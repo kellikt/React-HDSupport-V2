@@ -1,0 +1,59 @@
+:root {
+    --white: #fff;
+    --light-grey: #f6f9fc;
+    --grey: #f1f4f8b0;
+    --dark-grey: #6b7c93;
+    --green: #24b47e;
+    --teal: #4f96ce;
+    --blue: #6772e5;
+    --gold: #e39f48;
+    --pink: #b76ac4;
+    --light-blue: #3396d3;
+    --black: #32325d;
+    --spacer: 28px;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow-y: scroll;
+    background: var(--light-grey);
+    color: var(--black);
+}
+
+button {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: var(--blue);
+    font-weight: inherit;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+p {
+    margin: 0 0 1rem;
+}
