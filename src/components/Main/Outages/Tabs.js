@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { OutageContext } from './OutageContext';
 
 class Tabs extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            focused: 0,
-        };
 
         this.currDate = new Date();
         this.dates = [
@@ -16,14 +14,9 @@ class Tabs extends Component {
         ];
     }
 
-    handleClick = index => {
-        this.setState({
-            focused: index,
-        });
-    };
-
     render() {
-        const { focused } = this.state;
+        let value = this.context;
+        const { focused, handleClick } = value;
 
         return (
             <Container>
@@ -32,7 +25,7 @@ class Tabs extends Component {
                         return (
                             <Tab
                                 dark
-                                onClick={() => this.handleClick(index)}
+                                onClick={() => handleClick(index)}
                                 key={index}
                             >
                                 {`${date.date.getMonth() +
@@ -41,10 +34,7 @@ class Tabs extends Component {
                         );
                     else
                         return (
-                            <Tab
-                                onClick={() => this.handleClick(index)}
-                                key={index}
-                            >
+                            <Tab onClick={() => handleClick(index)} key={index}>
                                 {`${date.date.getMonth() +
                                     1}/${date.date.getDate()}`}
                             </Tab>
@@ -54,6 +44,8 @@ class Tabs extends Component {
         );
     }
 }
+
+Tabs.contextType = OutageContext;
 
 export default Tabs;
 

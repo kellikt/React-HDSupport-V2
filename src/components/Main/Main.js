@@ -6,6 +6,7 @@ import Roles from './Roles';
 import ClockInButton from './ClockInButton';
 import LinksContainer from './LinksContainer';
 import Outages from './Outages/Outages';
+import { OutageProvider } from './Outages/OutageContext';
 
 class Main extends Component {
     constructor(props) {
@@ -36,7 +37,9 @@ class Main extends Component {
                     <LinksContainer />
                 </div>
                 <div>
-                    <Outages />
+                    <OutageProvider>
+                        <Outages />
+                    </OutageProvider>
                 </div>
             </Container>
         );

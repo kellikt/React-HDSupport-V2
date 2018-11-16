@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Flipper } from 'react-flip-toolkit';
 
+import { OutageContext } from './OutageContext';
+import OutageContent from './OutageContent';
 import Tabs from './Tabs';
 
 class Outages extends Component {
     render() {
+        let value = this.context;
+        const { focused } = value;
+
         return (
-            <Container>
-                <Tabs />
-            </Container>
+            <Flipper flipKey={focused}>
+                <Container>
+                    <Tabs />
+                    <OutageContent />
+                </Container>
+            </Flipper>
         );
     }
 }
+
+Outages.contextType = OutageContext;
 
 export default Outages;
 
@@ -19,7 +30,7 @@ const Container = styled.div`
     background: var(--brown);
     border-radius: 8px;
     width: 566px;
-    height: 446px;
+    height: 100%;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
         0 5px 15px rgba(0, 0, 0, 0.07);
     transform-origin: top center;

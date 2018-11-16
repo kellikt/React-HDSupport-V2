@@ -20,14 +20,14 @@ export class OutageProvider extends Component {
         const { children } = this.props;
 
         return (
-            <OutageContext.Consumer
+            <OutageContext.Provider
                 value={{
                     focused: this.state.focused,
                     handleClick: this.handleClick,
                 }}
             >
                 {children}
-            </OutageContext.Consumer>
+            </OutageContext.Provider>
         );
     }
 }
