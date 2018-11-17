@@ -11,6 +11,8 @@
     --light-blue: #3396d3;
     --brown: #cec4b0;
     --black: #32325d;
+    --transition-duration: 1250ms;
+    --transition-delay: 250ms;
     --spacer: 28px;
 }
 

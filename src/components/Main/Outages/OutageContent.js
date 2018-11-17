@@ -5,19 +5,39 @@ import axios from 'axios';
 import { OutageContext } from './OutageContext';
 
 // TODO
-// <Flipped> around <Content>
 // in CDU, calculate height of the new box and explicitly set it so we can FLIP.
 
 class OutageContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            staff: [],
-            students: [],
+            staff: [
+                {
+                    uid: 1,
+                    first_name: 'placeholder',
+                    last_name: 'placeholder',
+                    notes: 'Vacation',
+                },
+            ],
+            students: [
+                {
+                    uid: 2,
+                    first_name: 'placeholder',
+                    last_name: 'placeholder',
+                    notes: 'Vacation',
+                },
+            ],
         };
     }
 
     doArraysEqual = (a, b) => {
+        // looks a bit weird, but we want to prevent the case where we compare 'different' empty/undefined arrays
+        // to prevent infinite looping.
+        if (
+            (!Array.isArray(a) || !a.length) &&
+            (!Array.isArray(b) || !b.length)
+        )
+            return false;
         if (a === b) return true;
         if (a == null || b == null) return false;
         if (a.length !== b.length) return false;
@@ -26,12 +46,6 @@ class OutageContent extends Component {
             if (a[i] !== b[i]) return false;
         }
         return true;
-    };
-
-    handleClick = () => {
-        this.setState({
-            clicked: true,
-        });
     };
 
     async componentDidUpdate(prevProps, prevState) {
@@ -46,20 +60,24 @@ class OutageContent extends Component {
             const dateString = `${currDate.getFullYear()}-${currDate.getMonth() +
                 1}-${currDate.getDate() + focused}`;
 
-            const staffRequest = await axios.get(
-                `/get-outages.php?role=staff&date=${dateString}`
-            );
-            const staffResult = await staffRequest.data;
+            try {
+                const staffRequest = await axios.get(
+                    `/get-outages.php?role=staff&date=${dateString}`
+                );
+                const staffResult = await staffRequest.data;
 
-            const studentRequest = await axios.get(
-                `/get-outages.php?role=student&date=${dateString}`
-            );
-            const studentResult = await studentRequest.data;
+                const studentRequest = await axios.get(
+                    `/get-outages.php?role=student&date=${dateString}`
+                );
+                const studentResult = await studentRequest.data;
 
-            this.setState({
-                staff: staffResult,
-                students: studentResult,
-            });
+                this.setState({
+                    staff: staffResult,
+                    students: studentResult,
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -67,7 +85,7 @@ class OutageContent extends Component {
         const { staff, students } = this.state;
 
         return (
-            <Container onClick={this.handleClick}>
+            <Container>
                 <Heading>
                     <h2>Staff</h2>
                     <h2>Students</h2>

@@ -23,6 +23,7 @@ export class OutageProvider extends Component {
             <OutageContext.Provider
                 value={{
                     focused: this.state.focused,
+                    big: this.state.big,
                     handleClick: this.handleClick,
                 }}
             >

@@ -54,7 +54,7 @@ const Container = styled.div`
 const NavLink = styled.div`
     color: ${({ color }) => (color ? `var(--${color})` : 'var(--blue)')};
     display: flex;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease-out;
     background-color: #fff;
     padding: 18px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
@@ -86,5 +86,9 @@ const NavLink = styled.div`
         color: var(--black);
         box-shadow: 0 18px 35px rgba(50, 50, 93, 0.1),
             0 8px 15px rgba(0, 0, 0, 0.07);
+    }
+
+    &:active {
+        transform: translateY(2px);
     }
 `;

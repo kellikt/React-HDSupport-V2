@@ -25,7 +25,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease-out;
     padding: 24px 40px 24px 140px;
     border-radius: 8px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
@@ -39,6 +39,10 @@ const Container = styled.div`
         transform: translateY(-2px);
         box-shadow: 0 18px 35px rgba(50, 50, 93, 0.1),
             0 8px 15px rgba(0, 0, 0, 0.07);
+    }
+
+    &:active {
+        transform: translateY(2px);
     }
 
     > svg {
