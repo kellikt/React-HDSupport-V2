@@ -8,7 +8,7 @@ class Announcements extends Component {
         super(props);
         this.state = {
             badgeText: 'Announcements',
-            currentHeight: 252,
+            currentHeight: 225,
             announcements: [],
             order: [0, 1, 2, 3, 4],
         };
@@ -37,6 +37,12 @@ class Announcements extends Component {
         this.setState({
             announcements: finalArray,
         });
+
+        const height = document.querySelector('.card1').offsetHeight;
+
+        this.setState({
+            currentHeight: height,
+        });
     }
 
     shiftCards = () => {
@@ -48,8 +54,11 @@ class Announcements extends Component {
             }
         });
 
+        const height = document.querySelector('.card2').offsetHeight;
+
         this.setState({
             order: newOrder,
+            currentHeight: height,
         });
     };
 

@@ -105,8 +105,7 @@ export const Card = styled.li`
     transform-origin: 50% 100%;
     backface-visibility: none;
     will-change: transform;
-
-    height: 252px;
+    min-height: 150px;
 
     span {
         text-transform: uppercase;
