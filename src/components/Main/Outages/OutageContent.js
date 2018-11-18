@@ -4,9 +4,6 @@ import axios from 'axios';
 
 import { OutageContext } from './OutageContext';
 
-// TODO
-// in CDU, calculate height of the new box and explicitly set it so we can FLIP.
-
 class OutageContent extends Component {
     constructor(props) {
         super(props);
@@ -33,11 +30,7 @@ class OutageContent extends Component {
     doArraysEqual = (a, b) => {
         // looks a bit weird, but we want to prevent the case where we compare 'different' empty/undefined arrays
         // to prevent infinite looping.
-        if (
-            (!Array.isArray(a) || !a.length) &&
-            (!Array.isArray(b) || !b.length)
-        )
-            return false;
+        if ((!Array.isArray(a) || !a.length) && (!Array.isArray(b) || !b.length)) return false;
         if (a === b) return true;
         if (a == null || b == null) return false;
         if (a.length !== b.length) return false;
@@ -57,26 +50,23 @@ class OutageContent extends Component {
             const { focused } = value;
 
             const currDate = new Date();
-            const dateString = `${currDate.getFullYear()}-${currDate.getMonth() +
-                1}-${currDate.getDate() + focused}`;
+            const dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate() + focused}`;
 
             try {
-                const staffRequest = await axios.get(
-                    `/get-outages.php?role=staff&date=${dateString}`
-                );
-                const staffResult = await staffRequest.data;
+                const staffRequest = axios.get(`/get-outages.php?role=staff&date=${dateString}`);
+                const studentRequest = axios.get(`/get-outages.php?role=student&date=${dateString}`);
 
-                const studentRequest = await axios.get(
-                    `/get-outages.php?role=student&date=${dateString}`
-                );
-                const studentResult = await studentRequest.data;
+                // By using Promise.all(), we can run our GETs synchronously and
+                // continue running as soon as the last call finishes instead of chaining
+                const results = await Promise.all([staffRequest, studentRequest]);
+                const data = await Promise.all([results[0].data, results[1].data]);
 
                 this.setState({
-                    staff: staffResult,
-                    students: studentResult,
+                    staff: data[0],
+                    students: data[1],
                 });
             } catch (error) {
-                console.log(error);
+                console.log(`Error fetching outages: ${error}`);
             }
         }
     }
@@ -96,9 +86,7 @@ class OutageContent extends Component {
                         {staff.map(entry => {
                             return (
                                 <Entry key={entry.uid}>
-                                    <h4>{`${entry.first_name} ${
-                                        entry.last_name
-                                    }`}</h4>
+                                    <h4>{`${entry.first_name} ${entry.last_name}`}</h4>
                                     <span>{entry.notes}</span>
                                 </Entry>
                             );
@@ -108,9 +96,7 @@ class OutageContent extends Component {
                         {students.map(entry => {
                             return (
                                 <Entry key={entry.uid}>
-                                    <h4>{`${entry.first_name} ${
-                                        entry.last_name
-                                    }`}</h4>
+                                    <h4>{`${entry.first_name} ${entry.last_name}`}</h4>
                                     <span>{entry.notes}</span>
                                 </Entry>
                             );

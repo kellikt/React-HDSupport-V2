@@ -9,28 +9,44 @@ import { ReactComponent as Gmail } from '../../images/Main/Gmail.svg';
 const LinksContainer = () => {
     return (
         <Container>
-            <NavLink color="green">
+            <NavLink
+                color="green"
+                href="http://drive.google.com/a/hawaii.edu#folders/0B4v6QnBNmu9KMVdqYXFqeGVndEE"
+                target="_blank"
+            >
                 <Schedules />
                 <div>
                     <h3>Schedules</h3>
                     <p>Check when you work.</p>
                 </div>
             </NavLink>
-            <NavLink color="pink">
+            <NavLink
+                color="pink"
+                href="https://www.hawaii.edu/bwiki/display/help/Home"
+                target="_blank"
+            >
                 <Wiki />
                 <div>
                     <h3>HD Wiki</h3>
                     <p>Need help? Read this.</p>
                 </div>
             </NavLink>
-            <NavLink color="light-blue">
+            <NavLink
+                color="light-blue"
+                href="https://csocits.slack.com/messages/"
+                target="_blank"
+            >
                 <Slack />
                 <div>
                     <h3>Slack</h3>
                     <p>Send a chat within ITS.</p>
                 </div>
             </NavLink>
-            <NavLink color="gold">
+            <NavLink
+                color="gold"
+                href="https://mail.google.com/a/hawaii.edu/"
+                target="_blank"
+            >
                 <Gmail />
                 <div>
                     <h3>UH Gmail</h3>
@@ -51,7 +67,7 @@ const Container = styled.div`
     margin-top: 60px;
 `;
 
-const NavLink = styled.div`
+const NavLink = styled.a`
     color: ${({ color }) => (color ? `var(--${color})` : 'var(--blue)')};
     display: flex;
     transition: all 0.2s ease-out;

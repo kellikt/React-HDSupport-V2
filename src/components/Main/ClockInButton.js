@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from '@reach/router';
 
 import { ReactComponent as Guy } from '../../images/Main/ClockIn.svg';
 import { ReactComponent as Arrow } from '../../images/icons/Arrow.svg';
 
 const ClockInButton = () => {
     return (
-        <Container>
+        <Container to="clock">
             <Guy />
             <HeadingText>
                 Clock In/Out <Arrow />
@@ -21,7 +22,7 @@ const ClockInButton = () => {
 
 export default ClockInButton;
 
-const Container = styled.div`
+const Container = styled(Link)`
     display: flex;
     flex-direction: column;
     position: relative;

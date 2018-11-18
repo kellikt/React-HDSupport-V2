@@ -1,10 +1,33 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from '@reach/router';
 
 import { ReactComponent as ITSLogo } from '../../../images/icons/its.svg';
 
+class Navbar extends Component {
+    render() {
+        const { children, onMouseLeave } = this.props;
+
+        return (
+            <NavbarEl onMouseLeave={onMouseLeave}>
+                <NavbarList>
+                    <Link to="/">
+                        <ITSLogo />
+                    </Link>
+                    {children}
+                    <Logout href="/">Logout</Logout>
+                </NavbarList>
+            </NavbarEl>
+        );
+    }
+}
+
+export default Navbar;
+
 const NavbarEl = styled.nav`
-    margin: auto;
+    margin: 4px auto auto auto;
+    max-width: 1200px;
+    width: 100%;
 `;
 
 const NavbarList = styled.ul`
@@ -38,23 +61,3 @@ const Logout = styled.a`
         opacity: 0.7;
     }
 `;
-
-class Navbar extends Component {
-    render() {
-        const { children, onMouseLeave } = this.props;
-
-        return (
-            <NavbarEl onMouseLeave={onMouseLeave}>
-                <NavbarList>
-                    <a href="/">
-                        <ITSLogo />
-                    </a>
-                    {children}
-                    <Logout href="/">Logout</Logout>
-                </NavbarList>
-            </NavbarEl>
-        );
-    }
-}
-
-export default Navbar;

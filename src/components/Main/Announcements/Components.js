@@ -12,22 +12,6 @@ export const Container = styled.div`
     }
 `;
 
-export const Badge = styled.a`
-    position: absolute;
-    z-index: 100;
-    left: 25px;
-    top: -13px;
-    padding: 2px 15px;
-    background: #005381;
-    border-radius: 50px;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.025em;
-    color: var(--white);
-    white-space: nowrap;
-`;
-
 export const CardsContainer = styled.ul`
     position: relative;
     font-size: 15px;
@@ -152,5 +136,29 @@ export const Card = styled.li`
 
     @media (min-width: 670px) {
         padding: 35px 40px;
+    }
+`;
+
+export const NextButton = styled.button`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    color: #8898aa;
+    transition: color 0.1s;
+    font-size: 15px;
+    padding: 0;
+    right: 18px;
+    top: 12px;
+    font-weight: 400;
+    z-index: 110;
+
+    svg {
+        width: 15px;
+        height: 15px;
+        margin-left: 4px;
+    }
+
+    &:hover {
+        color: var(--black);
     }
 `;

@@ -23,20 +23,14 @@ class Tabs extends Component {
                 {this.dates.map((date, index) => {
                     if (index === focused)
                         return (
-                            <Tab
-                                dark
-                                onClick={() => handleClick(index)}
-                                key={index}
-                            >
-                                {`${date.date.getMonth() +
-                                    1}/${date.date.getDate()}`}
+                            <Tab dark onClick={() => handleClick(index)} key={index}>
+                                {`${date.date.getMonth() + 1}/${date.date.getDate()}`}
                             </Tab>
                         );
                     else
                         return (
                             <Tab onClick={() => handleClick(index)} key={index}>
-                                {`${date.date.getMonth() +
-                                    1}/${date.date.getDate()}`}
+                                {`${date.date.getMonth() + 1}/${date.date.getDate()}`}
                             </Tab>
                         );
                 })}
@@ -53,8 +47,7 @@ const Container = styled.ul`
     display: flex;
     width: 100%;
     background: #ece5db;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-radius: 8px 8px 0 0;
 `;
 
 const Tab = styled.li`

@@ -19,26 +19,28 @@ class Roles extends Component {
     }
 
     async componentDidMount() {
-        const nameRequest = await axios.get(`/get-username.php?uuid=22051104`);
-        const nameData = await nameRequest.data;
+        try {
+            const nameRequest = await axios.get(`/get-username.php?uuid=22051104`);
+            const nameData = await nameRequest.data;
 
-        const rolesRequest = await axios.get(
-            `/get-roles.php?username=${nameData.username}`
-        );
-        const rolesData = await rolesRequest.data;
+            const rolesRequest = await axios.get(`/get-roles.php?username=${nameData.username}`);
+            const rolesData = await rolesRequest.data;
 
-        const roles = {
-            helpDesk: rolesData.helpdesk === 'yes' ? true : false,
-            lab: rolesData.lab === 'yes' ? true : false,
-            tech: rolesData.tech === 'yes' ? true : false,
-            staff: rolesData.staff === 'yes' ? true : false,
-            admin: rolesData.administrator === 'yes' ? true : false,
-            manager: rolesData.manager === 'yes' ? true : false,
-        };
+            const roles = {
+                helpDesk: rolesData.helpdesk === 'yes' ? true : false,
+                lab: rolesData.lab === 'yes' ? true : false,
+                tech: rolesData.tech === 'yes' ? true : false,
+                staff: rolesData.staff === 'yes' ? true : false,
+                admin: rolesData.administrator === 'yes' ? true : false,
+                manager: rolesData.manager === 'yes' ? true : false,
+            };
 
-        this.setState({
-            roles: roles,
-        });
+            this.setState({
+                roles: roles,
+            });
+        } catch (error) {
+            console.log(`Error fetching roles: ${error}`);
+        }
     }
 
     createRoleText = () => {
@@ -59,12 +61,9 @@ class Roles extends Component {
         // admin roles
         if (roles.admin === false && roles.manager === false)
             text += ' and you have no administrative roles.';
-        else if (roles.admin && roles.manager === false)
-            text += ' and a site Administrator.';
-        else if (roles.admin === false && roles.manager)
-            text += ' and a Lab/Help Desk Manager.';
-        else if (roles.admin && roles.manager)
-            text += ' and an Administrator and a Lab/Help Desk Manager.';
+        else if (roles.admin && roles.manager === false) text += ' and a site Administrator.';
+        else if (roles.admin === false && roles.manager) text += ' and a Lab/Help Desk Manager.';
+        else if (roles.admin && roles.manager) text += ' and an Administrator and a Lab/Help Desk Manager.';
 
         return text;
     };

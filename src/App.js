@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import Header from './components/Header/Header';
-import Main from './components/Main/Main';
+import SiteRouter from './components/SiteRouter';
+import { LayoutContext } from './LayoutContext';
 
 const AppContainer = styled.div`
     display: flex;
@@ -11,23 +12,27 @@ const AppContainer = styled.div`
 `;
 
 const ContentContainer = styled.div`
-    max-width: 1240px;
+    max-width: ${props => (props.fullScreen ? '100%' : '1200px')};
     width: 100%;
     margin: 0 auto;
-    padding: 0 20px;
 `;
 
 class App extends Component {
     render() {
+        let value = this.context;
+        const { fullScreen } = value;
+
         return (
             <AppContainer>
-                <ContentContainer>
+                <ContentContainer fullScreen={fullScreen}>
                     <Header duration={250} />
-                    <Main />
+                    <SiteRouter />
                 </ContentContainer>
             </AppContainer>
         );
     }
 }
+
+App.contextType = LayoutContext;
 
 export default App;

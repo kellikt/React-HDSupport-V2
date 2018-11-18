@@ -18,12 +18,16 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        const request = await axios.get('/get-name.php?uuid=22051104');
-        const data = await request.data;
+        try {
+            const request = await axios.get('/get-name.php?uuid=22051104');
+            const data = await request.data;
 
-        this.setState({
-            firstName: data.first_name,
-        });
+            this.setState({
+                firstName: data.first_name,
+            });
+        } catch (error) {
+            console.log(`Error getting name: ${error}`);
+        }
     }
 
     render() {

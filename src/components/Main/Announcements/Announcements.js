@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import { Container, Badge, CardsContainer, Card } from './Components';
+import Badge from './Badge';
+import { Container, CardsContainer, Card, NextButton } from './Components';
+import { ReactComponent as Arrow } from '../../../images/icons/Arrow.svg';
 
 class Announcements extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            badgeText: 'Announcements',
             currentHeight: 225,
             announcements: [],
             order: [0, 1, 2, 3, 4],
@@ -15,34 +16,38 @@ class Announcements extends Component {
     }
 
     async componentDidMount() {
-        const slackRequest = await axios.get(
-            `https://slack.com/api/channels.history?token=${
-                process.env.REACT_APP_SLACK_TOKEN
-            }&channel=${process.env.REACT_APP_SLACK_CHANNEL}&count=5`
-        );
-        const slackData = await slackRequest.data;
+        try {
+            const slackRequest = await axios.get(
+                `https://slack.com/api/channels.history?token=${
+                    process.env.REACT_APP_SLACK_TOKEN
+                }&channel=${process.env.REACT_APP_SLACK_CHANNEL}&count=5`
+            );
+            const slackData = await slackRequest.data;
 
-        // process the result
-        const finalArray = [...Array(5).keys()];
-        slackData.messages.forEach((message, index) => {
-            if (index === 0) {
-                // first announcement needs to be in card1.
-                finalArray[1] = message;
-            } else if (index === 4) {
-                // the last announcement goes in card0.
-                finalArray[0] = message;
-            } else finalArray[index + 1] = message;
-        });
+            // process the result
+            const finalArray = [...Array(5).keys()];
+            slackData.messages.forEach((message, index) => {
+                if (index === 0) {
+                    // first announcement needs to be in card1.
+                    finalArray[1] = message;
+                } else if (index === 4) {
+                    // the last announcement goes in card0.
+                    finalArray[0] = message;
+                } else finalArray[index + 1] = message;
+            });
 
-        this.setState({
-            announcements: finalArray,
-        });
+            this.setState({
+                announcements: finalArray,
+            });
 
-        const height = document.querySelector('.card1').offsetHeight;
+            const height = document.querySelector('.card1').offsetHeight;
 
-        this.setState({
-            currentHeight: height,
-        });
+            this.setState({
+                currentHeight: height,
+            });
+        } catch (error) {
+            console.log(`Error fetching announcements: ${error}`);
+        }
     }
 
     shiftCards = () => {
@@ -63,17 +68,17 @@ class Announcements extends Component {
     };
 
     render() {
-        const { badgeText, currentHeight, announcements, order } = this.state;
+        const { currentHeight, announcements, order } = this.state;
 
         return (
             <Container>
-                <Badge onClick={this.shiftCards}>{badgeText}</Badge>
+                <Badge />
                 <CardsContainer calc={currentHeight}>
                     {announcements.map((item, index) => {
                         return (
                             <Card key={index} className={`card${order[index]}`}>
                                 <span>
-                                    <h3>Placeholder</h3>
+                                    <h3>TODO</h3>
                                     <h6>Nov {index}</h6>
                                 </span>
                                 <p>{item.text}</p>
@@ -81,6 +86,9 @@ class Announcements extends Component {
                         );
                     })}
                 </CardsContainer>
+                <NextButton onClick={this.shiftCards}>
+                    Next <Arrow />
+                </NextButton>
             </Container>
         );
     }
