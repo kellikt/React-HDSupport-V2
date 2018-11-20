@@ -15,6 +15,9 @@
     --transition-duration: 1250ms;
     --transition-delay: 250ms;
     --spacer: 28px;
+
+    --red-button: linear-gradient(180deg, #f5515f, #a1051d);
+    --green-button: linear-gradient(180deg, #3ecf8e, #1a965f);
 }
 
 html {
@@ -38,6 +41,7 @@ body {
     background: var(--light-grey);
     color: var(--black);
     margin: 0;
+    overflow-x: hidden;
 }
 
 button {

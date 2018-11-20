@@ -8,6 +8,7 @@ import LinksContainer from './LinksContainer';
 import Outages from './Outages/Outages';
 import { OutageProvider } from './Outages/OutageContext';
 import Announcements from './Announcements/Announcements';
+import Background from '../Background';
 
 class Main extends Component {
     constructor(props) {
@@ -34,20 +35,23 @@ class Main extends Component {
         const { firstName } = this.state;
 
         return (
-            <Container>
-                <div>
-                    <Name>Welcome {firstName}!</Name>
-                    <Roles />
-                    <ClockInButton />
-                    <LinksContainer />
-                </div>
-                <div>
-                    <OutageProvider>
-                        <Outages />
-                    </OutageProvider>
-                    <Announcements />
-                </div>
-            </Container>
+            <React.Fragment>
+                <Container>
+                    <div>
+                        <Name>Welcome {firstName}!</Name>
+                        <Roles />
+                        <ClockInButton />
+                        <LinksContainer />
+                    </div>
+                    <div>
+                        <OutageProvider>
+                            <Outages />
+                        </OutageProvider>
+                        <Announcements />
+                    </div>
+                </Container>
+                <Background />
+            </React.Fragment>
         );
     }
 }

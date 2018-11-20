@@ -1,79 +1,88 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import { FormEl, RightSide, LeftSide, ClockState, Username, InOrOut, Comments } from './Components';
 import Timer from './Timer';
+import Spinner from '../Spinner';
 import { ReactComponent as RedX } from '../../images/icons/RedCross.svg';
+import { ReactComponent as GreenCheck } from '../../images/icons/GreenCheck.svg';
 import { ReactComponent as Couch } from '../../images/Clock/Chillin.svg';
+import { ReactComponent as Working } from '../../images/Clock/Working.svg';
 import Button from '../Button';
+import { ClockContext } from './ClockContext';
 
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            value: '',
+            text: '',
         };
-    }
-
-    async componentDidMount() {
-        try {
-            const request = await axios.get(`/get-username.php?uuid=22051104`);
-            const data = await request.data;
-
-            this.setState({
-                username: data.username,
-            });
-        } catch (error) {
-            console.log(`Error fetching clockin info: ${error}`);
-        }
     }
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(`You submitted: ${this.state.value}`);
+        let value = this.context;
+        const { handleSubmit } = value;
+
+        handleSubmit(this.state.text);
+
+        this.setState({
+            text: '',
+        });
     };
 
     handleType = event => {
         this.setState({
-            value: event.target.value,
+            text: event.target.value,
         });
     };
 
     render() {
-        const { username, value } = this.state;
+        const { text } = this.state;
+        let value = this.context;
+        const { username, clockedIn, loading } = value;
 
         return (
             <FormEl onSubmit={this.handleSubmit}>
-                <LeftSide>
-                    <ClockState>
-                        <RedX />
-                        <div>
-                            <Username>
-                                You <strong>({username})</strong> are:
-                            </Username>
-                            <InOrOut>Clocked Out</InOrOut>
-                        </div>
-                    </ClockState>
-                    <Timer />
-                    <Comments>
-                        <span>
-                            Have a weird clock-in/out? <em>Write a comment!</em>
-                        </span>
-                        <textarea
-                            placeholder="Write your comment here!"
-                            value={value}
-                            onChange={this.handleType}
-                        />
-                    </Comments>
-                </LeftSide>
-                <RightSide>
-                    <Couch />
-                    <Button green>Clock In</Button>
-                </RightSide>
+                {loading ? (
+                    <Spinner size={85} margin={132} />
+                ) : (
+                    <React.Fragment>
+                        <LeftSide>
+                            <ClockState>
+                                {clockedIn ? <GreenCheck /> : <RedX />}
+                                <div>
+                                    <Username>
+                                        You <strong>({username})</strong> are:
+                                    </Username>
+                                    <InOrOut clockedIn={clockedIn}>
+                                        Clocked
+                                        {clockedIn ? ' in' : ' out'}
+                                    </InOrOut>
+                                </div>
+                            </ClockState>
+                            <Timer />
+                            <Comments>
+                                <span>
+                                    Have a weird clock-in/out? <em>Write a comment!</em>
+                                </span>
+                                <textarea
+                                    placeholder="Write your comment here!"
+                                    value={text}
+                                    onChange={this.handleType}
+                                />
+                            </Comments>
+                        </LeftSide>
+                        <RightSide>
+                            {clockedIn ? <Working /> : <Couch />}
+                            {clockedIn ? <Button red>Clock out</Button> : <Button green>Clock In</Button>}
+                        </RightSide>
+                    </React.Fragment>
+                )}
             </FormEl>
         );
     }
 }
+
+Form.contextType = ClockContext;
 
 export default Form;

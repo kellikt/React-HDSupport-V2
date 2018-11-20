@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Form from './Form';
 import Timestamp from './Timestamp';
 
-class ClockCard extends Component {
-    render() {
-        return (
-            <Container>
-                <Form />
-                <Timestamp />
-            </Container>
-        );
-    }
-}
+const ClockCard = () => {
+    return (
+        <Container>
+            <Form />
+            <Timestamp />
+        </Container>
+    );
+};
 
 export default ClockCard;
 

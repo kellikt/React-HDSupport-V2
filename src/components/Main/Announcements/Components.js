@@ -33,8 +33,7 @@ export const CardsContainer = styled.ul`
         z-index: 80;
         pointer-events: auto;
         background: #fff;
-        box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
-            0 5px 15px rgba(0, 0, 0, 0.07);
+        box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
         transform: ${props => `translateY(${props.calc}px) scale(1)`};
 
         > * {
@@ -49,8 +48,7 @@ export const CardsContainer = styled.ul`
         --offset-delay: calc(var(--transition-delay) * 0.5);
         opacity: 1;
         z-index: 70;
-        transform: ${props =>
-            `translateY(${props.calc + 30}px) scale(0.934579)`};
+        transform: ${props => `translateY(${props.calc + 30}px) scale(0.934579)`};
 
         &::after {
             opacity: 1;
@@ -60,16 +58,14 @@ export const CardsContainer = styled.ul`
         --offset-delay: calc(var(--transition-delay) * 0.75);
         opacity: 1;
         z-index: 60;
-        transform: ${props =>
-            `translateY(${props.calc + 60}px) scale(0.873439)`};
+        transform: ${props => `translateY(${props.calc + 60}px) scale(0.873439)`};
 
         &::after {
             opacity: 0.5;
         }
     }
     .card4 {
-        transform: ${props =>
-            `translateY(${props.calc + 120}px) scale(0.816298)`};
+        transform: ${props => `translateY(${props.calc + 120}px) scale(0.816298)`};
     }
 `;
 
@@ -102,6 +98,7 @@ export const Card = styled.li`
         color: var(--black);
         margin: 0 12px 0 0;
         font-size: 15px;
+        white-space: nowrap;
     }
 
     h6 {
@@ -130,8 +127,7 @@ export const Card = styled.li`
         bottom: 0;
         top: 0;
         pointer-events: none;
-        background: linear-gradient(180deg, #fff, #e6ebf1) bottom/100% 150px
-            repeat-x;
+        background: linear-gradient(180deg, #fff, #e6ebf1) bottom/100% 150px repeat-x;
     }
 
     @media (min-width: 670px) {

@@ -6,6 +6,7 @@ export class LayoutProvider extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            uuid: '22051104',
             fullScreen: false,
         };
     }
@@ -23,6 +24,7 @@ export class LayoutProvider extends Component {
             <LayoutContext.Provider
                 value={{
                     fullScreen: this.state.fullScreen,
+                    uuid: this.state.uuid,
                     changeSize: this.changeSize,
                 }}
             >

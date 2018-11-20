@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { ClockContext } from './ClockContext';
 
 class Timestamp extends Component {
-    async componentDidMount() {
-        const request = await axios.get(`/get-last-clock.php?username=asyarb`);
-        const data = await request.data;
-
-        console.log(data);
-    }
-
     render() {
+        let value = this.context;
+        const { lastClock } = value;
+        const { action, dayOfWeek, time, date, comments } = lastClock;
+
         return (
             <Container>
-                <Title>Last Clock-Out</Title>
+                <Title>Last Clock-{action}</Title>
                 <Stamp>
                     <h4>Your Timestamp:</h4>
-                    <span>Tuesday</span>
-                    <span>8:27 AM</span>
-                    <span>11-13-2018</span>
+                    <span>{dayOfWeek}</span>
+                    <span>{time}</span>
+                    <span>{date}</span>
                 </Stamp>
                 <Comments>
                     <h4>Your Comments:</h4>
+                    <p>{comments}</p>
                 </Comments>
             </Container>
         );
     }
 }
+
+Timestamp.contextType = ClockContext;
 
 export default Timestamp;
 
@@ -69,4 +69,8 @@ const Stamp = styled.div`
 const Comments = styled.div`
     padding-top: 24px;
     border-top: 1px solid #d2d1d1cc;
+
+    p {
+        margin: 12px 0 0 0;
+    }
 `;

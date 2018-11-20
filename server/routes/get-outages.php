@@ -29,6 +29,8 @@ function getOutages($db, $role, $date)
         $array[] = $row;
     }
 
+    $stmt->close();
+
     return json_encode($array);
 }
 

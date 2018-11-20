@@ -18,22 +18,29 @@ class Announcements extends Component {
     async componentDidMount() {
         try {
             const slackRequest = await axios.get(
-                `https://slack.com/api/channels.history?token=${
-                    process.env.REACT_APP_SLACK_TOKEN
-                }&channel=${process.env.REACT_APP_SLACK_CHANNEL}&count=5`
+                `https://slack.com/api/channels.history?token=${process.env.REACT_APP_SLACK_TOKEN}&channel=${
+                    process.env.REACT_APP_SLACK_CHANNEL
+                }&count=5`
             );
             const slackData = await slackRequest.data;
 
             // process the result
             const finalArray = [...Array(5).keys()];
             slackData.messages.forEach((message, index) => {
+                const timestamp = this.getTime(message.ts);
+                const text = this.getText(message.text);
+
+                const finalMessage = {
+                    title: text[0],
+                    date: timestamp,
+                    text: text[1],
+                };
+
                 if (index === 0) {
-                    // first announcement needs to be in card1.
-                    finalArray[1] = message;
+                    finalArray[1] = finalMessage;
                 } else if (index === 4) {
-                    // the last announcement goes in card0.
-                    finalArray[0] = message;
-                } else finalArray[index + 1] = message;
+                    finalArray[0] = finalMessage;
+                } else finalArray[index + 1] = finalMessage;
             });
 
             this.setState({
@@ -49,6 +56,63 @@ class Announcements extends Component {
             console.log(`Error fetching announcements: ${error}`);
         }
     }
+
+    getText = text => {
+        let announcement;
+
+        if (text.includes('•')) {
+            announcement = text.replace('•', '');
+            announcement = announcement.replace('•', 'CUTHERE');
+            announcement = announcement.split('CUTHERE');
+
+            // handle links
+            if (announcement[1].includes('http')) {
+                let tempLink = announcement[1].split('<');
+                tempLink = tempLink[1].split('|');
+
+                let href = tempLink[0];
+                let anchorText = tempLink[1].split('>');
+                anchorText = anchorText[0];
+
+                href = `<a href='${href}' class='commonLink'>${anchorText}</a>`;
+                announcement[1] = announcement[1].replace(/<.*>/g, href);
+            }
+
+            // handle bolds
+            while (announcement[1].includes('*')) {
+                announcement[1] = announcement[1].replace('*', '<strong>');
+                announcement[1] = announcement[1].replace('*', '</strong>');
+            }
+            // handle italics
+            while (announcement[1].includes('_')) {
+                announcement[1] = announcement[1].replace('_', '<em>');
+                announcement[1] = announcement[1].replace('_', '</em>');
+            }
+
+            let breakCount = 0;
+            while (announcement[1].includes('\n')) {
+                if (breakCount === 0) {
+                    announcement[1] = announcement[1].replace('\n', '');
+                    breakCount++;
+                } else announcement[1] = announcement[1].replace('\n', '<br />');
+            }
+        } else {
+            announcement = ['Announcement', "Somebody didn't use the correct syntax :("];
+        }
+
+        return announcement;
+    };
+
+    getTime = timestamp => {
+        let ts = parseInt(timestamp) * 1000;
+        ts = new Date(ts);
+
+        const fullDate = ts.toDateString();
+        const splitDate = fullDate.split(' ');
+        const monthDay = `${splitDate[1]} ${splitDate[2]}`;
+
+        return monthDay;
+    };
 
     shiftCards = () => {
         const newOrder = this.state.order.map(item => {
@@ -78,10 +142,10 @@ class Announcements extends Component {
                         return (
                             <Card key={index} className={`card${order[index]}`}>
                                 <span>
-                                    <h3>TODO</h3>
-                                    <h6>Nov {index}</h6>
+                                    <h3>{item.title}</h3>
+                                    <h6>{item.date}</h6>
                                 </span>
-                                <p>{item.text}</p>
+                                <p dangerouslySetInnerHTML={{ __html: item.text }} />
                             </Card>
                         );
                     })}

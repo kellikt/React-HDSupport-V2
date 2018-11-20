@@ -9,6 +9,8 @@ function getName($db, $id)
     $stmt->execute();
     $array = $stmt->get_result()->fetch_assoc();
 
+    $stmt->close();
+
     return json_encode($array);
 }
 

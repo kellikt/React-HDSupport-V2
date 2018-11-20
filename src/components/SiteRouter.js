@@ -7,7 +7,7 @@ import ClockIn from './ClockIn/ClockIn';
 class SiteRouter extends Component {
     render() {
         return (
-            <Router>
+            <Router primary={false}>
                 <Main path="/" />
                 <ClockIn path="clock" />
             </Router>
