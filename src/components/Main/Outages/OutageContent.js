@@ -28,46 +28,40 @@ class OutageContent extends Component {
     }
 
     doArraysEqual = (a, b) => {
-        // looks a bit weird, but we want to prevent the case where we compare 'different' empty/undefined arrays
-        // to prevent infinite looping.
-        if ((!Array.isArray(a) || !a.length) && (!Array.isArray(b) || !b.length)) return false;
         if (a === b) return true;
-        if (a == null || b == null) return false;
+        if (a === null || b === null) return false;
         if (a.length !== b.length) return false;
-
         for (var i = 0; i < a.length; ++i) {
-            if (a[i] !== b[i]) return false;
+            if (a[i].uid !== b[i].uid) return false;
         }
         return true;
     };
 
-    async componentDidUpdate(prevProps, prevState) {
-        if (
-            this.doArraysEqual(prevState.staff, this.state.staff) ||
-            this.doArraysEqual(prevState.students, this.state.students)
-        ) {
-            let value = this.context;
-            const { focused } = value;
+    async componentDidUpdate() {
+        let value = this.context;
+        const { focused } = value;
+        const currDate = new Date();
+        const dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate() +
+            focused}`;
 
-            const currDate = new Date();
-            const dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate() + focused}`;
+        try {
+            const staffRequest = axios.get(`/get-outages.php?role=staff&date=${dateString}`);
+            const studentRequest = axios.get(`/get-outages.php?role=student&date=${dateString}`);
 
-            try {
-                const staffRequest = axios.get(`/get-outages.php?role=staff&date=${dateString}`);
-                const studentRequest = axios.get(`/get-outages.php?role=student&date=${dateString}`);
+            const results = await Promise.all([staffRequest, studentRequest]);
+            const data = await Promise.all([results[0].data, results[1].data]);
 
-                // By using Promise.all(), we can run our GETs synchronously and
-                // continue running as soon as the last call finishes instead of chaining
-                const results = await Promise.all([staffRequest, studentRequest]);
-                const data = await Promise.all([results[0].data, results[1].data]);
-
+            if (
+                !this.doArraysEqual(data[0], this.state.staff) ||
+                !this.doArraysEqual(data[1], this.state.students)
+            ) {
                 this.setState({
                     staff: data[0],
                     students: data[1],
                 });
-            } catch (error) {
-                console.log(`Error fetching outages: ${error}`);
             }
+        } catch (error) {
+            console.log(`Error fetching outages: ${error}`);
         }
     }
 

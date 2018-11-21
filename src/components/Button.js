@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Button = props => {
     return <ColoredButton {...props}>{props.children}</ColoredButton>;
+};
+
+Button.propTypes = {
+    color: PropTypes.string.isRequired,
 };
 
 export default Button;
@@ -16,7 +21,7 @@ const ColoredButton = styled.button`
     outline: 0;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
     box-shadow: 0 1px 2px 0 rgba(74, 144, 226, 0.44), 0 2px 8px 0 rgba(0, 0, 0, 0.14);
-    background: ${props => (props.green ? 'var(--green-button)' : props.red ? 'var(--red-button)' : null)};
+    background: ${({ color }) => (color ? `var(--${color}-button)` : `var(--green-button`)};
     border-radius: 6px;
     font-size: 16px;
 

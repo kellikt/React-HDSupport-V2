@@ -12,12 +12,21 @@
     --brown: #cec4b0;
     --black: #32325d;
     --red: #d95c6e;
+    --purple: #a38cdc;
     --transition-duration: 1250ms;
     --transition-delay: 250ms;
     --spacer: 28px;
 
     --red-button: linear-gradient(180deg, #f5515f, #a1051d);
     --green-button: linear-gradient(180deg, #3ecf8e, #1a965f);
+    --purple-button: linear-gradient(180deg, #a387e5, #583aa1);
+
+    --crumb-blue-text: #6772e5;
+    --crumb-blue-bg: #bcdaff;
+    --crumb-blue-border: #bcdaff52;
+    --crumb-purple-text: #50319b;
+    --crumb-purple-bg: #e1dbee;
+    --crumb-purple-border: #e1dbee52;
 }
 
 html {
@@ -75,4 +84,10 @@ textarea {
     outline: none;
     resize: none;
     font-weight: 400;
+}
+
+input {
+    font-family: inherit;
+    border: none;
+    outline: none;
 }

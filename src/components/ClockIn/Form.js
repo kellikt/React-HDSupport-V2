@@ -74,7 +74,11 @@ class Form extends Component {
                         </LeftSide>
                         <RightSide>
                             {clockedIn ? <Working /> : <Couch />}
-                            {clockedIn ? <Button red>Clock out</Button> : <Button green>Clock In</Button>}
+                            {clockedIn ? (
+                                <Button color="red">Clock out</Button>
+                            ) : (
+                                <Button color="green">Clock In</Button>
+                            )}
                         </RightSide>
                     </React.Fragment>
                 )}

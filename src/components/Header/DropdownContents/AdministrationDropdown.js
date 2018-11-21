@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from '@reach/router';
 
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Schedule } from '../../../images/icons/Administration/Schedule.svg';
@@ -18,26 +19,22 @@ const AdministrationDropdown = () => {
             <DropdownSection data-first-dropdown-section>
                 <ul>
                     <ListItem>
-                        <a href="/">
+                        <Link to="/schedmgmt">
                             <Heading color="pink">
                                 <Schedule />
                                 Schedule Management
                             </Heading>
-                            <Description>
-                                Edit &amp; view schedules/timesheets.
-                            </Description>
-                        </a>
+                            <Description>Edit &amp; view schedules/timesheets.</Description>
+                        </Link>
                     </ListItem>
                     <ListItem>
-                        <a href="/">
+                        <Link to="/acctmgmt">
                             <Heading color="pink">
                                 <Account />
                                 Account Management
                             </Heading>
-                            <Description>
-                                Add/Edit users to HDSupport.
-                            </Description>
-                        </a>
+                            <Description>Add/Edit users to HDSupport.</Description>
+                        </Link>
                     </ListItem>
                     <ListItem noMarginBottom>
                         <a href="/">
@@ -45,9 +42,7 @@ const AdministrationDropdown = () => {
                                 <Browser />
                                 Browser Recommendations
                             </Heading>
-                            <Description>
-                                Manage the browser matrix.
-                            </Description>
+                            <Description>Manage the browser matrix.</Description>
                         </a>
                     </ListItem>
                 </ul>

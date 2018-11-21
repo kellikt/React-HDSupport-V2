@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import Badge from './Badge';
+import Spinner from '../../Spinner';
 import { Container, CardsContainer, Card, NextButton } from './Components';
 import { ReactComponent as Arrow } from '../../../images/icons/Arrow.svg';
 
@@ -12,6 +14,7 @@ class Announcements extends Component {
             currentHeight: 225,
             announcements: [],
             order: [0, 1, 2, 3, 4],
+            isLoading: true,
         };
     }
 
@@ -45,6 +48,7 @@ class Announcements extends Component {
 
             this.setState({
                 announcements: finalArray,
+                isLoading: false,
             });
 
             const height = document.querySelector('.card1').offsetHeight;
@@ -132,23 +136,29 @@ class Announcements extends Component {
     };
 
     render() {
-        const { currentHeight, announcements, order } = this.state;
+        const { currentHeight, announcements, order, isLoading } = this.state;
 
         return (
             <Container>
                 <Badge />
                 <CardsContainer calc={currentHeight}>
-                    {announcements.map((item, index) => {
-                        return (
-                            <Card key={index} className={`card${order[index]}`}>
-                                <span>
-                                    <h3>{item.title}</h3>
-                                    <h6>{item.date}</h6>
-                                </span>
-                                <p dangerouslySetInnerHTML={{ __html: item.text }} />
-                            </Card>
-                        );
-                    })}
+                    {isLoading ? (
+                        <SpinnerCard>
+                            <Spinner size={50} margin={100} />
+                        </SpinnerCard>
+                    ) : (
+                        announcements.map((item, index) => {
+                            return (
+                                <Card key={index} className={`card${order[index]}`}>
+                                    <span>
+                                        <h3>{item.title}</h3>
+                                        <h6>{item.date}</h6>
+                                    </span>
+                                    <p dangerouslySetInnerHTML={{ __html: item.text }} />
+                                </Card>
+                            );
+                        })
+                    )}
                 </CardsContainer>
                 <NextButton onClick={this.shiftCards}>
                     Next <Arrow />
@@ -159,3 +169,12 @@ class Announcements extends Component {
 }
 
 export default Announcements;
+
+const SpinnerCard = styled.li`
+    position: absolute;
+    display: grid;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    background: #fff;
+    width: 100%;
+    border-radius: 8px;
+`;

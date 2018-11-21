@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const scale = keyframes`
     0% { transform: scale(0); opacity: 0; }
@@ -13,9 +14,6 @@ const SpinnerContainer = styled.span`
     height: ${props => `${props.loaderSize}px`};
     margin-right: '.25rem';
     position: relative;
-    top: 4px;
-    margin-left: 18px;
-    left: -4px;
     grid-column: 1/-1;
     grid-row: 1/-1;
     align-self: center;
@@ -54,6 +52,11 @@ const Spinner = props => {
             <SpinnerBall loaderSize={size} />
         </SpinnerContainer>
     );
+};
+
+Spinner.propTypes = {
+    size: PropTypes.number.isRequired,
+    margin: PropTypes.number,
 };
 
 export default Spinner;
