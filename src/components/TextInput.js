@@ -1,33 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-class TextInput extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: false,
-        };
-    }
+const TextInput = props => {
+    const { id, label, placeholder, value, onChange } = props;
 
-    render() {
-        const { id, label, placeholder, value, onChange } = this.props;
-
-        return (
-            <Container error={this.state.error}>
-                <label htmlFor={id}>{label}</label>
-                <input
-                    type="text"
-                    id={id}
-                    value={value}
-                    onChange={onChange}
-                    placeholder={placeholder}
-                    {...this.props}
-                />
-            </Container>
-        );
-    }
-}
+    return (
+        <Container>
+            <label htmlFor={id}>{label}</label>
+            <input
+                type="text"
+                id={id}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                {...props}
+            />
+        </Container>
+    );
+};
 
 TextInput.defaultProps = {
     label: '',
@@ -65,7 +56,7 @@ const Container = styled.div`
         background-color: #f1f3f6;
         color: var(--black);
         transition: all 0.15s ease;
-        border: 2px solid ${props => (props.error ? '#d95c6e' : '#f1f3f6')};
+        border: 2px solid #f1f3f6;
 
         &:active,
         &:focus {

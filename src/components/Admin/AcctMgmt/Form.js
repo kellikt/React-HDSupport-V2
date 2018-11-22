@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import ErrorSnackbar from './ErrorSnackbar';
-import { PoseGroup } from 'react-pose';
 import { FormEl, Title, UHSearch, PIISearch } from './FormComponents';
 import TextInput from '../../TextInput';
 import Button from '../../Button';
+import SearchResult from './SearchResult';
 import { ReactComponent as GradHat } from '../../../images/Admin/Acct/GradHat.svg';
 import { ReactComponent as Forms } from '../../../images/Admin/Acct/Forms.svg';
 
@@ -17,6 +18,8 @@ class Form extends Component {
             firstName: '',
             lastName: '',
             error: false,
+            searched: false,
+            searchResult: {},
         };
     }
 
@@ -64,57 +67,82 @@ class Form extends Component {
             setTimeout(() => {
                 this.handleSnack();
             }, 3000);
+        } else {
+            this.setState({
+                searching: true,
+            });
+            try {
+                const request = await axios.post('/search-user.php', {
+                    username: username,
+                    uuid: uuid,
+                    firstName: firstName,
+                    lastName: lastName,
+                });
+                const data = await request.data;
+
+                this.setState({
+                    searchResult: data,
+                    searched: true,
+                    searching: false,
+                });
+            } catch (error) {
+                console.log(`Error searching for user: ${error}`);
+            }
         }
     };
 
     render() {
-        const { username, uuid, firstName, lastName, error } = this.state;
+        const { username, uuid, firstName, lastName, error, searched, searchResult } = this.state;
 
         return (
             <React.Fragment>
-                <FormEl onSubmit={this.handleSubmit}>
-                    <Title>
-                        <h1>User Lookup</h1>
-                        <p>Use one of the following methods to search for a user.</p>
-                    </Title>
-                    <UHSearch>
-                        <h2>UH Search Criteria:</h2>
-                        <GradHat />
-                        <TextInput
-                            id="UHUsername"
-                            label="UH Username"
-                            placeholder="janed"
-                            value={username}
-                            onChange={event => this.handleChange(event, 'username')}
-                        />
-                        <TextInput
-                            id="UHnumber"
-                            label="UH Number"
-                            placeholder="12345678"
-                            value={uuid}
-                            onChange={event => this.handleChange(event, 'uuid')}
-                        />
-                    </UHSearch>
-                    <PIISearch>
-                        <h2>Personal Info Criteria:</h2>
-                        <Forms />
-                        <TextInput
-                            id="firstname"
-                            label="First Name"
-                            placeholder="Jane"
-                            value={firstName}
-                            onChange={event => this.handleChange(event, 'firstName')}
-                        />
-                        <TextInput
-                            id="lastname"
-                            label="Last Name"
-                            placeholder="Doe"
-                            value={lastName}
-                            onChange={event => this.handleChange(event, 'lastName')}
-                        />
-                    </PIISearch>
-                    <Button color="purple">Search</Button>
-                </FormEl>
+                {searched ? (
+                    <SearchResult result={searchResult} />
+                ) : (
+                    <FormEl onSubmit={this.handleSubmit}>
+                        <Title>
+                            <h1>User Lookup</h1>
+                            <p>Use one of the following methods to search for a user.</p>
+                        </Title>
+                        <UHSearch>
+                            <h2>UH Search Criteria:</h2>
+                            <GradHat />
+                            <TextInput
+                                id="UHUsername"
+                                label="UH Username"
+                                placeholder="janed"
+                                value={username}
+                                onChange={event => this.handleChange(event, 'username')}
+                            />
+                            <TextInput
+                                id="UHnumber"
+                                label="UH Number"
+                                placeholder="12345678"
+                                value={uuid}
+                                onChange={event => this.handleChange(event, 'uuid')}
+                            />
+                        </UHSearch>
+                        <PIISearch>
+                            <h2>Personal Info Criteria:</h2>
+                            <Forms />
+                            <TextInput
+                                id="firstname"
+                                label="First Name"
+                                placeholder="Jane"
+                                value={firstName}
+                                onChange={event => this.handleChange(event, 'firstName')}
+                            />
+                            <TextInput
+                                id="lastname"
+                                label="Last Name"
+                                placeholder="Doe"
+                                value={lastName}
+                                onChange={event => this.handleChange(event, 'lastName')}
+                            />
+                        </PIISearch>
+                        <Button color="purple">Search</Button>
+                    </FormEl>
+                )}
                 <ErrorSnackbar
                     error={error}
                     errMessage="Enter at least a single search term."

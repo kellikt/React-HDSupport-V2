@@ -5,6 +5,7 @@ import Main from './Main/Main';
 import ClockIn from './ClockIn/ClockIn';
 import AcctMgmt from './Admin/AcctMgmt';
 import EditUser from './Admin/AcctMgmt/EditUser';
+import Edit from './Admin/AcctMgmt/Edit';
 import SchedMgmt from './Admin/SchedMgmt';
 
 class SiteRouter extends Component {
@@ -15,6 +16,7 @@ class SiteRouter extends Component {
                 <ClockIn path="clock" />
                 <AcctMgmt path="acctmgmt" />
                 <EditUser path="acctmgmt/edituser" />
+                <Edit path="acctmgmt/edituser/:username" />
                 <SchedMgmt path="schedmgmt" />
             </Router>
         );
