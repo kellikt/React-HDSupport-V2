@@ -23,8 +23,9 @@ export const Title = styled.div`
     h1 {
         font-size: 28px;
         margin: 0 0 4px;
-        color: #7a5dbf;
+        color: ${props => (props.color === 'green' ? 'var(--green)' : '#7a5dbf')};
     }
+
     p {
         margin: 0;
         color: var(--dark-grey);

@@ -27,6 +27,9 @@
     --crumb-purple-text: #50319b;
     --crumb-purple-bg: #e1dbee;
     --crumb-purple-border: #e1dbee52;
+    --crumb-green-text: #24b47e;
+    --crumb-green-bg: #d6facf;
+    --crumb-green-border: #d6facf52;
 }
 
 html {

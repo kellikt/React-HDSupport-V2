@@ -6,7 +6,7 @@ const TextInput = props => {
     const { id, label, placeholder, value, onChange } = props;
 
     return (
-        <Container>
+        <Container className="styled-input">
             <label htmlFor={id}>{label}</label>
             <input
                 type="text"
@@ -25,7 +25,7 @@ TextInput.defaultProps = {
 };
 
 TextInput.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     label: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,

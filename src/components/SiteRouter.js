@@ -7,6 +7,7 @@ import AcctMgmt from './Admin/AcctMgmt';
 import EditUser from './Admin/AcctMgmt/EditUser';
 import Edit from './Admin/AcctMgmt/Edit';
 import SchedMgmt from './Admin/SchedMgmt';
+import Add from './Admin/AcctMgmt/Add';
 
 class SiteRouter extends Component {
     render() {
@@ -17,6 +18,7 @@ class SiteRouter extends Component {
                 <AcctMgmt path="acctmgmt" />
                 <EditUser path="acctmgmt/edituser" />
                 <Edit path="acctmgmt/edituser/:username" />
+                <Add path="acctmgmt/adduser" />
                 <SchedMgmt path="schedmgmt" />
             </Router>
         );

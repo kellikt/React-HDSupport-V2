@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import ErrorSnackbar from './ErrorSnackbar';
+import Snackbar from './Snackbar';
 import { FormEl, Title, UHSearch, PIISearch } from './FormComponents';
 import TextInput from '../../TextInput';
 import Button from '../../Button';
@@ -143,10 +143,12 @@ class Form extends Component {
                         <Button color="purple">Search</Button>
                     </FormEl>
                 )}
-                <ErrorSnackbar
-                    error={error}
-                    errMessage="Enter at least a single search term."
+                <Snackbar
+                    handler={error}
+                    message="Enter at least a single search term."
                     onClick={this.handleSnack}
+                    heading="Error!"
+                    isError={true}
                 />
             </React.Fragment>
         );

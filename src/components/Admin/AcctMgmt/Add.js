@@ -8,10 +8,10 @@ import Breadcrumb from '../Breadcrumb';
 import TextInput from '../../TextInput';
 import Checkbox from '../../Checkbox';
 import Snackbar from './Snackbar';
-import { ReactComponent as Personal } from '../../../images/Admin/Acct/EditPersonal.svg';
-import { ReactComponent as Contact } from '../../../images/Admin/Acct/EditContact.svg';
+import { ReactComponent as Personal } from '../../../images/Admin/Acct/AddPersonal.svg';
+import { ReactComponent as Contact } from '../../../images/Admin/Acct/AddContact.svg';
 
-class Edit extends Component {
+class Add extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,32 +36,12 @@ class Edit extends Component {
                 home_phone: '',
                 other_phone: '',
                 street_address: '',
-                uuid: 0,
+                uuid: 12345678,
                 zipcode: '',
                 uid: 0,
             },
             snack: false,
         };
-    }
-
-    async componentDidMount() {
-        const { username } = this.props;
-
-        const rolesRequest = axios.get(`/get-roles.php?username=${username}`);
-        const infoRequest = axios.post(`/search-user.php`, {
-            username: username,
-            uuid: '',
-            firstName: '',
-            lastName: '',
-        });
-
-        const response = await Promise.all([rolesRequest, infoRequest]);
-        const data = await Promise.all([response[0].data, response[1].data]);
-
-        this.setState({
-            roles: data[0],
-            info: data[1][0],
-        });
     }
 
     handleChange = (event, type) => {
@@ -270,22 +250,9 @@ class Edit extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { roles, info } = this.state;
-
+        const { info, roles } = this.state;
         try {
-            const groups = axios.post('/edit-user-groups.php', {
-                administrator: roles.administrator,
-                helpdesk: roles.helpdesk,
-                lab: roles.lab,
-                manager: roles.manager,
-                staff: roles.staff,
-                tech: roles.tech,
-                third_shift: roles.third_shift,
-                username: info.username,
-                uid: info.uid,
-            });
-
-            const userInfo = axios.post('/edit-user.php', {
+            const addInfo = await axios.post('/add-user.php', {
                 uuid: info.uuid,
                 firstName: info.first_name,
                 lastName: info.last_name,
@@ -297,25 +264,24 @@ class Edit extends Component {
                 address: info.street_address,
                 zip: info.zipcode,
                 city: info.city,
-                expired: info.expired,
-                uid: info.uid,
             });
 
-            await Promise.all([groups, userInfo]);
-
-            this.setState({
-                snack: true,
-            });
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-            });
-            setTimeout(() => {
-                this.handleSnack();
-            }, 3000);
+            const data = await addInfo.data;
+            console.log(data);
         } catch (error) {
-            console.log(`Error editing user: ${error}`);
+            console.log(`Error adding user: ${error}`);
         }
+
+        this.setState({
+            snack: true,
+        });
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+        setTimeout(() => {
+            this.handleSnack();
+        }, 3000);
     };
 
     handleSnack = () => {
@@ -327,19 +293,19 @@ class Edit extends Component {
     render() {
         const links = [
             { title: 'Account Management', to: '/acctmgmt' },
-            { title: 'Edit User', to: '/acctmgmt/edituser' },
+            { title: 'Add User', to: '/acctmgmt/adduser' },
         ];
 
         const { info, roles, snack } = this.state;
 
         return (
             <Container>
-                <h1>Edit User</h1>
-                <Breadcrumb links={links} color="purple" />
+                <h1>Add User</h1>
+                <Breadcrumb links={links} color="green" />
                 <EditForm onSubmit={this.handleSubmit}>
-                    <Title className="title">
-                        <h1>Edit Details</h1>
-                        <p>Make any desired changes in the forms below, then hit save at the bottom.</p>
+                    <Title className="title" color="green">
+                        <h1>Enter Details</h1>
+                        <p>Enter in the user's information in the fields below.</p>
                     </Title>
                     <FormSection id="personal">Personal Info</FormSection>
                     <TextInput
@@ -462,10 +428,10 @@ class Edit extends Component {
                         <Personal />
                         <Contact />
                     </Images>
-                    <Button color="purple">Submit</Button>
+                    <Button color="green">Submit</Button>
                     <Snackbar
                         handler={snack}
-                        message={`Successfully edited user: '${info.username}'`}
+                        message={`Successfully added user: '${info.username}'`}
                         onClick={this.handleSnack}
                         heading="Success!"
                     />
@@ -475,7 +441,7 @@ class Edit extends Component {
     }
 }
 
-export default Edit;
+export default Add;
 
 const Container = styled.main`
     margin-top: 60px;
@@ -546,14 +512,14 @@ const EditForm = styled(FormEl)`
 
 const FormSection = styled.div`
     grid-column: 1/-1;
-    color: #7a5dbf;
+    color: var(--green);
     font-size: 26px;
     font-weight: 600;
     margin: 30px 0 18px;
 
     &:before {
-        color: var(--red);
-        border: 2px solid var(--red);
+        color: var(--gold);
+        border: 2px solid var(--gold);
         border-radius: 50%;
         padding: 4px 16px;
         margin-right: 30px;

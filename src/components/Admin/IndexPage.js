@@ -36,4 +36,8 @@ const Container = styled.main`
         font-weight: 600;
         font-size: 34px;
     }
+
+    @media (max-width: 850px) {
+        grid-template-columns: 1fr;
+    }
 `;

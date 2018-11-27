@@ -3,19 +3,21 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import posed, { PoseGroup } from 'react-pose';
 
-class ErrorSnackbar extends Component {
+class Snackbar extends Component {
     render() {
-        const { errMessage, onClick, error } = this.props;
+        const { heading, message, onClick, handler, isError } = this.props;
 
         return (
             <PoseGroup>
-                {error && (
-                    <StyledContainer key="snack">
+                {handler && (
+                    <StyledContainer key="snack" isError={isError}>
                         <div>
-                            <h4>Error!</h4>
-                            <p>{errMessage}</p>
+                            <h4>{heading}</h4>
+                            <p>{message}</p>
                         </div>
-                        <button onClick={onClick}>Dismiss</button>
+                        <button type="button" onClick={onClick}>
+                            Dismiss
+                        </button>
                     </StyledContainer>
                 )}
             </PoseGroup>
@@ -23,13 +25,15 @@ class ErrorSnackbar extends Component {
     }
 }
 
-ErrorSnackbar.propTypes = {
-    error: PropTypes.bool.isRequired,
-    errMessage: PropTypes.string.isRequired,
+Snackbar.propTypes = {
+    handler: PropTypes.bool.isRequired,
+    message: PropTypes.string.isRequired,
+    heading: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
+    isError: PropTypes.bool,
 };
 
-export default ErrorSnackbar;
+export default Snackbar;
 
 const Container = posed.div({
     enter: {
@@ -48,7 +52,7 @@ const Container = posed.div({
 });
 
 const StyledContainer = styled(Container)`
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     right: 40px;
     background-color: #282c34;
@@ -72,7 +76,7 @@ const StyledContainer = styled(Container)`
     }
 
     button {
-        color: var(--red);
+        color: ${props => (props.isError ? 'var(--red)' : 'var(--green)')};
         font-weight: bold;
         text-transform: uppercase;
         margin-left: 30px;
@@ -82,7 +86,7 @@ const StyledContainer = styled(Container)`
         outline: none;
 
         &:hover {
-            color: #fc677c;
+            color: ${props => (props.isError ? '#fc677c' : '#29d997')};
         }
     }
 `;
