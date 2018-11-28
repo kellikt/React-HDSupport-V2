@@ -40,7 +40,7 @@ const index = () => {
                 color="light-blue"
                 title="Clock-in Metrics"
                 description="View stats on clock-ins for a date range."
-                to="/tsadmin"
+                to="/schedmgmt/clockmetrics"
             >
                 <Metrics />
             </IndexLink>

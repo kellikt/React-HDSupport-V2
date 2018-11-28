@@ -2,7 +2,6 @@
 
 require_once "../database/connect_db.php";
 
-
 function clockIn($db, $username, $comments, $action)
 {
     $ip = $_SERVER["REMOTE_ADDR"];

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const TextInput = props => {
-    const { id, label, placeholder, value, onChange } = props;
+    const { id, label, placeholder, value, onChange, name } = props;
 
     return (
         <Container className="styled-input">
@@ -14,6 +14,7 @@ const TextInput = props => {
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
+                name={name}
                 {...props}
             />
         </Container>
@@ -30,6 +31,7 @@ TextInput.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    name: PropTypes.string,
 };
 
 export default TextInput;

@@ -20,9 +20,13 @@
     --red-button: linear-gradient(180deg, #f5515f, #a1051d);
     --green-button: linear-gradient(180deg, #3ecf8e, #1a965f);
     --purple-button: linear-gradient(180deg, #a387e5, #583aa1);
+    --lightblue-button: linear-gradient(180deg, #89b1ff, #5b8def);
 
     --crumb-blue-text: #6772e5;
     --crumb-blue-bg: #bcdaff;
+    --crumb-lightblue-text: #3a8cf7;
+    --crumb-lightblue-bg: #d6e6f4;
+    --crumb-lightblue-border: #d6e6f452;
     --crumb-blue-border: #bcdaff52;
     --crumb-purple-text: #50319b;
     --crumb-purple-bg: #e1dbee;
@@ -93,4 +97,22 @@ input {
     font-family: inherit;
     border: none;
     outline: none;
+}
+
+select {
+    border: 1px solid #eee;
+    color: var(--black);
+    font-family: inherit;
+    font-weight: 400;
+    padding: 15px 15px 15px 8px;
+    border-radius: 8px;
+    background-color: #f1f3f6;
+    outline: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg aria-hidden='true' data-prefix='fas' data-icon='caret-down' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' class='svg-inline--fa fa-caret-down fa-w-10 fa-3x'%3e%3cpath fill='currentColor' d='M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z' class=''/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: 95%;
+    background-size: 0.8em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
 }

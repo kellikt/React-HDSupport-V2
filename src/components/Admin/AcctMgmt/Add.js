@@ -266,8 +266,19 @@ class Add extends Component {
                 city: info.city,
             });
 
-            const data = await addInfo.data;
-            console.log(data);
+            const uid = await addInfo.data;
+
+            await axios.post('/add-user-groups.php', {
+                uid: uid,
+                username: info.username,
+                admin: roles.administrator,
+                manager: roles.manager,
+                staff: roles.staff,
+                helpdesk: roles.helpdesk,
+                tech: roles.tech,
+                lab: roles.lab,
+                third_shift: roles.third_shift,
+            });
         } catch (error) {
             console.log(`Error adding user: ${error}`);
         }
