@@ -10,7 +10,6 @@ import {
     Timestamp,
     Comments,
     Location,
-    RowContainer,
 } from './MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../images/Admin/Sched/Table.svg';
 import { ReactComponent as Check } from '../../../images/icons/GreenCheck.svg';
@@ -32,9 +31,9 @@ class MetricsTable extends Component {
         const request = await axios.post('/get-clock-metrics.php', {
             username: student,
             year: year,
-            month: splitDate[0],
-            startDay: splitDate[1],
-            endDay: splitDate[2],
+            month: Number.parseInt(splitDate[0], 10),
+            startDay: Number.parseInt(splitDate[1], 10),
+            endDay: Number.parseInt(splitDate[2], 10),
         });
         const data = await request.data;
 
@@ -68,25 +67,24 @@ class MetricsTable extends Component {
                     <span>Comments</span>
                     <span>Location Okay?</span>
                 </TableHeading>
-                <RowContainer>
-                    {results.map(result => {
-                        let locationFlag = false;
-                        if (!result.ip.includes('128.171')) {
-                            locationFlag = true;
-                        }
 
-                        return (
-                            <TableRow key={result.logid}>
-                                <Timestamp in={result.action}>
-                                    <h4>{`${result.hour}:${result.min} ${result.ampm}`}</h4>
-                                    <span>{`${result.month}/${result.day}/${year}`}</span>
-                                </Timestamp>
-                                <Comments>{result.comments}</Comments>
-                                <Location>{locationFlag ? <X /> : <Check />}</Location>
-                            </TableRow>
-                        );
-                    })}
-                </RowContainer>
+                {results.map(result => {
+                    let locationFlag = false;
+                    if (!result.ip.includes('128.171')) {
+                        locationFlag = true;
+                    }
+
+                    return (
+                        <TableRow key={result.logid}>
+                            <Timestamp in={result.action}>
+                                <h4>{`${result.hour}:${result.min} ${result.ampm}`}</h4>
+                                <span>{`${result.month}/${result.day}/${year}`}</span>
+                            </Timestamp>
+                            <Comments>{result.comments}</Comments>
+                            <Location>{locationFlag ? <X /> : <Check />}</Location>
+                        </TableRow>
+                    );
+                })}
             </Table>
         );
     }

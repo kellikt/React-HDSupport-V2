@@ -5,7 +5,7 @@ const Faded = posed.div({
     enter: {
         y: 0,
         opacity: 1,
-        beforeChildren: 300,
+        beforeChildren: 500,
         transition: {
             ease: 'circOut',
             default: { duration: 500 },
@@ -73,17 +73,7 @@ export const TableHeading = styled.div`
     }
 `;
 
-export const RowContainer = posed.div({
-    enter: { staggerChildren: 80 },
-    exit: { staggerChildren: 80, staggerDirection: -1 },
-});
-
-const SlideUp = posed.div({
-    enter: { y: 0, opacity: 1 },
-    exit: { y: 50, opacity: 0 },
-});
-
-export const TableRow = styled(SlideUp)`
+export const TableRow = styled.div`
     display: grid;
     grid-template-columns: 0.25fr 1fr 0.25fr;
     color: var(--black);
