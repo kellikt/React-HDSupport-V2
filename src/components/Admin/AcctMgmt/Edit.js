@@ -310,7 +310,7 @@ class Edit extends Component {
                 top: 0,
                 behavior: 'smooth',
             });
-            setTimeout(() => {
+            this.timeoutId = setTimeout(() => {
                 this.handleSnack();
             }, 3000);
         } catch (error) {
@@ -323,6 +323,10 @@ class Edit extends Component {
             snack: false,
         });
     };
+
+    componentWillUnmount() {
+        window.clearTimeout(this.timeoutID);
+    }
 
     render() {
         const links = [

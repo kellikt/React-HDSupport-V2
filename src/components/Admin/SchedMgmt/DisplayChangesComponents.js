@@ -41,6 +41,7 @@ export const DateRange = styled(DateInputs)`
 
 export const Options = styled.div`
     justify-self: center;
+    align-self: end;
 
     h4 {
         text-align: center;
@@ -48,10 +49,21 @@ export const Options = styled.div`
         font-size: 18px;
         color: var(--blue);
     }
+
+    button {
+        margin-bottom: 24px;
+    }
 `;
 
 export const Main = styled.div`
-    align-self: start;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    > div {
+        margin-bottom: 24px;
+    }
 `;
 
 export const Radios = styled.div`

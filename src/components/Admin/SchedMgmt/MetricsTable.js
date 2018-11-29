@@ -21,25 +21,28 @@ class MetricsTable extends Component {
         this.state = {
             results: [],
         };
-        this.tableRef = React.createRef();
     }
 
     async componentDidMount() {
         const { student, year, payPeriod } = this.props;
         const splitDate = payPeriod.split(',');
 
-        const request = await axios.post('/get-clock-metrics.php', {
-            username: student,
-            year: year,
-            month: Number.parseInt(splitDate[0], 10),
-            startDay: Number.parseInt(splitDate[1], 10),
-            endDay: Number.parseInt(splitDate[2], 10),
-        });
-        const data = await request.data;
+        try {
+            const request = await axios.post('/get-clock-metrics.php', {
+                username: student,
+                year: year,
+                month: Number.parseInt(splitDate[0], 10),
+                startDay: Number.parseInt(splitDate[1], 10),
+                endDay: Number.parseInt(splitDate[2], 10),
+            });
+            const data = await request.data;
 
-        this.setState({
-            results: data,
-        });
+            this.setState({
+                results: data,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {
@@ -48,7 +51,7 @@ class MetricsTable extends Component {
         const splitDate = payPeriod.split(',');
 
         return (
-            <Table ref={this.tableRef} {...this.props}>
+            <Table {...this.props}>
                 <TableLabel>
                     <TableLogo />
                     <div>

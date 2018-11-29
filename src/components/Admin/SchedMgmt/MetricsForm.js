@@ -82,17 +82,21 @@ class MetricsForm extends Component {
     };
 
     async componentDidMount() {
-        const helpdesk = axios.get('/get-list-students.php?role=helpdesk');
-        const lab = axios.get('/get-list-students.php?role=lab');
-        const third_shift = axios.get('/get-list-students.php?role=third_shift');
+        try {
+            const helpdesk = axios.get('/get-list-students.php?role=helpdesk');
+            const lab = axios.get('/get-list-students.php?role=lab');
+            const third_shift = axios.get('/get-list-students.php?role=third_shift');
 
-        const data = await Promise.all([helpdesk, lab, third_shift]);
+            const data = await Promise.all([helpdesk, lab, third_shift]);
 
-        this.setState({
-            helpdesk: data[0].data,
-            lab: data[1].data,
-            third_shift: data[2].data,
-        });
+            this.setState({
+                helpdesk: data[0].data,
+                lab: data[1].data,
+                third_shift: data[2].data,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {

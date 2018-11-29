@@ -64,7 +64,7 @@ class Form extends Component {
             this.setState({
                 error: true,
             });
-            setTimeout(() => {
+            this.timeoutID = setTimeout(() => {
                 this.handleSnack();
             }, 3000);
         } else {
@@ -90,6 +90,10 @@ class Form extends Component {
             }
         }
     };
+
+    componentWillUnmount() {
+        window.clearTimeout(this.timeoutID);
+    }
 
     render() {
         const { username, uuid, firstName, lastName, error, searched, searchResult } = this.state;

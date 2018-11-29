@@ -56,33 +56,41 @@ class ChangeForm extends Component {
         const startDateString = `${date[0].getFullYear()}-${date[0].getMonth() + 1}-${date[0].getDate()}`;
         const endDateString = `${date[1].getFullYear()}-${date[1].getMonth() + 1}-${date[1].getDate()}`;
 
-        const request = await axios.post('/add-schedule-change.php', {
-            username: username,
-            reason: reason,
-            startDate: startDateString,
-            endDate: endDateString,
-        });
-        const data = await request.data;
+        try {
+            const request = await axios.post('/add-schedule-change.php', {
+                username: username,
+                reason: reason,
+                startDate: startDateString,
+                endDate: endDateString,
+            });
+            const data = await request.data;
 
-        if (data) {
-            this.setState({
-                submitted: true,
-                message: 'Successfully submitted schedule change.',
-                messageHeading: 'Success!',
-                error: false,
-            });
-        } else {
-            this.setState({
-                submitted: true,
-                message: 'Failed to submit schedule change. Check your inputs.',
-                messageHeading: 'Error!',
-                error: true,
-            });
+            if (data) {
+                this.setState({
+                    submitted: true,
+                    message: 'Successfully submitted schedule change.',
+                    messageHeading: 'Success!',
+                    error: false,
+                });
+            } else {
+                this.setState({
+                    submitted: true,
+                    message: 'Failed to submit schedule change. Check your inputs.',
+                    messageHeading: 'Error!',
+                    error: true,
+                });
+            }
+            this.timeoutId = setTimeout(() => {
+                this.handleSnack();
+            }, 3000);
+        } catch (error) {
+            console.log(error);
         }
-        setTimeout(() => {
-            this.handleSnack();
-        }, 3000);
     };
+
+    componentWillUnmount() {
+        window.clearTimeout(this.timeoutID);
+    }
 
     render() {
         const { username, reason, date, submitted, message, messageHeading, error } = this.state;

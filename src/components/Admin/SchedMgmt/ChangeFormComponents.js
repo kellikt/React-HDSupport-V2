@@ -81,6 +81,7 @@ export const DateInputs = styled.div`
         align-items: center;
         width: 100%;
         border: none;
+        cursor: pointer;
     }
 
     .react-daterange-picker__inputGroup {

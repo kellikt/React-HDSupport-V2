@@ -290,7 +290,7 @@ class Add extends Component {
             top: 0,
             behavior: 'smooth',
         });
-        setTimeout(() => {
+        this.timeoutID = setTimeout(() => {
             this.handleSnack();
         }, 3000);
     };
@@ -300,6 +300,10 @@ class Add extends Component {
             snack: false,
         });
     };
+
+    componentWillUnmount() {
+        window.clearTimeout(this.timeoutID);
+    }
 
     render() {
         const links = [
