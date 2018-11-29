@@ -24,7 +24,7 @@ const index = () => {
                 color="purple"
                 title="Enter Schedule Change"
                 description="Go here if someone calls out/is on vacation."
-                to="/tsadmin"
+                to="/schedmgmt/schedchange"
             >
                 <SchedChange />
             </IndexLink>
@@ -32,7 +32,7 @@ const index = () => {
                 color="gold"
                 title="Display Schedule Changes"
                 description="Make edits to any current posted schedule changes."
-                to="/tsadmin"
+                to="/schedmgmt/displaychanges"
             >
                 <DisplaySched />
             </IndexLink>

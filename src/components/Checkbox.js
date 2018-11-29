@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Checkbox = props => {
-    const { id, label, onChange, checked } = props;
+    const { id, label, onChange, checked, name } = props;
 
     return (
         <CheckboxEl>
-            <input type="checkbox" id={id} onChange={onChange} checked={checked} />
+            <input type="checkbox" id={id} onChange={onChange} checked={checked} name={name} />
             <label htmlFor={id}>{label}</label>
         </CheckboxEl>
     );
@@ -17,6 +17,7 @@ Checkbox.propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     checked: PropTypes.bool,
+    name: PropTypes.string,
 };
 
 export default Checkbox;

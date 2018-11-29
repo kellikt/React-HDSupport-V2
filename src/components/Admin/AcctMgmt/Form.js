@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Snackbar from './Snackbar';
+import Snackbar from '../Snackbar';
 import { FormEl, Title, UHSearch, PIISearch } from './FormComponents';
 import TextInput from '../../TextInput';
 import Button from '../../Button';

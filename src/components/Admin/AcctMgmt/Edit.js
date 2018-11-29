@@ -7,7 +7,7 @@ import { FormEl, Title } from './FormComponents';
 import Breadcrumb from '../Breadcrumb';
 import TextInput from '../../TextInput';
 import Checkbox from '../../Checkbox';
-import Snackbar from './Snackbar';
+import Snackbar from '../Snackbar';
 import { ReactComponent as Personal } from '../../../images/Admin/Acct/EditPersonal.svg';
 import { ReactComponent as Contact } from '../../../images/Admin/Acct/EditContact.svg';
 
@@ -344,30 +344,35 @@ class Edit extends Component {
                     <FormSection id="personal">Personal Info</FormSection>
                     <TextInput
                         label="First Name"
+                        id="firstname"
                         placeholder="Jane"
                         value={info.first_name}
                         onChange={event => this.handleChange(event, 'firstName')}
                     />
                     <TextInput
                         label="Last Name"
+                        id="lastname"
                         placeholder="Doe"
                         value={info.last_name}
                         onChange={event => this.handleChange(event, 'lastName')}
                     />
                     <TextInput
                         label="Street Address"
+                        id="address"
                         placeholder="1234 Placeholder Street"
                         value={info.street_address}
                         onChange={event => this.handleChange(event, 'address')}
                     />
                     <TextInput
                         label="City"
+                        id="city"
                         placeholder="Honolulu"
                         value={info.city}
                         onChange={event => this.handleChange(event, 'city')}
                     />
                     <TextInput
                         label="Zipcode"
+                        id="zip"
                         placeholder="96822"
                         value={info.zipcode}
                         onChange={event => this.handleChange(event, 'zip')}
@@ -375,30 +380,35 @@ class Edit extends Component {
                     <FormSection id="contact">Contact Info</FormSection>
                     <TextInput
                         label="UH Username"
+                        id="username"
                         placeholder="janed"
                         value={info.username}
                         onChange={event => this.handleChange(event, 'username')}
                     />
                     <TextInput
                         label="UH Number"
+                        id="uuid"
                         placeholder="12345678"
                         value={`${info.uuid}`}
                         onChange={event => this.handleChange(event, 'uuid')}
                     />
                     <TextInput
                         label="Non-UH Email"
+                        id="altemail"
                         placeholder="janed@gmail.com"
                         value={info.alt_email}
                         onChange={event => this.handleChange(event, 'nonuh')}
                     />
                     <TextInput
                         label="Home Phone"
+                        id="homephone"
                         placeholder="808-956-8883"
                         value={info.home_phone}
                         onChange={event => this.handleChange(event, 'homephone')}
                     />
                     <TextInput
                         label="Cell Phone"
+                        id="cellphone"
                         placeholder="808-956-8883"
                         value={info.cell_phone}
                         onChange={event => this.handleChange(event, 'cellphone')}

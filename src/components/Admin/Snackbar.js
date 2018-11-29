@@ -52,7 +52,7 @@ const Container = posed.div({
 });
 
 const StyledContainer = styled(Container)`
-    position: fixed;
+    position: absolute;
     bottom: 20px;
     right: 40px;
     background-color: #282c34;

@@ -21,6 +21,7 @@
     --green-button: linear-gradient(180deg, #3ecf8e, #1a965f);
     --purple-button: linear-gradient(180deg, #a387e5, #583aa1);
     --lightblue-button: linear-gradient(180deg, #89b1ff, #5b8def);
+    --gold-button: linear-gradient(180deg, #ffc476, #e39f48);
 
     --crumb-blue-text: #6772e5;
     --crumb-blue-bg: #bcdaff;
@@ -34,6 +35,9 @@
     --crumb-green-text: #24b47e;
     --crumb-green-bg: #d6facf;
     --crumb-green-border: #d6facf52;
+    --crumb-gold-bg: #ffeacf;
+    --crumb-gold-text: #e39f48;
+    --crumb-gold-border: #ffeacf52;
 }
 
 html {
@@ -91,6 +95,20 @@ textarea {
     outline: none;
     resize: none;
     font-weight: 400;
+    padding: 13px;
+    font-size: 14px;
+    background: #f1f3f6;
+    border-radius: 4px;
+    resize: none;
+    transition: background 0.1s ease-in, color 0.1s ease-in;
+    height: 120px;
+    width: 100%;
+    border: 2px solid #f1f3f6;
+}
+
+textarea:active,
+textarea:focus {
+    background: var(--white);
 }
 
 input {

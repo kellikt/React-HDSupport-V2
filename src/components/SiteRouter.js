@@ -10,6 +10,8 @@ import Add from './Admin/AcctMgmt/Add';
 
 import SchedMgmt from './Admin/SchedMgmt';
 import ClockMetrics from './Admin/SchedMgmt/ClockMetrics';
+import ScheduleChange from './Admin/SchedMgmt/ScheduleChange';
+import DisplayChanges from './Admin/SchedMgmt/DisplayChanges';
 
 class SiteRouter extends Component {
     render() {
@@ -25,6 +27,8 @@ class SiteRouter extends Component {
 
                 <SchedMgmt path="schedmgmt" />
                 <ClockMetrics path="schedmgmt/clockmetrics" />
+                <ScheduleChange path="schedmgmt/schedchange" />
+                <DisplayChanges path="schedmgmt/displaychanges" />
             </Router>
         );
     }

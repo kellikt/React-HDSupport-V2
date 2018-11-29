@@ -22,12 +22,12 @@ const TextInput = props => {
 };
 
 TextInput.defaultProps = {
-    label: '',
+    label: 'Input',
 };
 
 TextInput.propTypes = {
-    id: PropTypes.string,
-    label: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
