@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DateInputs } from './ChangeFormComponents';
+import { DateInputs } from '../ScheduleChange/ChangeFormComponents';
 
 export const FormEl = styled.form`
     background: var(--white);

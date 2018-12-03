@@ -9,9 +9,9 @@ import Edit from './Admin/AcctMgmt/Edit';
 import Add from './Admin/AcctMgmt/Add';
 
 import SchedMgmt from './Admin/SchedMgmt';
-import ClockMetrics from './Admin/SchedMgmt/ClockMetrics';
-import ScheduleChange from './Admin/SchedMgmt/ScheduleChange';
-import DisplayChanges from './Admin/SchedMgmt/DisplayChanges';
+import ClockMetrics from './Admin/SchedMgmt/ClockMetrics/ClockMetrics';
+import ScheduleChange from './Admin/SchedMgmt/ScheduleChange/ScheduleChange';
+import DisplayChanges from './Admin/SchedMgmt/DisplaySchedule/DisplayChanges';
 
 class SiteRouter extends Component {
     render() {

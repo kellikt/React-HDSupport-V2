@@ -5,7 +5,7 @@ require_once "../database/connect_db.php";
 function getClockMetrics($db, $username, $year, $month, $startDay, $endDay)
 {
     $stmt = $db->prepare("SELECT logid, action, ampm, comments, hour, ip, min, month, day FROM log WHERE username = ? AND (year = ?) AND (month = ?) AND (day >= ? AND day <= ?)");
-    $stmt->bind_param("sssss", $username, $year, $month, $startDay, $endDay);
+    $stmt->bind_param("ssiii", $username, $year, $month, $startDay, $endDay);
     $stmt->execute();
     $result = $stmt->get_result();
     $array = array();

@@ -77,7 +77,7 @@ export const DateInputs = styled.div`
     .react-daterange-picker__wrapper {
         display: grid;
         grid-column-gap: 18px;
-        grid-template-columns: 1fr auto 1fr auto;
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
         width: 100%;
         border: none;
@@ -122,7 +122,7 @@ export const DateInputs = styled.div`
         height: auto;
         margin: 0;
         padding: 30px;
-        background: linear-gradient(180deg, #a387e5, #583aa1);
+        background: ${({ color }) => (color ? `var(--${color}-button)` : `var(--purple-button`)};
         border-radius: 6px 6px 0 0;
         align-items: center;
     }
@@ -136,15 +136,18 @@ export const DateInputs = styled.div`
     }
 
     .react-calendar__navigation button {
-        min-width: auto;
+        min-width: 30px;
         color: var(--white);
         transition: transform 0.25s ease-out;
         padding: 0;
 
-        &:enabled:hover,
-        &:enabled:focus {
+        &:enabled:hover {
             background: transparent;
             transform: translateY(-2px);
+        }
+
+        &:enabled:focus {
+            background: transparent;
         }
     }
 
@@ -158,14 +161,13 @@ export const DateInputs = styled.div`
 
     .react-calendar__tile--hasActive,
     .react-calendar__tile--active {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
         transition: all 0.15s ease-out;
-        background: #583aa1;
+        background: ${({ color }) => (color ? `var(--${color})` : `var(--purple`)};
         color: var(--white);
 
         &:enabled:hover,
         &:enabled:focus {
-            background: var(--purple);
+            background: ${({ color }) => (color ? `var(--${color})` : `var(--purple`)};
         }
 
         &:hover {
@@ -178,6 +180,11 @@ export const DateInputs = styled.div`
     }
 
     .react-calendar__tile--hasActive {
-        background: var(--purple);
+        background: ${({ color }) => (color ? `var(--${color})` : `var(--purple`)};
+    }
+
+    .react-daterange-picker__clear-button {
+        display: none;
+        visibility: hidden;
     }
 `;

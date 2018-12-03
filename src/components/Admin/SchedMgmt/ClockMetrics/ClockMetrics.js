@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import MetricsForm from './MetricsForm';
-import Breadcrumb from '../Breadcrumb';
+import Breadcrumb from '../../Breadcrumb';
 
 const ClockMetrics = () => {
     const links = [

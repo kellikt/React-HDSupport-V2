@@ -88,7 +88,7 @@ export const TableRow = styled.div`
     }
 
     span {
-        color: var(--dark-grey);
+        color: var(--black);
 
         &:last-of-type {
             justify-self: center;

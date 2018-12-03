@@ -3,10 +3,10 @@ import DateRangerPicker from '@wojtekmaj/react-daterange-picker';
 import { PoseGroup } from 'react-pose';
 
 import { FormEl, Title, DateRange, Options, Main, Radios } from './DisplayChangesComponents';
-import { ReactComponent as Graphic } from '../../../images/Admin/Sched/DisplaySched.svg';
-import TextInput from '../../TextInput';
-import Button from '../../Button';
-import RadioButton from '../../RadioButton';
+import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/DisplaySched.svg';
+import TextInput from '../../../TextInput';
+import Button from '../../../Button';
+import RadioButton from '../../../RadioButton';
 import DisplayChangesTable from './DisplayChangesTable';
 
 class DisplayChangesForm extends Component {
@@ -53,7 +53,11 @@ class DisplayChangesForm extends Component {
                     <Main>
                         <Title>
                             <h2>Display Schedule Changes</h2>
-                            <p>Show a list of all schedule changes for a specified user and date range:</p>
+                            <p>
+                                Show a list of all schedule changes for a specified user and date range.
+                                Omitting the 'Username' field will fetch results for ALL active
+                                staff/students.
+                            </p>
                         </Title>
                         <TextInput
                             id="username"
@@ -72,6 +76,7 @@ class DisplayChangesForm extends Component {
                                 id="staff"
                                 value="Students"
                                 label="Students"
+                                color="gold"
                                 onChange={this.handleInput}
                             />
                             <RadioButton
@@ -79,15 +84,18 @@ class DisplayChangesForm extends Component {
                                 id="students"
                                 value="Staff"
                                 label="Staff"
+                                color="gold"
                                 onChange={this.handleInput}
                             />
                         </Radios>
                         <Button color="gold">Display Changes</Button>
                     </Options>
                 </FormEl>
-                {submitted && (
-                    <DisplayChangesTable key="table" username={username} date={date} option={radio} />
-                )}
+                <PoseGroup>
+                    {submitted && (
+                        <DisplayChangesTable key="table" username={username} date={date} option={radio} />
+                    )}
+                </PoseGroup>
             </React.Fragment>
         );
     }

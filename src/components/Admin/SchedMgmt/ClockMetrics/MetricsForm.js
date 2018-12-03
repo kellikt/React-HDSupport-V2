@@ -3,8 +3,8 @@ import axios from 'axios';
 import { PoseGroup } from 'react-pose';
 
 import { FormEl, Title, Inputs } from './MetricsFormComponents';
-import { ReactComponent as Graphic } from '../../../images/Admin/Sched/Metrics.svg';
-import Button from '../../Button';
+import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Metrics.svg';
+import Button from '../../../Button';
 import MetricsTable from './MetricsTable';
 
 class MetricsForm extends Component {

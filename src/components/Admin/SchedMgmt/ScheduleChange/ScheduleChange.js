@@ -1,25 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import ChangeForm from './ChangeForm';
 
-import DisplayChangesForm from './DisplayChangesForm';
-import Breadcrumb from '../Breadcrumb';
+import Breadcrumb from '../../Breadcrumb';
 
-const DisplayChanges = () => {
+const ScheduleChange = () => {
     const links = [
         { title: 'Schedule Management', to: '/schedmgmt' },
-        { title: 'Display Changes', to: '/schedmgmt/displaychanges' },
+        { title: 'Schedule Change', to: '/schedmgmt/schedchange' },
     ];
 
     return (
         <Container>
-            <h1>Display Schedule Changes</h1>
-            <Breadcrumb links={links} color="gold" />
-            <DisplayChangesForm />
+            <h1>Schedule Change</h1>
+            <Breadcrumb links={links} color="purple" />
+            <ChangeForm />
         </Container>
     );
 };
 
-export default DisplayChanges;
+export default ScheduleChange;
 
 const Container = styled.main`
     margin-top: 60px;

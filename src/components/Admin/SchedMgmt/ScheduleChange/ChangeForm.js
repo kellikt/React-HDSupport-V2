@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import DateRangerPicker from '@wojtekmaj/react-daterange-picker';
 import axios from 'axios';
 
-import { ReactComponent as Graphic } from '../../../images/Admin/Sched/SchedChange.svg';
+import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/SchedChange.svg';
 import { FormEl, Title, Reasons, DateInputs } from './ChangeFormComponents';
-import TextInput from '../../TextInput';
-import RadioButton from '../../RadioButton';
-import Button from '../../Button';
-import Snackbar from '../Snackbar';
+import TextInput from '../../../TextInput';
+import RadioButton from '../../../RadioButton';
+import Button from '../../../Button';
+import Snackbar from '../../Snackbar';
 
 class ChangeForm extends Component {
     constructor(props) {
@@ -71,6 +71,8 @@ class ChangeForm extends Component {
                     message: 'Successfully submitted schedule change.',
                     messageHeading: 'Success!',
                     error: false,
+                    username: '',
+                    reason: '',
                 });
             } else {
                 this.setState({
@@ -89,7 +91,7 @@ class ChangeForm extends Component {
     };
 
     componentWillUnmount() {
-        window.clearTimeout(this.timeoutID);
+        window.clearTimeout(this.timeoutId);
     }
 
     render() {

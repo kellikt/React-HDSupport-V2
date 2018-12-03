@@ -11,9 +11,9 @@ import {
     Comments,
     Location,
 } from './MetricsTableComponents';
-import { ReactComponent as TableLogo } from '../../../images/Admin/Sched/Table.svg';
-import { ReactComponent as Check } from '../../../images/icons/GreenCheck.svg';
-import { ReactComponent as X } from '../../../images/icons/RedCross.svg';
+import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';
+import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
+import { ReactComponent as X } from '../../../../images/icons/RedCross.svg';
 
 class MetricsTable extends Component {
     constructor(props) {

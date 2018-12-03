@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Checkbox = props => {
-    const { id, label, onChange, checked, name } = props;
+    const { id, label, onChange, checked, name, color } = props;
 
     return (
-        <CheckboxEl>
+        <CheckboxEl color={color}>
             <input type="checkbox" id={id} onChange={onChange} checked={checked} name={name} />
             <label htmlFor={id}>{label}</label>
         </CheckboxEl>
@@ -59,8 +59,8 @@ const CheckboxEl = styled.div`
         height: 21px;
         border-top: 2px solid #0000;
         border-left: 2px solid #0000;
-        border-right: 2px solid #06d19c;
-        border-bottom: 2px solid #06d19c;
+        border-right: 2px solid ${({ color }) => (color ? `var(--${color})` : `#06d19c`)};
+        border-bottom: 2px solid ${({ color }) => (color ? `var(--${color})` : `#06d19c`)};
         transform: rotate(40deg);
         backface-visibility: hidden;
         transform-origin: 100% 100%;

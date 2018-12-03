@@ -425,23 +425,27 @@ class Edit extends Component {
                             label="Lab Monitor"
                             onChange={() => this.handleCheck('lab')}
                             checked={roles.lab === 'yes' ? true : false}
+                            color="purple"
                         />
                         <Checkbox
                             id="helpdesk"
                             label="Help Desk"
                             onChange={() => this.handleCheck('helpdesk')}
                             checked={roles.helpdesk === 'yes' ? true : false}
+                            color="purple"
                         />
                         <Checkbox
                             id="tech"
                             label="Technician"
                             onChange={() => this.handleCheck('tech')}
                             checked={roles.tech === 'yes' ? true : false}
+                            color="purple"
                         />
                         <Checkbox
                             id="staff"
                             label="Staff"
                             onChange={() => this.handleCheck('staff')}
+                            color="purple"
                             checked={roles.staff === 'yes' ? true : false}
                         />
                         <Checkbox
@@ -449,6 +453,7 @@ class Edit extends Component {
                             label="3rd Shift"
                             onChange={() => this.handleCheck('third')}
                             checked={roles.third_shift === 'yes' ? true : false}
+                            color="purple"
                         />
                     </FunctionalRoles>
                     <AdminRoles>
@@ -458,18 +463,21 @@ class Edit extends Component {
                             label="Manager"
                             onChange={() => this.handleCheck('manager')}
                             checked={roles.manager === 'yes' ? true : false}
+                            color="purple"
                         />
                         <Checkbox
                             id="admin"
                             label="Administrator"
                             onChange={() => this.handleCheck('admin')}
                             checked={roles.administrator === 'yes' ? true : false}
+                            color="purple"
                         />
                         <Checkbox
                             id="enabled"
                             label="Enabled"
                             onChange={() => this.handleCheck('enabled')}
                             checked={info.expired === 0 ? true : false}
+                            color="purple"
                         />
                     </AdminRoles>
                     <Images>

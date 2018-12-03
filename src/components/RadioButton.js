@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const RadioButton = props => {
-    const { id, label, onChange, checked, value, name } = props;
+    const { id, label, onChange, checked, value, name, color } = props;
 
     return (
-        <RadioButtonEl>
+        <RadioButtonEl color={color}>
             <input type="radio" id={id} onChange={onChange} checked={checked} name={name} value={value} />
             <label htmlFor={id}>{label}</label>
         </RadioButtonEl>
@@ -70,8 +70,8 @@ const RadioButtonEl = styled.div`
 
     [type='radio']:checked + label::after {
         border-radius: 50%;
-        border: 1px solid #8867d5;
-        background-color: #8867d5;
+        border: 1px solid ${({ color }) => (color ? `var(--${color})` : `#8867d5`)};
+        background-color: ${({ color }) => (color ? `var(--${color})` : `#8867d5`)};
         z-index: 0;
     }
 
