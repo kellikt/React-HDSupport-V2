@@ -183,7 +183,7 @@ class MetricsForm extends Component {
                             </select>
                         </div>
                     </Inputs>
-                    <Button color="lightblue">Display Actions</Button>
+                    <Button color="light-blue">Display Actions</Button>
                 </FormEl>
                 <PoseGroup>
                     {searched && (

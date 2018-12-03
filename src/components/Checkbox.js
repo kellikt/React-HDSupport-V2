@@ -7,7 +7,7 @@ const Checkbox = props => {
 
     return (
         <CheckboxEl color={color}>
-            <input type="checkbox" id={id} onChange={onChange} checked={checked} name={name} />
+            <input type="checkbox" id={id} onChange={onChange} checked={checked} name={name} {...props} />
             <label htmlFor={id}>{label}</label>
         </CheckboxEl>
     );
@@ -18,6 +18,7 @@ Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
     checked: PropTypes.bool,
     name: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
 };
 
 export default Checkbox;

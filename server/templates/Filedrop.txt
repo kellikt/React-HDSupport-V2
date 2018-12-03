@@ -1,0 +1,42 @@
+<p>Hello,</p>
+<p>If you would like us to perform a password reset for your UH Username, you would need to follow the steps detailed below:</p>
+<ol>
+  <li>Navigate to www.hawaii.edu/filedrop</li>
+  <li>Choose the <strong>Non-UH Username</strong> option</li>
+  <li>An email will be sent to the specified email that you entered on step 2. Once you receive the email, follow the link in the
+  email and:</li>
+  <li>For the recipient, enter <strong>help</strong>.</li>
+  <li>Enable authentication. This option MUST be enabled for the password reset request to be processed.</li>
+  <li>Enter ticket # in the comment field.</li>
+  <li>Enter your full-name in the comment field.</li>
+  <li>Enter a short reason for the filedrop request (e.g 'password reset') in the comment field.</li>
+  <li>On the following page, upload a document (.doc, .txt, etc.) containing the following info:</li>
+    <ul>
+      <li>Your ticket number: (THIRD)</li>
+      <li>Full name on record.</li>
+      <li>UH Number OR last 4 digits of SSN.</li>
+      <li>Month and Date of Birth (mm/dd).</li>
+      <li>UH Username.</li>
+      <li>Contact phone # where we can reach you in voice.</li>
+      <li>Readable photocopy of a government issued ID (driver's license, State-ID, etc).</li>
+    </ul>
+</ol>
+<p>If you have any further questions regarding this process, please feel free to contact us at: help@hawaii.edu</p>
+<div>Regards,</div>
+<div>Anthony</div>
+<div>ITS Help Desk Consultant</div><br>
+<div style="text-align: center; font-family: courier new, monospace">
+  <div>
+    <div>
+      <div>-----------------------------------------------------------------------</div>
+      <div>H E L P D E S K<br></div>
+      <div>------------------------------------------------------------------------</div>
+      <div>University of Hawai'i<br></div>
+      <div>Information Technology Services<br></div>
+      <div>2520 Correa Road, IT Center 1st Floor<br></div>
+      <div>Honolulu, Hawai'i 96822<br></div>
+      <div>Oahu: (808) 956-8883<br>Neighbor Islands: (800) = 558-2669</div>
+      <div><span>Fax: (808) 956-2108</span><br></div>
+    </div>
+  </div>
+</div>

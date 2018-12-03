@@ -7,7 +7,15 @@ const RadioButton = props => {
 
     return (
         <RadioButtonEl color={color}>
-            <input type="radio" id={id} onChange={onChange} checked={checked} name={name} value={value} />
+            <input
+                type="radio"
+                id={id}
+                onChange={onChange}
+                checked={checked}
+                name={name}
+                value={value}
+                {...props}
+            />
             <label htmlFor={id}>{label}</label>
         </RadioButtonEl>
     );
@@ -17,7 +25,7 @@ RadioButton.propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     checked: PropTypes.bool,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func.isRequired,
     name: PropTypes.string,
     value: PropTypes.string.isRequired,
 };

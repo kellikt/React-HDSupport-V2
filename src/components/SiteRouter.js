@@ -13,6 +13,11 @@ import ClockMetrics from './Admin/SchedMgmt/ClockMetrics/ClockMetrics';
 import ScheduleChange from './Admin/SchedMgmt/ScheduleChange/ScheduleChange';
 import DisplayChanges from './Admin/SchedMgmt/DisplaySchedule/DisplayChanges';
 
+import Email from './Email/';
+import Banner from './Email/Banner';
+import UsernameChange from './Email/UsernameChange';
+import FileDrop from './Email/FileDrop';
+
 class SiteRouter extends Component {
     render() {
         return (
@@ -29,6 +34,11 @@ class SiteRouter extends Component {
                 <ClockMetrics path="schedmgmt/clockmetrics" />
                 <ScheduleChange path="schedmgmt/schedchange" />
                 <DisplayChanges path="schedmgmt/displaychanges" />
+
+                <Email path="email" />
+                <Banner path="email/banner" />
+                <UsernameChange path="email/usernamechange" />
+                <FileDrop path="email/filedrop" />
             </Router>
         );
     }

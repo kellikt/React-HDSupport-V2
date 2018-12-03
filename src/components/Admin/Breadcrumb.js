@@ -12,9 +12,6 @@ const Breadcrumb = props => {
                 <Crumb to="/" color={color}>
                     Home
                 </Crumb>
-                <Crumb to="/" color={color}>
-                    Admin Tools
-                </Crumb>
                 {links.map((item, index) => {
                     return (
                         <Crumb key={index} to={item.to} color={color}>

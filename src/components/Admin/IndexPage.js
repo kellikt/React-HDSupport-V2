@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import Breadcrumb from './Breadcrumb';
 
 const IndexPage = props => {
-    const { children, title, links } = props;
+    const { children, title, links, color } = props;
 
     return (
         <Container>
             <h1>{title}</h1>
-            <Breadcrumb links={links} color="blue" />
+            <Breadcrumb links={links} color={color} />
             {children}
         </Container>
     );

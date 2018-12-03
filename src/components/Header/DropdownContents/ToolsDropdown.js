@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from '@reach/router';
 
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Slack } from '../../../images/icons/Tools/Slack.svg';
@@ -35,10 +36,7 @@ const ToolsDropdown = () => {
                                 <UHIMC />
                                 UHIMC
                             </Heading>
-                            <Description>
-                                Lookup UH official records. (For official use
-                                only)
-                            </Description>
+                            <Description>Lookup UH official records. (For official use only)</Description>
                         </a>
                     </ListItem>
                     <ListItem>
@@ -51,15 +49,13 @@ const ToolsDropdown = () => {
                         </a>
                     </ListItem>
                     <ListItem noMarginBottom>
-                        <a href="/">
+                        <Link to="/email">
                             <Heading color="light-blue">
-                                <Gmail />
-                                UH Gmail
+                                <Email />
+                                Email Generator
                             </Heading>
-                            <Description>
-                                Google @ UH Email Service.
-                            </Description>
-                        </a>
+                            <Description>Send an email with a pre-defined template.</Description>
+                        </Link>
                     </ListItem>
                 </ul>
             </DropdownSection>
@@ -69,8 +65,8 @@ const ToolsDropdown = () => {
                     <ListItem>
                         <a href="/">
                             <Heading color="light-blue">
-                                <Email />
-                                Email Generator
+                                <Gmail />
+                                UH Gmail
                             </Heading>
                         </a>
                     </ListItem>
