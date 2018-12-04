@@ -1,0 +1,11 @@
+<p>Hello SECOND,</p>
+<p>We have received your request to reserve the ITS Training Lab for the following dates:</p>
+<p><strong>THIRD</strong></p>
+<p>Please confirm with us when you have finalized these dates. Note that cancellation of this tentative reservation is required at least 24 hours in advance to avoid additional room charges.</p>
+<p>On each reserved date, please check in at the Help Desk service window located in the IT Center lobby. When your session is over for the day, please check out at the window.</p>
+<p>For this session your department will be charged a setup/cleanup fee of $40 after your last session.</p>
+<p>If you'd like to test your setup, please schedule an additional time between 8:30AM and 4PM Monday - Friday (excluding holidays) before your scheduled session. Room rates apply.</p>
+<p>If you require assistance turning on the equipment or run into technical problems during your session, please inquire with the Help Desk service window located in the IT Center lobby.</p>
+<p>Please remember that food and beverages are prohibited, except beverages in closed containers. After each session, please turn off the lights and computers to conserve energy. Also, please let us know if you have any questions.</p>
+<p>Sincerely,</p>
+<p>NAME</p>

@@ -8,11 +8,11 @@ import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
 
-class FileDrop extends Component {
+class FMO extends Component {
     state = {
-        current: '',
-        recipient: '',
-        simpTicket: '',
+        summary: '',
+        personnel: '',
+        badges: '',
         bcc: true,
         preview: false,
     };
@@ -38,27 +38,28 @@ class FileDrop extends Component {
 
     async componentDidMount() {
         try {
-            const request = await axios.get(`/get-name.php?uuid=22051104`);
-            const data = await request.data;
+            const name = axios.get(`/get-name.php?uuid=22051104`);
+            const username = axios.get(`/get-username.php?uuid=22051104`);
 
-            this.firstName = data.first_name;
+            const request = await Promise.all([name, username]);
+            const data = await Promise.all([request[0].data, request[1].data]);
+
+            this.firstName = data[0].first_name;
+            this.username = data[1].username;
         } catch (error) {
             console.log(error);
         }
     }
 
     render() {
-        const links = [
-            { title: 'Email Generator', to: '/email' },
-            { title: 'Filedrop', to: '/email/filedrop' },
-        ];
+        const links = [{ title: 'Email Generator', to: '/email' }, { title: 'FMO Access', to: '/email/fmo' }];
 
-        const { bcc, current, recipient, simpTicket, preview } = this.state;
+        const { bcc, summary, personnel, badges, preview } = this.state;
 
         return (
             <Container>
-                <h1>Filedrop Instructions</h1>
-                <Breadcrumb links={links} color="purple" />
+                <h1>FMO Access Request</h1>
+                <Breadcrumb links={links} color="red" />
                 <FormEl onSubmit={this.handleSubmit}>
                     <Title>
                         <h2>Email Fields</h2>
@@ -69,29 +70,33 @@ class FileDrop extends Component {
                         </p>
                     </Title>
                     <Text>
+                        <TextArea>
+                            <label htmlFor="summary">Brief Summary of Work</label>
+                            <textarea
+                                id="summary"
+                                placeholder="3rd floor elevator lights"
+                                value={summary}
+                                onChange={this.handleInput}
+                                name="summary"
+                            />
+                        </TextArea>
+                        <TextArea>
+                            <label htmlFor="personnel">FMO Personnel Names</label>
+                            <textarea
+                                id="personnel"
+                                placeholder="John Smith and Logan Florenco"
+                                value={personnel}
+                                onChange={this.handleInput}
+                                name="personnel"
+                            />
+                        </TextArea>
                         <TextInput
-                            id="current"
-                            label="Current UH Username of Requestor"
-                            placeholder="janed"
-                            value={current}
+                            id="badges"
+                            label="FMO Badges Provided"
+                            placeholder="12 and 17"
+                            value={badges}
                             onChange={this.handleInput}
-                            name="current"
-                        />
-                        <TextInput
-                            id="recipient"
-                            label="Recipient Personal Email for Instructions"
-                            placeholder="placeholder@gmail.com"
-                            value={recipient}
-                            onChange={this.handleInput}
-                            name="recipient"
-                        />
-                        <TextInput
-                            id="simpTicket"
-                            label="SIMP Ticket Number"
-                            placeholder="123456"
-                            value={simpTicket}
-                            onChange={this.handleInput}
-                            name="simpTicket"
+                            name="badges"
                         />
                     </Text>
                     <Options>
@@ -101,21 +106,21 @@ class FileDrop extends Component {
                             name="bcc"
                             checked={bcc}
                             onChange={this.handleInput}
-                            color="purple"
+                            color="red"
                         />
                     </Options>
-                    <Button color="purple">Preview Email</Button>
+                    <Button color="red">Preview Email</Button>
                 </FormEl>
                 {preview && (
                     <Preview
-                        first={recipient}
+                        first={summary}
                         bcc={bcc}
-                        second={current}
-                        from="help@hawaii.edu"
-                        third={simpTicket}
-                        subject="Filedrop Instructions for UH Password Reset"
-                        type="filedrop"
-                        color="purple"
+                        second={personnel}
+                        from={`${this.username}@hawaii.edu`}
+                        third={badges}
+                        subject="FMO Access"
+                        type="fmo"
+                        color="red"
                         firstName={this.firstName}
                     />
                 )}
@@ -124,7 +129,7 @@ class FileDrop extends Component {
     }
 }
 
-export default FileDrop;
+export default FMO;
 
 const Container = styled.main`
     margin-top: 60px;
@@ -157,7 +162,7 @@ const Title = styled.div`
         font-size: 28px;
         font-weight: 600;
         margin: 0 0 4px;
-        color: var(--purple);
+        color: var(--red);
     }
 
     p {
@@ -183,7 +188,26 @@ const Text = styled.div`
     > div {
         &:last-of-type {
             grid-column: 1/-1;
-            width: 60%;
+            width: 40%;
         }
+    }
+`;
+
+const TextArea = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 12px 0;
+
+    label {
+        line-height: 1;
+        font-weight: 400;
+        font-size: 14px;
+        color: var(--dark-grey);
+        margin-bottom: 8px;
+        padding-left: 12px;
+    }
+
+    textarea {
+        min-height: 150px;
     }
 `;

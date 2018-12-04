@@ -17,6 +17,9 @@ import Email from './Email/';
 import Banner from './Email/Banner';
 import UsernameChange from './Email/UsernameChange';
 import FileDrop from './Email/FileDrop';
+import SortSite from './Email/SortSite';
+import TrainingLab from './Email/TrainingLab';
+import FMO from './Email/FMO';
 
 class SiteRouter extends Component {
     render() {
@@ -39,6 +42,9 @@ class SiteRouter extends Component {
                 <Banner path="email/banner" />
                 <UsernameChange path="email/usernamechange" />
                 <FileDrop path="email/filedrop" />
+                <SortSite path="email/sortsite" />
+                <TrainingLab path="email/training" />
+                <FMO path="email/fmo" />
             </Router>
         );
     }

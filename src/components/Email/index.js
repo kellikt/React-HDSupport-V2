@@ -42,7 +42,7 @@ const index = () => {
                 color="red"
                 title="FMO Access"
                 description="Send an email about FMO personnel accessing the ITC."
-                to="/email/filedrop"
+                to="/email/fmo"
             >
                 <FMO />
             </IndexLink>

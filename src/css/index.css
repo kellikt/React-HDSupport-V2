@@ -22,6 +22,7 @@
     --purple-button: linear-gradient(180deg, #a387e5, #583aa1);
     --light-blue-button: linear-gradient(180deg, #89b1ff, #5b8def);
     --gold-button: linear-gradient(180deg, #ffc476, #e39f48);
+    --blue-button: linear-gradient(180deg, #7c7ebf, #414384);
 
     --crumb-blue-text: #6772e5;
     --crumb-blue-bg: #bcdaff;
@@ -38,6 +39,9 @@
     --crumb-gold-bg: #ffeacf;
     --crumb-gold-text: #e39f48;
     --crumb-gold-border: #ffeacf52;
+    --crumb-red-text: #800a1b;
+    --crumb-red-bg: #f8c9cd;
+    --crumb-red-border: #f8c9cd52;
 }
 
 html {

@@ -11,9 +11,13 @@ class Preview extends Component {
         super(props);
         this.ref = React.createRef();
 
-        const { from, first, subject } = this.props;
+        const { from, first, subject, type } = this.props;
 
-        first.includes('@') ? (this.toAddress = first) : (this.toAddress = `${first}@hawaii.edu`);
+        first.includes('@')
+            ? (this.toAddress = first)
+            : type === 'fmo'
+            ? (this.toAddress = 'itc-bc@lists.hawaii.edu')
+            : (this.toAddress = `${first}@hawaii.edu`);
 
         this.state = {
             from: from,
@@ -53,7 +57,7 @@ class Preview extends Component {
     };
 
     async componentDidMount() {
-        const { third, second, first, type } = this.props;
+        const { third, second, first, type, firstName } = this.props;
 
         this.ref.current.scrollIntoView({
             behavior: 'smooth',
@@ -64,6 +68,7 @@ class Preview extends Component {
         data = data.replace(/FIRST/gi, first);
         data = data.replace(/SECOND/gi, second);
         data = data.replace(/THIRD/gi, third);
+        data = data.replace(/NAME/gi, firstName);
 
         this.setState({
             body: data,
@@ -130,6 +135,7 @@ Preview.propTypes = {
     subject: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     color: PropTypes.string,
+    firstName: PropTypes.string,
 };
 
 export default Preview;

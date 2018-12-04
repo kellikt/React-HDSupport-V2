@@ -1,0 +1,25 @@
+<p>Hello SECOND,</p>
+<p>We have received your request to reserve the Accessibility Tool for the following dates:</p>
+<p><strong>THIRD</strong></p>
+<p>To access the software on PC:</p>
+<ol>
+  <li>Search for and launch <strong>Remote Desktop Connection</strong> from the Start menu</li>
+  <li><strong>Computer </strong>is <strong>adascan.its.hawaii.edu</strong></li>
+  <li>Click <strong>Connect</strong></li><li><strong>Username</strong> is <strong>sortsiteuser</strong></li>
+  <li>Password will be file dropped to you in a separate email on your start date.</li>
+  <li>Please read and follow along with the <strong>Using SortSite</strong> PDF on the desktop.</li>
+</ol>
+<p>To access the software on Macintosh:</p>
+<ol><li>Install and launch <strong>Microsoft Remote Desktop</strong> from the App Store</li>
+  <li>Click <strong>New</strong></li>
+  <li><strong>PC Name</strong> is <strong>adascan.its.hawaii.edu</strong></li>
+  <li><strong>Username</strong> is <strong>sortsiteuser</strong></li>
+  <li>Password will be file dropped to you in a separate email on your start date.</li>
+  <li><strong>Close</strong> the window. You should now see the IP listed under <strong>My Desktops</strong></li>
+  <li>Double click the IP to start the session, and click <strong>Continue </strong>if prompted to Verify the certificate.</li>
+  <li>Please read and follow along with the <strong>Using SortSite</strong> PDF on the desktop.</li>
+</ol>
+<p>If you require assistance, or have questions, please feel free to reply back to this email.</p>
+<p>Sincerely,</p>
+<p>NAME</p>
+<p>ITS ADA Group</p>

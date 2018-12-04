@@ -8,11 +8,11 @@ import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
 
-class FileDrop extends Component {
+class TrainingLab extends Component {
     state = {
-        current: '',
+        fullName: '',
         recipient: '',
-        simpTicket: '',
+        requestedDates: '',
         bcc: true,
         preview: false,
     };
@@ -50,15 +50,15 @@ class FileDrop extends Component {
     render() {
         const links = [
             { title: 'Email Generator', to: '/email' },
-            { title: 'Filedrop', to: '/email/filedrop' },
+            { title: 'Training Lab', to: '/email/traininglab' },
         ];
 
-        const { bcc, current, recipient, simpTicket, preview } = this.state;
+        const { bcc, fullName, recipient, requestedDates, preview } = this.state;
 
         return (
             <Container>
-                <h1>Filedrop Instructions</h1>
-                <Breadcrumb links={links} color="purple" />
+                <h1>Training Lab Request</h1>
+                <Breadcrumb links={links} color="blue" />
                 <FormEl onSubmit={this.handleSubmit}>
                     <Title>
                         <h2>Email Fields</h2>
@@ -70,28 +70,28 @@ class FileDrop extends Component {
                     </Title>
                     <Text>
                         <TextInput
-                            id="current"
-                            label="Current UH Username of Requestor"
-                            placeholder="janed"
-                            value={current}
+                            id="fullName"
+                            label="Full Name of Requestor"
+                            placeholder="Ryan McCalla"
+                            value={fullName}
                             onChange={this.handleInput}
-                            name="current"
+                            name="fullName"
                         />
                         <TextInput
                             id="recipient"
-                            label="Recipient Personal Email for Instructions"
-                            placeholder="placeholder@gmail.com"
+                            label="Recipient UH Username for Instructions"
+                            placeholder="rmcalla"
                             value={recipient}
                             onChange={this.handleInput}
                             name="recipient"
                         />
                         <TextInput
-                            id="simpTicket"
-                            label="SIMP Ticket Number"
-                            placeholder="123456"
-                            value={simpTicket}
+                            id="requestedDates"
+                            label="Requested Dates"
+                            placeholder="mm/dd/yyyy - mm/dd/yyyy"
+                            value={requestedDates}
                             onChange={this.handleInput}
-                            name="simpTicket"
+                            name="requestedDates"
                         />
                     </Text>
                     <Options>
@@ -101,21 +101,21 @@ class FileDrop extends Component {
                             name="bcc"
                             checked={bcc}
                             onChange={this.handleInput}
-                            color="purple"
+                            color="blue"
                         />
                     </Options>
-                    <Button color="purple">Preview Email</Button>
+                    <Button color="blue">Preview Email</Button>
                 </FormEl>
                 {preview && (
                     <Preview
                         first={recipient}
                         bcc={bcc}
-                        second={current}
-                        from="help@hawaii.edu"
-                        third={simpTicket}
-                        subject="Filedrop Instructions for UH Password Reset"
-                        type="filedrop"
-                        color="purple"
+                        second={fullName}
+                        from="itstraininglab-l@hawaii.edu"
+                        third={requestedDates}
+                        subject="Re: UH ITS Computer Training Lab Reservation"
+                        type="traininglab"
+                        color="blue"
                         firstName={this.firstName}
                     />
                 )}
@@ -124,7 +124,7 @@ class FileDrop extends Component {
     }
 }
 
-export default FileDrop;
+export default TrainingLab;
 
 const Container = styled.main`
     margin-top: 60px;
@@ -157,7 +157,7 @@ const Title = styled.div`
         font-size: 28px;
         font-weight: 600;
         margin: 0 0 4px;
-        color: var(--purple);
+        color: var(--blue);
     }
 
     p {
