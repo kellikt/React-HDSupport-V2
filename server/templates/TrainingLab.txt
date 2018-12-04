@@ -8,4 +8,4 @@
 <p>If you require assistance turning on the equipment or run into technical problems during your session, please inquire with the Help Desk service window located in the IT Center lobby.</p>
 <p>Please remember that food and beverages are prohibited, except beverages in closed containers. After each session, please turn off the lights and computers to conserve energy. Also, please let us know if you have any questions.</p>
 <p>Sincerely,</p>
-<p>NAME</p>
+<p>SIGNATURE</p>

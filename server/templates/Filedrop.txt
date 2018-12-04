@@ -23,7 +23,7 @@
 </ol>
 <p>If you have any further questions regarding this process, please feel free to contact us at: help@hawaii.edu</p>
 <div>Regards,</div>
-<div>NAME</div>
+<div>SIGNATURE</div>
 <div>ITS Help Desk Consultant</div><br>
 <div style="text-align: center; font-family: courier new, monospace">
   <div>

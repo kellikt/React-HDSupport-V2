@@ -68,7 +68,7 @@ class Preview extends Component {
         data = data.replace(/FIRST/gi, first);
         data = data.replace(/SECOND/gi, second);
         data = data.replace(/THIRD/gi, third);
-        data = data.replace(/NAME/gi, firstName);
+        data = data.replace(/SIGNATURE/gi, firstName);
 
         this.setState({
             body: data,

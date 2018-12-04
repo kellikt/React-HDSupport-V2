@@ -3,5 +3,5 @@ Hello,
 FMO personnel: SECOND entered the ITC to work on FIRST. They have been provided the following badge number/s: THIRD.
 
 Regards,
-NAME
+SIGNATURE
 ITS Help Desk
