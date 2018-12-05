@@ -16,7 +16,7 @@ const index = () => {
                 color="green"
                 title="Timesheet Admin"
                 description="View timesheets and enter exceptions."
-                to="/tsadmin"
+                to="/schedmgmt/tsadmin"
             >
                 <Sheetadmin />
             </IndexLink>

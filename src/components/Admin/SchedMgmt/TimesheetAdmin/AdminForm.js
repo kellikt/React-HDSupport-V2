@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { PoseGroup } from 'react-pose';
 
-import { FormEl, Title, Inputs } from './MetricsFormComponents';
-import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Metrics.svg';
+import Exceptions from './Exceptions';
 import Button from '../../../Button';
-import MetricsTable from './MetricsTable';
+import { FormEl, Title } from './AdminFormComponents';
+import { Inputs } from '../ClockMetrics/MetricsFormComponents';
+import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Sheetadmin.svg';
 import { periods } from '../../payPeriods.json';
 
-class MetricsForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedUser: '',
-            year: '',
-            payPeriod: '',
-            helpdesk: [],
-            lab: [],
-            third_shift: [],
-            searched: false,
-        };
-    }
+class AdminForm extends Component {
+    state = {
+        selectedUser: '',
+        year: '',
+        payPeriod: '',
+        helpdesk: [],
+        lab: [],
+        third_shift: [],
+        searched: false,
+    };
 
     createYears = () => {
         let currentYear = new Date().getFullYear();
@@ -36,10 +33,8 @@ class MetricsForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-
-        this.setState({
-            searched: true,
-        });
+        const { selectedUser, year, payPeriod } = this.state;
+        alert(`${selectedUser} + ${year} + ${payPeriod}`);
     };
 
     handleChange = event => {
@@ -71,7 +66,7 @@ class MetricsForm extends Component {
     }
 
     render() {
-        const { selectedUser, year, payPeriod, helpdesk, lab, third_shift, searched } = this.state;
+        const { helpdesk, lab, third_shift, selectedUser, year, payPeriod } = this.state;
         const years = this.createYears();
 
         return (
@@ -79,8 +74,8 @@ class MetricsForm extends Component {
                 <FormEl onSubmit={this.handleSubmit}>
                     <Graphic />
                     <Title>
-                        <h2>Look Up User</h2>
-                        <p>Search clock-in/out actions for:</p>
+                        <h2>View Printable Timesheet</h2>
+                        <p>Display a timesheet for:</p>
                     </Title>
                     <Inputs>
                         <div>
@@ -153,16 +148,12 @@ class MetricsForm extends Component {
                             </select>
                         </div>
                     </Inputs>
-                    <Button color="light-blue">Display Actions</Button>
+                    <Button color="green">Show Timesheet</Button>
                 </FormEl>
-                <PoseGroup>
-                    {searched && (
-                        <MetricsTable key="table" student={selectedUser} year={year} payPeriod={payPeriod} />
-                    )}
-                </PoseGroup>
+                <Exceptions helpdesk={helpdesk} lab={lab} third_shift={third_shift} />
             </React.Fragment>
         );
     }
 }
 
-export default MetricsForm;
+export default AdminForm;

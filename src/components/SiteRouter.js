@@ -12,6 +12,7 @@ import SchedMgmt from './Admin/SchedMgmt';
 import ClockMetrics from './Admin/SchedMgmt/ClockMetrics/ClockMetrics';
 import ScheduleChange from './Admin/SchedMgmt/ScheduleChange/ScheduleChange';
 import DisplayChanges from './Admin/SchedMgmt/DisplaySchedule/DisplayChanges';
+import TimesheetAdmin from './Admin/SchedMgmt/TimesheetAdmin/TimesheetAdmin';
 
 import Email from './Email/';
 import Banner from './Email/Banner';
@@ -37,6 +38,7 @@ class SiteRouter extends Component {
                 <ClockMetrics path="schedmgmt/clockmetrics" />
                 <ScheduleChange path="schedmgmt/schedchange" />
                 <DisplayChanges path="schedmgmt/displaychanges" />
+                <TimesheetAdmin path="schedmgmt/tsadmin" />
 
                 <Email path="email" />
                 <Banner path="email/banner" />
