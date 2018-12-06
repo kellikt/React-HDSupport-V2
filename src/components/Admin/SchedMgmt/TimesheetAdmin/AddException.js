@@ -63,40 +63,27 @@ class AddException extends Component {
         event.preventDefault();
         const { username, date } = this.props;
         const { t0, t1, t2, t3, t4, t5, eid } = this.state;
-
-        if (t0 === '' || t0 === undefined) {
-            this.setState({
-                message: `Missing input fields! Check time inputs.`,
-                heading: 'Error!',
-                searched: true,
-                error: true,
+        try {
+            await axios.post('/add-single-exception.php', {
+                username: username,
+                date: date,
+                eid: eid,
+                t0: t0,
+                t1: t1,
+                t2: t2,
+                t3: t3,
+                t4: t4,
+                t5: t5,
             });
-            this.snackTimer = setTimeout(() => {
-                this.handleSnack();
-            }, 3000);
-        } else {
-            try {
-                await axios.post('/add-single-exception.php', {
-                    username: username,
-                    date: date,
-                    eid: eid,
-                    t0: t0,
-                    t1: t1,
-                    t2: t2,
-                    t3: t3,
-                    t4: t4,
-                    t5: t5,
-                });
-                this.setState({
-                    message: `Added exception for ${username} on ${date}`,
-                    heading: 'Success!',
-                    searched: true,
-                });
+            this.setState({
+                message: `Added exception for ${username} on ${date}`,
+                heading: 'Success!',
+                searched: true,
+            });
 
-                this.handleClose(1200);
-            } catch (error) {
-                this.handleError();
-            }
+            this.handleClose(1200);
+        } catch (error) {
+            this.handleError();
         }
     };
 
@@ -128,12 +115,13 @@ class AddException extends Component {
                 this.handleClose(2000);
             } else if (times.length === 0) {
                 this.setState({
-                    message: 'No clock-in exists for this day!',
-                    heading: 'Error!',
-                    error: true,
+                    message: 'Just FYI, there are no clock-ins for this date.',
+                    heading: 'Heads up!',
                     searched: true,
                 });
-                this.handleClose(2000);
+                this.warnTimer = setTimeout(() => {
+                    this.handleSnack();
+                }, 3000);
             }
         } catch (error) {
             this.handleError();
@@ -147,6 +135,7 @@ class AddException extends Component {
     componentWillUnmount() {
         clearTimeout(this.timeoutId);
         clearTimeout(this.snackTimer);
+        clearTimeout(this.warnTimer);
     }
 
     render() {
