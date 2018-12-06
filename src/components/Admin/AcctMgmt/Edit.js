@@ -7,7 +7,7 @@ import { FormEl, Title } from './FormComponents';
 import Breadcrumb from '../Breadcrumb';
 import TextInput from '../../TextInput';
 import Checkbox from '../../Checkbox';
-import Snackbar from '../Snackbar';
+import SnackbarPortal from '../../SnackbarPortal';
 import { ReactComponent as Personal } from '../../../images/Admin/Acct/EditPersonal.svg';
 import { ReactComponent as Contact } from '../../../images/Admin/Acct/EditContact.svg';
 
@@ -56,7 +56,7 @@ class Edit extends Component {
         });
 
         const response = await Promise.all([rolesRequest, infoRequest]);
-        const data = await Promise.all([response[0].data, response[1].data]);
+        const data = [response[0].data, response[1].data];
 
         this.setState({
             roles: data[0],
@@ -485,7 +485,7 @@ class Edit extends Component {
                         <Contact />
                     </Images>
                     <Button color="purple">Submit</Button>
-                    <Snackbar
+                    <SnackbarPortal
                         handler={snack}
                         message={`Successfully edited user: '${info.username}'`}
                         onClick={this.handleSnack}

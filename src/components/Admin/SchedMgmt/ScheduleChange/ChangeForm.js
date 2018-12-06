@@ -7,7 +7,7 @@ import { FormEl, Title, Reasons, DateInputs } from './ChangeFormComponents';
 import TextInput from '../../../TextInput';
 import RadioButton from '../../../RadioButton';
 import Button from '../../../Button';
-import Snackbar from '../../Snackbar';
+import SnackbarPortal from '../../../SnackbarPortal';
 
 class ChangeForm extends Component {
     constructor(props) {
@@ -63,7 +63,7 @@ class ChangeForm extends Component {
                 startDate: startDateString,
                 endDate: endDateString,
             });
-            const data = await request.data;
+            const data = request.data;
 
             if (data) {
                 this.setState({
@@ -163,7 +163,7 @@ class ChangeForm extends Component {
                     <RadioButton name="radio" id="other" value="" label="Other" onChange={this.handleRadio} />
                     <Button color="purple">Enter Change</Button>
                 </Reasons>
-                <Snackbar
+                <SnackbarPortal
                     handler={submitted}
                     message={message}
                     heading={messageHeading}

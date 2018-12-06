@@ -37,24 +37,23 @@ export default Snackbar;
 
 const Container = posed.div({
     enter: {
-        y: 0,
         opacity: 1,
+        y: 0,
         transition: {
             ease: 'circOut',
             default: { duration: 300 },
         },
     },
     exit: {
-        y: 50,
         opacity: 0,
+        y: 50,
         transition: { ease: 'circOut', duration: 300 },
     },
 });
 
 const StyledContainer = styled(Container)`
-    position: absolute;
-    bottom: 20px;
-    right: 40px;
+    display: flex;
+    justify-content: space-between;
     background-color: #282c34;
     color: var(--white);
     padding: 18px 24px;

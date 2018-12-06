@@ -36,7 +36,7 @@ export const TableLabel = styled.div`
     display: flex;
     align-items: center;
 
-    svg {
+    > svg {
         width: 100px;
         margin-right: 24px;
         height: 100%;

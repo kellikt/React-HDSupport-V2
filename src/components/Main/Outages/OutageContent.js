@@ -49,7 +49,7 @@ class OutageContent extends Component {
             const studentRequest = axios.get(`/get-outages.php?role=student&date=${dateString}`);
 
             const results = await Promise.all([staffRequest, studentRequest]);
-            const data = await Promise.all([results[0].data, results[1].data]);
+            const data = [results[0].data, results[1].data];
 
             if (
                 !this.doArraysEqual(data[0], this.state.staff) ||

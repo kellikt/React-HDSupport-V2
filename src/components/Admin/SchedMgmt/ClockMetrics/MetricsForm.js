@@ -7,6 +7,7 @@ import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Metric
 import Button from '../../../Button';
 import MetricsTable from './MetricsTable';
 import { periods } from '../../payPeriods.json';
+import { createYears } from '../../utils';
 
 class MetricsForm extends Component {
     constructor(props) {
@@ -21,18 +22,6 @@ class MetricsForm extends Component {
             searched: false,
         };
     }
-
-    createYears = () => {
-        let currentYear = new Date().getFullYear();
-        const years = [];
-
-        while (currentYear >= 2005) {
-            years.push(currentYear);
-            currentYear--;
-        }
-
-        return years;
-    };
 
     handleSubmit = event => {
         event.preventDefault();
@@ -72,7 +61,7 @@ class MetricsForm extends Component {
 
     render() {
         const { selectedUser, year, payPeriod, helpdesk, lab, third_shift, searched } = this.state;
-        const years = this.createYears();
+        const years = createYears();
 
         return (
             <React.Fragment>

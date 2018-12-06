@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Snackbar from '../Snackbar';
+import SnackbarPortal from '../../SnackbarPortal';
 import { FormEl, Title, UHSearch, PIISearch } from './FormComponents';
 import TextInput from '../../TextInput';
 import Button from '../../Button';
@@ -78,7 +78,7 @@ class Form extends Component {
                     firstName: firstName,
                     lastName: lastName,
                 });
-                const data = await request.data;
+                const data = request.data;
 
                 this.setState({
                     searchResult: data,
@@ -147,7 +147,7 @@ class Form extends Component {
                         <Button color="purple">Search</Button>
                     </FormEl>
                 )}
-                <Snackbar
+                <SnackbarPortal
                     handler={error}
                     message="Enter at least a single search term."
                     onClick={this.handleSnack}

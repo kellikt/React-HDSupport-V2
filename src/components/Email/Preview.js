@@ -37,15 +37,13 @@ class Preview extends Component {
             behavior: 'smooth',
         });
 
-        const request = await axios.get(`/send-email.php`, {
+        await axios.get(`/send-email.php`, {
             from: from,
             to: to,
             subject: subject,
             body: body,
             bcc: bcc,
         });
-        const data = await request.data;
-        console.log(data);
     };
 
     handleInput = event => {
@@ -64,7 +62,7 @@ class Preview extends Component {
         });
 
         const request = await axios.get(`/get-email-contents.php?type=${type}`);
-        let data = await request.data;
+        let data = request.data;
         data = data.replace(/FIRST/gi, first);
         data = data.replace(/SECOND/gi, second);
         data = data.replace(/THIRD/gi, third);

@@ -138,3 +138,10 @@ select {
     -moz-appearance: none;
     width: 100%;
 }
+
+.snackbar {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    outline: none;
+}

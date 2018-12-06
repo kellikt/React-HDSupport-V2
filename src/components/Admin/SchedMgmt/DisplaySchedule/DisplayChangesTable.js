@@ -10,13 +10,10 @@ import { ReactComponent as X } from '../../../../images/icons/RedCross.svg';
 import ExpandedRow from './ExpandedRow';
 
 class DisplayChangesTable extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            results: [],
-            focused: -1,
-        };
-    }
+    state = {
+        results: [],
+        focused: -1,
+    };
 
     getTableData = async () => {
         const { username, date, option } = this.props;
@@ -30,11 +27,12 @@ class DisplayChangesTable extends Component {
                 endDate: endDateString,
                 option: option,
             });
-            const data = await request.data;
-
-            this.setState({
-                results: data,
-            });
+            const data = request.data;
+            if (!(data === 0)) {
+                this.setState({
+                    results: data,
+                });
+            }
         } catch (error) {
             console.log(error);
         }
@@ -80,7 +78,7 @@ class DisplayChangesTable extends Component {
     };
 
     async componentDidMount() {
-        this.getTableData();
+        await this.getTableData();
     }
 
     render() {

@@ -45,7 +45,7 @@ class Banner extends Component {
             const username = axios.get('/get-username.php?uuid=22051104');
 
             const request = await Promise.all([name, username]);
-            const data = await Promise.all([request[0].data, request[1].data]);
+            const data = [request[0].data, request[1].data];
 
             this.setState({
                 staff: data[0].first_name,

@@ -22,11 +22,11 @@ const TextInput = props => {
 };
 
 TextInput.defaultProps = {
-    label: 'Input',
+    label: '',
 };
 
 TextInput.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
@@ -59,6 +59,7 @@ const Container = styled.div`
         color: var(--black);
         transition: all 0.15s ease;
         border: 2px solid #f1f3f6;
+        width: 100%;
 
         &:active,
         &:focus {

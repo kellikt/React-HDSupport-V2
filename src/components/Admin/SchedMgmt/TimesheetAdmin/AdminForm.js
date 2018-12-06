@@ -6,6 +6,7 @@ import Button from '../../../Button';
 import { FormEl, Title } from './AdminFormComponents';
 import { Inputs } from '../ClockMetrics/MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Sheetadmin.svg';
+import { createYears } from '../../utils';
 import { periods } from '../../payPeriods.json';
 
 class AdminForm extends Component {
@@ -17,18 +18,6 @@ class AdminForm extends Component {
         lab: [],
         third_shift: [],
         searched: false,
-    };
-
-    createYears = () => {
-        let currentYear = new Date().getFullYear();
-        const years = [];
-
-        while (currentYear >= 2005) {
-            years.push(currentYear);
-            currentYear--;
-        }
-
-        return years;
     };
 
     handleSubmit = event => {
@@ -67,7 +56,7 @@ class AdminForm extends Component {
 
     render() {
         const { helpdesk, lab, third_shift, selectedUser, year, payPeriod } = this.state;
-        const years = this.createYears();
+        const years = createYears();
 
         return (
             <React.Fragment>

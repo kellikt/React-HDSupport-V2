@@ -58,7 +58,7 @@ function getScheduleChanges($db, $username, $beginDate, $endDate, $option)
         $checkResult = $checkUser->get_result();
         if ($checkResult->num_rows === 0) {
             $checkUser->close();
-            return false;
+            return 0;
         } else {
             $array = $checkResult->fetch_assoc();
             $uid = $array["uid"];

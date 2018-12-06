@@ -35,7 +35,7 @@ class MetricsTable extends Component {
                 startDay: Number.parseInt(splitDate[1], 10),
                 endDay: Number.parseInt(splitDate[2], 10),
             });
-            const data = await request.data;
+            const data = request.data;
 
             this.setState({
                 results: data,

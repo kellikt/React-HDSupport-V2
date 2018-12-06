@@ -39,7 +39,7 @@ class SortSite extends Component {
     async componentDidMount() {
         try {
             const request = await axios.get(`/get-name.php?uuid=22051104`);
-            const data = await request.data;
+            const data = request.data;
 
             this.firstName = data.first_name;
         } catch (error) {

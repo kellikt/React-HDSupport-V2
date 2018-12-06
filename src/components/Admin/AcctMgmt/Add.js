@@ -7,7 +7,7 @@ import { FormEl, Title } from './FormComponents';
 import Breadcrumb from '../Breadcrumb';
 import TextInput from '../../TextInput';
 import Checkbox from '../../Checkbox';
-import Snackbar from '../Snackbar';
+import SnackbarPortal from '../../SnackbarPortal';
 import { ReactComponent as Personal } from '../../../images/Admin/Acct/AddPersonal.svg';
 import { ReactComponent as Contact } from '../../../images/Admin/Acct/AddContact.svg';
 
@@ -454,7 +454,7 @@ class Add extends Component {
                         <Contact />
                     </Images>
                     <Button color="green">Submit</Button>
-                    <Snackbar
+                    <SnackbarPortal
                         handler={snack}
                         message={`Successfully added user: '${info.username}'`}
                         onClick={this.handleSnack}

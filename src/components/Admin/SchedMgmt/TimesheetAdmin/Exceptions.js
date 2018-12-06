@@ -6,6 +6,7 @@ import { Title } from './AdminFormComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Exceptions.svg';
 import Button from '../../../Button';
 import TextInput from '../../../TextInput';
+import AddException from './AddException';
 
 class Exceptions extends Component {
     constructor(props) {
@@ -18,6 +19,12 @@ class Exceptions extends Component {
             searched: false,
         };
     }
+
+    handleClose = () => {
+        this.setState({
+            searched: false,
+        });
+    };
 
     handleSubmit = event => {
         event.preventDefault();
@@ -40,11 +47,11 @@ class Exceptions extends Component {
         const { helpdesk, lab, third_shift } = this.props;
 
         return (
-            <FormEl onSubmit={this.handleSubmit}>
+            <React.Fragment>
                 {searched ? (
-                    <div>yo</div>
+                    <AddException username={selectedUser} date={date} handleClose={this.handleClose} />
                 ) : (
-                    <React.Fragment>
+                    <FormEl key="form" {...this.props} onSubmit={this.handleSubmit}>
                         <Graphic />
                         <Content>
                             <Title>
@@ -101,9 +108,9 @@ class Exceptions extends Component {
                             </Inputs>
                             <Button color="green">Next</Button>
                         </Content>
-                    </React.Fragment>
+                    </FormEl>
                 )}
-            </FormEl>
+            </React.Fragment>
         );
     }
 }
@@ -129,6 +136,7 @@ const FormEl = styled.form`
         width: 100%;
         height: 100%;
         margin-right: 30px;
+        align-self: center;
     }
 
     .styled-input {

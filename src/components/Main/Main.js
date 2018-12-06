@@ -7,6 +7,7 @@ import ClockInButton from './ClockInButton';
 import LinksContainer from './LinksContainer';
 import Outages from './Outages/Outages';
 import { OutageProvider } from './Outages/OutageContext';
+import { LayoutContext } from '../../LayoutContext';
 import Announcements from './Announcements/Announcements';
 import Background from '../Background';
 
@@ -19,9 +20,12 @@ class Main extends Component {
     }
 
     async componentDidMount() {
+        let value = this.context;
+        const { uuid } = value;
+
         try {
-            const request = await axios.get('/get-name.php?uuid=22051104');
-            const data = await request.data;
+            const request = await axios.get(`/get-name.php?uuid=${uuid}`);
+            const data = request.data;
 
             this.setState({
                 firstName: data.first_name,
@@ -55,6 +59,8 @@ class Main extends Component {
         );
     }
 }
+
+Main.contextType = LayoutContext;
 
 export default Main;
 
