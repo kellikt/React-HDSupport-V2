@@ -8,6 +8,7 @@ import Button from '../Button';
 import Checkbox from '../Checkbox';
 import RadioButton from '../RadioButton';
 import Preview from './Preview';
+import { LayoutContext } from '../../LayoutContext';
 
 class Banner extends Component {
     state = {
@@ -40,9 +41,12 @@ class Banner extends Component {
     };
 
     async componentDidMount() {
+        let value = this.context;
+        const { uuid } = value;
+
         try {
-            const name = axios.get('/get-name.php?uuid=22051104');
-            const username = axios.get('/get-username.php?uuid=22051104');
+            const name = axios.get(`/get-name.php?uuid=${uuid}`);
+            const username = axios.get(`/get-username.php?uuid=${uuid}`);
 
             const request = await Promise.all([name, username]);
             const data = [request[0].data, request[1].data];
@@ -150,6 +154,8 @@ class Banner extends Component {
         );
     }
 }
+
+Banner.contextType = LayoutContext;
 
 export default Banner;
 

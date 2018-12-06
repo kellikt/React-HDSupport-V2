@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const RolesEl = styled.h2`
-    font-weight: 300;
-    color: #3e87cf;
-    max-width: 30ch;
-    font-size: 34px;
-    margin: 0;
-`;
+import { LayoutContext } from '../../LayoutContext';
 
 class Roles extends Component {
     constructor(props) {
@@ -19,12 +13,15 @@ class Roles extends Component {
     }
 
     async componentDidMount() {
+        let value = this.context;
+        const { uuid } = value;
+
         try {
-            const nameRequest = await axios.get(`/get-username.php?uuid=22051104`);
-            const nameData = await nameRequest.data;
+            const nameRequest = await axios.get(`/get-username.php?uuid=${uuid}`);
+            const nameData = nameRequest.data;
 
             const rolesRequest = await axios.get(`/get-roles.php?username=${nameData.username}`);
-            const rolesData = await rolesRequest.data;
+            const rolesData = rolesRequest.data;
 
             const roles = {
                 helpDesk: rolesData.helpdesk === 'yes' ? true : false,
@@ -75,4 +72,13 @@ class Roles extends Component {
     }
 }
 
+Roles.contextType = LayoutContext;
 export default Roles;
+
+const RolesEl = styled.h2`
+    font-weight: 300;
+    color: #3e87cf;
+    max-width: 30ch;
+    font-size: 34px;
+    margin: 0;
+`;

@@ -7,6 +7,7 @@ import TextInput from '../TextInput';
 import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
+import { LayoutContext } from '../../LayoutContext';
 
 class SortSite extends Component {
     state = {
@@ -37,8 +38,11 @@ class SortSite extends Component {
     };
 
     async componentDidMount() {
+        let value = this.context;
+        const { uuid } = value;
+
         try {
-            const request = await axios.get(`/get-name.php?uuid=22051104`);
+            const request = await axios.get(`/get-name.php?uuid=${uuid}`);
             const data = request.data;
 
             this.firstName = data.first_name;
@@ -124,6 +128,7 @@ class SortSite extends Component {
     }
 }
 
+SortSite.contextType = LayoutContext;
 export default SortSite;
 
 const Container = styled.main`

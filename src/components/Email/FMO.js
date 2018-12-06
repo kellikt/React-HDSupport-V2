@@ -7,6 +7,7 @@ import TextInput from '../TextInput';
 import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
+import { LayoutContext } from '../../LayoutContext';
 
 class FMO extends Component {
     state = {
@@ -37,9 +38,12 @@ class FMO extends Component {
     };
 
     async componentDidMount() {
+        let value = this.context;
+        const { uuid } = value;
+
         try {
-            const name = axios.get(`/get-name.php?uuid=22051104`);
-            const username = axios.get(`/get-username.php?uuid=22051104`);
+            const name = axios.get(`/get-name.php?uuid=${uuid}`);
+            const username = axios.get(`/get-username.php?uuid=${uuid}`);
 
             const request = await Promise.all([name, username]);
             const data = [request[0].data, request[1].data];
@@ -129,6 +133,7 @@ class FMO extends Component {
     }
 }
 
+FMO.contextType = LayoutContext;
 export default FMO;
 
 const Container = styled.main`
