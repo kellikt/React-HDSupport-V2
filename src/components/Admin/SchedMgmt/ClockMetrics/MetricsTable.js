@@ -71,14 +71,14 @@ class MetricsTable extends Component {
                     <span>Location Okay?</span>
                 </TableHeading>
 
-                {results.map(result => {
+                {results.map((result, index) => {
                     let locationFlag = false;
                     if (!result.ip.includes('128.171')) {
                         locationFlag = true;
                     }
 
                     return (
-                        <TableRow key={result.logid}>
+                        <TableRow key={result.logid} stagger={index}>
                             <Timestamp in={result.action}>
                                 <h4>{`${result.hour}:${result.min} ${result.ampm}`}</h4>
                                 <span>{`${result.month}/${result.day}/${year}`}</span>

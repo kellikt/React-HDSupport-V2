@@ -6,6 +6,8 @@ import { ReactComponent as Sheetadmin } from '../../../images/Admin/Sched/Sheeta
 import { ReactComponent as Metrics } from '../../../images/Admin/Sched/Metrics.svg';
 import { ReactComponent as DisplaySched } from '../../../images/Admin/Sched/DisplaySched.svg';
 import { ReactComponent as SchedChange } from '../../../images/Admin/Sched/SchedChange.svg';
+import { ReactComponent as Holiday } from '../../../images/Admin/Sched/Holiday.svg';
+import { ReactComponent as Forty } from '../../../images/Admin/Sched/Forty.svg';
 
 const index = () => {
     const links = [{ title: 'Schedule Management', to: '/schedmgmt' }];
@@ -43,6 +45,22 @@ const index = () => {
                 to="/schedmgmt/clockmetrics"
             >
                 <Metrics />
+            </IndexLink>
+            <IndexLink
+                color="blue"
+                title="Holiday Wizard"
+                description="Make changes to upcoming holidays."
+                to="/schedmgmt/holiday"
+            >
+                <Holiday />
+            </IndexLink>
+            <IndexLink
+                color="red"
+                title="Work Week Exceptions"
+                description="Define/change 40 hour work weeks."
+                to="/schedmgmt/wwexceptions"
+            >
+                <Forty />
             </IndexLink>
         </IndexPage>
     );

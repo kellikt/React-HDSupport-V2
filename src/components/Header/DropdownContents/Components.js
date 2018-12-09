@@ -12,10 +12,6 @@ export const Heading = styled.h3`
     margin-top: 0;
     margin-bottom: ${props => (props.noMarginBottom ? 0 : '12px')};
     color: ${({ color }) => (color ? `var(--${color})` : 'var(--blue)')};
-
-    &:hover {
-        color: ${props => (props.noLink ? null : 'var(--black)')};
-    }
 `;
 
 export const Description = styled.p`
@@ -27,6 +23,12 @@ export const Description = styled.p`
 
 export const ListItem = styled.li`
     margin-bottom: ${props => (props.noMarginBottom ? 0 : '24px')};
+
+    &:hover {
+        h3 {
+            color: ${props => (props.noLink ? null : 'var(--black)')};
+        }
+    }
 `;
 
 export const DropdownSection = styled.div`

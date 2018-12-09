@@ -36,4 +36,7 @@ const ContentContainer = styled.div`
     width: 100%;
     margin: 0 auto;
     padding: ${props => (props.fullScreen ? '0' : '0 20px')};
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
 `;

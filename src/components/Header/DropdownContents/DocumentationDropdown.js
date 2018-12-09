@@ -50,9 +50,7 @@ const DocumentationDropdown = () => {
                                 <Documentation />
                                 Help Desk Wiki
                             </Heading>
-                            <Description>
-                                Review any Help Desk procedure.
-                            </Description>
+                            <Description>Review any Help Desk procedure.</Description>
                         </a>
                     </ListItem>
 

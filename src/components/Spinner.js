@@ -2,6 +2,40 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 
+const Spinner = props => {
+    const { size, margin, fullscreen } = props;
+
+    return (
+        <React.Fragment>
+            {fullscreen ? (
+                <FullScreen>
+                    <SpinnerContainer loaderSize={size} margin={margin}>
+                        <SpinnerBall loaderSize={size} />
+                        <SpinnerBall loaderSize={size} />
+                        <SpinnerBall loaderSize={size} />
+                        <SpinnerBall loaderSize={size} />
+                    </SpinnerContainer>
+                </FullScreen>
+            ) : (
+                <SpinnerContainer loaderSize={size} margin={margin}>
+                    <SpinnerBall loaderSize={size} />
+                    <SpinnerBall loaderSize={size} />
+                    <SpinnerBall loaderSize={size} />
+                    <SpinnerBall loaderSize={size} />
+                </SpinnerContainer>
+            )}
+        </React.Fragment>
+    );
+};
+
+Spinner.propTypes = {
+    size: PropTypes.number.isRequired,
+    margin: PropTypes.number,
+    fullscreen: PropTypes.bool,
+};
+
+export default Spinner;
+
 const scale = keyframes`
     0% { transform: scale(0); opacity: 0; }
     5% { opacity: 1; }
@@ -9,10 +43,9 @@ const scale = keyframes`
 `;
 
 const SpinnerContainer = styled.span`
-    display: inline-block;
+    display: block;
     width: ${props => `${props.loaderSize}px`};
     height: ${props => `${props.loaderSize}px`};
-    margin-right: '.25rem';
     position: relative;
     grid-column: 1/-1;
     grid-row: 1/-1;
@@ -41,22 +74,7 @@ const SpinnerBall = styled.span`
     animation: ${scale} 1s 0s linear infinite;
 `;
 
-const Spinner = props => {
-    const { size, margin } = props;
-
-    return (
-        <SpinnerContainer loaderSize={size} margin={margin}>
-            <SpinnerBall loaderSize={size} />
-            <SpinnerBall loaderSize={size} />
-            <SpinnerBall loaderSize={size} />
-            <SpinnerBall loaderSize={size} />
-        </SpinnerContainer>
-    );
-};
-
-Spinner.propTypes = {
-    size: PropTypes.number.isRequired,
-    margin: PropTypes.number,
-};
-
-export default Spinner;
+const FullScreen = styled.div`
+    height: 100%;
+    display: grid;
+`;

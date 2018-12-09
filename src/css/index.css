@@ -23,6 +23,7 @@
     --light-blue-button: linear-gradient(180deg, #89b1ff, #5b8def);
     --gold-button: linear-gradient(180deg, #ffc476, #e39f48);
     --blue-button: linear-gradient(180deg, #7c7ebf, #414384);
+    --secondary-button: #fff;
 
     --crumb-blue-text: #6772e5;
     --crumb-blue-bg: #bcdaff;

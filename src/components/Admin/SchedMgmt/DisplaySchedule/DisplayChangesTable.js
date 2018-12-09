@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { PoseGroup } from 'react-pose';
 
 import { Table, TableLabel, TableHeading, TableRow, Location } from '../ClockMetrics/MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';
@@ -107,34 +108,40 @@ class DisplayChangesTable extends Component {
                     <span>End Date</span>
                     <span>{focused >= 0 ? 'Action' : 'Multi-Day?'}</span>
                 </Heading>
-                {results.map((result, index) => {
-                    if (index === focused) {
-                        return (
-                            <ExpandedRow
-                                key={result.sid}
-                                username={result.username}
-                                notes={result.notes}
-                                beginDate={result.begin_date}
-                                endDate={result.end_date}
-                                sid={result.sid}
-                                handleDelete={this.handleDelete}
-                                handleEdit={this.handleEdit}
-                            />
-                        );
-                    } else {
-                        return (
-                            <Row key={result.sid} onClick={() => this.handleRowClick(index)}>
-                                <Username>{result.username}</Username>
-                                <Notes>{result.notes}</Notes>
-                                <span>{result.begin_date}</span>
-                                <span>{result.end_date}</span>
-                                <Location>
-                                    {result.begin_date === result.end_date ? <X /> : <Check />}
-                                </Location>
-                            </Row>
-                        );
-                    }
-                })}
+                <PoseGroup>
+                    {results.map((result, index) => {
+                        if (index === focused) {
+                            return (
+                                <ExpandedRow
+                                    key={result.sid}
+                                    username={result.username}
+                                    notes={result.notes}
+                                    beginDate={result.begin_date}
+                                    endDate={result.end_date}
+                                    sid={result.sid}
+                                    handleDelete={this.handleDelete}
+                                    handleEdit={this.handleEdit}
+                                />
+                            );
+                        } else {
+                            return (
+                                <Row
+                                    key={result.sid}
+                                    onClick={() => this.handleRowClick(index)}
+                                    stagger={index}
+                                >
+                                    <Username>{result.username}</Username>
+                                    <Notes>{result.notes}</Notes>
+                                    <span>{result.begin_date}</span>
+                                    <span>{result.end_date}</span>
+                                    <Location>
+                                        {result.begin_date === result.end_date ? <X /> : <Check />}
+                                    </Location>
+                                </Row>
+                            );
+                        }
+                    })}
+                </PoseGroup>
             </Table>
         );
     }

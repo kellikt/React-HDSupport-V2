@@ -23,9 +23,7 @@ const UserDocsDropdown = () => {
                                 <AskUs />
                                 Askus Articles
                             </Heading>
-                            <Description>
-                                A collection of instructional articles.
-                            </Description>
+                            <Description>A collection of instructional articles.</Description>
                         </a>
                     </ListItem>
                     <ListItem noMarginBottom>
@@ -34,9 +32,7 @@ const UserDocsDropdown = () => {
                                 <Reps />
                                 ITS Campus Reps
                             </Heading>
-                            <Description>
-                                Hours &amp; of PW reset reps.
-                            </Description>
+                            <Description>Hours &amp; of PW reset reps.</Description>
                         </a>
                     </ListItem>
                 </ul>

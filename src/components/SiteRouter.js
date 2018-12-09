@@ -3,16 +3,14 @@ import { Router } from '@reach/router';
 
 import Main from './Main/Main';
 import ClockIn from './ClockIn/ClockIn';
-import AcctMgmt from './Admin/AcctMgmt';
-import EditUser from './Admin/AcctMgmt/EditUser';
-import Edit from './Admin/AcctMgmt/Edit';
-import Add from './Admin/AcctMgmt/Add';
 
 import SchedMgmt from './Admin/SchedMgmt';
 import ClockMetrics from './Admin/SchedMgmt/ClockMetrics/ClockMetrics';
 import ScheduleChange from './Admin/SchedMgmt/ScheduleChange/ScheduleChange';
 import DisplayChanges from './Admin/SchedMgmt/DisplaySchedule/DisplayChanges';
 import TimesheetAdmin from './Admin/SchedMgmt/TimesheetAdmin/TimesheetAdmin';
+import HolidayWizard from './Admin/SchedMgmt/HolidayWizard';
+import WorkWeekExceptions from './Admin/SchedMgmt/WorkWeekExceptions';
 
 import Email from './Email/';
 import Banner from './Email/Banner';
@@ -21,6 +19,11 @@ import FileDrop from './Email/FileDrop';
 import SortSite from './Email/SortSite';
 import TrainingLab from './Email/TrainingLab';
 import FMO from './Email/FMO';
+
+import AcctMgmt from './Admin/AcctMgmt';
+import EditUser from './Admin/AcctMgmt/EditUser';
+import Edit from './Admin/AcctMgmt/Edit';
+import Add from './Admin/AcctMgmt/Add';
 
 class SiteRouter extends Component {
     render() {
@@ -39,6 +42,8 @@ class SiteRouter extends Component {
                 <ScheduleChange path="schedmgmt/schedchange" />
                 <DisplayChanges path="schedmgmt/displaychanges" />
                 <TimesheetAdmin path="schedmgmt/tsadmin" />
+                <HolidayWizard path="schedmgmt/holiday" />
+                <WorkWeekExceptions path="schedmgmt/wwexceptions" />
 
                 <Email path="email" />
                 <Banner path="email/banner" />

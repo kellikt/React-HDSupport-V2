@@ -31,25 +31,17 @@ const DownloadsDropdown = () => {
         <DownloadsDropdownEl>
             <DropdownSection data-first-dropdown-section>
                 <ul>
-                    <ListItem noMarginBottom>
-                        <Heading color="green" noLink>
+                    <ListItem noMarginBottom noLink>
+                        <Heading color="green">
                             <Downloads />
                             Waiver Downloads
                         </Heading>
-                        <Description>
-                            Choose the appropriate waiver type.
-                        </Description>
+                        <Description>Choose the appropriate waiver type.</Description>
 
                         <WaiversContainer>
-                            <DownloadsLink href="/">
-                                Waiver of Liability
-                            </DownloadsLink>
-                            <DownloadsLink href="/">
-                                Waiver for Disk Recovery
-                            </DownloadsLink>
-                            <DownloadsLink href="/">
-                                Waiver for Drop-Offs
-                            </DownloadsLink>
+                            <DownloadsLink href="/">Waiver of Liability</DownloadsLink>
+                            <DownloadsLink href="/">Waiver for Disk Recovery</DownloadsLink>
+                            <DownloadsLink href="/">Waiver for Drop-Offs</DownloadsLink>
                         </WaiversContainer>
                     </ListItem>
                 </ul>
