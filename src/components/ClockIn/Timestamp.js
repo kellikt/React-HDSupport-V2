@@ -47,6 +47,11 @@ const Container = styled.div`
         font-style: italic;
         margin: 0 0 12px;
     }
+
+    @media (max-width: 1050px) {
+        flex-direction: row;
+        align-items: center;
+    }
 `;
 
 const Title = styled.h2`
@@ -57,6 +62,12 @@ const Title = styled.h2`
     font-weight: 600;
     border-bottom: 1px solid #d2d1d1cc;
     margin: 0;
+
+    @media (max-width: 1050px) {
+        border-right: 1px solid #d2d1d1cc;
+        padding: 30px 24px 30px 0;
+        border-bottom: 0;
+    }
 `;
 
 const Stamp = styled.div`
@@ -72,5 +83,11 @@ const Comments = styled.div`
 
     p {
         margin: 12px 0 0 0;
+    }
+
+    @media (max-width: 1050px) {
+        border-left: 1px solid #d2d1d1cc;
+        padding: 30px 0 30px 24px;
+        border-top: 0;
     }
 `;

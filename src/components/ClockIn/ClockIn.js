@@ -46,9 +46,13 @@ const Container = styled.main`
 
     > svg {
         width: 41vw;
-        height: 41vw;
-        right: -6vw;
-        top: 0;
+        height: 780px;
+        right: -8vw;
+        top: 30px;
         position: absolute;
+
+        @media (max-width: 1650px) {
+            display: none;
+        }
     }
 `;

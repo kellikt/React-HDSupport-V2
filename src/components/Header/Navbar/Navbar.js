@@ -28,6 +28,11 @@ const NavbarEl = styled.nav`
     margin: 4px auto auto auto;
     max-width: 1200px;
     width: 100%;
+    padding: 0 20px;
+
+    @media (max-width: 1100px) {
+        visibility: hidden;
+    }
 `;
 
 const NavbarList = styled.ul`

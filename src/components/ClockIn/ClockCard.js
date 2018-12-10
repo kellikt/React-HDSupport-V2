@@ -23,4 +23,13 @@ const Container = styled.div`
     width: 60vw;
     border-radius: 8px;
     margin-left: 100px;
+
+    @media (max-width: 1650px) {
+        width: auto;
+        margin: 0 30px;
+    }
+
+    @media(max-width: 1050px) {
+        grid-template-columns: 1fr;
+    }
 `;

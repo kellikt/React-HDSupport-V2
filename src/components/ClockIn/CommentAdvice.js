@@ -90,6 +90,11 @@ const Container = styled.div`
     grid-column-gap: 100px;
     margin-top: 90px;
     padding: 30px;
+
+    @media (max-width: 1650px) {
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+    }
 `;
 
 const Reminder = styled.div`
@@ -101,12 +106,31 @@ const Reminder = styled.div`
         height: 100%;
         margin-right: 60px;
         align-self: center;
+
+        @media (max-width: 800px) {
+            margin: 0 0 30px;
+            order: 0;
+        }
+    }
+
+    @media (max-width: 800px) {
+        flex-direction: column;
+
+        &:nth-of-type(2) {
+            > div {
+                order: 2;
+            }
+        }
     }
 `;
 
 const Examples = styled(Reminder)`
     > svg {
         margin: 0 0 0 60px;
+
+        @media (max-width: 800px) {
+            margin: 0 0 30px;
+        }
     }
 `;
 

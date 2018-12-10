@@ -10,6 +10,11 @@ export const FormEl = styled.form`
         color: var(--dark-grey);
         font-size: 15px;
     }
+
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+        grid-row-gap: 30px;
+    }
 `;
 
 export const Username = styled.span``;
@@ -76,6 +81,10 @@ export const RightSide = styled(LeftSide)`
     svg {
         width: 100%;
         max-height: 205px;
+
+        @media (max-width: 800px) {
+            display: none;
+        }
     }
 
     button {
