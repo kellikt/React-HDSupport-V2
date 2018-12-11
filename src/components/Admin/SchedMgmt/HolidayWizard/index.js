@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import HolidayWizard from './HolidayWizard';
 import Breadcrumb from '../../Breadcrumb';
+import Container from '../../Container';
 
 const Index = () => {
     const links = [
@@ -20,13 +20,3 @@ const Index = () => {
 };
 
 export default Index;
-
-const Container = styled.main`
-    margin-top: 60px;
-
-    > h1 {
-        margin: 0 0 18px;
-        font-weight: 600;
-        font-size: 34px;
-    }
-`;

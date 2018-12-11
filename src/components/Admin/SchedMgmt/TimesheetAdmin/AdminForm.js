@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { navigate } from '@reach/router';
 
 import Exceptions from './Exceptions';
 import Button from '../../../Button';
@@ -23,7 +24,8 @@ class AdminForm extends Component {
     handleSubmit = event => {
         event.preventDefault();
         const { selectedUser, year, payPeriod } = this.state;
-        alert(`${selectedUser} + ${year} + ${payPeriod}`);
+
+        navigate(`timesheet/${selectedUser}/${year}/${payPeriod}`);
     };
 
     handleChange = event => {

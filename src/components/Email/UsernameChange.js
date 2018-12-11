@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import Container from '../Admin/Container';
 import Breadcrumb from '../Admin/Breadcrumb';
 import TextInput from '../TextInput';
 import Button from '../Button';
@@ -112,16 +113,6 @@ class UsernameChange extends Component {
 }
 
 export default UsernameChange;
-
-const Container = styled.main`
-    margin-top: 60px;
-
-    > h1 {
-        margin: 0 0 18px;
-        font-weight: 600;
-        font-size: 34px;
-    }
-`;
 
 const FormEl = styled.form`
     background: var(--white);

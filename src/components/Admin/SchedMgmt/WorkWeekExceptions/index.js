@@ -1,13 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import WorkWeekWizard from './WorkWeekWizard';
 import Breadcrumb from '../../Breadcrumb';
+import Container from '../../Container';
 
 const Index = () => {
     const links = [
         { title: 'Schedule Management', to: '/schedmgmt' },
-        { title: 'Work Week Exceptions', to: '/schedmgmt/wwexception' },
+        { title: 'Work Week Exceptions', to: '/schedmgmt/wwexceptions' },
     ];
 
     return (
@@ -20,13 +20,3 @@ const Index = () => {
 };
 
 export default Index;
-
-const Container = styled.main`
-    margin-top: 60px;
-
-    > h1 {
-        margin: 0 0 18px;
-        font-weight: 600;
-        font-size: 34px;
-    }
-`;

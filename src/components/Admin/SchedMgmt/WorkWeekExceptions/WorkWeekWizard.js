@@ -7,6 +7,7 @@ import { Title, CurrentWeeks, RangeInput } from './WorkWeekComponents';
 import HolidayList from '../HolidayWizard/HolidayList';
 import TextInput from '../../../TextInput';
 import Button from '../../../Button';
+import SnackbarPortal from '../../../SnackbarPortal';
 
 class WorkWeekWizard extends Component {
     constructor(props) {
@@ -16,8 +17,18 @@ class WorkWeekWizard extends Component {
             full: false,
             week: '',
             date: [new Date(), new Date()],
+            snack: false,
+            message: '',
+            heading: '',
+            error: false,
         };
     }
+
+    handleSnack = () => {
+        this.setState({
+            snack: false,
+        });
+    };
 
     handleChange = event => {
         const name = event.target.name;
@@ -28,7 +39,12 @@ class WorkWeekWizard extends Component {
     };
 
     handleError = message => {
-        alert(message);
+        this.setState({
+            error: true,
+            snack: true,
+            message: message,
+            heading: 'Error!',
+        });
     };
 
     handleDelete = async stamp => {
@@ -69,7 +85,7 @@ class WorkWeekWizard extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { date, week } = this.state;
+        const { date, week, full } = this.state;
 
         if (week === '') {
             this.handleError('Invalid inputs. Check the name or date.');
@@ -83,6 +99,32 @@ class WorkWeekWizard extends Component {
             const weeksToAdd = diffDays / 7;
 
             console.log(weeksToAdd);
+            console.log(beginDate.getTime() / 1000);
+
+            try {
+                await axios.post(`/add-work-week.php/`, {
+                    description: week,
+                    timestamp: beginDate.getTime() / 1000,
+                    weeks: weeksToAdd,
+                });
+                if (full) {
+                    this.getWeeks('yes');
+                } else {
+                    this.getWeeks('no');
+                }
+
+                this.setState({
+                    week: '',
+                    snack: true,
+                    message: `Added "${week}" to the 40 hour work week list.`,
+                    heading: 'Success!',
+                });
+                this.timerId = setTimeout(() => {
+                    this.handleSnack();
+                }, 3000);
+            } catch (error) {
+                this.handleError('Something went wrong connecting to the DB.');
+            }
         }
     };
 
@@ -103,7 +145,7 @@ class WorkWeekWizard extends Component {
                 });
             }
         } catch (error) {
-            console.log(error);
+            this.handleError('Something went wrong connecting to the DB.');
         }
     };
 
@@ -111,8 +153,12 @@ class WorkWeekWizard extends Component {
         this.getWeeks('no');
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.timerId);
+    }
+
     render() {
-        const { full, weekList, date, week } = this.state;
+        const { full, weekList, date, week, snack, message, heading, error } = this.state;
 
         return (
             <Form onSubmit={this.handleSubmit}>
@@ -152,6 +198,13 @@ class WorkWeekWizard extends Component {
                     </Text>
                     <Button color="red">Add 40 Hour Week</Button>
                 </Inputs>
+                <SnackbarPortal
+                    handler={snack}
+                    message={message}
+                    heading={heading}
+                    onClick={this.handleSnack}
+                    isError={error}
+                />
             </Form>
         );
     }

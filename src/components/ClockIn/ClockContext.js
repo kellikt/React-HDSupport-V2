@@ -54,11 +54,13 @@ export class ClockProvider extends Component {
         else action = 'in';
 
         try {
-            await axios.post('/clock-in.php', {
+            const request = await axios.post('/clock-in.php', {
                 username: username,
                 comments: commentString,
                 action: action,
             });
+            const data = request.data;
+            console.log(data);
 
             this.refreshForm();
         } catch (error) {

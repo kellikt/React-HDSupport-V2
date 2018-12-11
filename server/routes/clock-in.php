@@ -20,6 +20,20 @@ function clockIn($db, $username, $comments, $action)
     $stmt->execute();
     $stmt->close();
 
+    $uidStmt = $db->prepare("SELECT uid FROM users WHERE username = ?");
+    $uidStmt->bind_param("s", $username);
+    $uidStmt->execute();
+    $uidResult = $uidStmt->get_result()->fetch_assoc();
+    $uid = $uidResult['uid'];
+    $uidStmt->close();
+
+    $timestamp = time();
+
+    $clockStmt = $db->prepare("INSERT INTO clock (uid, tstamp, action, ip, hostname, comments) VALUES (?, ?, ?, ?, ?, ?)");
+    $clockStmt->bind_param("iissss", $uid, $timestamp, $action, $ip, $hostname, $comments);
+    $clockStmt->execute();
+    $clockStmt->close();
+
     return true;
 }
 

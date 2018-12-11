@@ -11,6 +11,7 @@ import DisplayChanges from './Admin/SchedMgmt/DisplaySchedule/DisplayChanges';
 import TimesheetAdmin from './Admin/SchedMgmt/TimesheetAdmin/TimesheetAdmin';
 import HolidayWizard from './Admin/SchedMgmt/HolidayWizard';
 import WorkWeekExceptions from './Admin/SchedMgmt/WorkWeekExceptions';
+import Timesheet from './Admin/SchedMgmt/Timesheet';
 
 import Email from './Email/';
 import Banner from './Email/Banner';
@@ -44,6 +45,7 @@ class SiteRouter extends Component {
                 <TimesheetAdmin path="schedmgmt/tsadmin" />
                 <HolidayWizard path="schedmgmt/holiday" />
                 <WorkWeekExceptions path="schedmgmt/wwexceptions" />
+                <Timesheet path="/schedmgmt/timesheet/:username/:year/:payPeriod" />
 
                 <Email path="email" />
                 <Banner path="email/banner" />
