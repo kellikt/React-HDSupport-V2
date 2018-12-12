@@ -48,7 +48,8 @@ export const DropdownBackground = styled.div`
     border-radius: 4px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3);
+    box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(0, 0, 0, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.1);
     will-change: transform;
 `;
 

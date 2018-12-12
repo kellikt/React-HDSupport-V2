@@ -5,25 +5,42 @@ import PropTypes from 'prop-types';
 
 import Heading from './Heading';
 import { LayoutContext } from '../../../../LayoutContext';
+import Timesheet from './Timesheet';
+import MetricsTable from '../ClockMetrics/MetricsTable';
 
 class Index extends Component {
     state = {
         user: {},
+        partial: {},
+        weekOne: {},
+        weekTwo: {},
+        weekThree: {},
+        grandTotals: [],
     };
 
     getUserInfo = async () => {
-        const { username } = this.props;
+        const { username, payPeriod, year } = this.props;
 
         try {
-            const request = await axios.post('/search-user.php', {
+            const request = axios.post('/search-user.php', {
                 username: username,
                 uuid: '',
                 firstName: '',
                 lastName: '',
             });
-            const data = request.data;
+            const timesheetRequest = axios.post('/get-timesheet-info.php', {
+                payPeriod: payPeriod,
+                year: year,
+                username: username,
+            });
+            const responses = await Promise.all([request, timesheetRequest]);
             this.setState({
-                user: data[0],
+                user: responses[0].data[0],
+                partial: responses[1].data[3],
+                weekOne: responses[1].data[0],
+                weekTwo: responses[1].data[1],
+                weekThree: responses[1].data[2],
+                grandTotals: responses[1].data[4],
             });
         } catch (error) {
             console.log(error);
@@ -46,7 +63,8 @@ class Index extends Component {
 
     render() {
         const { year, payPeriod, username } = this.props;
-        const { user } = this.state;
+        const { user, partial, weekOne, weekTwo, weekThree, grandTotals } = this.state;
+        const weeks = [weekOne, weekTwo, weekThree];
 
         return (
             <Container>
@@ -55,7 +73,12 @@ class Index extends Component {
                     year={year}
                     payPeriod={payPeriod}
                     username={username}
+                    partialHours={partial.partial_week_hours_parsed}
                 />
+                <InfoContainer>
+                    <Timesheet weeks={weeks} totals={grandTotals} />
+                    <MetricsTable student={username} year={year} payPeriod={payPeriod} />
+                </InfoContainer>
             </Container>
         );
     }
@@ -75,4 +98,23 @@ const Container = styled.main`
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+`;
+
+const InfoContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    grid-column-gap: 30px;
+
+    .tableRow {
+        border-top: none;
+        padding: 12px 18px;
+
+        &:nth-of-type(odd) {
+            border-top: 3px solid #e4ebf4;
+        }
+    }
+
+    .striped {
+        background: #f6fafd;
+    }
 `;

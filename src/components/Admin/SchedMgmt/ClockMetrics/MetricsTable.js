@@ -49,6 +49,8 @@ class MetricsTable extends Component {
         const { student, year, payPeriod } = this.props;
         const { results } = this.state;
         const splitDate = payPeriod.split(',');
+        let stripeCounter = -1;
+        let stripeFlag = false;
 
         return (
             <Table {...this.props}>
@@ -68,17 +70,27 @@ class MetricsTable extends Component {
                 <TableHeading>
                     <span>Timestamp</span>
                     <span>Comments</span>
-                    <span>Location Okay?</span>
+                    <span>Location?</span>
                 </TableHeading>
 
                 {results.map((result, index) => {
                     let locationFlag = false;
+                    if (stripeCounter === 1) {
+                        stripeFlag = !stripeFlag;
+                        stripeCounter = 0;
+                    } else stripeCounter++;
+                    let classes = '';
+                    if (stripeFlag) {
+                        classes = 'tableRow striped';
+                    } else {
+                        classes = 'tableRow';
+                    }
                     if (!result.ip.includes('128.171')) {
                         locationFlag = true;
                     }
 
                     return (
-                        <TableRow key={result.logid} stagger={index}>
+                        <TableRow key={result.logid} stagger={index} className={classes}>
                             <Timestamp in={result.action}>
                                 <h4>{`${result.hour}:${result.min} ${result.ampm}`}</h4>
                                 <span>{`${result.month}/${result.day}/${year}`}</span>

@@ -1,85 +1,59 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import Button from '../../../Button';
 
-class Heading extends Component {
-    parsePayPeriod = () => {
-        const { payPeriod, year } = this.props;
-        const splitDate = payPeriod.split(',');
-        const dates = [
-            new Date(Date.parse(`${splitDate[0]}/${splitDate[1]}/${year}`)),
-            new Date(Date.parse(`${splitDate[0]}/${splitDate[2]}/${year}`)),
-        ];
+const parsePayPeriod = (payPeriod, year) => {
+    const splitDate = payPeriod.split(',');
+    const dates = [
+        new Date(Date.parse(`${splitDate[0]}/${splitDate[1]}/${year}`)),
+        new Date(Date.parse(`${splitDate[0]}/${splitDate[2]}/${year}`)),
+    ];
 
-        return dates;
-    };
+    return dates;
+};
 
-    subtractDays = (date, days) => {
-        const result = new Date(date);
-        result.setDate(result.getDate() - days);
+const Heading = props => {
+    const { name, year, payPeriod, partialHours } = props;
+    const dates = parsePayPeriod(payPeriod, year);
+    const month = dates[0].toLocaleString('en-US', { month: 'long' });
 
-        return result;
-    };
+    return (
+        <Container>
+            <Top>
+                <h2>{name}</h2>
+                <Button color="light-blue">Show Printable Timesheet</Button>
+            </Top>
+            <Bottom>
+                <PayPeriod>
+                    <Label>Pay Period</Label>
+                    <div>{`${month} ${dates[0].getDate()} - ${month} ${dates[1].getDate()}`}</div>
+                </PayPeriod>
+                <Year>
+                    <Label>Year</Label>
+                    <div>{year}</div>
+                </Year>
+                <Partial>
+                    <Label>Hours Worked on Partial</Label>
+                    <div>{partialHours} Hours</div>
+                </Partial>
+            </Bottom>
+        </Container>
+    );
+};
 
-    async componentDidMount() {
-        const { payPeriod, username, year } = this.props;
-        const splitDate = payPeriod.split(',');
-        const beginDate = new Date(Date.parse(`${splitDate[0]}/${splitDate[1]}/${year}`));
-        const partialBegin = this.subtractDays(beginDate, beginDate.getDay());
-
-        try {
-            const request = await axios.post('/get-partial-hours.php', {
-                username: username,
-                periodStart: partialBegin.getTime() / 1000,
-                periodEnd: beginDate.getTime() / 1000,
-                dayGap: beginDate.getDay(),
-                year: year,
-            });
-            const data = request.data;
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    render() {
-        const { name, year } = this.props;
-        const dates = this.parsePayPeriod();
-        const month = dates[0].toLocaleString('en-US', { month: 'long' });
-
-        return (
-            <Container>
-                <Top>
-                    <h2>{name}</h2>
-                    <Button color="light-blue">Show Printable Timesheet</Button>
-                </Top>
-                <Bottom>
-                    <PayPeriod>
-                        <Label>Pay Period</Label>
-                        <div>{`${month} ${dates[0].getDate()} - ${month} ${dates[1].getDate()}`}</div>
-                    </PayPeriod>
-                    <Year>
-                        <Label>Year</Label>
-                        <div>{year}</div>
-                    </Year>
-                    <Partial>
-                        <Label>Hours Worked on Partial</Label>
-                        <div>00:00 hours</div>
-                    </Partial>
-                </Bottom>
-            </Container>
-        );
-    }
-}
+Heading.defaultProps = {
+    name: 'Loading...',
+    partialHours: '--:--',
+};
 
 Heading.propTypes = {
     name: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
     payPeriod: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
+    partialHours: PropTypes.string.isRequired,
 };
 
 export default Heading;
