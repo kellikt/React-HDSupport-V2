@@ -113,7 +113,7 @@ class AddException extends Component {
                     searched: true,
                 });
                 this.handleClose(2000);
-            } else if (times.length === 0) {
+            } else if (eid === '') {
                 this.setState({
                     message: 'Just FYI, there are no clock-ins for this date.',
                     heading: 'Heads up!',

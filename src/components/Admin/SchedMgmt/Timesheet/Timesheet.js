@@ -20,7 +20,7 @@ class Timesheet extends Component {
     render() {
         const buttons = [...Array(3).keys()];
         const { week } = this.state;
-        const { weeks, totals } = this.props;
+        const { weeks, totals, username } = this.props;
 
         return (
             <Container>
@@ -43,11 +43,11 @@ class Timesheet extends Component {
                 <WeekContainer>
                     <PoseGroup>
                         {week === 0 ? (
-                            <Week key="weekOne" weekData={weeks[0]} />
+                            <Week key="weekOne" username={username} weekData={weeks[0]} />
                         ) : week === 1 ? (
-                            <Week key="weekTwo" weekData={weeks[1]} />
+                            <Week key="weekTwo" username={username} weekData={weeks[1]} />
                         ) : (
-                            <Week key="weekThree" weekData={weeks[2]} />
+                            <Week key="weekThree" username={username} weekData={weeks[2]} />
                         )}
                     </PoseGroup>
                     <WeekTotal
@@ -55,6 +55,7 @@ class Timesheet extends Component {
                         night={totals[1]}
                         overtime={totals[2]}
                         nightOvertime={totals[3]}
+                        hoursString="Grand-Total Hours"
                     />
                 </WeekContainer>
             </Container>
@@ -65,6 +66,7 @@ class Timesheet extends Component {
 Timesheet.propTypes = {
     weeks: PropTypes.array.isRequired,
     totals: PropTypes.array.isRequired,
+    username: PropTypes.string.isRequired,
 };
 
 export default Timesheet;

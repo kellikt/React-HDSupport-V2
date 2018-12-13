@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import posed from 'react-pose';
+import posed, { PoseGroup } from 'react-pose';
 import PropTypes from 'prop-types';
 
 import WeekTotal from './WeekTotal';
+import DayException from './DayException';
 
 class Week extends Component {
+    state = {
+        focused: null,
+    };
+
+    handleClick = index => {
+        this.setState({
+            focused: index,
+        });
+    };
+
     createEmptySpans = num => {
         const array = [...Array(num).keys()];
         return array;
     };
 
     render() {
-        const { weekData } = this.props;
+        const { weekData, username } = this.props;
+        const { focused } = this.state;
         const dayKeys = Object.keys(weekData).filter(key => {
             return !key.includes('_');
         });
@@ -33,66 +45,80 @@ class Week extends Component {
                         <span>OT</span>
                         <span>NT OT</span>
                     </Heading>
-                    {dayKeys.map(day => {
-                        const currentDayObj = weekData[day];
-                        let clocksExist = false;
-                        let emptySpans;
-                        if (currentDayObj.hasOwnProperty('times')) {
-                            clocksExist = true;
-                            emptySpans = this.createEmptySpans(6 - currentDayObj.times.length); // maximum of 6 spans needed
-                        } else {
-                            emptySpans = this.createEmptySpans(6);
-                        }
+                    <PoseGroup>
+                        {dayKeys.map((day, index) => {
+                            const currentDayObj = weekData[day];
+                            let clocksExist = false;
+                            let emptySpans;
+                            if (currentDayObj.hasOwnProperty('times')) {
+                                clocksExist = true;
+                                emptySpans = this.createEmptySpans(6 - currentDayObj.times.length); // maximum of 6 spans needed
+                            } else {
+                                emptySpans = this.createEmptySpans(6);
+                            }
 
-                        return (
-                            <Day key={day}>
-                                <DateOfRow>
-                                    <div>{currentDayObj.date}</div>
-                                    <div>{day}</div>
-                                </DateOfRow>
-                                {clocksExist
-                                    ? currentDayObj.times.map((time, index) => {
-                                          if (index % 2 === 0)
-                                              return (
-                                                  <Time key={index} green>
-                                                      {time}
-                                                  </Time>
-                                              );
-                                          else return <Time key={index}>{time}</Time>;
-                                      })
-                                    : null}
-                                {emptySpans.map(index => {
-                                    return <span key={index} />;
-                                })}
-                                {currentDayObj.total_reg === '0:00' ? (
-                                    <Hours>{currentDayObj.total_reg}</Hours>
-                                ) : (
-                                    <Hours active>{currentDayObj.total_reg}</Hours>
-                                )}
-                                {currentDayObj.total_night === '0:00' ? (
-                                    <Hours>{currentDayObj.total_night}</Hours>
-                                ) : (
-                                    <Hours active>{currentDayObj.total_night}</Hours>
-                                )}
-                                {currentDayObj.totalot_reg === '0:00' ? (
-                                    <Hours>{currentDayObj.totalot_reg}</Hours>
-                                ) : (
-                                    <Hours active>{currentDayObj.totalot_reg}</Hours>
-                                )}
-                                {currentDayObj.totalot_night === '0:00' ? (
-                                    <Hours>{currentDayObj.totalot_night}</Hours>
-                                ) : (
-                                    <Hours active>{currentDayObj.totalot_night}</Hours>
-                                )}
-                            </Day>
-                        );
-                    })}
+                            if (focused === index) {
+                                return (
+                                    <DayException
+                                        key={`fullday${day}`}
+                                        day={day}
+                                        dayObj={currentDayObj}
+                                        username={username}
+                                    />
+                                );
+                            } else {
+                                return (
+                                    <Day key={day} onClick={() => this.handleClick(index)}>
+                                        <DateOfRow>
+                                            <div>{currentDayObj.date}</div>
+                                            <div>{day}</div>
+                                        </DateOfRow>
+                                        {clocksExist
+                                            ? currentDayObj.times.map((time, index) => {
+                                                  if (index % 2 === 0)
+                                                      return (
+                                                          <Time key={index} green>
+                                                              {time}
+                                                          </Time>
+                                                      );
+                                                  else return <Time key={index}>{time}</Time>;
+                                              })
+                                            : null}
+                                        {emptySpans.map(index => {
+                                            return <span key={index} />;
+                                        })}
+                                        {currentDayObj.total_reg === '0:00' ? (
+                                            <Hours>{currentDayObj.total_reg}</Hours>
+                                        ) : (
+                                            <Hours active>{currentDayObj.total_reg}</Hours>
+                                        )}
+                                        {currentDayObj.total_night === '0:00' ? (
+                                            <Hours>{currentDayObj.total_night}</Hours>
+                                        ) : (
+                                            <Hours active>{currentDayObj.total_night}</Hours>
+                                        )}
+                                        {currentDayObj.totalot_reg === '0:00' ? (
+                                            <Hours>{currentDayObj.totalot_reg}</Hours>
+                                        ) : (
+                                            <Hours active>{currentDayObj.totalot_reg}</Hours>
+                                        )}
+                                        {currentDayObj.totalot_night === '0:00' ? (
+                                            <Hours>{currentDayObj.totalot_night}</Hours>
+                                        ) : (
+                                            <Hours active>{currentDayObj.totalot_night}</Hours>
+                                        )}
+                                    </Day>
+                                );
+                            }
+                        })}
+                    </PoseGroup>
                 </Container>
                 <WeekTotal
                     regular={weekData.subtotal_reg}
                     night={weekData.subtotal_night}
                     overtime={weekData.subtotalot_reg}
                     nightOvertime={weekData.subtotalot_night}
+                    hoursString="Sub-total Hours"
                 />
             </WeekContainer>
         );
@@ -101,6 +127,7 @@ class Week extends Component {
 
 Week.propTypes = {
     weekData: PropTypes.object.isRequired,
+    username: PropTypes.string.isRequired,
 };
 
 export default Week;
@@ -159,7 +186,12 @@ const Heading = styled.div`
     }
 `;
 
-const Day = styled.div`
+const AnimatedDay = posed.div({
+    enter: { opacity: 1, delay: 300 },
+    exit: { opacity: 0 },
+});
+
+const Day = styled(AnimatedDay)`
     display: grid;
     grid-template-columns: repeat(11, 1fr);
     font-weight: 500;
@@ -175,13 +207,13 @@ const Day = styled.div`
     }
 `;
 
-const DateOfRow = styled.span`
+export const DateOfRow = styled.span`
     border-right: 3px solid #e4ebf4;
 
     > div {
         &:first-of-type {
             color: var(--light-blue);
-            font-size: 17px;
+            font-size: 15px;
         }
         &:last-of-type {
             color: var(--dark-grey);

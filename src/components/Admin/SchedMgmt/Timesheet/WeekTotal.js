@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const WeekTotal = props => {
-    const { regular, night, overtime, nightOvertime } = props;
+    const { regular, night, overtime, nightOvertime, hoursString } = props;
 
     return (
-        <Container>
-            <h2>Sub-Total Hours</h2>
+        <Container {...props}>
+            <h2>{hoursString}</h2>
             <AllHours>
                 <Hours>
                     <span>Regular</span>
@@ -42,6 +42,7 @@ WeekTotal.propTypes = {
     night: PropTypes.string.isRequired,
     overtime: PropTypes.string.isRequired,
     nightOvertime: PropTypes.string.isRequired,
+    hoursString: PropTypes.string.isRequired,
 };
 
 export default WeekTotal;

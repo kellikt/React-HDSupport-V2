@@ -76,7 +76,7 @@ class Index extends Component {
                     partialHours={partial.partial_week_hours_parsed}
                 />
                 <InfoContainer>
-                    <Timesheet weeks={weeks} totals={grandTotals} />
+                    <Timesheet weeks={weeks} totals={grandTotals} username={username} />
                     <MetricsTable student={username} year={year} payPeriod={payPeriod} />
                 </InfoContainer>
             </Container>
