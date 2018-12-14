@@ -52,6 +52,10 @@ const Container = styled.div`
         flex-direction: row;
         align-items: center;
     }
+
+    @media (max-width: 500px) {
+        padding: 12px;
+    }
 `;
 
 const Title = styled.h2`
@@ -68,12 +72,27 @@ const Title = styled.h2`
         padding: 30px 24px 30px 0;
         border-bottom: 0;
     }
+
+    @media (max-width: 500px) {
+        padding: 12px 4px;
+        font-size: 16px;
+        width: 30%;
+    }
 `;
 
 const Stamp = styled.div`
     span {
         font-size: 15px;
         display: block;
+    }
+
+    @media (max-width: 500px) {
+        font-size: 15px;
+        width: 40%;
+
+        span {
+            font-size: 14px;
+        }
     }
 `;
 
@@ -85,9 +104,19 @@ const Comments = styled.div`
         margin: 12px 0 0 0;
     }
 
+    h4 {
+        margin: 0;
+    }
+
     @media (max-width: 1050px) {
         border-left: 1px solid #d2d1d1cc;
         padding: 30px 0 30px 24px;
         border-top: 0;
+    }
+
+    @media (max-width: 500px) {
+        padding: 12px 4px;
+        font-size: 15px;
+        width: 30%;
     }
 `;

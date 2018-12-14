@@ -41,8 +41,7 @@ class OutageContent extends Component {
         let value = this.context;
         const { focused } = value;
         const currDate = new Date();
-        const dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate() +
-            focused}`;
+        const dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate() + focused}`;
 
         try {
             const staffRequest = axios.get(`/get-outages.php?role=staff&date=${dateString}`);
@@ -51,10 +50,7 @@ class OutageContent extends Component {
             const results = await Promise.all([staffRequest, studentRequest]);
             const data = [results[0].data, results[1].data];
 
-            if (
-                !this.doArraysEqual(data[0], this.state.staff) ||
-                !this.doArraysEqual(data[1], this.state.students)
-            ) {
+            if (!this.doArraysEqual(data[0], this.state.staff) || !this.doArraysEqual(data[1], this.state.students)) {
                 this.setState({
                     staff: data[0],
                     students: data[1],
@@ -121,6 +117,10 @@ const Heading = styled.div`
         color: var(--white);
         letter-spacing: 0.035em;
         margin-bottom: 12px;
+
+        @media (max-width: 500px) {
+            font-size: 18px;
+        }
     }
 `;
 
@@ -139,6 +139,10 @@ const Content = styled.div`
         font-size: 20px;
         font-weight: 500;
         margin: 0;
+
+        @media (max-width: 500px) {
+            font-size: 16px;
+        }
     }
 
     span {

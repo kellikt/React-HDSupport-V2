@@ -20,33 +20,21 @@ const LinksContainer = () => {
                     <p>Check when you work.</p>
                 </div>
             </NavLink>
-            <NavLink
-                color="pink"
-                href="https://www.hawaii.edu/bwiki/display/help/Home"
-                target="_blank"
-            >
+            <NavLink color="pink" href="https://www.hawaii.edu/bwiki/display/help/Home" target="_blank">
                 <Wiki />
                 <div>
                     <h3>HD Wiki</h3>
                     <p>Need help? Read this.</p>
                 </div>
             </NavLink>
-            <NavLink
-                color="light-blue"
-                href="https://csocits.slack.com/messages/"
-                target="_blank"
-            >
+            <NavLink color="light-blue" href="https://csocits.slack.com/messages/" target="_blank">
                 <Slack />
                 <div>
                     <h3>Slack</h3>
                     <p>Send a chat within ITS.</p>
                 </div>
             </NavLink>
-            <NavLink
-                color="gold"
-                href="https://mail.google.com/a/hawaii.edu/"
-                target="_blank"
-            >
+            <NavLink color="gold" href="https://mail.google.com/a/hawaii.edu/" target="_blank">
                 <Gmail />
                 <div>
                     <h3>UH Gmail</h3>
@@ -73,8 +61,7 @@ const NavLink = styled.a`
     transition: all 0.2s ease-out;
     background-color: #fff;
     padding: 18px;
-    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     border-radius: 8px;
     align-items: center;
 
@@ -95,16 +82,29 @@ const NavLink = styled.a`
         width: 100px;
         height: 100px;
         margin-right: 24px;
+
+        @media (max-width: 1100px) {
+            width: 75px;
+            height: 75px;
+        }
+
+        @media (max-width: 530px) {
+            margin: 0 0 20px;
+        }
     }
 
     &:hover {
         transform: translateY(-2px);
         color: var(--black);
-        box-shadow: 0 18px 35px rgba(50, 50, 93, 0.1),
-            0 8px 15px rgba(0, 0, 0, 0.07);
+        box-shadow: 0 18px 35px rgba(50, 50, 93, 0.1), 0 8px 15px rgba(0, 0, 0, 0.07);
     }
 
     &:active {
         transform: translateY(2px);
+    }
+
+    @media (max-width: 530px) {
+        flex-direction: column;
+        text-align: center;
     }
 `;

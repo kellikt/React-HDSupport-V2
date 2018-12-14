@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Flipper } from 'react-flip-toolkit';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import DropdownContainer from './DropdownContainer/DropdownContainer';
 import Navbar from './Navbar/Navbar';
 import NavbarItem from './Navbar/NavbarItem';
-
 import ToolsDropdown from './DropdownContents/ToolsDropdown';
 import DownloadsDropdown from './DropdownContents/DownloadsDropdown';
 import DocumentationDropdown from './DropdownContents/DocumentationDropdown';
 import UserDocsDropdown from './DropdownContents/UserDocsDropdown';
 import AdministrationDropdown from './DropdownContents/AdministrationDropdown';
+import { LayoutContext } from '../../LayoutContext';
 
 const navbarConfig = [
     { title: 'Tools', dropdown: ToolsDropdown },
@@ -25,6 +26,7 @@ class Header extends Component {
         super(props);
         this.state = {
             activeIndices: [],
+            roles: {},
         };
     }
 
@@ -42,8 +44,7 @@ class Header extends Component {
             this.resetDropdownState(i);
             return;
         }
-        if (this.state.activeIndices[this.state.activeIndices.length - 1] === i)
-            return;
+        if (this.state.activeIndices[this.state.activeIndices.length - 1] === i) return;
 
         this.setState(prevState => ({
             activeIndices: prevState.activeIndices.concat(i),
@@ -55,11 +56,31 @@ class Header extends Component {
         this.setState({
             animatingOut: true,
         });
-        this.animatingOutTimeout = setTimeout(
-            this.resetDropdownState,
-            this.props.duration
-        );
+        this.animatingOutTimeout = setTimeout(this.resetDropdownState, this.props.duration);
     };
+
+    async componentDidMount() {
+        let value = this.context;
+        const { username } = value;
+        try {
+            const request = await axios.get(`/get-roles.php?username=${username}`);
+            const data = request.data;
+
+            const roles = {
+                helpDesk: data.helpdesk === 'yes' ? true : false,
+                lab: data.lab === 'yes' ? true : false,
+                tech: data.tech === 'yes' ? true : false,
+                staff: data.staff === 'yes' ? true : false,
+                admin: data.administrator === 'yes' ? true : false,
+                manager: data.manager === 'yes' ? true : false,
+            };
+            this.setState({
+                roles: roles,
+            });
+        } catch (error) {
+            console.log('Unable to fetch roles from DB.');
+        }
+    }
 
     render() {
         const { duration } = this.props;
@@ -67,15 +88,11 @@ class Header extends Component {
         let PrevDropdown;
         let direction;
 
-        const currentIndex = this.state.activeIndices[
-            this.state.activeIndices.length - 1
-        ];
+        const currentIndex = this.state.activeIndices[this.state.activeIndices.length - 1];
         const prevIndex =
-            this.state.activeIndices.length > 1 &&
-            this.state.activeIndices[this.state.activeIndices.length - 2];
+            this.state.activeIndices.length > 1 && this.state.activeIndices[this.state.activeIndices.length - 2];
 
-        if (typeof currentIndex === 'number')
-            CurrentDropdown = navbarConfig[currentIndex].dropdown;
+        if (typeof currentIndex === 'number') CurrentDropdown = navbarConfig[currentIndex].dropdown;
         if (typeof prevIndex === 'number') {
             PrevDropdown = navbarConfig[prevIndex].dropdown;
             direction = currentIndex > prevIndex ? 'right' : 'left';
@@ -87,19 +104,13 @@ class Header extends Component {
                     <Navbar onMouseLeave={this.onMouseLeave}>
                         {navbarConfig.map((n, index) => {
                             return (
-                                <NavbarItem
-                                    key={index}
-                                    title={n.title}
-                                    index={index}
-                                    onMouseEnter={this.onMouseEnter}
-                                >
+                                <NavbarItem key={index} title={n.title} index={index} onMouseEnter={this.onMouseEnter}>
                                     {currentIndex === index && (
                                         <DropdownContainer
                                             direction={direction}
-                                            animatingOut={
-                                                this.state.animatingOut
-                                            }
+                                            animatingOut={this.state.animatingOut}
                                             duration={duration}
+                                            roles={this.state.roles}
                                         >
                                             <CurrentDropdown />
                                             {PrevDropdown && <PrevDropdown />}
@@ -118,5 +129,7 @@ class Header extends Component {
 Header.propTypes = {
     duration: PropTypes.number.isRequired,
 };
+
+Header.contextType = LayoutContext;
 
 export default Header;

@@ -19,19 +19,16 @@ export class ClockProvider extends Component {
     async componentDidMount() {
         try {
             let value = this.context;
-            const { uuid } = value;
+            const { username } = value;
 
-            const request = await axios.get(`/get-username.php?uuid=${uuid}`);
-            const data = request.data;
-
-            const lastClockRequest = await axios.get(`/get-last-clock.php?username=${data.username}`);
+            const lastClockRequest = await axios.get(`/get-last-clock.php?username=${username}`);
             const clockData = lastClockRequest.data;
 
             const time = `${clockData.hour}:${clockData.min} ${clockData.ampm}`;
             const date = `${clockData.month}-${clockData.day}-${clockData.year}`;
 
             this.setState({
-                username: data.username,
+                username: username,
                 clockedIn: clockData.action === 'out' ? false : true,
                 lastClock: {
                     action: clockData.action,
@@ -43,7 +40,16 @@ export class ClockProvider extends Component {
                 loading: false,
             });
         } catch (error) {
-            console.log(`Error fetching clock info: ${error}`);
+            let value = this.context;
+            const { username } = value;
+            this.setState({
+                username: username,
+                clockedIn: false,
+                lastClock: {
+                    action: 'out',
+                },
+                loading: false,
+            });
         }
     }
 

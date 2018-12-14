@@ -11,6 +11,12 @@ class Week extends Component {
         focused: null,
     };
 
+    resetFocus = () => {
+        this.setState({
+            focused: null,
+        });
+    };
+
     handleClick = index => {
         this.setState({
             focused: index,
@@ -23,7 +29,7 @@ class Week extends Component {
     };
 
     render() {
-        const { weekData, username } = this.props;
+        const { weekData, username, refreshData } = this.props;
         const { focused } = this.state;
         const dayKeys = Object.keys(weekData).filter(key => {
             return !key.includes('_');
@@ -64,6 +70,8 @@ class Week extends Component {
                                         day={day}
                                         dayObj={currentDayObj}
                                         username={username}
+                                        close={this.resetFocus}
+                                        refreshData={refreshData}
                                     />
                                 );
                             } else {
@@ -128,6 +136,7 @@ class Week extends Component {
 Week.propTypes = {
     weekData: PropTypes.object.isRequired,
     username: PropTypes.string.isRequired,
+    refreshData: PropTypes.func,
 };
 
 export default Week;

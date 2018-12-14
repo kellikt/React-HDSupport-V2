@@ -73,4 +73,8 @@ const Tab = styled.li`
     &:hover {
         background: var(--brown);
     }
+
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
 `;

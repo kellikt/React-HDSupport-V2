@@ -68,6 +68,13 @@ const Container = styled.main`
     margin-top: 60px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-column-gap: 24px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        margin: 0 auto;
+        max-width: 600px;
+    }
 `;
 
 const Name = styled.h1`

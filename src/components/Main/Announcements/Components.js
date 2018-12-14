@@ -10,6 +10,11 @@ export const Container = styled.div`
     p {
         margin: 0;
     }
+
+    @media (max-width: 900px) {
+        margin: 50px auto;
+        width: 100%;
+    }
 `;
 
 export const CardsContainer = styled.ul`

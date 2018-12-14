@@ -6,7 +6,6 @@ import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Schedule } from '../../../images/icons/Administration/Schedule.svg';
 import { ReactComponent as Account } from '../../../images/icons/Administration/Account.svg';
 import { ReactComponent as Browser } from '../../../images/icons/Administration/Browser.svg';
-import { ReactComponent as Waiver } from '../../../images/icons/Administration/Waiver.svg';
 import { ReactComponent as Database } from '../../../images/icons/Administration/Database.svg';
 
 const AdministrationDropdownEl = styled.div`
@@ -49,14 +48,6 @@ const AdministrationDropdown = () => {
             </DropdownSection>
             <DropdownSection>
                 <ul>
-                    <ListItem>
-                        <a href="/">
-                            <Heading color="pink">
-                                <Waiver />
-                                Waiver Management
-                            </Heading>
-                        </a>
-                    </ListItem>
                     <ListItem noMarginBottom>
                         <a href="/">
                             <Heading color="pink">

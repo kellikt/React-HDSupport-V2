@@ -30,8 +30,9 @@ const NavbarEl = styled.nav`
     width: 100%;
     padding: 0 20px;
 
-    @media (max-width: 1100px) {
+    @media (max-width: 900px) {
         visibility: hidden;
+        font-size: 15px;
     }
 `;
 
@@ -44,6 +45,10 @@ const NavbarList = styled.ul`
 
     > a {
         margin-right: auto;
+
+        @media (max-width: 1100px) {
+            font-size: 15px;
+        }
 
         > svg {
             width: 50px;

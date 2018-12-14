@@ -38,8 +38,7 @@ export default Breadcrumb;
 const Container = styled.nav`
     display: flex;
     grid-column: 1/-1;
-    border-bottom: 2px solid
-        ${({ color }) => (color ? `var(--crumb-${color}-border)` : `var(--crumb-blue-border)`)};
+    border-bottom: 2px solid ${({ color }) => (color ? `var(--crumb-${color}-border)` : `var(--crumb-blue-border)`)};
 `;
 
 const Crumbs = styled.div`
@@ -90,5 +89,11 @@ const Crumb = styled(Link)`
 
     &:last-of-type {
         margin-right: 0;
+    }
+
+    @media (max-width: 600px) {
+        font-size: 13px;
+        line-height: 1.1;
+        padding: 0 12px;
     }
 `;

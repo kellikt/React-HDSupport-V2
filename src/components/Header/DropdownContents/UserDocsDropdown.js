@@ -18,7 +18,7 @@ const UserDocsDropdown = () => {
             <DropdownSection data-first-dropdown-section>
                 <ul>
                     <ListItem>
-                        <a href="/">
+                        <a href="https://hawaii.edu/askus/" target="_blank" rel="noopener noreferrer">
                             <Heading color="gold">
                                 <AskUs />
                                 Askus Articles
@@ -27,7 +27,11 @@ const UserDocsDropdown = () => {
                         </a>
                     </ListItem>
                     <ListItem noMarginBottom>
-                        <a href="/">
+                        <a
+                            href="http://myuhinfo.hawaii.edu/page/campusreps.html"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <Heading color="gold">
                                 <Reps />
                                 ITS Campus Reps
@@ -40,14 +44,14 @@ const UserDocsDropdown = () => {
             <DropdownSection>
                 <ul>
                     <ListItem>
-                        <a href="/">
+                        <a href="https://www.hawaii.edu/askus/588" target="_blank" rel="noopener noreferrer">
                             <Heading color="gold">
                                 <Policy /> ITS Support Policy
                             </Heading>
                         </a>
                     </ListItem>
                     <ListItem>
-                        <a href="/">
+                        <a href="https://www.hawaii.edu/itslab/" target="_blank" rel="noopener noreferrer">
                             <Heading color="gold">
                                 <Labs />
                                 ITS Labs Homepage
@@ -55,7 +59,11 @@ const UserDocsDropdown = () => {
                         </a>
                     </ListItem>
                     <ListItem noMarginBottom>
-                        <a href="/">
+                        <a
+                            href="http://myuhinfo.hawaii.edu/page/studentservices.html"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <Heading color="gold">
                                 <AnR />
                                 A&amp;R Representatives

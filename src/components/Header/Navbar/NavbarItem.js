@@ -2,6 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+class NavbarItem extends Component {
+    onMouseEnter = () => {
+        this.props.onMouseEnter(this.props.index);
+    };
+
+    render() {
+        const { title, children } = this.props;
+
+        return (
+            <NavbarItemEl onMouseEnter={this.onMouseEnter} onFocus={this.onMouseEnter}>
+                <NavbarItemTitle>{title}</NavbarItemTitle>
+                <DropdownSlot>{children}</DropdownSlot>
+            </NavbarItemEl>
+        );
+    }
+}
+
+NavbarItem.propTypes = {
+    onMouseEnter: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+    children: PropTypes.node,
+};
+
+export default NavbarItem;
+
 const NavbarItemTitle = styled.button`
     background: transparent;
     border: 0;
@@ -22,6 +48,15 @@ const NavbarItemTitle = styled.button`
         opacity: 0.7;
         outline: none;
     }
+
+    @media (max-width: 1100px) {
+        font-size: 15px;
+        padding: 1rem 20px 1.2rem;
+    }
+
+    @media (max-width: 900px) {
+        padding: 0;
+    }
 `;
 
 const NavbarItemEl = styled.li`
@@ -35,32 +70,3 @@ const DropdownSlot = styled.div`
     perspective: 1500px;
     z-index: 2;
 `;
-
-class NavbarItem extends Component {
-    onMouseEnter = () => {
-        this.props.onMouseEnter(this.props.index);
-    };
-
-    render() {
-        const { title, children } = this.props;
-
-        return (
-            <NavbarItemEl
-                onMouseEnter={this.onMouseEnter}
-                onFocus={this.onMouseEnter}
-            >
-                <NavbarItemTitle>{title}</NavbarItemTitle>
-                <DropdownSlot>{children}</DropdownSlot>
-            </NavbarItemEl>
-        );
-    }
-}
-
-NavbarItem.propTypes = {
-    onMouseEnter: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
-    index: PropTypes.number.isRequired,
-    children: PropTypes.node,
-};
-
-export default NavbarItem;

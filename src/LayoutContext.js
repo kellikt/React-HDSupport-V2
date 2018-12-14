@@ -7,6 +7,7 @@ export class LayoutProvider extends Component {
         super(props);
         this.state = {
             uuid: '22051104',
+            username: 'asyarb',
             fullScreen: false,
         };
     }
@@ -25,6 +26,7 @@ export class LayoutProvider extends Component {
                 value={{
                     fullScreen: this.state.fullScreen,
                     uuid: this.state.uuid,
+                    username: this.state.username,
                     changeSize: this.changeSize,
                 }}
             >

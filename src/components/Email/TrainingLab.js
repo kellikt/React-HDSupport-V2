@@ -53,10 +53,7 @@ class TrainingLab extends Component {
     }
 
     render() {
-        const links = [
-            { title: 'Email Generator', to: '/email' },
-            { title: 'Training Lab', to: '/email/traininglab' },
-        ];
+        const links = [{ title: 'Email Generator', to: '/email' }, { title: 'Training Lab', to: '/email/traininglab' }];
 
         const { bcc, fullName, recipient, requestedDates, preview } = this.state;
 
@@ -180,6 +177,14 @@ const Text = styled.div`
         &:last-of-type {
             grid-column: 1/-1;
             width: 60%;
+
+            @media (max-width: 550px) {
+                width: 100%;
+            }
         }
+    }
+
+    @media (max-width: 550px) {
+        grid-template-columns: 1fr;
     }
 `;

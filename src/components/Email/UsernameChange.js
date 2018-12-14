@@ -162,6 +162,14 @@ const Text = styled.div`
         &:last-of-type {
             grid-column: 1/-1;
             width: 60%;
+
+            @media (max-width: 550px) {
+                width: 100%;
+            }
         }
+    }
+
+    @media (max-width: 550px) {
+        grid-template-columns: 1fr;
     }
 `;

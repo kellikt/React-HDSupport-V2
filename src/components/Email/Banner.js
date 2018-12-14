@@ -43,18 +43,16 @@ class Banner extends Component {
 
     async componentDidMount() {
         let value = this.context;
-        const { uuid } = value;
+        const { uuid, username } = value;
 
         try {
-            const name = axios.get(`/get-name.php?uuid=${uuid}`);
-            const username = axios.get(`/get-username.php?uuid=${uuid}`);
+            const name = await axios.get(`/get-name.php?uuid=${uuid}`);
 
-            const request = await Promise.all([name, username]);
-            const data = [request[0].data, request[1].data];
+            const data = name.data;
 
             this.setState({
-                staff: data[0].first_name,
-                username: data[1].username,
+                staff: data.first_name,
+                username: username,
             });
         } catch (error) {
             console.log(`Error getting name: ${error}`);
@@ -62,10 +60,7 @@ class Banner extends Component {
     }
 
     render() {
-        const links = [
-            { title: 'Email Generator', to: '/email' },
-            { title: 'Banner PW Reset', to: '/email/banner' },
-        ];
+        const links = [{ title: 'Email Generator', to: '/email' }, { title: 'Banner PW Reset', to: '/email/banner' }];
 
         const { banner, staff, dept, bcc, username, preview, from } = this.state;
 
@@ -214,6 +209,14 @@ const Text = styled.div`
         &:last-of-type {
             grid-column: 1/-1;
             width: 60%;
+
+            @media (max-width: 550px) {
+                width: 100%;
+            }
         }
+    }
+
+    @media (max-width: 550px) {
+        grid-template-columns: 1fr;
     }
 `;

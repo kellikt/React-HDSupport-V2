@@ -53,10 +53,7 @@ class FileDrop extends Component {
     }
 
     render() {
-        const links = [
-            { title: 'Email Generator', to: '/email' },
-            { title: 'Filedrop', to: '/email/filedrop' },
-        ];
+        const links = [{ title: 'Email Generator', to: '/email' }, { title: 'Filedrop', to: '/email/filedrop' }];
 
         const { bcc, current, recipient, simpTicket, preview } = this.state;
 
@@ -180,6 +177,14 @@ const Text = styled.div`
         &:last-of-type {
             grid-column: 1/-1;
             width: 60%;
+
+            @media (max-width: 550px) {
+                width: 100%;
+            }
         }
+    }
+
+    @media (max-width: 550px) {
+        grid-template-columns: 1fr;
     }
 `;

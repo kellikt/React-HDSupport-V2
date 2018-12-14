@@ -8,6 +8,9 @@ import { ReactComponent as Warning } from '../../../../images/icons/RedExclamati
 import { ReactComponent as GreenCheck } from '../../../../images/icons/GreenCheck.svg';
 import { ReactComponent as WarningExclamation } from '../../../../images/icons/WarningExclamation.svg';
 import TextInput from '../../../TextInput';
+import Button from '../../../Button';
+import CloseButton from '../../../CloseButton';
+import SnackbarPortal from '../../../SnackbarPortal';
 
 class DayException extends Component {
     state = {
@@ -20,11 +23,54 @@ class DayException extends Component {
             t5: '',
         },
         logs: [],
+        message: '',
+        error: false,
+        edited: false,
+        heading: '',
     };
 
-    handleSubmit = event => {
+    handleSnack = () => {
+        this.setState({
+            error: false,
+            edited: false,
+        });
+    };
+
+    handleSubmit = async event => {
         event.preventDefault();
-        alert('hey');
+        const {
+            dayObj: { date },
+            username,
+            close,
+            refreshData,
+        } = this.props;
+        const { eid, t0, t1, t2, t3, t4, t5 } = this.state.exception;
+
+        try {
+            await axios.post('/add-single-exception.php', {
+                username: username,
+                date: date,
+                eid: eid,
+                t0: t0,
+                t1: t1,
+                t2: t2,
+                t3: t3,
+                t4: t4,
+                t5: t5,
+            });
+            this.setState({
+                message: `Added exception for ${username} on ${date}`,
+                heading: 'Success!',
+                edited: true,
+            });
+            refreshData();
+            this.timeoutId = setTimeout(() => {
+                this.handleSnack();
+                close();
+            }, 1500);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     handleChange = event => {
@@ -54,12 +100,16 @@ class DayException extends Component {
         }
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.timeoutId);
+    }
+
     render() {
-        const { dayObj, day } = this.props;
-        const { exception, logs } = this.state;
+        const { dayObj, day, close } = this.props;
+        const { exception, logs, message, heading, edited, error } = this.state;
 
         return (
-            <Container {...this.props}>
+            <Container onSubmit={this.handleSubmit} {...this.props}>
                 <Heading>
                     <Reminder>
                         <WarningExclamation />
@@ -101,7 +151,16 @@ class DayException extends Component {
                     <TextInput value={exception.t3} name="t3" onChange={this.handleChange} placeholder="00:00 AM" />
                     <TextInput value={exception.t4} name="t4" onChange={this.handleChange} placeholder="00:00 AM" />
                     <TextInput value={exception.t5} name="t5" onChange={this.handleChange} placeholder="00:00 AM" />
+                    <Button color="light-blue">Submit Exception</Button>
                 </Exceptions>
+                <CloseButton onClick={close} />
+                <SnackbarPortal
+                    handler={edited}
+                    message={message}
+                    heading={heading}
+                    onClick={this.handleSnack}
+                    isError={error}
+                />
             </Container>
         );
     }
@@ -114,6 +173,7 @@ DayException.defaultProps = {
 DayException.propTypes = {
     dayObj: PropTypes.object.isRequired,
     username: PropTypes.string,
+    close: PropTypes.func,
 };
 
 export default DayException;
@@ -131,6 +191,15 @@ const Container = styled(AnimatedDay)`
     border-top: 3px solid #e4ebf4;
     border-bottom: 3px solid #e4ebf4;
     min-height: 100px;
+    position: relative;
+
+    > span {
+        top: 15px;
+        right: 15px;
+        width: 36px;
+        height: 36px;
+        padding: 10px;
+    }
 `;
 
 const Label = styled.div`
@@ -173,6 +242,10 @@ const Exceptions = styled(Times)`
     .styled-input {
         padding: 15px 2px;
         margin: 0;
+    }
+
+    > button {
+        grid-column: 9 / span 2;
     }
 `;
 

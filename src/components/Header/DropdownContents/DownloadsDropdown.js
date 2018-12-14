@@ -39,9 +39,27 @@ const DownloadsDropdown = () => {
                         <Description>Choose the appropriate waiver type.</Description>
 
                         <WaiversContainer>
-                            <DownloadsLink href="/">Waiver of Liability</DownloadsLink>
-                            <DownloadsLink href="/">Waiver for Disk Recovery</DownloadsLink>
-                            <DownloadsLink href="/">Waiver for Drop-Offs</DownloadsLink>
+                            <DownloadsLink
+                                href="https://www.hawaii.edu/help/hdsupport/get_file.php?showfile=yes&fid=1155"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Waiver of Liability
+                            </DownloadsLink>
+                            <DownloadsLink
+                                href="https://www.hawaii.edu/help/hdsupport/get_file.php?showfile=yes&fid=1156"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Waiver for Disk Recovery
+                            </DownloadsLink>
+                            <DownloadsLink
+                                href="https://www.hawaii.edu/help/hdsupport/get_file.php?showfile=yes&fid=1157"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Waiver for Drop-Offs
+                            </DownloadsLink>
                         </WaiversContainer>
                     </ListItem>
                 </ul>
@@ -49,7 +67,11 @@ const DownloadsDropdown = () => {
             <DropdownSection>
                 <ul>
                     <ListItem noMarginBottom>
-                        <a href="/">
+                        <a
+                            href="https://www.hawaii.edu/help/hdsupport/get_file.php?fid=1158"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <Heading color="green">
                                 <Contract />
                                 Contract for Phone Headsets

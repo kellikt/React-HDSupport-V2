@@ -1,30 +1,16 @@
 import React, { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import { Flipped } from 'react-flip-toolkit';
-import {
-    DropdownRoot,
-    Caret,
-    DropdownBackground,
-    AltBackground,
-    InvertedDiv,
-} from './Components';
+
+import { DropdownRoot, Caret, DropdownBackground, AltBackground, InvertedDiv } from './Components';
 import FadeContents from './FadeContents';
 
 const getFirstDropdownSectionHeight = el => {
-    if (
-        !el ||
-        !el.querySelector ||
-        !el.querySelector('*[data-first-dropdown-section]')
-    )
-        return 0;
+    if (!el || !el.querySelector || !el.querySelector('*[data-first-dropdown-section]')) return 0;
     return el.querySelector('*[data-first-dropdown-section]').offsetHeight;
 };
 
-const updateAltBackground = ({
-    altBackground,
-    prevDropdown,
-    currentDropdown,
-}) => {
+const updateAltBackground = ({ altBackground, prevDropdown, currentDropdown }) => {
     const prevHeight = getFirstDropdownSectionHeight(prevDropdown);
     const currentHeight = getFirstDropdownSectionHeight(currentDropdown);
 
@@ -50,7 +36,6 @@ const updateAltBackground = ({
 class DropdownContainer extends Component {
     constructor(props) {
         super(props);
-
         this.altBackgroundEl = React.createRef();
         this.currentDropdownEl = React.createRef();
         this.prevDropdownEl = React.createRef();
@@ -66,15 +51,11 @@ class DropdownContainer extends Component {
     }
 
     render() {
-        const { children, direction, animatingOut, duration } = this.props;
+        const { children, direction, animatingOut, duration, roles } = this.props;
         const [currentDropdown, prevDropdown] = Children.toArray(children);
 
         return (
-            <DropdownRoot
-                direction={direction}
-                animatingOut={animatingOut}
-                duration={duration}
-            >
+            <DropdownRoot direction={direction} animatingOut={animatingOut} duration={duration}>
                 <Flipped flipId="dropdown-caret">
                     <Caret />
                 </Flipped>
@@ -82,14 +63,12 @@ class DropdownContainer extends Component {
                     <DropdownBackground>
                         <Flipped inverseFlipId="dropdown">
                             <InvertedDiv>
-                                <AltBackground
-                                    ref={this.altBackgroundEl}
-                                    duration={duration}
-                                />
+                                <AltBackground ref={this.altBackgroundEl} duration={duration} />
                                 <FadeContents
                                     direction={direction}
                                     duration={duration}
                                     ref={this.currentDropdownEl}
+                                    roles={roles}
                                 >
                                     {currentDropdown}
                                 </FadeContents>
@@ -104,6 +83,7 @@ class DropdownContainer extends Component {
                                         direction={direction}
                                         duration={duration}
                                         ref={this.prevDropdownEl}
+                                        roles={roles}
                                     >
                                         {prevDropdown}
                                     </FadeContents>
@@ -122,6 +102,7 @@ DropdownContainer.propTypes = {
     animatingOut: PropTypes.bool,
     direction: PropTypes.oneOf(['left', 'right']),
     duration: PropTypes.number,
+    roles: PropTypes.object,
 };
 
 export default DropdownContainer;

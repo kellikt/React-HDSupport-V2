@@ -43,6 +43,7 @@ const Container = styled.main`
     display: flex;
     flex-direction: column;
     margin-top: 60px;
+    overflow-x: hidden;
 
     > svg {
         width: 41vw;
@@ -53,6 +54,8 @@ const Container = styled.main`
 
         @media (max-width: 1650px) {
             display: none;
+            visibility: hidden;
+            opacity: 0;
         }
     }
 `;

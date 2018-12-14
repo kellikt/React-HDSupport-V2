@@ -1,6 +1,33 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
+
+const FadeContents = forwardRef(({ children, duration, animatingOut, direction, roles }, ref) => {
+    return (
+        <FadeContainer
+            // prevent screen readers from reading out hidden content
+            aria-hidden={animatingOut}
+            animatingOut={animatingOut}
+            direction={direction}
+            duration={duration}
+            ref={ref}
+            roles={roles}
+        >
+            {cloneElement(children, { roles: roles })}
+        </FadeContainer>
+    );
+});
+
+FadeContents.propTypes = {
+    duration: PropTypes.number,
+    direction: PropTypes.oneOf(['right', 'left']),
+    animatingOut: PropTypes.bool,
+    children: PropTypes.node,
+    ref: PropTypes.func,
+    roles: PropTypes.object,
+};
+
+export default FadeContents;
 
 const getFadeContainerKeyFrame = ({ animatingOut, direction }) => {
     if (!direction) return;
@@ -20,28 +47,3 @@ const FadeContainer = styled.div`
     top: 0;
     left: 0;
 `;
-
-const FadeContents = forwardRef(
-    ({ children, duration, animatingOut, direction }, ref) => (
-        <FadeContainer
-            // prevent screen readers from reading out hidden content
-            aria-hidden={animatingOut}
-            animatingOut={animatingOut}
-            direction={direction}
-            duration={duration}
-            ref={ref}
-        >
-            {children}
-        </FadeContainer>
-    )
-);
-
-FadeContents.propTypes = {
-    duration: PropTypes.number,
-    direction: PropTypes.oneOf(['right', 'left']),
-    animatingOut: PropTypes.bool,
-    children: PropTypes.node,
-    ref: PropTypes.func,
-};
-
-export default FadeContents;
