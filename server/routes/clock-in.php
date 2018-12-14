@@ -15,17 +15,81 @@ function clockIn($db, $username, $comments, $action)
     $ampm = date("A");
     $cleanedComments = addslashes($comments);
 
-    $stmt = $db->prepare("INSERT INTO log (username, ip, hostname, month, day, dow, year, hour, min, ampm, action, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssssssss", $username, $ip, $hostname, $month, $day, $dow, $year, $hour, $min, $ampm, $action, $cleanedComments);
-    $stmt->execute();
-    $stmt->close();
-
+    // get uid
     $uidStmt = $db->prepare("SELECT uid FROM users WHERE username = ?");
     $uidStmt->bind_param("s", $username);
     $uidStmt->execute();
     $uidResult = $uidStmt->get_result()->fetch_assoc();
     $uid = $uidResult['uid'];
     $uidStmt->close();
+
+    if ($action === 'out') {
+        $lastClockStmt = $db->prepare("SELECT * FROM log WHERE username = ? ORDER BY logid DESC LIMIT 1");
+        $lastClockStmt->bind_param("s", $username);
+        $lastClockStmt->execute();
+        $row = $lastClockStmt->get_result()->fetch_assoc();
+
+        $lastDay = $row['day'];
+        $lastMonth = $row['month'];
+        $lastYear = $row['year'];
+        $inAction = 'in';
+        $eleven = '11';
+        $fiftyNine = '59';
+        $PM = 'PM';
+        $twelve = '12';
+        $zeroZero = '00';
+        $AM = 'AM';
+        $lastClockStmt->close();
+
+        if ($day !== $lastDay) {
+            $inDay = strtotime("$lastMonth/$lastDay/$lastYear");
+            $outDay = strtotime("$month/$day/$year");
+
+            $troubleshoot[] = $inDay;
+            $troubleshoot[] = $outDay;
+
+            while ($inDay < $outDay) {
+                // setup
+                $inDayStamp = $inDay + 86399;
+                $outMonth = date('n', $inDay);
+                $outNumDay = date('j', $inDay);
+                $outDow = date('l', $inDay);
+                $outYear = date('Y', $inDay);
+
+                $outClock = $db->prepare("INSERT INTO clock (uid, tstamp, action, ip, hostname, comments) VALUES (?, ?, ?, ?, ?, ?)");
+                $outClock->bind_param("iissss", $uid, $inDayStamp, $action, $ip, $hostname, $cleanedComments);
+                $outClock->execute();
+                $outClock->close();
+
+                $outStmt = $db->prepare("INSERT INTO log (username, ip, hostname, month, day, dow, year, hour, min, ampm, action, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $outStmt->bind_param("ssssssssssss", $username, $ip, $hostname, $outMonth, $outNumDay, $outDow, $outYear, $eleven, $fiftyNine, $PM, $action, $cleanedComments);
+                $outStmt->execute();
+                $outStmt->close();
+
+                // setup
+                $inDay += 86400;
+                $inMonth = date('n', $inDay);
+                $inNumDay = date('j', $inDay);
+                $inDow = date('l', $inDay);
+                $inYear = date('Y', $inDay);
+
+                $inClock = $db->prepare("INSERT INTO clock (uid, tstamp, action, ip, hostname, comments) VALUES (?, ?, ?, ?, ?, ?)");
+                $inClock->bind_param("iissss", $uid, $inDay, $inAction, $ip, $hostname, $cleanedComments);
+                $inClock->execute();
+                $inClock->close();
+
+                $inStmt = $db->prepare("INSERT INTO log (username, ip, hostname, month, day, dow, year, hour, min, ampm, action, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $inStmt->bind_param("ssssssssssss", $username, $ip, $hostname, $inMonth, $inNumDay, $inDow, $inYear, $twelve, $zeroZero, $AM, $inAction, $cleanedComments);
+                $inStmt->execute();
+                $inStmt->close();
+            }
+        }
+    }
+
+    $stmt = $db->prepare("INSERT INTO log (username, ip, hostname, month, day, dow, year, hour, min, ampm, action, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssss", $username, $ip, $hostname, $month, $day, $dow, $year, $hour, $min, $ampm, $action, $cleanedComments);
+    $stmt->execute();
+    $stmt->close();
 
     $timestamp = time();
 
