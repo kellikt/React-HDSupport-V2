@@ -18,7 +18,7 @@ const index = () => {
                 color="green"
                 title="Timesheet Admin"
                 description="View timesheets and enter exceptions."
-                to="/schedmgmt/tsadmin"
+                to={`${process.env.PUBLIC_URL}/schedmgmt/tsadmin`}
             >
                 <Sheetadmin />
             </IndexLink>
@@ -26,7 +26,7 @@ const index = () => {
                 color="purple"
                 title="Enter Schedule Change"
                 description="Go here if someone calls out/is on vacation."
-                to="/schedmgmt/schedchange"
+                to={`${process.env.PUBLIC_URL}/schedmgmt/schedchange`}
             >
                 <SchedChange />
             </IndexLink>
@@ -34,7 +34,7 @@ const index = () => {
                 color="gold"
                 title="Display Schedule Changes"
                 description="Make edits to any current posted schedule changes."
-                to="/schedmgmt/displaychanges"
+                to={`${process.env.PUBLIC_URL}/schedmgmt/displaychanges`}
             >
                 <DisplaySched />
             </IndexLink>
@@ -42,7 +42,7 @@ const index = () => {
                 color="light-blue"
                 title="Clock-in Metrics"
                 description="View stats on clock-ins for a date range."
-                to="/schedmgmt/clockmetrics"
+                to={`${process.env.PUBLIC_URL}/schedmgmt/clockmetrics`}
             >
                 <Metrics />
             </IndexLink>
@@ -50,7 +50,7 @@ const index = () => {
                 color="blue"
                 title="Holiday Wizard"
                 description="Make changes to upcoming holidays."
-                to="/schedmgmt/holiday"
+                to={`${process.env.PUBLIC_URL}/schedmgmt/holiday`}
             >
                 <Holiday />
             </IndexLink>
@@ -58,7 +58,7 @@ const index = () => {
                 color="red"
                 title="Work Week Exceptions"
                 description="Define/change 40 hour work weeks."
-                to="/schedmgmt/wwexceptions"
+                to={`${process.env.PUBLIC_URL}/schedmgmt/wwexceptions`}
             >
                 <Forty />
             </IndexLink>

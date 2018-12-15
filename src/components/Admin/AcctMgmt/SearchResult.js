@@ -17,7 +17,7 @@ const SearchResult = ({ result }) => {
             </TableHeader>
             {result.map(item => {
                 return (
-                    <TableRow key={item.uuid} to={`/acctmgmt/edituser/${item.username}`}>
+                    <TableRow key={item.uuid} to={`${process.env.PUBLIC_URL}/acctmgmt/edituser/${item.username}`}>
                         <NameAndID>
                             <h3>{`${item.first_name} ${item.last_name}`}</h3>
                             <span>{item.uuid}</span>

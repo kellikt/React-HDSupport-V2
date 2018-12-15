@@ -23,7 +23,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "homepage": "https://www.hawaii.edu/help/hdsupport/dev/",
+    "homepage": "/help/hdsupport/dev/index.php/",
     "proxy": "http://localhost/hdsupport-server/routes",
     "eslintConfig": {
         "extends": "react-app"

@@ -7,12 +7,12 @@ const Breadcrumb = ({ links, color }) => {
     return (
         <Container color={color}>
             <Crumbs color={color}>
-                <Crumb to="/" color={color}>
+                <Crumb to={`${process.env.PUBLIC_URL}/`} color={color}>
                     Home
                 </Crumb>
                 {links.map((item, index) => {
                     return (
-                        <Crumb key={index} to={item.to} color={color}>
+                        <Crumb key={index} to={`${process.env.PUBLIC_URL}${item.to}`} color={color}>
                             {item.title}
                         </Crumb>
                     );
