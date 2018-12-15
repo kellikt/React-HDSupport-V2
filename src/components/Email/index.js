@@ -18,7 +18,7 @@ const index = () => {
                 color="light-blue"
                 title="Banner Password Reset"
                 description="Send the Banner PW reset email template."
-                to="/email/banner"
+                to={`${process.env.PUBLIC_URL}/email/banner`}
             >
                 <Banner />
             </IndexLink>
@@ -26,7 +26,7 @@ const index = () => {
                 color="gold"
                 title="UH Username Change"
                 description="Send the UH Username terms and conditions email."
-                to="/email/usernamechange"
+                to={`${process.env.PUBLIC_URL}/email/usernamechange`}
             >
                 <UsernameChange />
             </IndexLink>
@@ -34,7 +34,7 @@ const index = () => {
                 color="purple"
                 title="Filedrop Instructions"
                 description="Send instructions for filedrop to a user's personal email."
-                to="/email/filedrop"
+                to={`${process.env.PUBLIC_URL}/email/filedrop`}
             >
                 <FileDrop />
             </IndexLink>
@@ -42,7 +42,7 @@ const index = () => {
                 color="red"
                 title="FMO Access"
                 description="Send an email about FMO personnel accessing the ITC."
-                to="/email/fmo"
+                to={`${process.env.PUBLIC_URL}/email/fmo`}
             >
                 <FMO />
             </IndexLink>
@@ -50,7 +50,7 @@ const index = () => {
                 color="green"
                 title="Sortsite Request"
                 description="Send the Accessibility Sortsite tool confirmation email."
-                to="/email/sortsite"
+                to={`${process.env.PUBLIC_URL}/email/sortsite`}
             >
                 <SortSite />
             </IndexLink>
@@ -58,7 +58,7 @@ const index = () => {
                 color="blue"
                 title="Training Lab"
                 description="Send the Training Lab reservation confirmation email."
-                to="/email/training"
+                to={`${process.env.PUBLIC_URL}/email/training`}
             >
                 <TrainingLab />
             </IndexLink>

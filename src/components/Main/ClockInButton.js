@@ -7,7 +7,7 @@ import { ReactComponent as Arrow } from '../../images/icons/Arrow.svg';
 
 const ClockInButton = () => {
     return (
-        <Container to="clock">
+        <Container to={`${process.env.PUBLIC_URL}/clock`}>
             <Guy />
             <div>
                 <HeadingText>

@@ -14,7 +14,7 @@ const index = () => {
                 color="green"
                 title="Add New User"
                 description="Create a new user for HDSupport"
-                to="/acctmgmt/adduser"
+                to={`${process.env.PUBLIC_URL}/acctmgmt/adduser`}
             >
                 <AddUser />
             </IndexLink>
@@ -22,7 +22,7 @@ const index = () => {
                 color="purple"
                 title="Edit User"
                 description="Edit an existing user's record/permissions."
-                to="/acctmgmt/edituser"
+                to={`${process.env.PUBLIC_URL}/acctmgmt/edituser`}
             >
                 <EditUser />
             </IndexLink>
