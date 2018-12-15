@@ -1,6 +1,13 @@
 <?php 
 
-require_once "../database/connect_db.php";
+session_start();
+include "./do_auth.php";
+
+if (isset($_SESSION["host"])) {
+  $host = $_SESSION["host"];
+} else {
+  $host = "https://www.hawaii.edu/help/hdsupport/";
+}
 
 error_reporting(0);
 
@@ -81,24 +88,24 @@ require "./helpers/calc_timesheet.php";
 	  
 	  <?php
 
-    $result = mysqli_query($GLOBALS['mysqli'], "SELECT first_name, last_name FROM users where username='" . $chosen_user . "'");
+  $result = mysqli_query($GLOBALS['mysqli'], "SELECT first_name, last_name FROM users where username='" . $chosen_user . "'");
 
-    $row = mysqli_fetch_assoc($result);
+  $row = mysqli_fetch_assoc($result);
 
-    echo $row["last_name"];
+  echo $row["last_name"];
 
-    $x = 28 - strlen($row["last_name"]);
+  $x = 28 - strlen($row["last_name"]);
 
-    while ($x > 0) {
+  while ($x > 0) {
 
-        echo "&nbsp;";
-        $x--;
+    echo "&nbsp;";
+    $x--;
 
-    }
+  }
 
-    echo $row["first_name"];
+  echo $row["first_name"];
 	  //total chars = 84
-    ?>
+  ?>
 	  </div>
 	  </td>
 	  </tr>
@@ -128,9 +135,9 @@ require "./helpers/calc_timesheet.php";
 		 <td width="185">
 	     <div class="nameline">
 	     <?php
-        echo date("F", mktime(0, 0, 0, $period_start_month, 1, $period_start_year)) . " " . (int)$period_start_day .
-            " - " . date("F", mktime(0, 0, 0, $period_end_month, 1, $period_end_year)) . " " . (int)$period_end_day;
-        ?>
+      echo date("F", mktime(0, 0, 0, $period_start_month, 1, $period_start_year)) . " " . (int)$period_start_day .
+        " - " . date("F", mktime(0, 0, 0, $period_end_month, 1, $period_end_year)) . " " . (int)$period_end_day;
+      ?>
 		 </div>
 		</td>
         <td>
@@ -139,8 +146,8 @@ require "./helpers/calc_timesheet.php";
 		<td width="100">
          <div class="nameline">
 	     <?php
-        echo "&nbsp;&nbsp;&nbsp;&nbsp;" . $period_end_year;
-        ?>
+      echo "&nbsp;&nbsp;&nbsp;&nbsp;" . $period_end_year;
+      ?>
 		 </div>
 		 </td>
        </tr>

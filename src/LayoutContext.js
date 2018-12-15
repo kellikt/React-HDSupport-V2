@@ -10,7 +10,6 @@ export class LayoutProvider extends Component {
             uuid: '',
             username: '',
             firstName: '',
-            enabled: '',
             fullScreen: false,
             isExpired: false,
             loaded: false,
@@ -56,7 +55,7 @@ export class LayoutProvider extends Component {
                 loaded: true,
             });
         } catch (error) {
-            console.log('Unable to fetch session data from server');
+            console.log(`Unable: ${error}`);
         }
     }
 
