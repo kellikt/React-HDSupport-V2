@@ -1,0 +1,331 @@
+
+body {
+
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 5px;
+  margin-top: 0px;
+  
+}
+
+.topalign {
+
+  vertical-align: top;
+
+}
+
+.bottomalign {
+
+  vertical-align: bottom;
+
+}
+
+table.upperleft {
+
+  width: 140px;
+  font-size: 5px;
+
+}
+
+div.title {
+
+  text-align: center;
+
+}
+
+.centered {
+
+  text-align: center;
+
+}
+
+.rightalign {
+
+  text-align: right;
+
+}
+
+div.lastfirstmiddle {
+
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+
+}
+
+span.title13 {
+
+  font-size: 13px;
+  font-weight: bold;
+
+}
+
+span.title15 {
+
+  font-size: 15px;
+  font-weight: bold;
+}
+
+span.size8 {
+
+  font-size: 8px;
+  text-decoration: none;
+
+}
+
+span.size6 {
+
+  font-size: 6px;
+
+}
+
+span.size6-italic {
+
+  font-size: 6px;
+  font-style: italic;
+
+}
+
+span.size6-ul-bottom {
+
+  font-size: 6px;
+  text-decoration: underline;
+  vertical-align: bottom;
+
+}
+
+div.underline-name {
+
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  width: 300px;
+}
+
+div.underline-month {
+
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  width: 175px;
+
+}
+
+div.underline-year {
+
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  width: 100px;
+
+}
+
+.underline {
+
+ text-decoration: underline;
+
+}
+
+.underline-bottom {
+
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 10px;
+ text-decoration: underline;
+ vertical-align: bottom;
+
+}
+
+div.nameline {
+
+  border-bottom: 1px black solid;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  text-align: left;
+
+}
+
+.floatleft {
+
+  float: left;
+
+}
+
+.bottom {
+
+  vertical-align: bottom;
+
+}
+
+table.clocktime {
+
+  margin: 0px 0px 0px 0px;
+  border-collapse: collapse;
+  empty-cells: hide;
+  
+
+}
+
+table.clocktime td {
+
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  width: 80px;
+  text-align: center;
+
+}
+
+table.clocktime td.span {
+
+  width: auto;
+  text-align: left;
+
+}
+
+table.clocktime td.hide {
+
+  border-style: none;
+  padding: 1px 0px 1px 0px;
+
+}
+
+table.clocktime td.boldbottom {
+
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  border-bottom-width: 3px;
+
+}
+
+table.clocktime td.nobottom-center {
+
+  border-bottom-style: none;
+  text-align: center;
+
+}
+
+table.clocktime td.nobottom-center-boldtop {
+
+  border-bottom-style: none;
+  text-align: center;
+  border-top-style: solid;
+  border-top-color: black;
+  border-top-width: 3px;
+
+}
+
+
+table.clocktime td.notop-center {
+
+  border-top-style: none;
+  text-align: center;
+
+}
+
+table.clocktime td.small-center {
+
+  width: 50px;
+  text-align: center;
+  padding: 1px 0px 1px 0px;
+
+}
+
+table.clocktime td.hide-small-center {
+
+  border-style: none;
+  width: 50px;
+  text-align: center;
+
+}
+
+table.clocktime td.hide-small-span {
+
+  border-style: none;
+  text-align: left;
+  width: auto;
+
+}
+
+table.clocktime td.noleft-center {
+
+  border-left-style: none;
+  text-align: center;
+
+}
+
+table.clocktime td.noright-center {
+
+  border-right-style: none;
+  text-align: center;
+
+}
+
+span.times6 {
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 6px;
+  
+}
+
+span.times6-underline {
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 6px;
+  text-decoration: underline;
+
+}
+
+span.times10 {
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 10px;
+
+}
+
+span.times10-bold {
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 10px;
+  font-weight: bold;
+
+}
+
+.size7 {
+
+  font-size: 7px;
+
+}
+
+.size7-bold {
+
+  font-size: 7px;
+  font-weight: bold;
+
+}
+
+.span {
+
+  width: auto;
+
+}
+
+.padleftright {
+
+  padding: 0px 5px 0px 5px;
+  width: auto;
+
+}
+
+table.convert {
+
+width: 150px;
+border: 1px solid black;
+
+}
+
+.hide {
+
+ border-style: none;
+ width: auto;
+ text-align: left;
+ 
+}

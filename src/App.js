@@ -8,14 +8,16 @@ import { LayoutContext } from './LayoutContext';
 class App extends Component {
     render() {
         let value = this.context;
-        const { fullScreen } = value;
+        const { fullScreen, loaded } = value;
 
         return (
             <AppContainer>
-                <ContentContainer fullScreen={fullScreen}>
-                    <Header duration={250} />
-                    <SiteRouter />
-                </ContentContainer>
+                {loaded && (
+                    <ContentContainer fullScreen={fullScreen}>
+                        <Header duration={250} />
+                        <SiteRouter />
+                    </ContentContainer>
+                )}
             </AppContainer>
         );
     }

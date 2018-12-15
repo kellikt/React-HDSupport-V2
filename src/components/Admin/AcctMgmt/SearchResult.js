@@ -6,9 +6,7 @@ import { Link } from '@reach/router';
 import { ReactComponent as RedX } from '../../../images/icons/RedCross.svg';
 import { ReactComponent as GreenCheck } from '../../../images/icons/GreenCheck.svg';
 
-const SearchResult = props => {
-    const { result } = props;
-
+const SearchResult = ({ result }) => {
     return (
         <ResultTable>
             <TableHeader>

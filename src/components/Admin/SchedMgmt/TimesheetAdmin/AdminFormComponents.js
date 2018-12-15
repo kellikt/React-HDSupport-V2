@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FormEl = styled.form`
+export const FormEl = styled.div`
     padding: 30px 30px 30px 335px;
     border-radius: 8px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
@@ -16,10 +16,18 @@ export const FormEl = styled.form`
         height: 343px;
         top: -15px;
         left: -84px;
+
+        @media (max-width: 900px) {
+            display: none;
+        }
     }
 
-    > button {
+    > a {
         justify-self: end;
+    }
+
+    @media (max-width: 900px) {
+        padding: 30px;
     }
 `;
 

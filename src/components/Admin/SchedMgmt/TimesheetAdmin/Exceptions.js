@@ -137,6 +137,10 @@ const FormEl = styled.form`
         height: 100%;
         margin-right: 30px;
         align-self: center;
+
+        @media (max-width: 900px) {
+            display: none;
+        }
     }
 
     .styled-input {
@@ -171,6 +175,14 @@ const Inputs = styled.div`
         width: 100%;
         margin-right: 12px;
         display: flex;
+        flex-direction: column;
+
+        @media (max-width: 600px) {
+            margin-bottom: 12px;
+        }
+    }
+
+    @media (max-width: 600px) {
         flex-direction: column;
     }
 `;

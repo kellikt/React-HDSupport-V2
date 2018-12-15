@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 
-const IndexLink = props => {
-    const { color, children, title, description, to } = props;
-
+const IndexLink = ({ color, children, title, description, to }) => {
     return (
         <IndexLinkEl color={color} to={to}>
             {children}

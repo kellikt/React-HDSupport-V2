@@ -15,6 +15,11 @@ export const FormEl = styled.form`
         text-transform: uppercase;
         grid-column: 2;
     }
+
+    @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export const Title = styled.div`

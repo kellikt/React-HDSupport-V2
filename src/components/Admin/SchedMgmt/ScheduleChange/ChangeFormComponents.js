@@ -15,6 +15,18 @@ export const FormEl = styled.form`
     > svg {
         width: 100%;
         height: auto;
+
+        @media (max-width: 900px) {
+            display: none;
+        }
+    }
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
     }
 `;
 

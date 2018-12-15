@@ -14,8 +14,7 @@ const parsePayPeriod = (payPeriod, year) => {
     return dates;
 };
 
-const Heading = props => {
-    const { name, year, payPeriod, partialHours } = props;
+const Heading = ({ name, year, payPeriod, partialHours, username }) => {
     const dates = parsePayPeriod(payPeriod, year);
     const month = dates[0].toLocaleString('en-US', { month: 'long' });
 
@@ -23,7 +22,15 @@ const Heading = props => {
         <Container>
             <Top>
                 <h2>{name}</h2>
-                <Button color="light-blue">Show Printable Timesheet</Button>
+                <a
+                    href={`${
+                        process.env.REACT_APP_DB_SERVER
+                    }/show-timesheet.php?payPeriod=${payPeriod}&username=${username}&year=${year}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Button color="light-blue">Show Printable Timesheet</Button>
+                </a>
             </Top>
             <Bottom>
                 <PayPeriod>

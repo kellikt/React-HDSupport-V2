@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const WeekTotal = props => {
-    const { regular, night, overtime, nightOvertime, hoursString } = props;
-
+const WeekTotal = ({ regular, night, overtime, nightOvertime, hoursString }, props) => {
     return (
         <Container {...props}>
             <h2>{hoursString}</h2>

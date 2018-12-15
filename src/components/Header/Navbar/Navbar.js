@@ -15,7 +15,7 @@ class Navbar extends Component {
                         <ITSLogo />
                     </Link>
                     {children}
-                    <Logout href="/">Logout</Logout>
+                    <Logout href={`${process.env.REACT_APP_DB_SERVER}/logout.php`}>Logout</Logout>
                 </NavbarList>
             </NavbarEl>
         );

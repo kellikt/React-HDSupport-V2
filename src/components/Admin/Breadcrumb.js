@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 
-const Breadcrumb = props => {
-    const { links, color } = props;
-
+const Breadcrumb = ({ links, color }) => {
     return (
         <Container color={color}>
             <Crumbs color={color}>

@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const TextInput = props => {
-    const { id, label, placeholder, value, onChange, name } = props;
-
+const TextInput = ({ id, label, placeholder, value, onChange, name }, props) => {
     return (
         <Container className="styled-input">
             <label htmlFor={id}>{label}</label>

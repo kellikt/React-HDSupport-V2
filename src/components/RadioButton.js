@@ -2,20 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const RadioButton = props => {
-    const { id, label, onChange, checked, value, name, color } = props;
-
+const RadioButton = ({ id, label, onChange, checked, value, name, color }, props) => {
     return (
         <RadioButtonEl color={color}>
-            <input
-                type="radio"
-                id={id}
-                onChange={onChange}
-                checked={checked}
-                name={name}
-                value={value}
-                {...props}
-            />
+            <input type="radio" id={id} onChange={onChange} checked={checked} name={name} value={value} {...props} />
             <label htmlFor={id}>{label}</label>
         </RadioButtonEl>
     );

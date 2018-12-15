@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router';
+import PrivateRoute from './PrivateRoute';
 
 import Main from './Main/Main';
 import ClockIn from './ClockIn/ClockIn';
@@ -33,19 +34,19 @@ class SiteRouter extends Component {
                 <Main path="/" />
                 <ClockIn path="clock" />
 
-                <AcctMgmt path="acctmgmt" />
-                <EditUser path="acctmgmt/edituser" />
-                <Edit path="acctmgmt/edituser/:username" />
-                <Add path="acctmgmt/adduser" />
+                <PrivateRoute as={AcctMgmt} path="acctmgmt" />
+                <PrivateRoute as={EditUser} path="acctmgmt/edituser" />
+                <PrivateRoute as={Edit} path="acctmgmt/edituser/:username" />
+                <PrivateRoute as={Add} path="acctmgmt/adduser" />
 
-                <SchedMgmt path="schedmgmt" />
-                <ClockMetrics path="schedmgmt/clockmetrics" />
-                <ScheduleChange path="schedmgmt/schedchange" />
-                <DisplayChanges path="schedmgmt/displaychanges" />
-                <TimesheetAdmin path="schedmgmt/tsadmin" />
-                <HolidayWizard path="schedmgmt/holiday" />
-                <WorkWeekExceptions path="schedmgmt/wwexceptions" />
-                <Timesheet path="/schedmgmt/timesheet/:username/:year/:payPeriod" />
+                <PrivateRoute as={SchedMgmt} path="schedmgmt" />
+                <PrivateRoute as={ClockMetrics} path="schedmgmt/clockmetrics" />
+                <PrivateRoute as={ScheduleChange} path="schedmgmt/schedchange" />
+                <PrivateRoute as={DisplayChanges} path="schedmgmt/displaychanges" />
+                <PrivateRoute as={TimesheetAdmin} path="schedmgmt/tsadmin" />
+                <PrivateRoute as={WorkWeekExceptions} path="schedmgmt/wwexceptions" />
+                <PrivateRoute as={HolidayWizard} path="schedmgmt/holiday" />
+                <PrivateRoute as={Timesheet} path="/schedmgmt/timesheet/:username/:year/:payPeriod" />
 
                 <Email path="email" />
                 <Banner path="email/banner" />

@@ -10,6 +10,15 @@ export const Form = styled.form`
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 100px;
     margin-bottom: 30px;
+
+    @media (max-width: 750px) {
+        grid-column-gap: 30px;
+    }
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        grid-row-gap: 30px;
+    }
 `;
 
 export const Title = styled.div`

@@ -1,47 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import { LayoutContext } from '../../LayoutContext';
 
-class Roles extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            roles: {},
-        };
-    }
-
-    async componentDidMount() {
-        let value = this.context;
-        const { uuid } = value;
-
-        try {
-            const nameRequest = await axios.get(`/get-username.php?uuid=${uuid}`);
-            const nameData = nameRequest.data;
-
-            const rolesRequest = await axios.get(`/get-roles.php?username=${nameData.username}`);
-            const rolesData = rolesRequest.data;
-
-            const roles = {
-                helpDesk: rolesData.helpdesk === 'yes' ? true : false,
-                lab: rolesData.lab === 'yes' ? true : false,
-                tech: rolesData.tech === 'yes' ? true : false,
-                staff: rolesData.staff === 'yes' ? true : false,
-                admin: rolesData.administrator === 'yes' ? true : false,
-                manager: rolesData.manager === 'yes' ? true : false,
-            };
-
-            this.setState({
-                roles: roles,
-            });
-        } catch (error) {
-            console.log(`Error fetching roles: ${error}`);
-        }
-    }
-
+class Roles extends PureComponent {
     createRoleText = () => {
-        const { roles } = this.state;
+        let value = this.context;
+        const { roles } = value;
         let text = '';
 
         // primary role
@@ -56,8 +21,7 @@ class Roles extends Component {
         }
 
         // admin roles
-        if (roles.admin === false && roles.manager === false)
-            text += ' and you have no administrative roles.';
+        if (roles.admin === false && roles.manager === false) text += ' and you have no administrative roles.';
         else if (roles.admin && roles.manager === false) text += ' and a site Administrator.';
         else if (roles.admin === false && roles.manager) text += ' and a Lab/Help Desk Manager.';
         else if (roles.admin && roles.manager) text += ' and an Administrator and a Lab/Help Desk Manager.';

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Background = props => {
+const Background = () => {
     return (
         <Container>
             <span />
@@ -46,9 +46,7 @@ const Container = styled.div`
 
     @media (min-width: 1040px) {
         --gutter-column-width: var(--content-column-width);
-        min-width: calc(
-            1040px / var(--content-columns) * (var(--gutter-columns) * 2 + var(--content-columns))
-        );
+        min-width: calc(1040px / var(--content-columns) * (var(--gutter-columns) * 2 + var(--content-columns)));
     }
 
     span.white {

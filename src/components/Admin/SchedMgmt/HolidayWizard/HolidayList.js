@@ -6,17 +6,7 @@ import posed, { PoseGroup } from 'react-pose';
 import CloseButton from '../../../CloseButton';
 import Button from '../../../Button';
 
-const HolidayList = props => {
-    const { holidayList, full, heading, color, week } = props;
-
-    const handleDelete = stamp => {
-        props.handleDelete(stamp);
-    };
-
-    const getHolidays = full => {
-        props.getHolidays(full);
-    };
-
+const HolidayList = ({ holidayList, full, heading, color, week, handleDelete, getHolidays }) => {
     return (
         <React.Fragment>
             <List pose="enter">
@@ -119,6 +109,14 @@ export const Holiday = styled(AnimatedHoliday)`
             padding: 0;
             font-weight: 400;
             font-size: 15px;
+
+            @media (max-width: 750px) {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 750px) {
+            font-size: 16px;
         }
     }
 

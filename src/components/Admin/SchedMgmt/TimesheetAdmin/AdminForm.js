@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { navigate } from '@reach/router';
 
 import Exceptions from './Exceptions';
 import Button from '../../../Button';
@@ -19,13 +18,6 @@ class AdminForm extends Component {
         lab: [],
         third_shift: [],
         searched: false,
-    };
-
-    handleSubmit = event => {
-        event.preventDefault();
-        const { selectedUser, year, payPeriod } = this.state;
-
-        navigate(`timesheet/${selectedUser}/${year}/${payPeriod}`);
     };
 
     handleChange = event => {
@@ -62,7 +54,7 @@ class AdminForm extends Component {
 
         return (
             <React.Fragment>
-                <FormEl onSubmit={this.handleSubmit}>
+                <FormEl>
                     <Graphic />
                     <Title>
                         <h2>View Printable Timesheet</h2>
@@ -71,12 +63,7 @@ class AdminForm extends Component {
                     <Inputs>
                         <div>
                             <label htmlFor="user">Student</label>
-                            <select
-                                name="selectedUser"
-                                id="user"
-                                onChange={this.handleChange}
-                                value={selectedUser}
-                            >
+                            <select name="selectedUser" id="user" onChange={this.handleChange} value={selectedUser}>
                                 <option value="None">Select a Student</option>
                                 <optgroup label="Help Desk">
                                     {helpdesk.map(student => {
@@ -122,12 +109,7 @@ class AdminForm extends Component {
                         </div>
                         <div>
                             <label htmlFor="payperiod">Pay Period</label>
-                            <select
-                                name="payPeriod"
-                                id="payperiod"
-                                onChange={this.handleChange}
-                                value={payPeriod}
-                            >
+                            <select name="payPeriod" id="payperiod" onChange={this.handleChange} value={payPeriod}>
                                 <option value="None">Select Pay Period</option>
                                 {periods.map((period, index) => {
                                     return (
@@ -139,7 +121,13 @@ class AdminForm extends Component {
                             </select>
                         </div>
                     </Inputs>
-                    <Button color="green">Show Timesheet</Button>
+                    <a
+                        href={`/schedmgmt/timesheet/${selectedUser}/${year}/${payPeriod}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <Button color="green">Show Timesheet</Button>
+                    </a>
                 </FormEl>
                 <Exceptions helpdesk={helpdesk} lab={lab} third_shift={third_shift} />
             </React.Fragment>

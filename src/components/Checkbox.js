@@ -2,12 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const Checkbox = props => {
-    const { id, label, onChange, checked, name, color } = props;
-
+const Checkbox = ({ id, label, onChange, checked, name, color, disabled }, props) => {
     return (
-        <CheckboxEl color={color}>
-            <input type="checkbox" id={id} onChange={onChange} checked={checked} name={name} {...props} />
+        <CheckboxEl color={color} isDisabled={disabled}>
+            <input
+                type="checkbox"
+                id={id}
+                onChange={onChange}
+                checked={checked}
+                name={name}
+                disabled={disabled}
+                {...props}
+            />
             <label htmlFor={id}>{label}</label>
         </CheckboxEl>
     );
@@ -19,17 +25,19 @@ Checkbox.propTypes = {
     checked: PropTypes.bool,
     name: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
 };
 
 export default Checkbox;
 
 const CheckboxEl = styled.div`
     margin: 6px 0;
+    opacity: ${props => (props.isDisabled ? '.7' : '1')};
 
     [type='checkbox'] + label {
         position: relative;
         padding-left: 2em;
-        cursor: pointer;
+        cursor: ${props => (props.isDisabled ? 'not-allowed' : 'pointer')};
         display: inline-block;
         height: 25px;
         font-size: 16px;
@@ -60,8 +68,10 @@ const CheckboxEl = styled.div`
         height: 21px;
         border-top: 2px solid #0000;
         border-left: 2px solid #0000;
-        border-right: 2px solid ${({ color }) => (color ? `var(--${color})` : `#06d19c`)};
-        border-bottom: 2px solid ${({ color }) => (color ? `var(--${color})` : `#06d19c`)};
+        border-right: 2px solid
+            ${({ color, isDisabled }) => (color ? `var(--${color})` : isDisabled ? 'var(--dark-grey)' : `#06d19c`)};
+        border-bottom: 2px solid
+            ${({ color, isDisabled }) => (color ? `var(--${color})` : isDisabled ? 'var(--dark-grey)' : `#06d19c`)};
         transform: rotate(40deg);
         backface-visibility: hidden;
         transform-origin: 100% 100%;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import { LayoutContext } from '../../../LayoutContext';
 import Button from '../../Button';
 import { FormEl, Title } from './FormComponents';
 import Breadcrumb from '../Breadcrumb';
@@ -335,6 +336,10 @@ class Edit extends Component {
         ];
 
         const { info, roles, snack } = this.state;
+        let value = this.context;
+        const {
+            roles: { admin },
+        } = value;
 
         return (
             <Container>
@@ -464,6 +469,7 @@ class Edit extends Component {
                             onChange={() => this.handleCheck('manager')}
                             checked={roles.manager === 'yes' ? true : false}
                             color="purple"
+                            disabled={admin ? false : true}
                         />
                         <Checkbox
                             id="admin"
@@ -471,6 +477,7 @@ class Edit extends Component {
                             onChange={() => this.handleCheck('admin')}
                             checked={roles.administrator === 'yes' ? true : false}
                             color="purple"
+                            disabled={admin ? false : true}
                         />
                         <Checkbox
                             id="enabled"
@@ -478,6 +485,7 @@ class Edit extends Component {
                             onChange={() => this.handleCheck('enabled')}
                             checked={info.expired === 0 ? true : false}
                             color="purple"
+                            disabled={admin ? false : true}
                         />
                     </AdminRoles>
                     <Images>
@@ -496,6 +504,8 @@ class Edit extends Component {
         );
     }
 }
+
+Edit.contextType = LayoutContext;
 
 export default Edit;
 
@@ -563,6 +573,16 @@ const EditForm = styled(FormEl)`
         grid-row: 12;
         grid-column: 3;
     }
+
+    @media (max-width: 650px) {
+        display: flex;
+        flex-direction: column;
+
+        > .styled-input {
+            margin: 9px 0;
+            width: 100% !important;
+        }
+    }
 `;
 
 const FormSection = styled.div`
@@ -619,5 +639,9 @@ const Images = styled.div`
         max-height: 215px;
         width: 100%;
         margin: 100px 0;
+    }
+
+    @media (max-width: 650px) {
+        display: none;
     }
 `;

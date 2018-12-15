@@ -36,7 +36,11 @@ const AdministrationDropdown = () => {
                         </Link>
                     </ListItem>
                     <ListItem noMarginBottom>
-                        <a href="/">
+                        <a
+                            href="https://www.hawaii.edu/help/hdsupport/browser/index.php"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <Heading color="pink">
                                 <Browser />
                                 Browser Recommendations
@@ -49,7 +53,11 @@ const AdministrationDropdown = () => {
             <DropdownSection>
                 <ul>
                     <ListItem noMarginBottom>
-                        <a href="/">
+                        <a
+                            href="https://depts.its.hawaii.edu/dwb/phpMyAdmin-41/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <Heading color="pink">
                                 <Database />
                                 PHP MyAdmin

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Flipper } from 'react-flip-toolkit';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import Media from 'react-media';
 
+import ResponsiveNav from './Navbar/ResponsiveNav';
 import DropdownContainer from './DropdownContainer/DropdownContainer';
 import Navbar from './Navbar/Navbar';
 import NavbarItem from './Navbar/NavbarItem';
@@ -26,7 +27,6 @@ class Header extends Component {
         super(props);
         this.state = {
             activeIndices: [],
-            roles: {},
         };
     }
 
@@ -59,30 +59,9 @@ class Header extends Component {
         this.animatingOutTimeout = setTimeout(this.resetDropdownState, this.props.duration);
     };
 
-    async componentDidMount() {
-        let value = this.context;
-        const { username } = value;
-        try {
-            const request = await axios.get(`/get-roles.php?username=${username}`);
-            const data = request.data;
-
-            const roles = {
-                helpDesk: data.helpdesk === 'yes' ? true : false,
-                lab: data.lab === 'yes' ? true : false,
-                tech: data.tech === 'yes' ? true : false,
-                staff: data.staff === 'yes' ? true : false,
-                admin: data.administrator === 'yes' ? true : false,
-                manager: data.manager === 'yes' ? true : false,
-            };
-            this.setState({
-                roles: roles,
-            });
-        } catch (error) {
-            console.log('Unable to fetch roles from DB.');
-        }
-    }
-
     render() {
+        let value = this.context;
+        const { roles } = value;
         const { duration } = this.props;
         let CurrentDropdown;
         let PrevDropdown;
@@ -100,27 +79,40 @@ class Header extends Component {
 
         return (
             <header>
-                <Flipper flipKey={currentIndex}>
-                    <Navbar onMouseLeave={this.onMouseLeave}>
-                        {navbarConfig.map((n, index) => {
-                            return (
-                                <NavbarItem key={index} title={n.title} index={index} onMouseEnter={this.onMouseEnter}>
-                                    {currentIndex === index && (
-                                        <DropdownContainer
-                                            direction={direction}
-                                            animatingOut={this.state.animatingOut}
-                                            duration={duration}
-                                            roles={this.state.roles}
-                                        >
-                                            <CurrentDropdown />
-                                            {PrevDropdown && <PrevDropdown />}
-                                        </DropdownContainer>
-                                    )}
-                                </NavbarItem>
-                            );
-                        })}
-                    </Navbar>
-                </Flipper>
+                <Media query="(max-width: 900px)">
+                    {matches =>
+                        matches ? (
+                            <ResponsiveNav roles={roles} />
+                        ) : (
+                            <Flipper flipKey={currentIndex}>
+                                <Navbar onMouseLeave={this.onMouseLeave}>
+                                    {navbarConfig.map((n, index) => {
+                                        return (
+                                            <NavbarItem
+                                                key={index}
+                                                title={n.title}
+                                                index={index}
+                                                onMouseEnter={this.onMouseEnter}
+                                            >
+                                                {currentIndex === index && (
+                                                    <DropdownContainer
+                                                        direction={direction}
+                                                        animatingOut={this.state.animatingOut}
+                                                        duration={duration}
+                                                        roles={roles}
+                                                    >
+                                                        <CurrentDropdown />
+                                                        {PrevDropdown && <PrevDropdown />}
+                                                    </DropdownContainer>
+                                                )}
+                                            </NavbarItem>
+                                        );
+                                    })}
+                                </Navbar>
+                            </Flipper>
+                        )
+                    }
+                </Media>
             </header>
         );
     }

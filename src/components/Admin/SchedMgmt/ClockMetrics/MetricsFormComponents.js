@@ -16,11 +16,19 @@ export const FormEl = styled.form`
         height: 317px;
         top: -15px;
         left: -78px;
+
+        @media (max-width: 900px) {
+            display: none;
+        }
     }
 
     > button {
         justify-self: end;
         text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+        padding: 30px;
     }
 `;
 
@@ -69,5 +77,14 @@ export const Inputs = styled.div`
         &:last-of-type {
             margin-right: 0;
         }
+
+        @media (max-width: 600px) {
+            margin: 6px 0;
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 600px) {
+        flex-direction: column;
     }
 `;
