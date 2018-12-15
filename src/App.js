@@ -5,6 +5,8 @@ import Header from './components/Header/Header';
 import SiteRouter from './components/SiteRouter';
 import { LayoutContext } from './LayoutContext';
 
+// TODO: UPDATE PATHS IN ROUTER AND LINKS
+
 class App extends Component {
     render() {
         let value = this.context;

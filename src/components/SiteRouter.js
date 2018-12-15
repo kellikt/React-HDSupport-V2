@@ -31,7 +31,7 @@ import Add from './Admin/AcctMgmt/Add';
 class SiteRouter extends Component {
     render() {
         return (
-            <Router primary={false}>
+            <Router primary={false} basepath={`${process.env.REACT_APP_BASE_PATH}`}>
                 <UserRoute as={Main} path="/" />
                 <UserRoute as={ClockIn} path="clock" />
 
