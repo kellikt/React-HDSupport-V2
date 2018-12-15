@@ -50,7 +50,7 @@ export class ClockProvider extends Component {
                 lastClock: {
                     action: 'out',
                 },
-                loading: false,
+                loading: true,
             });
         }
     }

@@ -31,7 +31,7 @@ import Add from './Admin/AcctMgmt/Add';
 class SiteRouter extends Component {
     render() {
         return (
-            <Router primary={false} basepath={`${process.env.REACT_APP_BASE_PATH}`}>
+            <Router primary={false}>
                 <UserRoute as={Main} path={`${process.env.PUBLIC_URL}/`} />
                 <UserRoute as={ClockIn} path={`${process.env.PUBLIC_URL}/clock`} />
 
@@ -59,6 +59,8 @@ class SiteRouter extends Component {
                 <UserRoute as={SortSite} path={`${process.env.PUBLIC_URL}/email/sortsite`} />
                 <UserRoute as={TrainingLab} path={`${process.env.PUBLIC_URL}/email/training`} />
                 <UserRoute as={FMO} path={`${process.env.PUBLIC_URL}/email/fmo`} />
+
+                <Main default />
             </Router>
         );
     }
