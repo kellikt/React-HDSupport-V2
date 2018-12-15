@@ -61,7 +61,7 @@ class Header extends Component {
 
     render() {
         let value = this.context;
-        const { roles } = value;
+        const { roles, isExpired } = value;
         const { duration } = this.props;
         let CurrentDropdown;
         let PrevDropdown;
@@ -79,40 +79,42 @@ class Header extends Component {
 
         return (
             <header>
-                <Media query="(max-width: 900px)">
-                    {matches =>
-                        matches ? (
-                            <ResponsiveNav roles={roles} />
-                        ) : (
-                            <Flipper flipKey={currentIndex}>
-                                <Navbar onMouseLeave={this.onMouseLeave}>
-                                    {navbarConfig.map((n, index) => {
-                                        return (
-                                            <NavbarItem
-                                                key={index}
-                                                title={n.title}
-                                                index={index}
-                                                onMouseEnter={this.onMouseEnter}
-                                            >
-                                                {currentIndex === index && (
-                                                    <DropdownContainer
-                                                        direction={direction}
-                                                        animatingOut={this.state.animatingOut}
-                                                        duration={duration}
-                                                        roles={roles}
-                                                    >
-                                                        <CurrentDropdown />
-                                                        {PrevDropdown && <PrevDropdown />}
-                                                    </DropdownContainer>
-                                                )}
-                                            </NavbarItem>
-                                        );
-                                    })}
-                                </Navbar>
-                            </Flipper>
-                        )
-                    }
-                </Media>
+                {!isExpired && (
+                    <Media query="(max-width: 900px)">
+                        {matches =>
+                            matches ? (
+                                <ResponsiveNav roles={roles} />
+                            ) : (
+                                <Flipper flipKey={currentIndex}>
+                                    <Navbar onMouseLeave={this.onMouseLeave}>
+                                        {navbarConfig.map((n, index) => {
+                                            return (
+                                                <NavbarItem
+                                                    key={index}
+                                                    title={n.title}
+                                                    index={index}
+                                                    onMouseEnter={this.onMouseEnter}
+                                                >
+                                                    {currentIndex === index && (
+                                                        <DropdownContainer
+                                                            direction={direction}
+                                                            animatingOut={this.state.animatingOut}
+                                                            duration={duration}
+                                                            roles={roles}
+                                                        >
+                                                            <CurrentDropdown />
+                                                            {PrevDropdown && <PrevDropdown />}
+                                                        </DropdownContainer>
+                                                    )}
+                                                </NavbarItem>
+                                            );
+                                        })}
+                                    </Navbar>
+                                </Flipper>
+                            )
+                        }
+                    </Media>
+                )}
             </header>
         );
     }

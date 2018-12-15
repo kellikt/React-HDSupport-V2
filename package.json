@@ -23,7 +23,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "proxy": "http://localhost:80/hdsupport-server/routes/",
+    "proxy": "http://localhost/hdsupport-server/routes/",
     "eslintConfig": {
         "extends": "react-app"
     },

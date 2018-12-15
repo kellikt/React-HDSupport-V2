@@ -10,7 +10,9 @@ export class LayoutProvider extends Component {
             uuid: '',
             username: '',
             firstName: '',
+            enabled: '',
             fullScreen: false,
+            isExpired: false,
             loaded: false,
             roles: {},
         };
@@ -48,6 +50,7 @@ export class LayoutProvider extends Component {
                 username: data.username,
                 roles: roles,
                 firstName: nameData.first_name,
+                isExpired: nameData.expired === 1 ? true : false,
                 loaded: true,
             });
         } catch (error) {
@@ -67,6 +70,7 @@ export class LayoutProvider extends Component {
                     changeSize: this.changeSize,
                     loaded: this.state.loaded,
                     roles: this.state.roles,
+                    isExpired: this.state.isExpired,
                     firstName: this.state.firstName,
                 }}
             >

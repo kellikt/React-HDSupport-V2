@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router';
-import PrivateRoute from './PrivateRoute';
+import AdminRoute from './AdminRoute';
+import UserRoute from './UserRoute';
 
 import Main from './Main/Main';
 import ClockIn from './ClockIn/ClockIn';
@@ -31,30 +32,30 @@ class SiteRouter extends Component {
     render() {
         return (
             <Router primary={false}>
-                <Main path="/" />
-                <ClockIn path="clock" />
+                <UserRoute as={Main} path="/" />
+                <UserRoute as={ClockIn} path="clock" />
 
-                <PrivateRoute as={AcctMgmt} path="acctmgmt" />
-                <PrivateRoute as={EditUser} path="acctmgmt/edituser" />
-                <PrivateRoute as={Edit} path="acctmgmt/edituser/:username" />
-                <PrivateRoute as={Add} path="acctmgmt/adduser" />
+                <AdminRoute as={AcctMgmt} path="acctmgmt" />
+                <AdminRoute as={EditUser} path="acctmgmt/edituser" />
+                <AdminRoute as={Edit} path="acctmgmt/edituser/:username" />
+                <AdminRoute as={Add} path="acctmgmt/adduser" />
 
-                <PrivateRoute as={SchedMgmt} path="schedmgmt" />
-                <PrivateRoute as={ClockMetrics} path="schedmgmt/clockmetrics" />
-                <PrivateRoute as={ScheduleChange} path="schedmgmt/schedchange" />
-                <PrivateRoute as={DisplayChanges} path="schedmgmt/displaychanges" />
-                <PrivateRoute as={TimesheetAdmin} path="schedmgmt/tsadmin" />
-                <PrivateRoute as={WorkWeekExceptions} path="schedmgmt/wwexceptions" />
-                <PrivateRoute as={HolidayWizard} path="schedmgmt/holiday" />
-                <PrivateRoute as={Timesheet} path="/schedmgmt/timesheet/:username/:year/:payPeriod" />
+                <AdminRoute as={SchedMgmt} path="schedmgmt" />
+                <AdminRoute as={ClockMetrics} path="schedmgmt/clockmetrics" />
+                <AdminRoute as={ScheduleChange} path="schedmgmt/schedchange" />
+                <AdminRoute as={DisplayChanges} path="schedmgmt/displaychanges" />
+                <AdminRoute as={TimesheetAdmin} path="schedmgmt/tsadmin" />
+                <AdminRoute as={WorkWeekExceptions} path="schedmgmt/wwexceptions" />
+                <AdminRoute as={HolidayWizard} path="schedmgmt/holiday" />
+                <AdminRoute as={Timesheet} path="/schedmgmt/timesheet/:username/:year/:payPeriod" />
 
-                <Email path="email" />
-                <Banner path="email/banner" />
-                <UsernameChange path="email/usernamechange" />
-                <FileDrop path="email/filedrop" />
-                <SortSite path="email/sortsite" />
-                <TrainingLab path="email/training" />
-                <FMO path="email/fmo" />
+                <UserRoute as={Email} path="email" />
+                <UserRoute as={Banner} path="email/banner" />
+                <UserRoute as={UsernameChange} path="email/usernamechange" />
+                <UserRoute as={FileDrop} path="email/filedrop" />
+                <UserRoute as={SortSite} path="email/sortsite" />
+                <UserRoute as={TrainingLab} path="email/training" />
+                <UserRoute as={FMO} path="email/fmo" />
             </Router>
         );
     }
