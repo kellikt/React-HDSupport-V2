@@ -49,7 +49,7 @@ const ToolsDropdown = ({ roles: { tech } }) => {
                         </a>
                     </ListItem>
                     <ListItem noMarginBottom>
-                        <Link to="/email">
+                        <Link to={`${process.env.PUBLIC_URL}/email`}>
                             <Heading color="light-blue">
                                 <Email />
                                 Email Generator

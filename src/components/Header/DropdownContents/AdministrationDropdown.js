@@ -18,7 +18,7 @@ const AdministrationDropdown = () => {
             <DropdownSection data-first-dropdown-section>
                 <ul>
                     <ListItem>
-                        <Link to="/schedmgmt">
+                        <Link to={`${process.env.PUBLIC_URL}/schedmgmt`}>
                             <Heading color="pink">
                                 <Schedule />
                                 Schedule Management
@@ -27,7 +27,7 @@ const AdministrationDropdown = () => {
                         </Link>
                     </ListItem>
                     <ListItem>
-                        <Link to="/acctmgmt">
+                        <Link to={`${process.env.PUBLIC_URL}/acctmgmt`}>
                             <Heading color="pink">
                                 <Account />
                                 Account Management
