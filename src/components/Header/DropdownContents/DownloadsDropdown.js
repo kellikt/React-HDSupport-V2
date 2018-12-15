@@ -72,7 +72,7 @@ const DownloadsDropdown = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <Heading color="green">
+                            <Heading color="green" noMarginBottom>
                                 <Contract />
                                 Phone Headset Contract
                             </Heading>

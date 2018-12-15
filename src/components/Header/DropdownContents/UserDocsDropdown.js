@@ -64,7 +64,7 @@ const UserDocsDropdown = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <Heading color="gold">
+                            <Heading color="gold" noMarginBottom>
                                 <AnR />
                                 A&amp;R Representatives
                             </Heading>

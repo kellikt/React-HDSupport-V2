@@ -58,7 +58,7 @@ const AdministrationDropdown = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <Heading color="pink">
+                            <Heading color="pink" noMarginBottom>
                                 <Database />
                                 PHP MyAdmin
                             </Heading>

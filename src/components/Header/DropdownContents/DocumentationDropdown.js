@@ -141,7 +141,7 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <Heading>
+                            <Heading noMarginBottom>
                                 <Checklist />
                                 Operations Checklist
                             </Heading>

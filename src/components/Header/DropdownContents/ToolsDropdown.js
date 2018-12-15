@@ -101,7 +101,7 @@ const ToolsDropdown = ({ roles: { tech } }) => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <Heading color="light-blue">
+                                <Heading color="light-blue" noMarginBottom>
                                     <Software />
                                     Tech Software Page
                                 </Heading>

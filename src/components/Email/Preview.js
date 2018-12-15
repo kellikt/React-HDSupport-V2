@@ -37,7 +37,7 @@ class Preview extends Component {
             behavior: 'smooth',
         });
 
-        await axios.get(`${process.env.REACT_APP_DB_SERVER}/send-email.php`, {
+        await axios.post(`${process.env.REACT_APP_DB_SERVER}/send-email.php`, {
             from: from,
             to: to,
             subject: subject,
