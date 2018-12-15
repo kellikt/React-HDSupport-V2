@@ -74,7 +74,7 @@ const DownloadsDropdown = () => {
                         >
                             <Heading color="green">
                                 <Contract />
-                                Contract for Phone Headsets
+                                Phone Headset Contract
                             </Heading>
                         </a>
                     </ListItem>

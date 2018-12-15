@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const IndexLink = ({ color, children, title, description, to }) => {
     return (
-        <IndexLinkEl color={color} to={`${process.env.PUBLIC_URL}${to}`}>
+        <IndexLinkEl color={color} to={to}>
             {children}
             <div>
                 <h2>{title}</h2>

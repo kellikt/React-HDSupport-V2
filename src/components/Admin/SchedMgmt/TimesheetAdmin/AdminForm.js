@@ -122,7 +122,7 @@ class AdminForm extends Component {
                         </div>
                     </Inputs>
                     <a
-                        href={`/schedmgmt/timesheet/${selectedUser}/${year}/${payPeriod}`}
+                        href={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/${selectedUser}/${year}/${payPeriod}`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
