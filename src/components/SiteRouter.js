@@ -32,30 +32,33 @@ class SiteRouter extends Component {
     render() {
         return (
             <Router primary={false} basepath={`${process.env.REACT_APP_BASE_PATH}`}>
-                <UserRoute as={Main} path="/" />
-                <UserRoute as={ClockIn} path="clock" />
+                <UserRoute as={Main} path={`${process.env.PUBLIC_URL}/`} />
+                <UserRoute as={ClockIn} path={`${process.env.PUBLIC_URL}/clock`} />
 
-                <AdminRoute as={AcctMgmt} path="acctmgmt" />
-                <AdminRoute as={EditUser} path="acctmgmt/edituser" />
-                <AdminRoute as={Edit} path="acctmgmt/edituser/:username" />
-                <AdminRoute as={Add} path="acctmgmt/adduser" />
+                <AdminRoute as={AcctMgmt} path={`${process.env.PUBLIC_URL}/acctmgmt`} />
+                <AdminRoute as={EditUser} path={`${process.env.PUBLIC_URL}/acctmgmt/edituser`} />
+                <AdminRoute as={Edit} path={`${process.env.PUBLIC_URL}/acctmgmt/edituser/:username`} />
+                <AdminRoute as={Add} path={`${process.env.PUBLIC_URL}/acctmgmt/adduser`} />
 
-                <AdminRoute as={SchedMgmt} path="schedmgmt" />
-                <AdminRoute as={ClockMetrics} path="schedmgmt/clockmetrics" />
-                <AdminRoute as={ScheduleChange} path="schedmgmt/schedchange" />
-                <AdminRoute as={DisplayChanges} path="schedmgmt/displaychanges" />
-                <AdminRoute as={TimesheetAdmin} path="schedmgmt/tsadmin" />
-                <AdminRoute as={WorkWeekExceptions} path="schedmgmt/wwexceptions" />
-                <AdminRoute as={HolidayWizard} path="schedmgmt/holiday" />
-                <AdminRoute as={Timesheet} path="/schedmgmt/timesheet/:username/:year/:payPeriod" />
+                <AdminRoute as={SchedMgmt} path={`${process.env.PUBLIC_URL}/schedmgmt`} />
+                <AdminRoute as={ClockMetrics} path={`${process.env.PUBLIC_URL}/schedmgmt/clockmetrics`} />
+                <AdminRoute as={ScheduleChange} path={`${process.env.PUBLIC_URL}/schedmgmt/schedchange`} />
+                <AdminRoute as={DisplayChanges} path={`${process.env.PUBLIC_URL}/schedmgmt/displaychanges`} />
+                <AdminRoute as={TimesheetAdmin} path={`${process.env.PUBLIC_URL}/schedmgmt/tsadmin`} />
+                <AdminRoute as={WorkWeekExceptions} path={`${process.env.PUBLIC_URL}/schedmgmt/wwexceptions`} />
+                <AdminRoute as={HolidayWizard} path={`${process.env.PUBLIC_URL}/schedmgmt/holiday`} />
+                <AdminRoute
+                    as={Timesheet}
+                    path={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/:username/:year/:payPeriod`}
+                />
 
-                <UserRoute as={Email} path="email" />
-                <UserRoute as={Banner} path="email/banner" />
-                <UserRoute as={UsernameChange} path="email/usernamechange" />
-                <UserRoute as={FileDrop} path="email/filedrop" />
-                <UserRoute as={SortSite} path="email/sortsite" />
-                <UserRoute as={TrainingLab} path="email/training" />
-                <UserRoute as={FMO} path="email/fmo" />
+                <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
+                <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />
+                <UserRoute as={UsernameChange} path={`${process.env.PUBLIC_URL}/email/usernamechange`} />
+                <UserRoute as={FileDrop} path={`${process.env.PUBLIC_URL}/email/filedrop`} />
+                <UserRoute as={SortSite} path={`${process.env.PUBLIC_URL}/email/sortsite`} />
+                <UserRoute as={TrainingLab} path={`${process.env.PUBLIC_URL}/email/training`} />
+                <UserRoute as={FMO} path={`${process.env.PUBLIC_URL}/email/fmo`} />
             </Router>
         );
     }

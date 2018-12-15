@@ -11,7 +11,7 @@ class Navbar extends Component {
         return (
             <NavbarEl onMouseLeave={onMouseLeave}>
                 <NavbarList>
-                    <Link to="/">
+                    <Link to={`${process.env.PUBLIC_URL}/`}>
                         <ITSLogo />
                     </Link>
                     {children}
