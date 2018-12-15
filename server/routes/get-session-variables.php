@@ -1,8 +1,6 @@
 <?php 
 
-require_once "../database/connect_db.php";
-
-function getSessionInfo($db)
+function getSessionInfo()
 {
     session_start();
     $_SESSION['uuid'] = '22051104';
@@ -15,5 +13,5 @@ function getSessionInfo($db)
     return json_encode($array);
 }
 
-echo getSessionInfo($mysqli);
+echo getSessionInfo();
 ?>
