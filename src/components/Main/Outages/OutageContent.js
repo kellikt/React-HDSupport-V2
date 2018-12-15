@@ -5,27 +5,24 @@ import axios from 'axios';
 import { OutageContext } from './OutageContext';
 
 class OutageContent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            staff: [
-                {
-                    uid: 1,
-                    first_name: 'placeholder',
-                    last_name: 'placeholder',
-                    notes: 'Vacation',
-                },
-            ],
-            students: [
-                {
-                    uid: 2,
-                    first_name: 'placeholder',
-                    last_name: 'placeholder',
-                    notes: 'Vacation',
-                },
-            ],
-        };
-    }
+    state = {
+        staff: [
+            {
+                uid: 1,
+                first_name: 'placeholder',
+                last_name: 'placeholder',
+                notes: 'Vacation',
+            },
+        ],
+        students: [
+            {
+                uid: 2,
+                first_name: 'placeholder',
+                last_name: 'placeholder',
+                notes: 'Vacation',
+            },
+        ],
+    };
 
     doArraysEqual = (a, b) => {
         if (a === b) return true;
@@ -37,7 +34,7 @@ class OutageContent extends Component {
         return true;
     };
 
-    async componentDidUpdate() {
+    getOutageData = async () => {
         let value = this.context;
         const { focused } = value;
         const currDate = new Date();
@@ -59,6 +56,14 @@ class OutageContent extends Component {
         } catch (error) {
             console.log(`Error fetching outages: ${error}`);
         }
+    };
+
+    componentDidMount() {
+        this.getOutageData();
+    }
+
+    componentDidUpdate() {
+        this.getOutageData();
     }
 
     render() {
