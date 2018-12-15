@@ -21,7 +21,9 @@ export class ClockProvider extends Component {
             let value = this.context;
             const { username } = value;
 
-            const lastClockRequest = await axios.get(`/get-last-clock.php?username=${username}`);
+            const lastClockRequest = await axios.get(
+                `${process.env.REACT_APP_DB_SERVER}/get-last-clock.php?username=${username}`
+            );
             const clockData = lastClockRequest.data;
 
             const time = `${clockData.hour}:${clockData.min} ${clockData.ampm}`;
@@ -60,7 +62,7 @@ export class ClockProvider extends Component {
         else action = 'in';
 
         try {
-            const request = await axios.post('/clock-in.php', {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/clock-in.php`, {
                 username: username,
                 comments: commentString,
                 action: action,
@@ -75,7 +77,9 @@ export class ClockProvider extends Component {
     };
 
     refreshForm = async () => {
-        const lastClockRequest = await axios.get(`/get-last-clock.php?username=${this.state.username}`);
+        const lastClockRequest = await axios.get(
+            `${process.env.REACT_APP_DB_SERVER}/get-last-clock.php?username=${this.state.username}`
+        );
         const clockData = await lastClockRequest.data;
 
         const time = `${clockData.hour}:${clockData.min} ${clockData.ampm}`;

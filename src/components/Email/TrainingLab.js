@@ -43,7 +43,7 @@ class TrainingLab extends Component {
         const { uuid } = value;
 
         try {
-            const request = await axios.get(`/get-name.php?uuid=${uuid}`);
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-name.php?uuid=${uuid}`);
             const data = request.data;
 
             this.firstName = data.first_name;

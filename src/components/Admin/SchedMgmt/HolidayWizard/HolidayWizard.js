@@ -57,7 +57,7 @@ class HolidayWizard extends Component {
             this.handleError('Invalid inputs. Check the name or date.');
         } else {
             try {
-                await axios.post(`/add-holiday.php`, {
+                await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-holiday.php`, {
                     description: holiday,
                     timestamp: timestamp,
                 });
@@ -86,7 +86,7 @@ class HolidayWizard extends Component {
 
     getHolidays = async full => {
         try {
-            const request = await axios.get(`/get-holidays.php?full=${full}`);
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-holidays.php?full=${full}`);
             const data = request.data;
 
             if (full === 'no') {
@@ -109,7 +109,7 @@ class HolidayWizard extends Component {
         const { full } = this.state;
 
         try {
-            await axios.post(`/delete-holiday.php`, {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-holiday.php`, {
                 timestamp: stamp,
             });
 

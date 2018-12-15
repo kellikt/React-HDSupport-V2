@@ -46,7 +46,7 @@ class Banner extends Component {
         const { uuid, username } = value;
 
         try {
-            const name = await axios.get(`/get-name.php?uuid=${uuid}`);
+            const name = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-name.php?uuid=${uuid}`);
 
             const data = name.data;
 

@@ -51,7 +51,7 @@ class WorkWeekWizard extends Component {
         const { full } = this.state;
 
         try {
-            await axios.post(`/delete-work-week.php`, {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-work-week.php`, {
                 timestamp: stamp,
             });
 
@@ -102,7 +102,7 @@ class WorkWeekWizard extends Component {
             console.log(beginDate.getTime() / 1000);
 
             try {
-                await axios.post(`/add-work-week.php/`, {
+                await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-work-week.php/`, {
                     description: week,
                     timestamp: beginDate.getTime() / 1000,
                     weeks: weeksToAdd,
@@ -130,7 +130,7 @@ class WorkWeekWizard extends Component {
 
     getWeeks = async full => {
         try {
-            const request = await axios.get(`/get-work-weeks.php?full=${full}`);
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-work-weeks.php?full=${full}`);
             const data = request.data;
 
             if (full === 'no') {

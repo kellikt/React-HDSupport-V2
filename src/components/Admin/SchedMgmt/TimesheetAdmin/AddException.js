@@ -64,7 +64,7 @@ class AddException extends Component {
         const { username, date } = this.props;
         const { t0, t1, t2, t3, t4, t5, eid } = this.state;
         try {
-            await axios.post('/add-single-exception.php', {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-single-exception.php`, {
                 username: username,
                 date: date,
                 eid: eid,
@@ -98,7 +98,9 @@ class AddException extends Component {
         const { username, date } = this.props;
 
         try {
-            const request = await axios.get(`/get-single-exception.php?date=${date}&username=${username}`);
+            const request = await axios.get(
+                `${process.env.REACT_APP_DB_SERVER}/get-single-exception.php?date=${date}&username=${username}`
+            );
             const data = request.data;
 
             const { t0, t1, t2, t3, t4, t5, eid } = data[0];

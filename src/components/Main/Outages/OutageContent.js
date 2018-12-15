@@ -41,8 +41,12 @@ class OutageContent extends Component {
         const dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate() + focused}`;
 
         try {
-            const staffRequest = axios.get(`/get-outages.php?role=staff&date=${dateString}`);
-            const studentRequest = axios.get(`/get-outages.php?role=student&date=${dateString}`);
+            const staffRequest = axios.get(
+                `${process.env.REACT_APP_DB_SERVER}/get-outages.php?role=staff&date=${dateString}`
+            );
+            const studentRequest = axios.get(
+                `${process.env.REACT_APP_DB_SERVER}/get-outages.php?role=student&date=${dateString}`
+            );
 
             const results = await Promise.all([staffRequest, studentRequest]);
             const data = [results[0].data, results[1].data];

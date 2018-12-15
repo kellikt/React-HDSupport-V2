@@ -32,9 +32,9 @@ class AdminForm extends Component {
 
     async componentDidMount() {
         try {
-            const helpdesk = axios.get('/get-list-students.php?role=helpdesk');
-            const lab = axios.get('/get-list-students.php?role=lab');
-            const third_shift = axios.get('/get-list-students.php?role=third_shift');
+            const helpdesk = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=helpdesk`);
+            const lab = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=lab`);
+            const third_shift = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=third_shift`);
 
             const data = await Promise.all([helpdesk, lab, third_shift]);
 

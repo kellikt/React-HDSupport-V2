@@ -43,8 +43,8 @@ class FMO extends Component {
         const { uuid } = value;
 
         try {
-            const name = axios.get(`/get-name.php?uuid=${uuid}`);
-            const username = axios.get(`/get-username.php?uuid=${uuid}`);
+            const name = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-name.php?uuid=${uuid}`);
+            const username = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-username.php?uuid=${uuid}`);
 
             const request = await Promise.all([name, username]);
             const data = [request[0].data, request[1].data];

@@ -72,7 +72,7 @@ class Form extends Component {
                 searching: true,
             });
             try {
-                const request = await axios.post('/search-user.php', {
+                const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
                     username: username,
                     uuid: uuid,
                     firstName: firstName,

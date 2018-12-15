@@ -22,13 +22,13 @@ class Index extends Component {
         const { username, payPeriod, year } = this.props;
 
         try {
-            const request = axios.post('/search-user.php', {
+            const request = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
                 username: username,
                 uuid: '',
                 firstName: '',
                 lastName: '',
             });
-            const timesheetRequest = axios.post('/get-timesheet-info.php', {
+            const timesheetRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/get-timesheet-info.php`, {
                 payPeriod: payPeriod,
                 year: year,
                 username: username,

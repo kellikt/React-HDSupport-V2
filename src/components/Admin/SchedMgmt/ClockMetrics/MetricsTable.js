@@ -2,15 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import {
-    Table,
-    TableLabel,
-    TableHeading,
-    TableRow,
-    Timestamp,
-    Comments,
-    Location,
-} from './MetricsTableComponents';
+import { Table, TableLabel, TableHeading, TableRow, Timestamp, Comments, Location } from './MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 import { ReactComponent as X } from '../../../../images/icons/RedCross.svg';
@@ -28,7 +20,7 @@ class MetricsTable extends Component {
         const splitDate = payPeriod.split(',');
 
         try {
-            const request = await axios.post('/get-clock-metrics.php', {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-clock-metrics.php`, {
                 username: student,
                 year: year,
                 month: Number.parseInt(splitDate[0], 10),
@@ -61,9 +53,7 @@ class MetricsTable extends Component {
                             Results for: <strong>{student}</strong>
                         </h2>
                         <span>
-                            {`${splitDate[0]}/${splitDate[1]}/${year} - ${splitDate[0]}/${
-                                splitDate[2]
-                            }/${year}`}
+                            {`${splitDate[0]}/${splitDate[1]}/${year} - ${splitDate[0]}/${splitDate[2]}/${year}`}
                         </span>
                     </div>
                 </TableLabel>

@@ -43,9 +43,9 @@ class MetricsForm extends Component {
 
     async componentDidMount() {
         try {
-            const helpdesk = axios.get('/get-list-students.php?role=helpdesk');
-            const lab = axios.get('/get-list-students.php?role=lab');
-            const third_shift = axios.get('/get-list-students.php?role=third_shift');
+            const helpdesk = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=helpdesk`);
+            const lab = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=lab`);
+            const third_shift = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=third_shift`);
 
             const data = await Promise.all([helpdesk, lab, third_shift]);
 
@@ -74,12 +74,7 @@ class MetricsForm extends Component {
                     <Inputs>
                         <div>
                             <label htmlFor="user">Student</label>
-                            <select
-                                name="selectedUser"
-                                id="user"
-                                onChange={this.handleChange}
-                                value={selectedUser}
-                            >
+                            <select name="selectedUser" id="user" onChange={this.handleChange} value={selectedUser}>
                                 <option value="None">Select a Student</option>
                                 <optgroup label="Help Desk">
                                     {helpdesk.map(student => {
@@ -125,12 +120,7 @@ class MetricsForm extends Component {
                         </div>
                         <div>
                             <label htmlFor="payperiod">Pay Period</label>
-                            <select
-                                name="payPeriod"
-                                id="payperiod"
-                                onChange={this.handleChange}
-                                value={payPeriod}
-                            >
+                            <select name="payPeriod" id="payperiod" onChange={this.handleChange} value={payPeriod}>
                                 <option value="None">Select Pay Period</option>
                                 {periods.map((period, index) => {
                                     return (
@@ -145,9 +135,7 @@ class MetricsForm extends Component {
                     <Button color="light-blue">Display Actions</Button>
                 </FormEl>
                 <PoseGroup>
-                    {searched && (
-                        <MetricsTable key="table" student={selectedUser} year={year} payPeriod={payPeriod} />
-                    )}
+                    {searched && <MetricsTable key="table" student={selectedUser} year={year} payPeriod={payPeriod} />}
                 </PoseGroup>
             </React.Fragment>
         );

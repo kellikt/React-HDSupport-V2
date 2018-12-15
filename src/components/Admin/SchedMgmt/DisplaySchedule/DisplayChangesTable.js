@@ -21,7 +21,7 @@ class DisplayChangesTable extends Component {
         const endDateString = `${date[1].getFullYear()}-${date[1].getMonth() + 1}-${date[1].getDate()}`;
 
         try {
-            const request = await axios.post('/get-schedule-changes.php', {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-schedule-changes.php`, {
                 username: username,
                 beginDate: startDateString,
                 endDate: endDateString,
@@ -46,7 +46,7 @@ class DisplayChangesTable extends Component {
 
     handleEdit = async (sid, notes, beginDate, endDate) => {
         try {
-            await axios.post('/edit-schedule-change.php', {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-schedule-change.php`, {
                 sid: sid,
                 notes: notes,
                 beginDate: beginDate,
@@ -65,7 +65,7 @@ class DisplayChangesTable extends Component {
 
     handleDelete = async sid => {
         try {
-            await axios.post('/delete-schedule-change.php', {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-schedule-change.php`, {
                 sid: sid,
             });
 
@@ -123,18 +123,12 @@ class DisplayChangesTable extends Component {
                         );
                     } else {
                         return (
-                            <Row
-                                key={result.sid}
-                                onClick={() => this.handleRowClick(index)}
-                                stagger={index}
-                            >
+                            <Row key={result.sid} onClick={() => this.handleRowClick(index)} stagger={index}>
                                 <Username>{result.username}</Username>
                                 <Notes>{result.notes}</Notes>
                                 <span>{result.begin_date}</span>
                                 <span>{result.end_date}</span>
-                                <Location>
-                                    {result.begin_date === result.end_date ? <X /> : <Check />}
-                                </Location>
+                                <Location>{result.begin_date === result.end_date ? <X /> : <Check />}</Location>
                             </Row>
                         );
                     }

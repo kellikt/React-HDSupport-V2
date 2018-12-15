@@ -253,7 +253,7 @@ class Add extends Component {
         event.preventDefault();
         const { info, roles } = this.state;
         try {
-            const addInfo = await axios.post('/add-user.php', {
+            const addInfo = await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-user.php`, {
                 uuid: info.uuid,
                 firstName: info.first_name,
                 lastName: info.last_name,
@@ -269,7 +269,7 @@ class Add extends Component {
 
             const uid = await addInfo.data;
 
-            await axios.post('/add-user-groups.php', {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-user-groups.php`, {
                 uid: uid,
                 username: info.username,
                 admin: roles.administrator,

@@ -57,7 +57,7 @@ class ChangeForm extends Component {
         const endDateString = `${date[1].getFullYear()}-${date[1].getMonth() + 1}-${date[1].getDate()}`;
 
         try {
-            const request = await axios.post('/add-schedule-change.php', {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-schedule-change.php`, {
                 username: username,
                 reason: reason,
                 startDate: startDateString,
@@ -125,13 +125,7 @@ class ChangeForm extends Component {
                 </Title>
                 <Reasons>
                     <h4>Reason:</h4>
-                    <RadioButton
-                        name="radio"
-                        id="sick"
-                        value="Sick - "
-                        label="Sick"
-                        onChange={this.handleRadio}
-                    />
+                    <RadioButton name="radio" id="sick" value="Sick - " label="Sick" onChange={this.handleRadio} />
                     <RadioButton
                         name="radio"
                         id="learly"
@@ -153,13 +147,7 @@ class ChangeForm extends Component {
                         label="Vacation"
                         onChange={this.handleRadio}
                     />
-                    <RadioButton
-                        name="radio"
-                        id="roff"
-                        value="R. Off - "
-                        label="R. Off"
-                        onChange={this.handleRadio}
-                    />
+                    <RadioButton name="radio" id="roff" value="R. Off - " label="R. Off" onChange={this.handleRadio} />
                     <RadioButton name="radio" id="other" value="" label="Other" onChange={this.handleRadio} />
                     <Button color="purple">Enter Change</Button>
                 </Reasons>

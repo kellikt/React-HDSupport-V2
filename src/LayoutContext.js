@@ -26,11 +26,13 @@ export class LayoutProvider extends Component {
 
     async componentDidMount() {
         try {
-            const request = await axios.get('/get-session-variables.php');
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-session-variables.php`);
             const data = request.data;
 
-            const nameRequest = axios.get(`/get-name.php?uuid=${data.uuid}`);
-            const rolesRequest = axios.get(`/get-roles.php?username=${data.username}`);
+            const nameRequest = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-name.php?uuid=${data.uuid}`);
+            const rolesRequest = axios.get(
+                `${process.env.REACT_APP_DB_SERVER}/get-roles.php?username=${data.username}`
+            );
 
             const userData = await Promise.all([nameRequest, rolesRequest]);
             const nameData = userData[0].data;

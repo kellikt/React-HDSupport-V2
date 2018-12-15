@@ -48,8 +48,8 @@ class Edit extends Component {
     async componentDidMount() {
         const { username } = this.props;
 
-        const rolesRequest = axios.get(`/get-roles.php?username=${username}`);
-        const infoRequest = axios.post(`/search-user.php`, {
+        const rolesRequest = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-roles.php?username=${username}`);
+        const infoRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
             username: username,
             uuid: '',
             firstName: '',
@@ -274,7 +274,7 @@ class Edit extends Component {
         const { roles, info } = this.state;
 
         try {
-            const groups = axios.post('/edit-user-groups.php', {
+            const groups = axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-user-groups.php`, {
                 administrator: roles.administrator,
                 helpdesk: roles.helpdesk,
                 lab: roles.lab,
@@ -286,7 +286,7 @@ class Edit extends Component {
                 uid: info.uid,
             });
 
-            const userInfo = axios.post('/edit-user.php', {
+            const userInfo = axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-user.php`, {
                 uuid: info.uuid,
                 firstName: info.first_name,
                 lastName: info.last_name,

@@ -37,7 +37,7 @@ class Preview extends Component {
             behavior: 'smooth',
         });
 
-        await axios.get(`/send-email.php`, {
+        await axios.get(`${process.env.REACT_APP_DB_SERVER}/send-email.php`, {
             from: from,
             to: to,
             subject: subject,
@@ -61,7 +61,7 @@ class Preview extends Component {
             behavior: 'smooth',
         });
 
-        const request = await axios.get(`/get-email-contents.php?type=${type}`);
+        const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-email-contents.php?type=${type}`);
         let data = request.data;
         data = data.replace(/FIRST/gi, first);
         data = data.replace(/SECOND/gi, second);

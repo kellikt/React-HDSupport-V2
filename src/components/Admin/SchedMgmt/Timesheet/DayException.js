@@ -47,7 +47,7 @@ class DayException extends Component {
         const { eid, t0, t1, t2, t3, t4, t5 } = this.state.exception;
 
         try {
-            await axios.post('/add-single-exception.php', {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-single-exception.php`, {
                 username: username,
                 date: date,
                 eid: eid,
@@ -89,7 +89,9 @@ class DayException extends Component {
         const { username, dayObj } = this.props;
 
         try {
-            const request = await axios.get(`/get-single-exception.php?date=${dayObj.date}&username=${username}`);
+            const request = await axios.get(
+                `${process.env.REACT_APP_DB_SERVER}/get-single-exception.php?date=${dayObj.date}&username=${username}`
+            );
             const data = request.data;
             this.setState({
                 exception: data[0],
