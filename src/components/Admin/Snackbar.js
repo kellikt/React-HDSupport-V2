@@ -25,6 +25,10 @@ class Snackbar extends Component {
     }
 }
 
+Snackbar.defaultProps = {
+    isError: false,
+};
+
 Snackbar.propTypes = {
     handler: PropTypes.bool.isRequired,
     message: PropTypes.string.isRequired,
