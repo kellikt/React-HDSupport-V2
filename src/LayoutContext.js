@@ -56,7 +56,7 @@ export class LayoutProvider extends Component {
             });
 
             this.interval = setInterval(() => {
-                axios.get(`/keep-alive.php`);
+                axios.get(`${process.env.REACT_APP_DB_SERVER}/keep-alive.php`);
             }, 300000);
         } catch (error) {
             console.log(`Unable: ${error}`);

@@ -62,13 +62,11 @@ export class ClockProvider extends Component {
         else action = 'in';
 
         try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/clock-in.php`, {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/clock-in.php`, {
                 username: username,
                 comments: commentString,
                 action: action,
             });
-            const data = request.data;
-            console.log(data);
 
             this.refreshForm();
         } catch (error) {
