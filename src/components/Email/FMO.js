@@ -9,6 +9,7 @@ import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
 import { LayoutContext } from '../../LayoutContext';
+import Background from '../Background';
 
 class FMO extends Component {
     state = {
@@ -129,6 +130,7 @@ class FMO extends Component {
                         firstName={this.firstName}
                     />
                 )}
+                <Background color="purple" />
             </Container>
         );
     }

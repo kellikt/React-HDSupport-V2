@@ -8,6 +8,7 @@ import TextInput from '../../../TextInput';
 import RadioButton from '../../../RadioButton';
 import Button from '../../../Button';
 import SnackbarPortal from '../../../SnackbarPortal';
+import Background from '../../../Background';
 
 class ChangeForm extends Component {
     constructor(props) {
@@ -158,6 +159,7 @@ class ChangeForm extends Component {
                     isError={error}
                     onClick={this.handleSnack}
                 />
+                <Background color="purple" />
             </FormEl>
         );
     }

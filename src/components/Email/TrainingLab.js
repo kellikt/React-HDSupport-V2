@@ -9,6 +9,7 @@ import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
 import { LayoutContext } from '../../LayoutContext';
+import Background from '../Background';
 
 class TrainingLab extends Component {
     state = {
@@ -121,6 +122,7 @@ class TrainingLab extends Component {
                         firstName={this.firstName}
                     />
                 )}
+                <Background color="blue" yOffset={70} />
             </Container>
         );
     }

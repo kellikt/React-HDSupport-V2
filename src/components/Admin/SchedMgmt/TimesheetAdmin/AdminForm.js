@@ -8,6 +8,7 @@ import { Inputs } from '../ClockMetrics/MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Sheetadmin.svg';
 import { createYears } from '../../utils';
 import { periods } from '../../payPeriods.json';
+import Background from '../../../Background';
 
 class AdminForm extends Component {
     state = {
@@ -130,6 +131,7 @@ class AdminForm extends Component {
                     </a>
                 </FormEl>
                 <Exceptions helpdesk={helpdesk} lab={lab} third_shift={third_shift} />
+                <Background color="green" yOffset={90} />
             </React.Fragment>
         );
     }

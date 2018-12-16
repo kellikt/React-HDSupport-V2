@@ -8,6 +8,7 @@ import { ReactComponent as FileDrop } from '../../images/Email/FileDrop.svg';
 import { ReactComponent as FMO } from '../../images/Email/FMO.svg';
 import { ReactComponent as SortSite } from '../../images/Email/SortSite.svg';
 import { ReactComponent as TrainingLab } from '../../images/Email/TrainingLab.svg';
+import Background from '../Background';
 
 const index = () => {
     const links = [{ title: 'Email Generator', to: '/email' }];
@@ -62,6 +63,7 @@ const index = () => {
             >
                 <TrainingLab />
             </IndexLink>
+            <Background />
         </IndexPage>
     );
 };

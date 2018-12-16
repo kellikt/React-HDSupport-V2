@@ -3,6 +3,7 @@ import React from 'react';
 import WorkWeekWizard from './WorkWeekWizard';
 import Breadcrumb from '../../Breadcrumb';
 import Container from '../../Container';
+import Background from '../../../Background';
 
 const Index = () => {
     const links = [
@@ -15,6 +16,7 @@ const Index = () => {
             <h1>Work Week Exceptions</h1>
             <Breadcrumb links={links} color="red" />
             <WorkWeekWizard />
+            <Background color="purple" />
         </Container>
     );
 };

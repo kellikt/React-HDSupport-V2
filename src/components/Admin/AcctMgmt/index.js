@@ -4,6 +4,7 @@ import IndexPage from '../IndexPage';
 import IndexLink from '../IndexLink';
 import { ReactComponent as AddUser } from '../../../images/Admin/Acct/AddUser.svg';
 import { ReactComponent as EditUser } from '../../../images/Admin/Acct/EditUser.svg';
+import Background from '../../Background';
 
 const index = () => {
     const links = [{ title: 'Account Management', to: '/acctmgmt' }];
@@ -26,6 +27,7 @@ const index = () => {
             >
                 <EditUser />
             </IndexLink>
+            <Background color="blue" yOffset={70} />
         </IndexPage>
     );
 };

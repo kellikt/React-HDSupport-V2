@@ -10,6 +10,7 @@ import Checkbox from '../Checkbox';
 import RadioButton from '../RadioButton';
 import Preview from './Preview';
 import { LayoutContext } from '../../LayoutContext';
+import Background from '../Background';
 
 class Banner extends Component {
     state = {
@@ -146,6 +147,7 @@ class Banner extends Component {
                         color="light-blue"
                     />
                 )}
+                <Background />
             </Container>
         );
     }

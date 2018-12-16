@@ -8,12 +8,13 @@ import { ReactComponent as DisplaySched } from '../../../images/Admin/Sched/Disp
 import { ReactComponent as SchedChange } from '../../../images/Admin/Sched/SchedChange.svg';
 import { ReactComponent as Holiday } from '../../../images/Admin/Sched/Holiday.svg';
 import { ReactComponent as Forty } from '../../../images/Admin/Sched/Forty.svg';
+import Background from '../../Background';
 
 const index = () => {
     const links = [{ title: 'Schedule Management', to: '/schedmgmt' }];
 
     return (
-        <IndexPage title="Schedule Management" links={links}>
+        <IndexPage title="Schedule Management" links={links} color="light-blue">
             <IndexLink
                 color="green"
                 title="Timesheet Admin"
@@ -62,6 +63,7 @@ const index = () => {
             >
                 <Forty />
             </IndexLink>
+            <Background />
         </IndexPage>
     );
 };
