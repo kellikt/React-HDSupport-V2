@@ -236,7 +236,9 @@ const Container = styled.div`
                     ? '#e6ebf1'
                     : color === 'blue'
                     ? null
-                    : (color = 'gold' ? '#fde8cc' : '#cff1fa')};
+                    : color === 'gold'
+                    ? '#fde8cc'
+                    : '#cff1fa'};
             border: ${({ color }) => (color === 'blue' ? '2px solid #e6ebf1' : null)};
             position: relative;
             top: ${({ color }) => (color === 'blue' ? '2px' : 0)};

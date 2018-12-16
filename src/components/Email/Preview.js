@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import TextInput from '../TextInput';
 import Button from '../Button';
+import SnackbarPortal from '../SnackbarPortal';
 
 class Preview extends Component {
     constructor(props) {
@@ -24,8 +25,15 @@ class Preview extends Component {
             to: this.toAddress,
             subject: subject,
             body: '',
+            snackHandler: false,
         };
     }
+
+    handleSnack = () => {
+        this.setState({
+            snackHandler: false,
+        });
+    };
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -37,13 +45,23 @@ class Preview extends Component {
             behavior: 'smooth',
         });
 
-        await axios.post(`${process.env.REACT_APP_DB_SERVER}/send-email.php`, {
-            from: from,
-            to: to,
-            subject: subject,
-            body: body,
-            bcc: bcc,
-        });
+        try {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/send-email.php`, {
+                from: from,
+                to: to,
+                subject: subject,
+                body: body,
+                bcc: bcc,
+            });
+            this.setState({
+                snackHandler: true,
+            });
+            this.timerId = setTimeout(() => {
+                this.handleSnack();
+            }, 3000);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     handleInput = event => {
@@ -73,8 +91,12 @@ class Preview extends Component {
         });
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.timerId);
+    }
+
     render() {
-        const { from, to, subject, body } = this.state;
+        const { from, to, subject, body, snackHandler } = this.state;
         const { bcc, color } = this.props;
 
         return (
@@ -119,6 +141,12 @@ class Preview extends Component {
                     <BCCNotice color="red">You are not BCC'd on this email.</BCCNotice>
                 )}
                 <Button color={color}>Send Email</Button>
+                <SnackbarPortal
+                    handler={snackHandler}
+                    message={`You have sent an email to: '${to}'`}
+                    heading="Success!"
+                    onClick={this.handleSnack}
+                />
             </PreviewForm>
         );
     }
