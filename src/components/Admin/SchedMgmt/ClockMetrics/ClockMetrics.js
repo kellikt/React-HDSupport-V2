@@ -3,6 +3,7 @@ import React from 'react';
 import Container from '../../Container';
 import MetricsForm from './MetricsForm';
 import Breadcrumb from '../../Breadcrumb';
+import Background from '../../../Background';
 
 const ClockMetrics = () => {
     const links = [
@@ -15,6 +16,7 @@ const ClockMetrics = () => {
             <h1>Clock-in Metrics</h1>
             <Breadcrumb links={links} color="light-blue" />
             <MetricsForm />
+            <Background />
         </Container>
     );
 };

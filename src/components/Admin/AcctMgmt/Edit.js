@@ -11,6 +11,7 @@ import Checkbox from '../../Checkbox';
 import SnackbarPortal from '../../SnackbarPortal';
 import { ReactComponent as Personal } from '../../../images/Admin/Acct/EditPersonal.svg';
 import { ReactComponent as Contact } from '../../../images/Admin/Acct/EditContact.svg';
+import Background from '../../Background';
 
 class Edit extends Component {
     constructor(props) {
@@ -500,6 +501,7 @@ class Edit extends Component {
                         heading="Success!"
                     />
                 </EditForm>
+                <Background color="purple" />
             </Container>
         );
     }

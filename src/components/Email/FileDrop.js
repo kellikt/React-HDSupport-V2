@@ -9,6 +9,7 @@ import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
 import { LayoutContext } from '../../LayoutContext';
+import Background from '../Background';
 
 class FileDrop extends Component {
     state = {
@@ -121,6 +122,7 @@ class FileDrop extends Component {
                         firstName={this.firstName}
                     />
                 )}
+                <Background color="purple" />
             </Container>
         );
     }

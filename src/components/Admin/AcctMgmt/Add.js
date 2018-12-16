@@ -11,6 +11,7 @@ import Checkbox from '../../Checkbox';
 import SnackbarPortal from '../../SnackbarPortal';
 import { ReactComponent as Personal } from '../../../images/Admin/Acct/AddPersonal.svg';
 import { ReactComponent as Contact } from '../../../images/Admin/Acct/AddContact.svg';
+import Background from '../../Background';
 
 class Add extends Component {
     constructor(props) {
@@ -469,6 +470,7 @@ class Add extends Component {
                         heading="Success!"
                     />
                 </EditForm>
+                <Background color="green" yOffset={90} />
             </Container>
         );
     }

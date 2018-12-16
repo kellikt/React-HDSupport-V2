@@ -7,6 +7,7 @@ import TextInput from '../TextInput';
 import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Preview from './Preview';
+import Background from '../Background';
 
 class UsernameChange extends Component {
     state = {
@@ -107,6 +108,7 @@ class UsernameChange extends Component {
                         color="gold"
                     />
                 )}
+                <Background color="gold" />
             </Container>
         );
     }
