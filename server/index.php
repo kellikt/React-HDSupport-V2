@@ -1,5 +1,11 @@
 <?php
 
+// server should keep session data for AT LEAST 4 hours
+ini_set('session.gc_maxlifetime', 14400);
+
+// each client should remember their session id for EXACTLY 4 hours
+session_set_cookie_params(14400);
+
 session_start();
 include "./do_auth.php";
 
