@@ -1,7 +1,7 @@
 <?php
 
 $host = '127.0.0.1';
-$db = 'itshdprod';
+$db = '';
 $user = '';
 $pass = '';
 $charset = 'utf8mb4';

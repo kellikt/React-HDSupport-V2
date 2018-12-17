@@ -16,9 +16,9 @@ function getTimesheetInfo($db, $passed_payPeriod, $passed_year, $passed_username
 {
     error_reporting(0);
 
-    require "./helpers/timesheet_functions.php";
-    require "./helpers/timesheet_ver_functions.php";
-    require "./helpers/calc_timesheet.php";
+    require "./timesheet_functions.php";
+    require "./timesheet_ver_functions.php";
+    require "./calc_timesheet.php";
 
     $return = array();
 

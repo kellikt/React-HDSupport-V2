@@ -1,7 +1,7 @@
-Hello,
+<p>Hello,</p>
 
-FMO personnel: SECOND entered the ITC to work on FIRST. They have been provided the following badge number/s: THIRD.
+<p>FMO personnel: SECOND entered the ITC to work on FIRST. They have been provided the following badge number/s: THIRD.</p>
 
-Regards,
-SIGNATURE
-ITS Help Desk
+<p>Regards,</p>
+<p>SIGNATURE</p>
+<p>ITS Help Desk</p>
