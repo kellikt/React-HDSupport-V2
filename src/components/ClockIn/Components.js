@@ -22,7 +22,7 @@ export const Username = styled.span``;
 export const InOrOut = styled.h1`
     margin: 0;
     line-height: 1;
-    color: ${props => (props.clockedIn ? 'var(--green)' : 'var(--red)')};
+    color: ${({ clockedIn, timedOut }) => (timedOut ? 'var(--gold)' : clockedIn ? 'var(--green)' : 'var(--red)')};
     text-transform: uppercase;
     letter-spacing: 0.035em;
     font-size: 36px;

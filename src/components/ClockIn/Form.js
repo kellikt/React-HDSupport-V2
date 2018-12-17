@@ -6,9 +6,12 @@ import Spinner from '../Spinner';
 import { ReactComponent as RedX } from '../../images/icons/RedCross.svg';
 import { ReactComponent as GreenCheck } from '../../images/icons/GreenCheck.svg';
 import { ReactComponent as Couch } from '../../images/Clock/Chillin.svg';
+import { ReactComponent as WarningImg } from '../../images/Clock/Warning.svg';
 import { ReactComponent as Working } from '../../images/Clock/Working.svg';
+import { ReactComponent as Warning } from '../../images/icons/WarningExclamation.svg';
 import Button from '../Button';
 import { ClockContext } from './ClockContext';
+import SnackbarPortal from '../SnackbarPortal';
 
 class Form extends Component {
     constructor(props) {
@@ -39,7 +42,7 @@ class Form extends Component {
     render() {
         const { text } = this.state;
         let value = this.context;
-        const { username, clockedIn, loading } = value;
+        const { username, clockedIn, loading, timedOut } = value;
 
         return (
             <FormEl onSubmit={this.handleSubmit}>
@@ -49,14 +52,13 @@ class Form extends Component {
                     <React.Fragment>
                         <LeftSide>
                             <ClockState>
-                                {clockedIn ? <GreenCheck /> : <RedX />}
+                                {timedOut ? <Warning /> : clockedIn ? <GreenCheck /> : <RedX />}
                                 <div>
                                     <Username>
                                         You <strong>({username})</strong> are:
                                     </Username>
-                                    <InOrOut clockedIn={clockedIn}>
-                                        Clocked
-                                        {clockedIn ? ' in' : ' out'}
+                                    <InOrOut clockedIn={clockedIn} timedOut={timedOut}>
+                                        {timedOut ? 'Timed Out' : clockedIn ? 'Clocked in' : 'Clocked out'}
                                     </InOrOut>
                                 </div>
                             </ClockState>
@@ -73,7 +75,7 @@ class Form extends Component {
                             </Comments>
                         </LeftSide>
                         <RightSide>
-                            {clockedIn ? <Working /> : <Couch />}
+                            {timedOut ? <WarningImg /> : clockedIn ? <Working /> : <Couch />}
                             {clockedIn ? (
                                 <Button color="red">Clock out</Button>
                             ) : (
@@ -82,6 +84,15 @@ class Form extends Component {
                         </RightSide>
                     </React.Fragment>
                 )}
+                <SnackbarPortal
+                    handler={timedOut}
+                    message={'Your session expired. Please refresh the page.'}
+                    heading={'Hey!'}
+                    isError={true}
+                    onClick={() => {
+                        return null;
+                    }}
+                />
             </FormEl>
         );
     }
