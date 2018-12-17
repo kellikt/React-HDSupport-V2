@@ -1,30 +1,27 @@
-Aloha,
+<p>Aloha,
 
-Please read this notice carefully and reply that you understand and agree to the terms noted below. Your request will be processed within one business day of receiving your reply to this message.
+<p>Please read this notice carefully and reply that you understand and agree to the terms noted below. Your request will be processed within one business day of receiving your reply to this message.</p>
 
-This notice is being sent to you because you have requested a change of your UH Username.  If this is not the case, please contact the ITS Help Desk immediately; call the ITS Help Desk at (808) 956-8883 or toll-free from the neighbor islands at (800) 558-2669.
+<p>This notice is being sent to you because you have requested a change of your UH Username.  If this is not the case, please contact the ITS Help Desk immediately; call the ITS Help Desk at (808) 956-8883 or toll-free from the neighbor islands at (800) 558-2669.</p>
 
-Your request to change your UH Username to
+<p>Your request to change your UH Username to<br><br>
 
-          SECOND (email address = SECOND@hawaii.edu)
+          SECOND (email address = SECOND@hawaii.edu)<br><br>
 
-has been approved. The change will take place after you acknowledge your acceptance to the following stipulations:
+has been approved. The change will take place after you acknowledge your acceptance to the following stipulations:</p>
+<ol>
+    <li>Any email sent to your old UH email address will bounce back to the sender. You are responsible for updating your acquaintances and contacts with your new UH email address.</li>
+    <li>If you are subscribed to any mailing lists with your old UH email address, it is your responsibility to unsubscribe your old UH email address from those lists and to resubscribe to them under your new UH email address.</li>
+    <li>All MyUH (https://myuh.hawaii.edu) data (i.e. any saved favorites or preferences you have changed) will be *deleted* and CANNOT be restored.</li>
+    <li>Many services and systems use the UH Username for access control. This UH Username change process does not guarantee that all of these services/systems will be automatically updated, so you are responsible for testing access to all of these services/systems after the UH Username change, and working with the support staff for the service or system if any issues arise.</li>
+    <li>This UH Username change is not reversible. Any requested change to your UH Username after this change request is processed will be subject to the same procedures and guidelines as documented at: https://www.hawaii.edu/askus/100</li>
+</ol>
 
-1. Any email sent to your old UH email address will bounce back to the sender. You are responsible for updating your acquaintances and contacts with your new UH email address.
+<p>Please note that the password for your new UH Username will be the same one you used for your original UH Username.</p>
 
-2. If you are subscribed to any mailing lists with your old UH email address, it is your responsibility to unsubscribe your old UH email address from those lists and to resubscribe to them under your new UH email address.
+<p>If you have any questions or concerns regarding this request, please contact us.</p>
 
-3. All MyUH (https://myuh.hawaii.edu) data (i.e. any saved favorites or preferences you have changed) will be *deleted* and CANNOT be restored.
-
-4. Many services and systems use the UH Username for access control. This UH Username change process does not guarantee that all of these services/systems will be automatically updated, so you are responsible for testing access to all of these services/systems after the UH Username change, and working with the support staff for the service or system if any issues arise.
-
-5. This UH Username change is not reversible. Any requested change to your UH Username after this change request is processed will be subject to the same procedures and guidelines as documented at: https://www.hawaii.edu/askus/100
-
-Please note that the password for your new UH Username will be the same one you used for your original UH Username.
-
-If you have any questions or concerns regarding this request, please contact us.
-
-ITS Help Desk
-Phone: (808) 956-8883
-Toll Free (neighbor isles): (800) 558-2669
-Email: help@hawaii.edu
+<p>ITS Help Desk</p>
+<p>Phone: (808) 956-8883</p>
+<p>Toll Free (neighbor isles): (800) 558-2669</p>
+<p>Email: help@hawaii.edu</p>

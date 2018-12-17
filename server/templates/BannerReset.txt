@@ -1,42 +1,43 @@
-Hello,
+<p>Hello,</p>
 
-I've reset your Banner password. Banner can be accessed at https://banner.sis.hawaii.edu.
+<p>I've reset your Banner password. Banner can be accessed at https://banner.sis.hawaii.edu.</p>
 
-Your Banner ID (username) is: FIRST
-Your reset password is: change-2-day
+<p>Your Banner ID (username) is: <strong>FIRST</strong></p>
+<p>Your reset password is: <strong>change-2-day</strong></p>
 
-**Please change your Banner password as soon as possible.**
+<p><em>**Please change your Banner password as soon as possible.**</em></p>
 
-To login and change your Banner password:
+<p>To login and change your Banner password:</p>
 
-1. Go to https://banner.sis.hawaii.edu.
+<ol>
+    <li>Go to https://banner.sis.hawaii.edu.</li>
+    <li>
+        <p>In the "Username" box type: FIRST</p>
+        <p>In the "Password" box type: change-2-day</p>
+        <p>Leave the Database box blank.</p>
+        <p>Click on **Connect**</p>
+    </li>
+    <li>You will be told your password is expired. This is normal. Click on OK.</li>
+    <li>At the next screen, in the "Old Password" box, type the reset password (listed above), NOT the password you used to use.</li>
+    <li>In the "New Password" and "Retype new Password" boxes, please type a new password of your choice. (Please see the criteria for a new password below.)</li>
+    <li>Click OK.</li>
+</ol>
 
-2. In the "Username" box type: FIRST
-   In the "Password" box type: change-2-day
-   Leave the Database box blank.
-   Click on **Connect**
+<p>Your new password must meet these criteria:</p>
 
-3. You will be told your password is expired. This is normal. Click on OK.
+<ul>
+    <li>Password cannot be same as your Banner ID</li>
+    <li>Password must be at least 6 characters</li>
+    <li>Password must contain at least one digit, one alpha character, and one special character. The following are valid special characters: !%\*+,-/:?\_</li>
+    <li>New password must be different from previous passwords that you have used by at least three characters</li>
+</ul> 
 
-4. At the next screen, in the "Old Password" box, type the reset password (listed above), NOT the password you used to use.
+<p><em>Note: the single quote ('), ampersand (&), @ sign, # symbol, and caret (^) are NOT valid special characters. Please do not use these characters in your password.</em></p>
 
-5. In the "New Password" and "Retype new Password" boxes, please type a new password of your choice. (Please see the criteria for a new password below.)
+<p>If you get the message "Password verification failed" please double check that you are not using an invalid special character in your password.</p>
 
-6. Click OK.
+<p>Please reply to this message if you still cannot login to banner.</p>
 
-Your new password must meet these criteria:
-
-a.  Password cannot be same as your Banner ID
-b.  Password must be at least 6 characters
-c.  Password must contain at least one digit, one alpha character, and one special character. The following are valid special characters: !%\*+,-/:?\_
-d.  New password must be different from previous passwords that you have used by at least three characters
-
-Note: the single quote ('), ampersand (&), @ sign, # symbol, and caret (^) are NOT valid special characters. Please do not use these characters in your password.
-
-If you get the message "Password verification failed" please double check that you are not using an invalid special character in your password.
-
-Please reply to this message if you still cannot login to banner.
-
-Thank you,
-THIRD
-SECOND
+<p>Thank you,</p>
+<p>THIRD</p>
+<p>SECOND</p>

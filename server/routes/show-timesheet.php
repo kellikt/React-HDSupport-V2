@@ -18,9 +18,9 @@ $passed_payPeriod = $_GET['payPeriod'];
 $passed_year = $_GET['year'];
 $passed_username = $_GET['username'];
 
-require "./helpers/timesheet_functions.php";
-require "./helpers/timesheet_ver_functions.php";
-require "./helpers/calc_timesheet.php";
+require "./timesheet_functions.php";
+require "./timesheet_ver_functions.php";
+require "./calc_timesheet.php";
 
 ?>
 
@@ -30,7 +30,7 @@ require "./helpers/calc_timesheet.php";
 <head>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="../css/timesheet_styles.css">
+<link rel="stylesheet" type="text/css" href="./css/timesheet_styles.css">
 
 </head>
 <body>
