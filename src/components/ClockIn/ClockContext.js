@@ -13,6 +13,7 @@ export class ClockProvider extends Component {
             lastClock: {},
             clockedIn: null,
             loading: true,
+            timedOut: false,
         };
     }
 
@@ -67,32 +68,39 @@ export class ClockProvider extends Component {
                 comments: commentString,
                 action: action,
             });
-
             this.refreshForm();
         } catch (error) {
-            console.log(`Error clocking in/out: ${error}`);
+            this.setState({
+                timedOut: true,
+            });
         }
     };
 
     refreshForm = async () => {
-        const lastClockRequest = await axios.get(
-            `${process.env.REACT_APP_DB_SERVER}/get-last-clock.php?username=${this.state.username}`
-        );
-        const clockData = await lastClockRequest.data;
+        try {
+            const lastClockRequest = await axios.get(
+                `${process.env.REACT_APP_DB_SERVER}/get-last-clock.php?username=${this.state.username}`
+            );
+            const clockData = await lastClockRequest.data;
 
-        const time = `${clockData.hour}:${clockData.min} ${clockData.ampm}`;
-        const date = `${clockData.month}-${clockData.day}-${clockData.year}`;
+            const time = `${clockData.hour}:${clockData.min} ${clockData.ampm}`;
+            const date = `${clockData.month}-${clockData.day}-${clockData.year}`;
 
-        this.setState({
-            clockedIn: clockData.action === 'out' ? false : true,
-            lastClock: {
-                action: clockData.action,
-                dayOfWeek: clockData.dow,
-                time: time,
-                date: date,
-                comments: clockData.comments,
-            },
-        });
+            this.setState({
+                clockedIn: clockData.action === 'out' ? false : true,
+                lastClock: {
+                    action: clockData.action,
+                    dayOfWeek: clockData.dow,
+                    time: time,
+                    date: date,
+                    comments: clockData.comments,
+                },
+            });
+        } catch (error) {
+            this.setState({
+                timedOut: true,
+            });
+        }
     };
 
     render() {
@@ -106,6 +114,7 @@ export class ClockProvider extends Component {
                     clockedIn: this.state.clockedIn,
                     handleSubmit: this.handleSubmit,
                     loading: this.state.loading,
+                    timedOut: this.state.timedOut,
                 }}
             >
                 {children}
