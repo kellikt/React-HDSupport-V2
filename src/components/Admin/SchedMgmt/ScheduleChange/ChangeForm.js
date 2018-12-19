@@ -102,7 +102,7 @@ class ChangeForm extends Component {
             <FormEl onSubmit={this.handleSubmit}>
                 <DateInputs color="purple">
                     <h3>Date Range:</h3>
-                    <DateRangerPicker onChange={this.handleDate} value={date} />
+                    <DateRangerPicker onChange={this.handleDate} value={date} calendarType="US" />
                 </DateInputs>
                 <Graphic />
                 <Title>

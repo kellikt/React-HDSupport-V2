@@ -47,16 +47,15 @@ class DisplayChangesForm extends Component {
                 <FormEl onSubmit={this.handleSubmit}>
                     <DateRange color="gold">
                         <h3>Date Range:</h3>
-                        <DateRangerPicker onChange={this.handleDate} value={date} />
+                        <DateRangerPicker onChange={this.handleDate} value={date} calendarType="US" />
                     </DateRange>
                     <Graphic />
                     <Main>
                         <Title>
                             <h2>Display Schedule Changes</h2>
                             <p>
-                                Show a list of all schedule changes for a specified user and date range.
-                                Omitting the 'Username' field will fetch results for ALL active
-                                staff/students.
+                                Show a list of all schedule changes for a specified user and date range. Omitting the
+                                'Username' field will fetch results for ALL active staff/students.
                             </p>
                         </Title>
                         <TextInput
@@ -92,9 +91,7 @@ class DisplayChangesForm extends Component {
                     </Options>
                 </FormEl>
                 <PoseGroup>
-                    {submitted && (
-                        <DisplayChangesTable key="table" username={username} date={date} option={radio} />
-                    )}
+                    {submitted && <DisplayChangesTable key="table" username={username} date={date} option={radio} />}
                 </PoseGroup>
             </React.Fragment>
         );

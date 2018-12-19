@@ -193,7 +193,7 @@ class WorkWeekWizard extends Component {
                         />
                         <RangeInput color="red">
                             <label>Date Range</label>
-                            <DateRangerPicker onChange={this.handleDate} value={date} />
+                            <DateRangerPicker onChange={this.handleDate} value={date} calendarType="US" />
                         </RangeInput>
                     </Text>
                     <Button color="red">Add 40 Hour Week</Button>
