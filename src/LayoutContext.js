@@ -54,6 +54,10 @@ export class LayoutProvider extends Component {
                 isExpired: nameData.expired === 1 ? true : false,
                 loaded: true,
             });
+
+            this.refreshID = setInterval(() => {
+                window.location.reload();
+            }, 480000);
         } catch (error) {
             console.log(`Unable: ${error}`);
         }
