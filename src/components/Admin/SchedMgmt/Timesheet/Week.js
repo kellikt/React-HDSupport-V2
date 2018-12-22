@@ -28,12 +28,61 @@ class Week extends Component {
         return array;
     };
 
+    subtractDays = (date, days) => {
+        const result = new Date(date);
+        result.setDate(result.getDate() - days);
+
+        return result;
+    };
+
+    addDays = (date, days) => {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+
+        return result;
+    };
+
+    // creates an array that contains the dates of the trailing days of the 1st week which fall in the previous pay period.
+    getExtraFirstWeekDays = dayKeys => {
+        const { weekData } = this.props;
+        // Setup the trailing dates to add. These elements will not be interactable.
+        const array = [];
+        if (!(Object.keys(weekData).length === 0 && weekData.constructor === Object)) {
+            const firstDate = new Date(weekData[dayKeys[0]].date); // get the "earliest" day of the week from Sunday
+            const daysToAdd = firstDate.getDay(); // num of days since the last Sunday
+            for (let i = 1; i < daysToAdd + 1; i++) {
+                array.unshift(this.subtractDays(firstDate, i));
+            }
+        }
+
+        return array;
+    };
+
+    // creates an array that contains the dates of the leading days of the 3rd week  that fall into the next pay period.
+    getExtraLastWeekDays = dayKeys => {
+        const { weekData } = this.props;
+        const array = [];
+
+        if (!(Object.keys(weekData).length === 0 && weekData.constructor === Object)) {
+            const lastDate = new Date(weekData[dayKeys[dayKeys.length - 1]].date); // get the "leading" day of the week
+            const daysToAdd = 6 - lastDate.getDay();
+            for (let i = 1; i < daysToAdd + 1; i++) {
+                array.push(this.addDays(lastDate, i));
+            }
+        }
+
+        return array;
+    };
+
     render() {
         const { weekData, username, refreshData } = this.props;
         const { focused } = this.state;
         const dayKeys = Object.keys(weekData).filter(key => {
+            // interactable rows
             return !key.includes('_');
         });
+        const extraFirstWeekDays = this.getExtraFirstWeekDays(dayKeys);
+        const extraLastWeekDays = this.getExtraLastWeekDays(dayKeys);
 
         return (
             <WeekContainer {...this.props}>
@@ -52,6 +101,17 @@ class Week extends Component {
                         <span>NT OT</span>
                     </Heading>
                     <PoseGroup>
+                        {extraFirstWeekDays.map(day => {
+                            const dayOfWeek = day.toLocaleString('en-US', { weekday: 'long' });
+                            return (
+                                <InactiveDay key={day.getTime()}>
+                                    <DateOfRow>
+                                        <div>{`${day.getMonth() + 1}/${day.getDate()}/${day.getFullYear()}`}</div>
+                                        <div>{dayOfWeek}</div>
+                                    </DateOfRow>
+                                </InactiveDay>
+                            );
+                        })}
                         {dayKeys.map((day, index) => {
                             const currentDayObj = weekData[day];
                             let clocksExist = false;
@@ -118,6 +178,17 @@ class Week extends Component {
                                     </Day>
                                 );
                             }
+                        })}
+                        {extraLastWeekDays.map(day => {
+                            const dayOfWeek = day.toLocaleString('en-US', { weekday: 'long' });
+                            return (
+                                <InactiveDay key={day.getTime()}>
+                                    <DateOfRow>
+                                        <div>{`${day.getMonth() + 1}/${day.getDate()}/${day.getFullYear()}`}</div>
+                                        <div>{dayOfWeek}</div>
+                                    </DateOfRow>
+                                </InactiveDay>
+                            );
                         })}
                     </PoseGroup>
                 </Container>
@@ -210,6 +281,22 @@ const Day = styled(AnimatedDay)`
     &:hover {
         background-color: #f6fafd;
     }
+
+    > span {
+        padding: 15px;
+    }
+`;
+
+const InactiveDayAnimated = posed.div({
+    enter: { opacity: 0.3, delay: 300 },
+    exit: { opacity: 0 },
+});
+
+const InactiveDay = styled(InactiveDayAnimated)`
+    cursor: not-allowed;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    font-weight: 500;
 
     > span {
         padding: 15px;
