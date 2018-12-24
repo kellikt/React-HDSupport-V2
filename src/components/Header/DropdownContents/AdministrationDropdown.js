@@ -7,6 +7,7 @@ import { ReactComponent as Schedule } from '../../../images/icons/Administration
 import { ReactComponent as Account } from '../../../images/icons/Administration/Account.svg';
 import { ReactComponent as Browser } from '../../../images/icons/Administration/Browser.svg';
 import { ReactComponent as Database } from '../../../images/icons/Administration/Database.svg';
+import { ReactComponent as Docs } from '../../../images/icons/Administration/Docs.svg';
 
 const AdministrationDropdownEl = styled.div`
     width: 370px;
@@ -52,6 +53,14 @@ const AdministrationDropdown = () => {
             </DropdownSection>
             <DropdownSection>
                 <ul>
+                    <ListItem>
+                        <a href="https://www.hawaii.edu/help/hdsupport/docs" target="_blank" rel="noopener noreferrer">
+                            <Heading color="pink">
+                                <Docs />
+                                Developer Docs
+                            </Heading>
+                        </a>
+                    </ListItem>
                     <ListItem noMarginBottom>
                         <a
                             href="https://depts.its.hawaii.edu/dwb/phpMyAdmin-41/"
