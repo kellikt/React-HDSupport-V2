@@ -146,34 +146,34 @@ class Week extends Component {
                                                   if (index % 2 === 0)
                                                       return (
                                                           <Time key={index} green>
-                                                              {time}
+                                                              {time.replace(`<font color='red'>`,'').replace('</font>','')}
                                                           </Time>
                                                       );
-                                                  else return <Time key={index}>{time}</Time>;
+                                                  else return <Time key={index}>{time.replace(`<font color='red'>`,'').replace('</font>','')}</Time>;
                                               })
                                             : null}
                                         {emptySpans.map(index => {
                                             return <span key={index} />;
                                         })}
                                         {currentDayObj.total_reg === '0:00' ? (
-                                            <Hours>{currentDayObj.total_reg}</Hours>
+                                            <Hours>{currentDayObj.total_reg.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         ) : (
-                                            <Hours active>{currentDayObj.total_reg}</Hours>
+                                            <Hours active>{currentDayObj.total_reg.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         )}
                                         {currentDayObj.total_night === '0:00' ? (
-                                            <Hours>{currentDayObj.total_night}</Hours>
+                                            <Hours>{currentDayObj.total_night.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         ) : (
-                                            <Hours active>{currentDayObj.total_night}</Hours>
+                                            <Hours active>{currentDayObj.total_night.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         )}
                                         {currentDayObj.totalot_reg === '0:00' ? (
-                                            <Hours>{currentDayObj.totalot_reg}</Hours>
+                                            <Hours>{currentDayObj.totalot_reg.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         ) : (
-                                            <Hours active>{currentDayObj.totalot_reg}</Hours>
+                                            <Hours active>{currentDayObj.totalot_reg.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         )}
                                         {currentDayObj.totalot_night === '0:00' ? (
-                                            <Hours>{currentDayObj.totalot_night}</Hours>
+                                            <Hours>{currentDayObj.totalot_night.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         ) : (
-                                            <Hours active>{currentDayObj.totalot_night}</Hours>
+                                            <Hours active>{currentDayObj.totalot_night.replace(`<font color='red'>`,'').replace('</font>','')}</Hours>
                                         )}
                                     </Day>
                                 );

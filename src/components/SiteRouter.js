@@ -5,6 +5,7 @@ import UserRoute from './UserRoute';
 
 import Main from './Main/Main';
 import ClockIn from './ClockIn/ClockIn';
+import SelectTimesheet from './SelectTimesheet/SelectTimesheet';
 
 import SchedMgmt from './Admin/SchedMgmt';
 import ClockMetrics from './Admin/SchedMgmt/ClockMetrics/ClockMetrics';
@@ -34,6 +35,7 @@ class SiteRouter extends Component {
             <Router primary={false}>
                 <UserRoute as={Main} path={`${process.env.PUBLIC_URL}/`} />
                 <UserRoute as={ClockIn} path={`${process.env.PUBLIC_URL}/clock`} />
+                <UserRoute as={SelectTimesheet} path={`${process.env.PUBLIC_URL}/timesheet`} />
 
                 <AdminRoute as={AcctMgmt} path={`${process.env.PUBLIC_URL}/acctmgmt`} />
                 <AdminRoute as={EditUser} path={`${process.env.PUBLIC_URL}/acctmgmt/edituser`} />

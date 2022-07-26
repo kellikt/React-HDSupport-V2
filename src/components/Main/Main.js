@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Roles from './Roles';
 import ClockInButton from './ClockInButton';
+import TimesheetButton from './TimesheetButton';
 import LinksContainer from './LinksContainer';
 import Outages from './Outages/Outages';
 import { OutageProvider } from './Outages/OutageContext';
@@ -22,13 +23,15 @@ class Main extends Component {
                         <Name>Welcome {firstName}!</Name>
                         <Roles />
                         <ClockInButton />
+                        <TimesheetButton/>
                         <LinksContainer />
                     </div>
                     <div>
                         <OutageProvider>
                             <Outages />
                         </OutageProvider>
-                        <Announcements />
+                        <br/><br/>
+                        <Announcements/>
                     </div>
                 </Container>
                 <Background />

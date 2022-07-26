@@ -9,7 +9,7 @@ if (isset($_SESSION["host"])) {
   $host = "https://www.hawaii.edu/help/hdsupport/";
 }
 
-include "./helpers/timesheet_functions.php";
+include "./helpers/timesheet_functions_test.php";
 include "./helpers/timesheet_ver_functions.php";
 include "./helpers/calc_timesheet.php";
 

@@ -1,10 +1,10 @@
 <?php
 
-$host = 'mdb41.pvt.hawaii.edu';
+$host = '';
 $db = '';
 $user = '';
 $pass = '';
-$charset = 'utf8mb4';
+$charset = '';
 
 mysqli_report(MYSQLI_REPORT_OFF);
 

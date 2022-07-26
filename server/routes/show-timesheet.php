@@ -3,6 +3,29 @@
 session_start();
 include "./do_auth.php";
 
+function getSessionInfo()
+{
+    $array = array();
+    $array['uuid'] = $_SESSION['uuid'];
+    $array['username'] = $_SESSION['username'];
+
+    return json_encode($array);
+}
+
+function getRoles($db, $username)
+{
+    $stmt = $db->prepare("SELECT * FROM user_groups WHERE username=?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $array = $stmt->get_result()->fetch_assoc();
+
+    $stmt->close();
+
+    return json_encode($array);
+}
+
+$roles = json_decode(getRoles($mysqli, $_SESSION['username']));
+
 if (isset($_SESSION["host"])) {
   $host = $_SESSION["host"];
 } else {
@@ -15,10 +38,12 @@ $passed_payPeriod = $_GET['payPeriod'];
 $passed_year = $_GET['year'];
 $passed_username = $_GET['username'];
 
-require "./timesheet_functions.php";
-require "./timesheet_ver_functions.php";
-require "./calc_timesheet.php";
+// validate user is the user or staff or itsa
 
+if ($_SESSION['username'] == $passed_username || $roles->administrator == "yes" || $roles->staff == "yes" || $roles->manager == "yes") {
+  require "./timesheet_functions.php";
+  require "./timesheet_ver_functions.php";
+  require "./calc_timesheet.php";
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -27,7 +52,7 @@ require "./calc_timesheet.php";
 <head>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="./css/timesheet_styles.css">
+<link rel="stylesheet" type="text/css" href="../css/timesheet_styles.css">
 
 </head>
 <body>
@@ -874,6 +899,9 @@ CLOCK TIME (indicate AM and PM hours)</span></td>
 </body>
 </html>
 
-<?php 
+<?php
+} else {
+  echo "Not Authorized <br/>";
+}
 error_reporting(E_ALL);
 ?>

@@ -135,13 +135,13 @@ class DayException extends Component {
                 </Heading>
                 <Times>
                     <Label>Times:</Label>
-                    {logs.map(log => {
+                    {logs.sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID).map(log => {
                         return <span key={log.logid}>{`${log.hour}:${log.min} ${log.ampm}`}</span>;
                     })}
                 </Times>
                 <Comments>
                     <Label>Comments:</Label>
-                    {logs.map(log => {
+                    {logs.sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID).map(log => {
                         return <span key={log.logid}>{log.comments}</span>;
                     })}
                 </Comments>

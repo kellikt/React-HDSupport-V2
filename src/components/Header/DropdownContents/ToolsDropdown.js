@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from '@reach/router';
 
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Slack } from '../../../images/icons/Tools/Slack.svg';
 import { ReactComponent as Simp } from '../../../images/icons/Tools/Simp.svg';
 import { ReactComponent as UHIMC } from '../../../images/icons/Tools/UHIMC.svg';
 import { ReactComponent as Gmail } from '../../../images/icons/Tools/Gmail.svg';
-import { ReactComponent as Email } from '../../../images/icons/Tools/Email.svg';
 import { ReactComponent as Software } from '../../../images/icons/Tools/Software.svg';
 import { ReactComponent as Rio } from '../../../images/icons/Tools/Rio.svg';
 import { ReactComponent as IP } from '../../../images/icons/Tools/IP.svg';
@@ -40,22 +38,22 @@ const ToolsDropdown = ({ roles: { tech } }) => {
                         </a>
                     </ListItem>
                     <ListItem>
-                        <a href="https://www.hawaii.edu/simp/" target="_blank" rel="noopener noreferrer">
+                        <a href="CherwellClient://commands/goto" target="_blank" rel="noopener noreferrer">
                             <Heading color="light-blue">
                                 <Simp />
-                                SIMP
+                                Cherwell
                             </Heading>
-                            <Description>Access our ticket system.</Description>
+                            <Description>Access our current ticket system.</Description>
                         </a>
                     </ListItem>
                     <ListItem noMarginBottom>
-                        <Link to={`${process.env.PUBLIC_URL}/email`}>
+                        <a href="https://128.171.28.172/icinga/" target="_blank" rel="noopener noreferrer">
                             <Heading color="light-blue">
-                                <Email />
-                                Email Generator
+                                <IP />
+                                Icinga
                             </Heading>
-                            <Description>Send an email with a pre-defined template.</Description>
-                        </Link>
+                            <Description>Access Icinga.</Description>
+                        </a>
                     </ListItem>
                 </ul>
             </DropdownSection>
@@ -75,14 +73,6 @@ const ToolsDropdown = ({ roles: { tech } }) => {
                             <Heading color="light-blue">
                                 <Rio />
                                 Dept/RIO Management
-                            </Heading>
-                        </a>
-                    </ListItem>
-                    <ListItem>
-                        <a href="http://net.its.hawaii.edu/" target="_blank" rel="noopener noreferrer">
-                            <Heading color="light-blue">
-                                <IP />
-                                IP/Mac Lookup
                             </Heading>
                         </a>
                     </ListItem>

@@ -43,7 +43,7 @@ const Heading = ({ name, year, payPeriod, partialHours, username }) => {
                 </Year>
                 <Partial>
                     <Label>Hours Worked on Partial</Label>
-                    <div>{partialHours} Hours</div>
+                    <div>{partialHours.replace(`<font color='red'>`,'').replace('</font>','')} Hours</div>
                 </Partial>
             </Bottom>
         </Container>
