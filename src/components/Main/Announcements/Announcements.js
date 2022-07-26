@@ -20,42 +20,40 @@ class Announcements extends Component {
 
     async componentDidMount() {
         try {
-            const slackRequest = await axios.get(
-                `https://slack.com/api/channels.history?token=${process.env.REACT_APP_SLACK_TOKEN}&channel=${
-                    process.env.REACT_APP_SLACK_CHANNEL
-                }&count=5`
-            );
-            const slackData = await slackRequest.data;
+            const slackRequest = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-slack-history.php`, {
+                token: `${process.env.REACT_APP_SLACK_TOKEN}`,
+                channel: `${process.env.REACT_APP_SLACK_CHANNEL}`,
+            })
+                const slackData = await slackRequest.data;
+                // process the result
+                const finalArray = [...Array(5).keys()];
+                slackData.messages.forEach((message, index) => {
+                    const timestamp = this.getTime(message.ts);
+                    const text = this.getText(message.text);
 
-            // process the result
-            const finalArray = [...Array(5).keys()];
-            slackData.messages.forEach((message, index) => {
-                const timestamp = this.getTime(message.ts);
-                const text = this.getText(message.text);
+                    const finalMessage = {
+                        title: text[0],
+                        date: timestamp,
+                        text: text[1],
+                    };
 
-                const finalMessage = {
-                    title: text[0],
-                    date: timestamp,
-                    text: text[1],
-                };
+                    if (index === 0) {
+                        finalArray[1] = finalMessage;
+                    } else if (index === 4) {
+                        finalArray[0] = finalMessage;
+                    } else finalArray[index + 1] = finalMessage;
+                });
 
-                if (index === 0) {
-                    finalArray[1] = finalMessage;
-                } else if (index === 4) {
-                    finalArray[0] = finalMessage;
-                } else finalArray[index + 1] = finalMessage;
-            });
+                this.setState({
+                    announcements: finalArray,
+                    isLoading: false,
+                });
 
-            this.setState({
-                announcements: finalArray,
-                isLoading: false,
-            });
+                const height = document.querySelector('.card1').offsetHeight;
 
-            const height = document.querySelector('.card1').offsetHeight;
-
-            this.setState({
-                currentHeight: height,
-            });
+                this.setState({
+                    currentHeight: height,
+                });
         } catch (error) {
             console.log(`Error fetching announcements: ${error}`);
         }
@@ -63,6 +61,7 @@ class Announcements extends Component {
 
     getText = text => {
         let announcement;
+
 
         if (text.includes('•')) {
             announcement = text.replace('•', '');

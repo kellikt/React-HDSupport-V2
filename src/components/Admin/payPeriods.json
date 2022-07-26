@@ -9,7 +9,7 @@
         { "string": "April 1 - April 15", "value": [4, 1, 15] },
         { "string": "April 16 - April 30", "value": [4, 16, 30] },
         { "string": "May 1 - May 15", "value": [5, 1, 15] },
-        { "string": "May 16 - May 31", "value": [5, 16, 15] },
+        { "string": "May 16 - May 31", "value": [5, 16, 31] },
         { "string": "June 1 - June 15", "value": [6, 1, 15] },
         { "string": "June 16 - June 30", "value": [6, 16, 30] },
         { "string": "July 1 - July 15", "value": [7, 1, 15] },

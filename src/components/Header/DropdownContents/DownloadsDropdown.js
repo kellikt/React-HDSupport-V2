@@ -40,13 +40,6 @@ const DownloadsDropdown = () => {
 
                         <WaiversContainer>
                             <DownloadsLink
-                                href="https://www.hawaii.edu/help/hdsupport/get_file.php?showfile=yes&fid=1155"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Waiver of Liability
-                            </DownloadsLink>
-                            <DownloadsLink
                                 href="https://www.hawaii.edu/help/hdsupport/get_file.php?showfile=yes&fid=1156"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -68,7 +61,7 @@ const DownloadsDropdown = () => {
                 <ul>
                     <ListItem noMarginBottom>
                         <a
-                            href="https://www.hawaii.edu/help/hdsupport/get_file.php?fid=1158"
+                            href="https://docs.google.com/forms/d/e/1FAIpQLScUGQUmS7_6-gIGLfF_LASVurs3srYxOQ-b4FXWJMv7xzAW9w/viewform"
                             target="_blank"
                             rel="noopener noreferrer"
                         >

@@ -6,26 +6,170 @@ import { ReactComponent as Documentation } from '../../../images/icons/Documenta
 import { ReactComponent as Checklist } from '../../../images/icons/Documentation/Checklist.svg';
 import { ReactComponent as Phone } from '../../../images/icons/Documentation/Phone.svg';
 import { ReactComponent as Schedules } from '../../../images/icons/Documentation/Schedules.svg';
-import { ReactComponent as BuildingIP } from '../../../images/icons/Documentation/BuildingIP.svg';
+import { ReactComponent as LabChecklist } from '../../../images/icons/Documentation/Labs/Checklist.svg';
+import { ReactComponent as LabSchedules } from '../../../images/icons/Documentation/Labs/Schedules.svg';
+import { ReactComponent as LabDocumentation } from '../../../images/icons/Documentation/Labs/documentation.svg';
+import { ReactComponent as LabContract } from '../../../images/icons/Documentation/Labs/Contract.svg';
+import { ReactComponent as LabPhone } from '../../../images/icons/Documentation/Labs/Phone.svg';
+import { ReactComponent as ReceptDocumentation } from '../../../images/icons/Documentation/Reception/documentation.svg';
+import { ReactComponent as ReceptPhone } from '../../../images/icons/Documentation/Reception/Phone.svg';
+import { ReactComponent as ReceptVisitor } from '../../../images/icons/Documentation/Reception/Contract.svg';
+import { ReactComponent as ReceptMail } from '../../../images/icons/Documentation/Reception/Email.svg';
+import { ReactComponent as ReceptChecklist } from '../../../images/icons/Documentation/Reception/Checklist.svg';
+import { ReactComponent as ReceptSchedules} from '../../../images/icons/Documentation/Reception/Schedules.svg';
 
 const DocumentationDropdown = ({ roles: { helpDesk } }) => {
     return (
+        <div>
+        <HorizontalList>
         <DocumentationDropdownEl>
             <DropdownSection data-first-dropdown-section>
                 <ul>
                     <ListItem>
                         <a
-                            href={
-                                helpDesk
-                                    ? 'https://www.hawaii.edu/bwiki/display/help/Home'
-                                    : 'https://www.hawaii.edu/bwiki/display/itslab/ITS+Computer+Lab+Monitor+Handbook'
-                            }
+                            href='https://www.hawaii.edu/bwiki/display/help/Labs+Documentation'
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color='light-blue'>
+                                <LabDocumentation />
+                                Lab Wiki
+                            </Heading>
+                            <Description>Review any Lab Monitor procedure.</Description>
+                        </a>
+                    </ListItem>
+
+                    <LabDocsContainer>
+                        <div>
+                            <h4>Common Docs</h4>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Phone+Usage"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Phones
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies#ITSComputerLabMonitorPolicies-AttendancePolicy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Attendance
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                General Policies
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/pages/viewpage.action?pageId=777356017"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                ITS Lab Policies
+                            </a>
+                        </div>
+                        <div>
+                            <h4>Popular Docs</h4>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Opening%2C+Closing%2C+and+Lab+Unattended+Procedures"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Opening and Closing Procedures
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Lab+Software+Updates"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Software Updates
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Service+Window+Procedures"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Service Window
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Printing+in+the+Labs"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Printing
+                            </a>
+                        </div>
+                    </LabDocsContainer>
+                </ul>
+            </DropdownSection>
+            <DropdownSection>
+                <ul>
+                    <ListItem>
+                        <a
+                            href="https://drive.google.com/drive/folders/0Byo69lUtfgcqQnVleWxTbG1IcVE?resourcekey=0-b4b4G--uKG3aA-guY_zLPw"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="light-blue">
+                                <LabSchedules />
+                                Lab Schedules
+                            </Heading>
+                        </a>
+                    </ListItem>
+                    <ListItem>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/1tPWY28f7HRrjszglchyd7nFaarYiJp0EeqGRAQ_ae90/edit#gid=0"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="light-blue">
+                                <LabPhone />
+                                Phone Numbers &amp; Useful Info
+                            </Heading>
+                        </a>
+                    </ListItem>
+                    <ListItem>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/1QLwBCLIuNXM2EcidhUWI3CNrM831i-TuZ2ONH2yHlNg/edit#gid=1820989110"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="light-blue">
+                                <LabChecklist />
+                                Lab Software Update Sheet
+                            </Heading>
+                        </a>
+                    </ListItem>
+                    <ListItem noMarginBottom>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/1qcZ35_apSZZdqtL2yhZ6gBgpSqm8GIDW-LYl5549Sdk/edit#gid=375649893"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="light-blue" noMarginBottom>
+                                <LabContract />
+                                Lab Cleaning Sheet
+                            </Heading>
+                        </a>
+                    </ListItem>
+                </ul>
+            </DropdownSection>
+        </DocumentationDropdownEl>
+        <DocumentationDropdownEl>
+            <DropdownSection data-first-dropdown-section>
+                <ul>
+                    <ListItem>
+                        <a
+                            href='https://www.hawaii.edu/bwiki/display/help/Home'
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             <Heading>
                                 <Documentation />
-                                {helpDesk ? 'Help Desk Wiki' : 'Lab Wiki'}
+                                Help Desk Wiki
                             </Heading>
                             <Description>Review any Help Desk procedure.</Description>
                         </a>
@@ -49,13 +193,6 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                                 Attendance
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Email+Procedures"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Email
-                            </a>
-                            <a
                                 href="https://www.hawaii.edu/bwiki/display/help/Help+Desk+Policies+and+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -73,6 +210,13 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                                 ID Management
                             </a>
                             <a
+                                href="https://www.hawaii.edu/bwiki/pages/viewpage.action?pageId=525107245"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                MFA Procedures
+                            </a>
+                            <a
                                 href="https://www.hawaii.edu/bwiki/display/help/File+Drop+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -80,18 +224,18 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                                 File Drop
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Service+Window+Procedures"
+                                href="https://www.hawaii.edu/bwiki/display/help/Operations+Monitoring"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Service Window
+                                OC Monitoring
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Data+Center+Access+Procedures"
+                                href="https://www.hawaii.edu/bwiki/display/help/Laulima+Support+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Data Center Access
+                                Laulima Support
                             </a>
                         </div>
                     </DocsContainer>
@@ -113,19 +257,7 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                     </ListItem>
                     <ListItem>
                         <a
-                            href="https://www.hawaii.edu/help/hdsupport/get_file.php?showfile=yes&fid=1309"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <Heading>
-                                <BuildingIP />
-                                Building IP List
-                            </Heading>
-                        </a>
-                    </ListItem>
-                    <ListItem>
-                        <a
-                            href="https://www.hawaii.edu/bwiki/display/help/Phone+Numbers+and+Useful+Info"
+                            href="https://docs.google.com/spreadsheets/d/1tPWY28f7HRrjszglchyd7nFaarYiJp0EeqGRAQ_ae90/edit#gid=0"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -150,13 +282,217 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                 </ul>
             </DropdownSection>
         </DocumentationDropdownEl>
+        <DocumentationDropdownEl>
+            <DropdownSection data-first-dropdown-section>
+                <ul>
+                    <ListItem>
+                        <a
+                            href='https://www.hawaii.edu/bwiki/display/help/Reception+Desk+Procedures+and+Info'
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink">
+                                <ReceptDocumentation />
+                                Reception Desk
+                            </Heading>
+                            <Description>Review any Reception Desk procedure.</Description>
+                        </a>
+                    </ListItem>
+
+                    <ReceptDocsContainer>
+                        <div>
+                            <h4>Common Docs</h4>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Phone+Procedures"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Phones
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies#ITSComputerLabMonitorPolicies-AttendancePolicy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Attendance
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                General Policies
+                            </a>
+                        </div>
+                        <div>
+                            <h4>Popular Docs</h4>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/pages/viewpage.action?pageId=777356065"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Opening and Closing Procedures
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Mail+and+Packages"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Mail Runs
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/FMO+Access+Procedures"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                FMO Access
+                            </a>
+                            <a
+                                href="https://www.hawaii.edu/bwiki/display/help/Data+Center+Access+Procedures"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Data Center Access
+                            </a>
+                        </div>
+                    </ReceptDocsContainer>
+                </ul>
+            </DropdownSection>
+            <DropdownSection>
+                <ul>
+                    <ListItem>
+                        <a
+                            href="https://drive.google.com/drive/folders/0Byo69lUtfgcqQnVleWxTbG1IcVE?resourcekey=0-b4b4G--uKG3aA-guY_zLPw"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink">
+                                <ReceptSchedules />
+                                Lab Schedules
+                            </Heading>
+                        </a>
+                    </ListItem>
+                    <ListItem>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/1tPWY28f7HRrjszglchyd7nFaarYiJp0EeqGRAQ_ae90/edit#gid=0"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink">
+                                <ReceptPhone />
+                                Phone Numbers &amp; Useful Info
+                            </Heading>
+                        </a>
+                    </ListItem>
+                    <ListItem>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/1-_TU2GCz1Twk-rWTpw_ZVXBHN7wylH76KBSQr-2sucA/edit#gid=1415708749"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink">
+                                <ReceptVisitor />
+                                ITC Visitor Log
+                            </Heading>
+                        </a>
+                    </ListItem>
+                    <ListItem>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/1NLO6tph7GqgM_VwHt-4IhgtZQqS-o5MMVCgsDCZwHdw/edit#gid=1402120449"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink">
+                                <ReceptMail />
+                                Reception Desk Mail Log
+                            </Heading>
+                        </a>
+                    </ListItem>
+                    <ListItem noMarginBottom>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/1cW-hz2QRMEcEzgdciTV7jsjdWo-omyScvToiljWmch8/edit#gid=0"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink" noMarginBottom>
+                                <ReceptChecklist />
+                                Data Center Master Access List
+                            </Heading>
+                        </a>
+                    </ListItem>
+                </ul>
+            </DropdownSection>
+        </DocumentationDropdownEl>
+        </HorizontalList>
+        </div>
     );
 };
 
 export default DocumentationDropdown;
 
+const HorizontalList = styled.ul`
+    display: flex;
+    @media screen and (max-width: 900px) {
+        display: block;
+    }
+`;
+
 const DocumentationDropdownEl = styled.div`
     width: 390px;
+`;
+
+const ReceptDocsContainer = styled.div`
+    margin-left: 33px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    h4 {
+        color: #8898aa;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        margin: 0 0 6px;
+    }
+
+    a {
+        color: var(--pink);
+        font-weight: 500;
+        transition: color 0.1s ease;
+        line-height: 25px;
+        display: block;
+
+        &:hover {
+            color: var(--black);
+        }
+    }
+`;
+
+const LabDocsContainer = styled.div`
+    margin-left: 33px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    h4 {
+        color: #8898aa;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        margin: 0 0 6px;
+    }
+
+    a {
+        color: var(--light-blue);
+        font-weight: 500;
+        transition: color 0.1s ease;
+        line-height: 25px;
+        display: block;
+
+        &:hover {
+            color: var(--black);
+        }
+    }
 `;
 
 const DocsContainer = styled.div`

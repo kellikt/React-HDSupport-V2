@@ -48,15 +48,20 @@ function verify_full_week_hours(&$week)
 function verify_daily_hours(&$week)
 {
     foreach ($week as $key => $val) {
-        $total_mins = $week[$key]["total_reg_mins"] + $week[$key]["total_night_mins"];
+        if (isset($week[$key]["total_reg_mins"]) && isset($week[$key]["total_night_mins"])) {
+            $total_mins = $week[$key]["total_reg_mins"] + $week[$key]["total_night_mins"];
+        }
 
         if ($total_mins > 480) {
             for ($x = 0; $x < 6; $x++) {
-                if ($week[$key]["times"][$x] != "")
+                if (!empty($week[$key]["times"]) && $week[$key]["times"][$x] != "") 
                     $week[$key]["times"][$x] = "<font color='red'>ERROR: " . $week[$key]["times"][$x] . "</font>";
+                
             }
-            $week[$key]["total_reg"] = "<font color='red'>ERROR: " . $week[$key]["total_reg"] . "</font>";
-            $week[$key]["total_night"] = "<font color='red'>ERROR: " . $week[$key]["total_night"] . "</font>";
+            if (!empty($week[$key]["total_reg"])) {
+                $week[$key]["total_reg"] = "<font color='red'>ERROR: " . $week[$key]["total_reg"] . "</font>";
+                $week[$key]["total_night"] = "<font color='red'>ERROR: " . $week[$key]["total_night"] . "</font>";
+            }
         }
     }
 }

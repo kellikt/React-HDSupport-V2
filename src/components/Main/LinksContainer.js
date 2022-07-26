@@ -52,7 +52,7 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 12px;
     grid-row-gap: 20px;
-    margin-top: 60px;
+    margin-top: 50px;
 `;
 
 const NavLink = styled.a`

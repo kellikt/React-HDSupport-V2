@@ -1,10 +1,10 @@
 <?php
 
-$host = '127.0.0.1';
+$host = '';
 $db = '';
 $user = '';
 $pass = '';
-$charset = 'utf8mb4';
+$charset = '';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

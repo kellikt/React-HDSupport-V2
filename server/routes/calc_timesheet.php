@@ -1,5 +1,44 @@
-<?php
+<?php 
 
+//decrement by one day for partial hours
+function decrement_day($given_month, $given_day, $given_year) {
+    $date_string = $given_month . "/" . $given_day . "/" . $given_year;
+    $next_period_start_date =  date_create($date_string)->modify("-1 day")->format("d");
+    return $next_period_start_date;
+}
+
+//returns the logs for a specific date range as an array of json objects 
+function getLogs(
+    $db,
+    $username,
+    $year,
+    $month,
+    $startDay,
+    $endDay
+) {
+    $array = array();
+    $result = mysqli_query($GLOBALS['mysqli'], "SELECT * FROM log WHERE username='" . $username . "' AND month=" . $month . " AND day>=" . $startDay . " AND day<=" . $endDay . " AND year=" . $year . " ORDER BY logid ASC");
+
+    while ($row = $result->fetch_assoc()) {
+        $array[] = $row;
+    }
+    //echo json_encode($array);
+    return json_encode($array,1);
+}
+
+//returns the exceptions for a specific date range as an array of json objects
+function getExceptions($db, $username, $startDate, $endDate) {
+    $array = array();
+    $result = mysqli_query($GLOBALS['mysqli'], "SELECT * FROM exceptions WHERE username='" . $username . "' AND STR_TO_DATE(date_tag, '%m/%d/%Y') >= STR_TO_DATE('" . $startDate . "', '%m/%d/%Y') AND STR_TO_DATE(date_tag, '%m/%d/%Y') <= STR_TO_DATE('" . $endDate . "', '%m/%d/%Y') ORDER BY STR_TO_DATE(date_tag, '%m/%d/%Y') ASC");
+    while ($row = $result->fetch_assoc()) {
+        $array[] = $row;
+    }
+    //echo json_encode($array);
+    return json_encode($array);
+}
+
+$clock_counter = 0;
+$exc_counter = 0;
 $week1 = array();
 $week2 = array();
 $week3 = array();
@@ -43,6 +82,18 @@ $week_start_day = $period_start_day;
 $week_start_month = $period_start_month;
 $week_start_year = $period_start_year;
 
+$clock_counter = 0;
+
+// json object array of logs for date range
+$period_logs = json_decode(getLogs($mysqli, $chosen_user, $period_start_year, $period_start_month, $period_start_day, $period_end_day),1);
+
+// start and end date for finding exceptions
+$period_start_date = (int)$period_start_month . "/" . (int)$period_start_day . "/" . (int)$period_start_year;
+$period_end_date = (int)$period_end_month . "/" . (int)$period_end_day . "/" . (int)$period_end_year;
+
+// json object array of exceptions for date range
+$period_exceptions = json_decode(getExceptions($mysqli, $chosen_user, $period_start_date, $period_end_date),1);
+
 //calculate the 3 weeks on the timesheet.
 $week1 = calc_week(
     $chosen_user,
@@ -54,7 +105,9 @@ $week1 = calc_week(
     $period_end_year,
     $period_start_day,
     $period_start_month,
-    $period_start_year
+    $period_start_year,
+    $period_logs,
+    $period_exceptions
 );
 $week1["start_day"] = mktime(0, 0, 0, $week_start_month, $week_start_day, $week_start_year);
 
@@ -68,7 +121,9 @@ $week2 = calc_week(
     $period_end_year,
     $period_start_day,
     $period_start_month,
-    $period_start_year
+    $period_start_year,
+    $period_logs,
+    $period_exceptions
 );
 $week2["start_day"] = mktime(0, 0, 0, $week_start_month, $week_start_day, $week_start_year);
 
@@ -82,7 +137,9 @@ $week3 = calc_week(
     $period_end_year,
     $period_start_day,
     $period_start_month,
-    $period_start_year
+    $period_start_year,
+    $period_logs,
+    $period_exceptions
 );
 $week3["start_day"] = mktime(0, 0, 0, $week_start_month, $week_start_day, $week_start_year);
 
@@ -117,17 +174,35 @@ if ($week_start_sunday["day"] == $period_start_day && $week_start_sunday["month"
     $partial_week["partial_week_mins"] = 0;
     $partial_week["partial_week_hours_parsed"] = "0:00";
 } else {
+    global $clock_counter;
+    $clock_counter = 0;
+    global $exc_counter;
+    $exc_counter = 0;
+    $next_period_start_day = decrement_day($period_start_month, $period_start_day, $period_start_year);
+    // json object array of logs for date range
+
+    $partial_period_logs = json_decode(getLogs($mysqli, $chosen_user, $week_start_sunday["year"], $week_start_sunday["month"], $week_start_sunday["day"], $next_period_start_day),1);
+
+    // start and end date for finding exceptions
+    $partial_period_start_date = (int)$week_start_sunday["month"] . "/" . (int)$week_start_sunday["day"] . "/" . (int)$week_start_sunday["year"];
+    $partial_period_end_date = (int)$week_start_sunday["month"] . "/" . (int)$next_period_start_day . "/" . (int)$period_start_year;
+
+    // json object array of exceptions for date range
+    $partial_period_exceptions = json_decode(getExceptions($mysqli, $chosen_user, $partial_period_start_date, $partial_period_end_date),1);
+
     $partial_week = calc_week(
         $chosen_user,
         $week_start_sunday["day"],
         $week_start_sunday["month"],
         $week_start_sunday["year"],
-        $period_start_day - 1,
-        $period_start_month,
+        $next_period_start_day,
+        $week_start_sunday["month"],
         $period_start_year,
         $week_start_sunday["day"],
         $week_start_sunday["month"],
-        $week_start_sunday["year"]
+        $week_start_sunday["year"],
+        $partial_period_logs,
+        $partial_period_exceptions
     );
 
     $partial_week["partial_week_mins"] = $partial_week["subtotal_reg_mins"] + $partial_week["subtotal_night_mins"];

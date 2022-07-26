@@ -1,25 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from '@reach/router';
+import { ReactComponent as Sheet } from '../../images/Main/Sheet.svg';
 
-import { ReactComponent as Guy } from '../../images/Main/ClockIn.svg';
-import { ReactComponent as Arrow } from '../../images/icons/Arrow.svg';
-
-const ClockInButton = () => {
+const TimesheetButton = () => {
     return (
-        <Container to={`${process.env.PUBLIC_URL}/clock`}>
-            <Guy />
+        <Container to={`${process.env.PUBLIC_URL}/timesheet`}>
+            <Sheet />
             <div>
                 <HeadingText>
-                    Clock In/Out<Arrow />
+                    View Timesheets
                 </HeadingText>
-                <DescriptionText>Clock in and out for your scheduled shift.</DescriptionText>
+                <DescriptionText>View your timesheets.</DescriptionText>
             </div>
         </Container>
     );
 };
 
-export default ClockInButton;
+export default TimesheetButton;
 
 const Container = styled(Link)`
     display: flex;
@@ -70,6 +68,7 @@ const HeadingText = styled.h3`
     font-size: 24px;
     font-weight: bold;
     margin: 0 0 12px;
+    color: #6772E5;
 
     > svg {
         display: inline-block;

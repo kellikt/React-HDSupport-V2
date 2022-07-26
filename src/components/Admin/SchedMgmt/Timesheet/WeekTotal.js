@@ -9,19 +9,19 @@ const WeekTotal = ({ regular, night, overtime, nightOvertime, hoursString }, pro
             <AllHours>
                 <Hours>
                     <span>Regular</span>
-                    <div>{regular}</div>
+                    <div>{regular.replace(`<font color='red'>`,'').replace('</font>','')}</div>
                 </Hours>
                 <Hours>
                     <span>Night</span>
-                    <div>{night}</div>
+                    <div>{night.replace(`<font color='red'>`,'').replace('</font>','')}</div>
                 </Hours>
                 <Hours>
                     <span>Overtime</span>
-                    <div>{overtime}</div>
+                    <div>{overtime.replace(`<font color='red'>`,'').replace('</font>','')}</div>
                 </Hours>
                 <Hours>
                     <span>Night Overtime</span>
-                    <div>{nightOvertime}</div>
+                    <div>{nightOvertime.replace(`<font color='red'>`,'').replace('</font>','')}</div>
                 </Hours>
             </AllHours>
         </Container>

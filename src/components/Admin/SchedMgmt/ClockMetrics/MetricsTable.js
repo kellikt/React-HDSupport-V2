@@ -63,7 +63,9 @@ class MetricsTable extends Component {
                     <span>Location?</span>
                 </TableHeading>
 
-                {results.map((result, index) => {
+                {results
+                .sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID)
+                .map((result, index) => {
                     let locationFlag = false;
                     if (stripeCounter === 1) {
                         stripeFlag = !stripeFlag;

@@ -338,7 +338,9 @@ function calc_week(
     $period_end_year,
     $period_start_day,
     $period_start_month,
-    $period_start_year
+    $period_start_year,
+    $period_logs,
+    $period_exceptions
 ) {
 
     $week = array();
@@ -380,46 +382,76 @@ function calc_week(
   //checking if the period end is 9/10/07 and current day is 9/11/07, since this will print through the do-while loop
   //so we need to catch that case so it doesn't print
     if (!($period_end_year == 2007 && $period_end_month == 9 && $period_end_day == 10 && $current_year == 2007 && $current_month == 9 && $current_day == 11)) {
+        $log_array = $period_logs;
+
+        $exceptions_array = $period_exceptions;
 
         do {
-
             $week[$this_day]["date"] = (int)$current_month . "/" . (int)$current_day . "/" . (int)$current_year;
             $this_day_ut = mktime(0, 0, 0, $current_month, $current_day, $current_year);
 
+            $filter_exception = $week[$this_day]["date"];
+            $check_exceptions_res = array_filter($exceptions_array, function ($var) use ($filter_exception){
+                return ($var['date_tag'] == $filter_exception);
+            });
+            $filter_result = array_filter($log_array, function ($var) use ($current_day){
+                return ($var['day'] == $current_day);
+            });
 
-            $check_exceptions_res = mysqli_query($GLOBALS['mysqli'], "SELECT * FROM exceptions WHERE date_tag='" . $week[$this_day]["date"] . "' AND username='" . $username . "'");
-	
 	        //if there is an entry in the exceptions table for this date and user
-            if (mysqli_num_rows($check_exceptions_res) > 0) {
+            if (count((array)$check_exceptions_res) > 0) {
+                global $exc_counter;
+                if ($exc_counter == 0) {
+                    $exceptions = $check_exceptions_res[0];
 
-                $exceptions = mysqli_fetch_assoc($check_exceptions_res);
+                    for ($x = 0; $x < 6; $x++) {
 
-                for ($x = 0; $x < 6; $x++) {
+                        $hour = substr($exceptions["t" . $x], 0, strpos($exceptions["t" . $x], ":"));
+                        $min = substr($exceptions["t" . $x], strpos($exceptions["t" . $x], " ") - 2, strpos($exceptions["t" . $x], " ") - 1);
+                        $ampm = substr($exceptions["t" . $x], sizeof((array)$exceptions["t" . $x]) - 3, 2);
+    
+                        if ($exceptions["t" . $x] != "") {
+                            round_time($hour, $min, $ampm);
+                            $week[$this_day]["times"][$x] = $hour . ":" . $min . " " . $ampm;
+                            $week[$this_day]["action"][$x] = ($x % 2 ? "out" : "in");
+    
+                        }
+                    }
+                    $exc_counter = $exc_counter + count((array)$check_exceptions_res);
 
-                    $hour = substr($exceptions["t" . $x], 0, strpos($exceptions["t" . $x], ":"));
-                    $min = substr($exceptions["t" . $x], strpos($exceptions["t" . $x], " ") - 2, strpos($exceptions["t" . $x], " ") - 1);
-                    $ampm = substr($exceptions["t" . $x], sizeof($exceptions["t" . $x]) - 3, 2);
+                } else {
+                    $exc_counter = $exc_counter + count((array)$check_exceptions_res);
+                    $exceptions = $check_exceptions_res[$exc_counter - 1];
+                    for ($x = 0; $x < 6; $x++) {
 
-                    if ($exceptions["t" . $x] != "") {
-                        round_time($hour, $min, $ampm);
-                        $week[$this_day]["times"][$x] = $hour . ":" . $min . " " . $ampm;
-                        $week[$this_day]["action"][$x] = ($x % 2 ? "out" : "in");
-
+                        $hour = substr($exceptions["t" . $x], 0, strpos($exceptions["t" . $x], ":"));
+                        $min = substr($exceptions["t" . $x], strpos($exceptions["t" . $x], " ") - 2, strpos($exceptions["t" . $x], " ") - 1);
+                        $ampm = substr($exceptions["t" . $x], sizeof((array)$exceptions["t" . $x]) - 3, 2);
+    
+                        if ($exceptions["t" . $x] != "") {
+                            round_time($hour, $min, $ampm);
+                            $week[$this_day]["times"][$x] = $hour . ":" . $min . " " . $ampm;
+                            $week[$this_day]["action"][$x] = ($x % 2 ? "out" : "in");
+    
+                        }
                     }
                 }
+
+                global $clock_counter;
+                $clock_counter = $clock_counter + count((array)$filter_result);
+
 	//otherwise, calculate the week based on the log table.
             } else {
 
-                $times_result = mysqli_query($GLOBALS['mysqli'], "SELECT * FROM log WHERE username='" . $username . "' AND month=" . $current_month . " AND day=" . $current_day . " AND year=" . $current_year . " ORDER BY logid ASC");
-
                 $x = 0;
 
-                while ($row = mysqli_fetch_assoc($times_result)) {
+                while ($x < count((array)$filter_result)) {
+                    global $clock_counter;
 
-                    $hour = $row["hour"];
-                    $min = $row["min"];
-                    $ampm = $row["ampm"];
-                    $action = $row["action"];
+                    $hour = $filter_result[$x + $clock_counter]["hour"];
+                    $min = $filter_result[$x + $clock_counter]["min"];
+                    $ampm = $filter_result[$x + $clock_counter]["ampm"];
+                    $action = $filter_result[$x + $clock_counter]["action"];
 	  
 	    //round the time to the nearest 5 minute multiple.
                     round_time($hour, $min, $ampm);
@@ -431,6 +463,8 @@ function calc_week(
                     $x++;
 
                 }
+                global $clock_counter;
+                $clock_counter = $clock_counter + count((array)$filter_result);
 
             }//end else
 
@@ -447,8 +481,6 @@ function calc_week(
             if ($current_month == $after_period_end_month && $current_day == $after_period_end_day && $current_year == $after_period_end_year) {
                 unset($week[$this_day]);
             } //end if
-
-
             increment_day($current_day, $current_month, $current_year);
             $this_day = date("l", mktime(0, 0, 0, $current_month, $current_day, $current_year));
 
@@ -866,9 +898,9 @@ function round_time(&$hour, &$min, &$ampm)
 
   //if the minute is between 0-2, ie 3:10 or 4:42
   //then round it down.
-    if (($min % 5) <= 2) {
+    if (((int)$min % 5) <= 2) {
 
-        $min = $min - ($min % 5);
+        $min = (int)$min - ((int)$min % 5);
   
   //otherwise, if it is the 3 or 4, or 8 or 9, minute,
   //then round it up.
@@ -922,7 +954,7 @@ function synch_times(&$week)
 
         if ($day["action"][0] == "out") {
 
-            for ($x = 0; $x < count($day["times"]); $x++) {
+            for ($x = 0; $x < count((array)$day["times"]); $x++) {
 
                 $week[$key]["times"][$x] = $week[$key]["times"][$x + 1];
                 $week[$key]["action"][$x] = $week[$key]["action"][$x + 1];
@@ -931,10 +963,10 @@ function synch_times(&$week)
 
         }//end if first day is an "out"
 
-        if ($day["action"][count($day["times"]) - 1] == "in") {
+        if ($day["action"][count((array)$day["times"]) - 1] == "in") {
 
-            $week[$key]["times"][count($day["times"]) - 1] = "";
-            $week[$key]["action"][count($day["action"]) - 1] = "";
+            $week[$key]["times"][count((array)$day["times"]) - 1] = "";
+            $week[$key]["action"][count((array)$day["action"]) - 1] = "";
 
         }//end if last day is an "in"
 
@@ -989,7 +1021,7 @@ function calc_hours_worked(&$week)
                 $temp_times[$key][$x]["hour"] = $hour;
                 $temp_times[$key][$x]["min"] = $min;
 
-            } else if ($week[$key]["times"][$x] != false) {
+            } else if (isset($week[$key]["times"][$x]) && $week[$key]["times"][$x] != false) {
 
 
                 $temp_times[$key][$x]["hour"] = substr($week[$key]["times"][$x], 0, 2);
