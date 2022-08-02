@@ -20,7 +20,7 @@ const LinksContainer = () => {
                     <p>Check when you work.</p>
                 </div>
             </NavLink>
-            <NavLink color="pink" href="https://www.hawaii.edu/bwiki/display/help/Home" target="_blank">
+            <NavLink color="pink" href="https://uhawaii.atlassian.net/wiki/spaces/help/overview?homepageId=4817040" target="_blank">
                 <Wiki />
                 <div>
                     <h3>HD Wiki</h3>
