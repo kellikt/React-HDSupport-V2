@@ -27,7 +27,7 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                 <ul>
                     <ListItem>
                         <a
-                            href='https://www.hawaii.edu/bwiki/display/help/Labs+Documentation'
+                            href='https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818330/Labs+Documentation'
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -43,28 +43,28 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                         <div>
                             <h4>Common Docs</h4>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Phone+Usage"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818309/Phone+Usage"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Phones
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies#ITSComputerLabMonitorPolicies-AttendancePolicy"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818161/ITS+Computer+Lab+Monitor+Policies#ITSComputerLabMonitorPolicies-AttendancePolicy"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Attendance
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818161/ITS+Computer+Lab+Monitor+Policies"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 General Policies
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/pages/viewpage.action?pageId=777356017"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818167/ITS+Lab+Rules+Policies"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -74,28 +74,28 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                         <div>
                             <h4>Popular Docs</h4>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Opening%2C+Closing%2C+and+Lab+Unattended+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818314/Opening+Closing+and+Lab+Unattended+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Opening and Closing Procedures
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Lab+Software+Updates"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818327/Lab+Software+Updates"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Software Updates
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Service+Window+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820056/Service+Window+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Service Window
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Printing+in+the+Labs"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818246/Printing+in+the+Labs"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -163,7 +163,7 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                 <ul>
                     <ListItem>
                         <a
-                            href='https://www.hawaii.edu/bwiki/display/help/Home'
+                            href='https://uhawaii.atlassian.net/wiki/spaces/help/overview?homepageId=4817040'
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -179,21 +179,21 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                         <div>
                             <h4>Common Docs</h4>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Phone+Procedures+and+FAQ"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820150/Phone+Procedures+and+FAQ"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Phones
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Schedule+and+Attendance+Policies"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820137/Schedule+and+Attendance+Policies"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Attendance
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Help+Desk+Policies+and+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820144/Help+Desk+Policies+and+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -203,35 +203,35 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                         <div>
                             <h4>Popular Docs</h4>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/ID+Management+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820131/ID+Management+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 ID Management
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/pages/viewpage.action?pageId=525107245"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820332/CAS+Multifactor+Authentication+MFA+DUO"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 MFA Procedures
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/File+Drop+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820111/File+Drop+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 File Drop
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Operations+Monitoring"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820414/Operations+Monitoring"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 OC Monitoring
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Laulima+Support+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4819337/Laulima+Support+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -287,7 +287,7 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                 <ul>
                     <ListItem>
                         <a
-                            href='https://www.hawaii.edu/bwiki/display/help/Reception+Desk+Procedures+and+Info'
+                            href='https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818238/Reception+Desk+Procedures+and+Info'
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -303,21 +303,21 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                         <div>
                             <h4>Common Docs</h4>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Phone+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4817188/Phone+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Phones
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies#ITSComputerLabMonitorPolicies-AttendancePolicy"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818161/ITS+Computer+Lab+Monitor+Policies#ITSComputerLabMonitorPolicies-AttendancePolicy"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Attendance
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/ITS+Computer+Lab+Monitor+Policies"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818161/ITS+Computer+Lab+Monitor+Policies"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -327,28 +327,28 @@ const DocumentationDropdown = ({ roles: { helpDesk } }) => {
                         <div>
                             <h4>Popular Docs</h4>
                             <a
-                                href="https://www.hawaii.edu/bwiki/pages/viewpage.action?pageId=777356065"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818234/Opening+Closing+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Opening and Closing Procedures
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Mail+and+Packages"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818242/Mail+and+Packages"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Mail Runs
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/FMO+Access+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4818719/FMO+Access+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 FMO Access
                             </a>
                             <a
-                                href="https://www.hawaii.edu/bwiki/display/help/Data+Center+Access+Procedures"
+                                href="https://uhawaii.atlassian.net/wiki/spaces/help/pages/4820686/Data+Center+Access+Procedures"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
