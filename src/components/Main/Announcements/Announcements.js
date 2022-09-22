@@ -25,9 +25,14 @@ class Announcements extends Component {
                 channel: `${process.env.REACT_APP_SLACK_CHANNEL}`,
             })
                 const slackData = await slackRequest.data;
+
+                // filter channel leave/channel join/reminder_add messages and limit to 5 messages
+                let filteredSlackData = slackData.messages.filter((message) => message.subtype !== "channel_leave" && message.subtype !== "channel_join" && message.subtype !== "reminder_add" && message.room === undefined).slice(0, 5);
+
                 // process the result
+
                 const finalArray = [...Array(5).keys()];
-                slackData.messages.forEach((message, index) => {
+                filteredSlackData.forEach((message, index) => {
                     const timestamp = this.getTime(message.ts);
                     const text = this.getText(message.text);
 
@@ -62,11 +67,17 @@ class Announcements extends Component {
     getText = text => {
         let announcement;
 
+        if (text.includes('•') || text.substring(0, 9) === 'Reminder:') {
+            if (text.includes('•')) {
+                announcement = text.replace('•', '');
+                announcement = announcement.replace('•', 'CUTHERE');
+                announcement = announcement.split('CUTHERE');
+            }
 
-        if (text.includes('•')) {
-            announcement = text.replace('•', '');
-            announcement = announcement.replace('•', 'CUTHERE');
-            announcement = announcement.split('CUTHERE');
+            // handle reminder title
+            if (announcement[0].substring(0, 9) === 'Reminder:') {
+                announcement[0] = announcement[0].replace("Reminder: ", "");
+            }
 
             // handle links
             if (announcement[1].includes('http')) {

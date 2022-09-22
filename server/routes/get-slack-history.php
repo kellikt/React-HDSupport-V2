@@ -4,7 +4,7 @@ function slack($token, $channel)
 {
     $ch = curl_init();
     $authorization = "Authorization: Bearer " . $token;
-    $url = 'https://slack.com/api/conversations.history?channel=' . $channel . "&limit=5";
+    $url = 'https://slack.com/api/conversations.history?channel=' . $channel;
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization));
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
