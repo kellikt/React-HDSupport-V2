@@ -38,7 +38,17 @@ class OutageContent extends Component {
         let value = this.context;
         const { focused } = value;
         const currDate = new Date();
-        const dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate() + focused}`;
+        const nextDate = new Date(new Date().setDate(new Date().getDate() + 1));
+        const lastDate = new Date(new Date().setDate(new Date().getDate() + 2));
+        let dateString;
+
+        if (focused === 0) {
+            dateString = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate()}`;
+        } else if (focused === 1) {
+            dateString = `${nextDate.getFullYear()}-${nextDate.getMonth() + 1}-${nextDate.getDate()}`;
+        } else if (focused === 2) {
+            dateString = `${lastDate.getFullYear()}-${lastDate.getMonth() + 1}-${lastDate.getDate()}`;
+        }
 
         try {
             const staffRequest = axios.get(
