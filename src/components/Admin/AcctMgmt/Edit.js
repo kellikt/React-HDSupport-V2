@@ -25,6 +25,7 @@ class Edit extends Component {
                 staff: 'no',
                 tech: 'no',
                 third_shift: 'no',
+                leapstart: 'no',
             },
             info: {
                 first_name: '',
@@ -214,6 +215,23 @@ class Edit extends Component {
                     });
                 }
                 break;
+            case 'leapstart':
+                if (roles.leapstart === 'yes') {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            leapstart: 'no',
+                        },
+                    });
+                } else {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            leapstart: 'yes',
+                        },
+                    });
+                }
+                break;
             case 'manager':
                 if (roles.manager === 'yes') {
                     this.setState({
@@ -283,6 +301,7 @@ class Edit extends Component {
                 staff: roles.staff,
                 tech: roles.tech,
                 third_shift: roles.third_shift,
+                leapstart: roles.leapstart,
                 username: info.username,
                 uid: info.uid,
             });
@@ -459,6 +478,13 @@ class Edit extends Component {
                             label="3rd Shift"
                             onChange={() => this.handleCheck('third')}
                             checked={roles.third_shift === 'yes' ? true : false}
+                            color="purple"
+                        />
+                        <Checkbox
+                            id="leapstart"
+                            label="Leap Start"
+                            onChange={() => this.handleCheck('leapstart')}
+                            checked={roles.leapstart === 'yes' ? true : false}
                             color="purple"
                         />
                     </FunctionalRoles>

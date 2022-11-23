@@ -18,6 +18,7 @@ class AdminForm extends Component {
         helpdesk: [],
         lab: [],
         third_shift: [],
+        leapstart: [],
         searched: false,
     };
 
@@ -36,13 +37,15 @@ class AdminForm extends Component {
             const helpdesk = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=helpdesk`);
             const lab = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=lab`);
             const third_shift = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=third_shift`);
+            const leapstart = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=leapstart`);
 
-            const data = await Promise.all([helpdesk, lab, third_shift]);
+            const data = await Promise.all([helpdesk, lab, third_shift, leapstart]);
 
             this.setState({
                 helpdesk: data[0].data,
                 lab: data[1].data,
                 third_shift: data[2].data,
+                leapstart: data[3].data
             });
         } catch (error) {
             console.log(error);
@@ -50,7 +53,7 @@ class AdminForm extends Component {
     }
 
     render() {
-        const { helpdesk, lab, third_shift, selectedUser, year, payPeriod } = this.state;
+        const { helpdesk, lab, third_shift, leapstart, selectedUser, year, payPeriod } = this.state;
         const years = createYears();
 
         return (
@@ -86,6 +89,15 @@ class AdminForm extends Component {
                                 </optgroup>
                                 <optgroup label="Third Shift">
                                     {third_shift.map(student => {
+                                        return (
+                                            <option value={student.username} key={student.uid}>{`${
+                                                student.last_name
+                                            }, ${student.first_name}`}</option>
+                                        );
+                                    })}
+                                </optgroup>
+                                <optgroup label="Leap Start">
+                                    {leapstart.map(student => {
                                         return (
                                             <option value={student.username} key={student.uid}>{`${
                                                 student.last_name
@@ -130,7 +142,7 @@ class AdminForm extends Component {
                         <Button color="green">Show Timesheet</Button>
                     </a>
                 </FormEl>
-                <Exceptions helpdesk={helpdesk} lab={lab} third_shift={third_shift} />
+                <Exceptions helpdesk={helpdesk} lab={lab} third_shift={third_shift} leapstart={leapstart} />
                 <Background color="green" yOffset={90} />
             </React.Fragment>
         );

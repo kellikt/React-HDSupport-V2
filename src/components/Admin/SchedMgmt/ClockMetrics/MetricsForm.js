@@ -19,6 +19,7 @@ class MetricsForm extends Component {
             helpdesk: [],
             lab: [],
             third_shift: [],
+            leapstart: [],
             searched: false,
         };
     }
@@ -46,13 +47,15 @@ class MetricsForm extends Component {
             const helpdesk = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=helpdesk`);
             const lab = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=lab`);
             const third_shift = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=third_shift`);
+            const leapstart = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-students.php?role=leapstart`);
 
-            const data = await Promise.all([helpdesk, lab, third_shift]);
+            const data = await Promise.all([helpdesk, lab, third_shift, leapstart]);
 
             this.setState({
                 helpdesk: data[0].data,
                 lab: data[1].data,
                 third_shift: data[2].data,
+                leapstart: data[3].data,
             });
         } catch (error) {
             console.log(error);
@@ -60,7 +63,7 @@ class MetricsForm extends Component {
     }
 
     render() {
-        const { selectedUser, year, payPeriod, helpdesk, lab, third_shift, searched } = this.state;
+        const { selectedUser, year, payPeriod, helpdesk, lab, third_shift, leapstart, searched } = this.state;
         const years = createYears();
 
         return (
@@ -96,6 +99,15 @@ class MetricsForm extends Component {
                                 </optgroup>
                                 <optgroup label="Third Shift">
                                     {third_shift.map(student => {
+                                        return (
+                                            <option value={student.username} key={student.uid}>{`${
+                                                student.last_name
+                                            }, ${student.first_name}`}</option>
+                                        );
+                                    })}
+                                </optgroup>
+                                <optgroup label="Leap Start">
+                                    {leapstart.map(student => {
                                         return (
                                             <option value={student.username} key={student.uid}>{`${
                                                 student.last_name

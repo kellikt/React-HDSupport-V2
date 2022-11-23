@@ -39,6 +39,7 @@ export class LayoutProvider extends Component {
 
             const roles = {
                 helpDesk: rolesData.helpdesk === 'yes' ? true : false,
+                leapStart: rolesData.leapstart === 'yes' ? true: false,
                 lab: rolesData.lab === 'yes' ? true : false,
                 tech: rolesData.tech === 'yes' ? true : false,
                 staff: rolesData.staff === 'yes' ? true : false,

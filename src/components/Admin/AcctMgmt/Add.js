@@ -25,6 +25,7 @@ class Add extends Component {
                 staff: 'no',
                 tech: 'no',
                 third_shift: 'no',
+                leapstart: 'no',
             },
             info: {
                 first_name: '',
@@ -194,6 +195,23 @@ class Add extends Component {
                     });
                 }
                 break;
+            case 'leapstart':
+                if (roles.leapstart === 'yes') {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            leapstart: 'no',
+                        }
+                    });
+                } else {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            leapstart: 'yes'
+                        }
+                    })
+                }
+                break;
             case 'manager':
                 if (roles.manager === 'yes') {
                     this.setState({
@@ -280,6 +298,7 @@ class Add extends Component {
                 tech: roles.tech,
                 lab: roles.lab,
                 third_shift: roles.third_shift,
+                leapstart: roles.leapstart
             });
         } catch (error) {
             console.log(`Error adding user: ${error}`);
@@ -432,6 +451,12 @@ class Add extends Component {
                             label="3rd Shift"
                             onChange={() => this.handleCheck('third')}
                             checked={roles.third_shift === 'yes' ? true : false}
+                        />
+                        <Checkbox
+                            id="leapstart"
+                            label="Leap Start"
+                            onChange={() => this.handleCheck('leapstart')}
+                            checked={roles.leapstart === 'yes' ? true : false}
                         />
                     </FunctionalRoles>
                     <AdminRoles>

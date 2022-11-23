@@ -35,7 +35,14 @@ function getListStudents($db, $role)
             INNER JOIN users ON user_groups.uid = users.uid
             WHERE (user_groups.helpdesk = 'yes') AND user_groups.staff = 'no' AND user_groups.third_shift = 'yes' AND users.expired = '0'
             ORDER BY users.last_name ASC
-      ");
+        ");
+    } else if ($role === "leapstart") {
+        $stmt = $db->prepare("SELECT DISTINCT user_groups.uid, users.first_name, users.last_name, users.username
+            FROM user_groups
+            INNER JOIN users on user_groups.uid = users.uid
+            WHERE (user_groups.leapstart = 'yes') AND user_groups.staff = 'no' AND user_groups.third_shift = 'no' AND user_groups.lab = 'no' AND user_groups.helpdesk = 'no' AND users.expired = '0'
+            ORDER BY users.last_name ASC
+        ");
     }
 
     $stmt->execute();

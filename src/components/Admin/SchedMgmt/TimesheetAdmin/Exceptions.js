@@ -44,7 +44,7 @@ class Exceptions extends Component {
 
     render() {
         const { date, selectedUser, searched } = this.state;
-        const { helpdesk, lab, third_shift } = this.props;
+        const { helpdesk, lab, third_shift, leapstart } = this.props;
 
         return (
             <React.Fragment>
@@ -88,6 +88,15 @@ class Exceptions extends Component {
                                         </optgroup>
                                         <optgroup label="Third Shift">
                                             {third_shift.map(student => {
+                                                return (
+                                                    <option value={student.username} key={student.uid}>{`${
+                                                        student.last_name
+                                                    }, ${student.first_name}`}</option>
+                                                );
+                                            })}
+                                        </optgroup>
+                                        <optgroup label="Leap Start">
+                                            {leapstart.map(student => {
                                                 return (
                                                     <option value={student.username} key={student.uid}>{`${
                                                         student.last_name
