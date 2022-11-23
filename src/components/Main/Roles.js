@@ -14,10 +14,21 @@ class Roles extends PureComponent {
         else if (roles.lab) {
             if (roles.helpDesk) {
                 text = 'You are a Lab Monitor and a Help Desk Consultant';
-            } else text = 'You are a Lab Monitor';
+            } else if (roles.leapStart) {
+                text = 'You are a Lab Monitor and a Leap Start Participant';
+            } else {
+                text = 'You are a Lab Monitor';
+            }
         } else if (roles.helpDesk) {
-            if (roles.tech) text = 'You are a Technician';
-            else text = 'You are a Help Desk Consultant';
+            if (roles.tech) {
+                text = 'You are a Technician';
+            } else if (roles.leapStart) {
+                text = 'You are a Help Desk Consultant and a Leap Start Participant'
+            } else {
+                text = 'You are a Help Desk Consultant';
+            }
+        } else if (roles.leapStart) {
+            text = 'You are a Leap Start Participant';
         }
 
         // admin roles
