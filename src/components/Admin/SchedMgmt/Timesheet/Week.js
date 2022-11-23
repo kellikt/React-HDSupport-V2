@@ -118,6 +118,10 @@ class Week extends Component {
                             let emptySpans;
                             if (currentDayObj.hasOwnProperty('times')) {
                                 clocksExist = true;
+                                if (currentDayObj.times.length > 6) {
+                                    // reduce times to six
+                                    currentDayObj.times = currentDayObj.times.slice(0,6);
+                                }
                                 emptySpans = this.createEmptySpans(6 - currentDayObj.times.length); // maximum of 6 spans needed
                             } else {
                                 emptySpans = this.createEmptySpans(6);
@@ -142,7 +146,7 @@ class Week extends Component {
                                             <div>{day}</div>
                                         </DateOfRow>
                                         {clocksExist
-                                            ? currentDayObj.times.map((time, index) => {
+                                            ? currentDayObj.times.slice(0, 6).map((time, index) => {
                                                   if (index % 2 === 0)
                                                       return (
                                                           <Time key={index} green>
