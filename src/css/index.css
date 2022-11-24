@@ -23,6 +23,7 @@
     --light-blue-button: linear-gradient(180deg, #89b1ff, #5b8def);
     --gold-button: linear-gradient(180deg, #ffc476, #e39f48);
     --blue-button: linear-gradient(180deg, #7c7ebf, #414384);
+    --pink-button: linear-gradient(180deg, #e07be0, #9c4baa);
     --secondary-button: #fff;
 
     --crumb-blue-text: #6772e5;
@@ -43,6 +44,9 @@
     --crumb-red-text: #800a1b;
     --crumb-red-bg: #f8c9cd;
     --crumb-red-border: #f8c9cd52;
+    --crumb-pink-text: #b76ac4;
+    --crumb-pink-bg: #f0dcf4;
+    --crumb-pink-border:#f4bcff52;
 }
 
 html {

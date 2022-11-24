@@ -29,6 +29,10 @@ import EditUser from './Admin/AcctMgmt/EditUser';
 import Edit from './Admin/AcctMgmt/Edit';
 import Add from './Admin/AcctMgmt/Add';
 
+import Badges from './Badges';
+import AddBadge from './Badges/AddBadge/AddBadge';
+import DisplayBadges from './Badges/DisplayBadges/DisplayBadges';
+
 class SiteRouter extends Component {
     render() {
         return (
@@ -53,6 +57,10 @@ class SiteRouter extends Component {
                     as={Timesheet}
                     path={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/:username/:year/:payPeriod`}
                 />
+
+                <AdminRoute as={Badges} path={`${process.env.PUBLIC_URL}/badgemgmt`} />
+                <AdminRoute as={AddBadge} path={`${process.env.PUBLIC_URL}/badgemgmt/addbadge`} />
+                <AdminRoute as={DisplayBadges} path={`${process.env.PUBLIC_URL}/badgemgmt/displaybadges`} />
 
                 <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
                 <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />

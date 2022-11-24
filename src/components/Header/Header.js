@@ -12,6 +12,7 @@ import DownloadsDropdown from './DropdownContents/DownloadsDropdown';
 import DocumentationDropdown from './DropdownContents/DocumentationDropdown';
 import UserDocsDropdown from './DropdownContents/UserDocsDropdown';
 import AdministrationDropdown from './DropdownContents/AdministrationDropdown';
+import BadgesDropdown from './DropdownContents/BadgesDropdown';
 import { LayoutContext } from '../../LayoutContext';
 
 const navbarConfig = [
@@ -20,6 +21,7 @@ const navbarConfig = [
     { title: 'Documentation', dropdown: DocumentationDropdown },
     { title: 'User Docs', dropdown: UserDocsDropdown },
     { title: 'Administration', dropdown: AdministrationDropdown },
+    { title: 'Badges', dropdown: BadgesDropdown },
 ];
 
 class Header extends Component {
