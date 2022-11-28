@@ -9,6 +9,7 @@
         "@slack/web-api": "^6.7.2",
         "@wojtekmaj/react-daterange-picker": "^2.0.0",
         "axios": "^0.18.0",
+        "dayjs": "^1.11.6",
         "filepond": "^4.30.4",
         "filepond-plugin-file-encode": "^2.1.10",
         "filepond-plugin-image-exif-orientation": "^1.0.11",

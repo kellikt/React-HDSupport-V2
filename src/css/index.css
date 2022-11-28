@@ -7,6 +7,7 @@
     --teal: #4f96ce;
     --blue: #6772e5;
     --light-blue: #3396d3;
+    --dark-blue: #232aa0;
     --gold: #e39f48;
     --pink: #b76ac4;
     --brown: #cec4b0;
@@ -21,9 +22,11 @@
     --green-button: linear-gradient(180deg, #3ecf8e, #1a965f);
     --purple-button: linear-gradient(180deg, #a387e5, #583aa1);
     --light-blue-button: linear-gradient(180deg, #89b1ff, #5b8def);
+    --dark-blue-button: linear-gradient(180deg, #4072d7, #22458b);
     --gold-button: linear-gradient(180deg, #ffc476, #e39f48);
     --blue-button: linear-gradient(180deg, #7c7ebf, #414384);
     --pink-button: linear-gradient(180deg, #e07be0, #9c4baa);
+    --dark-grey-button: linear-gradient(180deg, #c5c5c5, #6b7c93);
     --secondary-button: #fff;
 
     --crumb-blue-text: #6772e5;
@@ -31,6 +34,9 @@
     --crumb-light-blue-text: #3a8cf7;
     --crumb-light-blue-bg: #d6e6f4;
     --crumb-light-blue-border: #d6e6f452;
+    --crumb-dark-blue-text: #174a8e;
+    --crumb-dark-blue-bg: #d6e6f4;
+    --crumb-dark-blue-border: #d6e6f452;
     --crumb-blue-border: #bcdaff52;
     --crumb-purple-text: #50319b;
     --crumb-purple-bg: #e1dbee;

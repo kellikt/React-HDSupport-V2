@@ -12,17 +12,15 @@ import { ReactComponent as Graphic } from '../../../images/Admin/Badges/AddBadge
 class AddForm extends Component {
     constructor(props) {
         super(props);
-        const currDate = new Date();
         this.state = {
             displayColorPicker: false,
+            displaySecondaryColorPicker: false,
             color: '#555050',
             background: '#555050',
+            secondaryColor: '#555050',
+            secondaryBackground: '#555050',
             title: '',
             description: '',
-            holiday: '',
-            date: `${currDate.getMonth() + 1}/${currDate.getDate()}/${currDate.getFullYear()}`,
-            holidayList: [],
-            full: false,
             snack: false,
             message: '',
             heading: '',
@@ -58,18 +56,36 @@ class AddForm extends Component {
         this.setState({ displayColorPicker: !this.state.displayColorPicker })
     };
 
+    handleSecondaryClick = () => {
+        this.setState({ displaySecondaryColorPicker: !this.state.displaySecondaryColorPicker })
+    }
+
     handleClose = () => {
         this.setState({ displayColorPicker: false })
     };
 
+    handleSecondaryClose = () => {
+        this.setState({ displaySecondaryColorPicker: false })
+    }
+
     handleColorChange = (color) => {
         this.setState({ 
             background: color.rgb,
-    });
+        });
     };
 
     handleChangeComplete = (color) => {
         this.setState({ color: color.hex });
+    }
+
+    handleSecondaryColorChange = (color) => {
+        this.setState({ 
+            secondaryBackground: color.rgb,
+        });
+    };
+
+    handleSecondaryChangeComplete = (color) => {
+        this.setState({ secondaryColor: color.hex });
     }
     
 
@@ -77,12 +93,13 @@ class AddForm extends Component {
 
         event.preventDefault();
 
-        const { title, color, description, link } = this.state;
+        const { title, color, secondaryColor, description, link } = this.state;
 
         try {
             axios.post(`${process.env.REACT_APP_DB_SERVER}/add-badge.php`, {
                 title: title,
                 hex: color,
+                hex_secondary: secondaryColor,
                 description: description,
                 link: link,
             }).then(function (response) {
@@ -107,30 +124,12 @@ class AddForm extends Component {
 
     };
 
-    handleDelete = async stamp => {
-        const { full } = this.state;
-
-        try {
-            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-holiday.php`, {
-                timestamp: stamp,
-            });
-
-            if (full) {
-                this.getHolidays('yes');
-            } else {
-                this.getHolidays('no');
-            }
-        } catch (error) {
-            this.handleError('Something went wrong with the database.');
-        }
-    };
-
     componentWillUnmount() {
         clearTimeout(this.timerId);
     }
 
     render() {
-        const { title, color, background, description, holiday, date, holidayList, full, message, heading, error, snack, link } = this.state;
+        const { title, color, background, description, message, heading, error, snack, link } = this.state;
 
         const styles = reactCSS({
             'default': {
@@ -162,6 +161,17 @@ class AddForm extends Component {
             },
           });
 
+          const secondaryStyles = reactCSS({
+            'default': {
+                color: {
+                    width: '36px',
+                    height: '14px',
+                    borderRadius: '2px',
+                    background: `rgba(${ this.state.secondaryBackground.r }, ${ this.state.secondaryBackground.g }, ${ this.state.secondaryBackground.b }, ${ this.state.secondaryBackground.a })`,
+                },
+            },
+          });
+
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Graphic/>
@@ -187,6 +197,17 @@ class AddForm extends Component {
                             { this.state.displayColorPicker ? <div style={ styles.popover }>
                             <div style={ styles.cover } onClick={ this.handleClose }/>
                             <SketchPicker color={ this.state.background } onChange={ this.handleColorChange } onChangeComplete={this.handleChangeComplete} />
+                            </div> : null }
+
+                        </BadgeDiv>
+                        <TextLabel>Select Badge Background</TextLabel>
+                        <BadgeDiv>
+                            <div style={ styles.swatch } onClick={ this.handleSecondaryClick }>
+                            <div style={ secondaryStyles.color } />
+                            </div>
+                            { this.state.displaySecondaryColorPicker ? <div style={ styles.popover }>
+                            <div style={ styles.cover } onClick={ this.handleSecondaryClose }/>
+                            <SketchPicker color={ this.state.secondaryBackground } onChange={ this.handleSecondaryColorChange } onChangeComplete={this.handleSecondaryChangeComplete} />
                             </div> : null }
 
                         </BadgeDiv>

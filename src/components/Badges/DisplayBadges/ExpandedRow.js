@@ -12,7 +12,7 @@ import { TableRow } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableCompone
 class ExpandedRow extends Component {
     constructor(props) {
         super(props);
-        const { title, link, description, hex } = this.props;
+        const { title, link, description, hex, secondaryHex } = this.props;
         this.state = {
             title: title,
             link: link,
@@ -20,6 +20,9 @@ class ExpandedRow extends Component {
             hex: hex,
             displayColorPicker: false,
             background: hex,
+            secondaryHex: secondaryHex,
+            displaySecondaryColorPicker: false,
+            secondaryBackground: secondaryHex
         };
     }
 
@@ -32,8 +35,8 @@ class ExpandedRow extends Component {
 
     handleEdit = () => {
         const { bid, handleEdit } = this.props;
-        const { title, description, hex, link } = this.state;
-        handleEdit(bid, title, hex, description, link );
+        const { title, description, hex, secondaryHex, link } = this.state;
+        handleEdit(bid, title, hex, secondaryHex, description, link );
     };
 
     handleDelete = () => {
@@ -57,11 +60,35 @@ class ExpandedRow extends Component {
     };
 
     handleChangeComplete = (color) => {
-        this.setState({ hex: color.hex });
-    }
+        this.setState({
+            hex: color.hex
+        });
+    };
+
+    handleSecondaryChangeComplete = (color) => {
+        this.setState({ secondaryHex: color.hex });
+    };
+
+    handleSecondaryClick = () => {
+        this.setState({ displaySecondaryColorPicker: !this.state.displaySecondaryColorPicker })
+    };
+
+    handleSecondaryClose = () => {
+        this.setState({ displaySecondaryColorPicker: false })
+    };
+
+    handleSecondaryColorChange = (color) => {
+        this.setState({ 
+            secondaryBackground: color.rgb,
+    });
+    };
+
+    handleSecondaryChangeComplete = (color) => {
+        this.setState({ secondaryHex: color.hex });
+    };
 
     render() {
-        const { description, hex, link, title, background } = this.state;
+        const { description, link, title } = this.state;
 
         const styles = reactCSS({
             'default': {
@@ -93,6 +120,17 @@ class ExpandedRow extends Component {
             },
         });
 
+        const secondaryStyles = reactCSS({
+            'default': {
+                color: {
+                    width: '36px',
+                    height: '14px',
+                    borderRadius: '2px',
+                    background: `rgba(${ this.state.secondaryBackground.r }, ${ this.state.secondaryBackground.g }, ${ this.state.secondaryBackground.b }, ${ this.state.secondaryBackground.a })`,
+                },
+            },
+          });
+
         return (
             <Row {...this.props}>
                 <TextInput id="link" label="GDrive Link to Image" name="link" value={link} onChange={this.handleInput} />
@@ -119,6 +157,16 @@ class ExpandedRow extends Component {
                         { this.state.displayColorPicker ? <div style={ styles.popover }>
                         <div style={ styles.cover } onClick={ this.handleClose }/>
                         <SketchPicker color={ this.state.background } onChange={ this.handleColorChange } onChangeComplete={this.handleChangeComplete} />
+                        </div> : null }
+                    </BadgeColor>
+                    <TextLabel>Select Badge Background</TextLabel>
+                    <BadgeColor>
+                        <div style={ styles.swatch } onClick={ this.handleSecondaryClick }>
+                        <div style={ secondaryStyles.color } />
+                        </div>
+                        { this.state.displaySecondaryColorPicker ? <div style={ styles.popover }>
+                        <div style={ styles.cover } onClick={ this.handleSecondaryClose }/>
+                        <SketchPicker color={ this.state.secondaryBackground } onChange={ this.handleSecondaryColorChange } onChangeComplete={this.handleSecondaryChangeComplete} />
                         </div> : null }
                     </BadgeColor>
                 </BadgeInput>

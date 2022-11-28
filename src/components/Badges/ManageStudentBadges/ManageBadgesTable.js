@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, useId } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { Table, TableLabel, TableHeading, TableRow, Location } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../images/Admin/Badges/Table.svg';
-import { ReactComponent as ColorIcon } from '../../../images/Admin/Badges/ColorIcon.svg';
-import { ReactComponent as NoIcon } from '../../../images/Admin/Badges/NoBadge.svg';
 import ExpandedRow from './ExpandedRow';
 
-class DisplayBadgesTable extends Component {
+const dayjs = require('dayjs');
+
+class ManageBadgesTable extends Component {
     state = {
         results: [],
         focused: -1,
@@ -17,14 +17,17 @@ class DisplayBadgesTable extends Component {
     };
 
     getTableData = async () => {
-        const { badge } = this.props;
+        const { user, badge } = this.props;
+
+        console.log(user);
 
         try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-badges.php`, {
-                name: badge
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-student-badges.php`, {
+                badge: badge,
+                user: user
             });
             const data = request.data;
-            if (!(data === 0)) {
+            if (!(data === 0 || data === '')) {
                 this.setState({
                     results: data,
                 });
@@ -40,15 +43,14 @@ class DisplayBadgesTable extends Component {
         });
     };
 
-    handleEdit = async (bid, title, hex, secondary_hex, description, link) => {
+    handleEdit = async (username, bid, tstamp, notes, fav) => {
         try {
-            await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-badge.php`, {
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-student-badge.php`, {
+                username: username,
                 bid: bid,
-                title: title,
-                hex: hex,
-                hex_secondary: secondary_hex,
-                description: description,
-                link: link
+                tstamp: tstamp,
+                notes: notes,
+                fav: fav
             });
 
             this.setState({
@@ -61,11 +63,11 @@ class DisplayBadgesTable extends Component {
         }
     };
 
-    handleDelete = async bid => {
-        console.log(bid);
+    handleDelete = async (bid, uid) => {
         try {
-            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-badge.php`, {
-                bid: bid
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-student-badge.php`, {
+                bid: bid,
+                uid: uid
             });
 
             this.setState(state => {
@@ -82,7 +84,7 @@ class DisplayBadgesTable extends Component {
 
     render() {
         const { results, focused } = this.state;
-        const { badge } = this.props;
+        const { user, badge } = this.props;
 
         return (
             <Table {...this.props}>
@@ -90,41 +92,40 @@ class DisplayBadgesTable extends Component {
                     <TableLogo />
                     <div>
                         <h2>
-                            Results for: <strong>{badge === '' ? `All Badges` : badge}</strong>
+                            Results for: <strong>{badge === '' ? `All Badges for ${user}` : badge}</strong>
                         </h2>
                     </div>
                 </Label>
                 <Heading>
-                    <span>Image</span>
-                    <span>Name</span>
-                    <span>Description</span>
-                    <span>{focused >= 0 ? 'Badge Outline/Background' : 'Badge Outline'}</span>
-                    <span>{focused >= 0 ? 'Action' : 'Badge Background'}</span>
+                    <span>Username</span>
+                    <span>Badge</span>
+                    <span>Date Received</span>
+                    <span>Comments</span>
+                    <span>{focused >= 0 ? 'Action' : ''}</span>
                 </Heading>
                 {results.map((result, index) => {
                     if (index === focused) {
                         return (
                             <ExpandedRow
                                 key={result.bid}
-                                link={result.link}
+                                username={result.username}
                                 title={result.title}
-                                description={result.description}
-                                hex={result.hex}
-                                secondaryHex={result.hex_secondary}
+                                comments={result.notes}
+                                timestamp={result.tstamp}
                                 bid={result.bid}
+                                uid={result.uid}
+                                fav={result.fav}
                                 handleDelete={this.handleDelete}
                                 handleEdit={this.handleEdit}
                             />
                         );
                     } else {
-                        const id = result.link.match(/[-\w]{25,}/);
                         return (
                             <Row key={result.bid} onClick={() => this.handleRowClick(index)} stagger={index}>
-                                <span>{result.link != '' ? <img width="100px" height="100px" src={`https://drive.google.com/uc?export=view&id=${id}`} /> : <NoIcon /> }</span>
+                                <Username>{result.username}</Username>
                                 <Username>{result.title}</Username>
-                                <Notes>{result.description}</Notes>
-                                <div><ColorIcon fill={result.hex} /><span>{result.hex}</span></div>
-                                <div><ColorIcon fill={result.hex_secondary} /><span>{result.hex_secondary}</span></div>
+                                <span>{dayjs(result.timestamp).format('MM-DD-YYYY')}</span>
+                                <Notes>{result.notes}</Notes>
                             </Row>
                         );
                     }
@@ -134,20 +135,21 @@ class DisplayBadgesTable extends Component {
     }
 }
 
-DisplayBadgesTable.propTypes = {
+ManageBadgesTable.propTypes = {
+    user: PropTypes.string.isRequired,
     badge: PropTypes.string.isRequired,
 };
 
-export default DisplayBadgesTable;
+export default ManageBadgesTable;
 
 const Label = styled(TableLabel)`
-    background: var(--purple-button);
+    background: var(--dark-blue-button);
 `;
 
 const Heading = styled(TableHeading)`
-    background: linear-gradient(180deg, #a387e5, #583aa1);
+    background: linear-gradient(180deg, #4072d7, #22458b);
     color: var(--white); 
-    grid-template-columns: 0.7fr 0.7fr 1fr 0.7fr 0.3fr;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.8fr 0.3fr;
 
     span {
         &:nth-of-type(4) {
@@ -157,7 +159,7 @@ const Heading = styled(TableHeading)`
 `;
 
 const Row = styled(TableRow)`
-    grid-template-columns: 0.7fr 0.7fr 1fr 0.7fr 0.3fr;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.8fr 0.3fr;
     font-weight: 500;
     transition: transform 0.25s ease-out, box-shadow 0.1s ease-out;
     padding: 24px 18px;

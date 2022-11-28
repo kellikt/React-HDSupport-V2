@@ -43,7 +43,7 @@ class DisplayBadgesForm extends Component {
                         <Title>
                             <h2>Display Badges</h2>
                             <p>
-                                Shows a list of badges based on search keybword. Leaving the 'Badge' field blank will fetch results for all badges.
+                                Shows a list of badges based on search keyword. Leaving the 'Badge' field blank will fetch results for all badges.
                             </p>
                         </Title>
                         <TextInput

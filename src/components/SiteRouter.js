@@ -33,6 +33,11 @@ import Badges from './Badges';
 import AddBadge from './Badges/AddBadge/AddBadge';
 import DisplayBadges from './Badges/DisplayBadges/DisplayBadges';
 
+import StudentBadge from './Badges/StudentBadge/StudentBadge';
+import ManageStudentBadges from './Badges/ManageStudentBadges/ManageStudentBadges';
+
+import BadgesHome from './Badges/BadgesHome/BadgesHome';
+
 class SiteRouter extends Component {
     render() {
         return (
@@ -61,6 +66,8 @@ class SiteRouter extends Component {
                 <AdminRoute as={Badges} path={`${process.env.PUBLIC_URL}/badgemgmt`} />
                 <AdminRoute as={AddBadge} path={`${process.env.PUBLIC_URL}/badgemgmt/addbadge`} />
                 <AdminRoute as={DisplayBadges} path={`${process.env.PUBLIC_URL}/badgemgmt/displaybadges`} />
+                <AdminRoute as={StudentBadge} path={`${process.env.PUBLIC_URL}/badgemgmt/studentbadge`} />
+                <AdminRoute as={ManageStudentBadges} path={`${process.env.PUBLIC_URL}/badgemgmt/managebadge`} />
 
                 <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
                 <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />
@@ -69,6 +76,8 @@ class SiteRouter extends Component {
                 <UserRoute as={SortSite} path={`${process.env.PUBLIC_URL}/email/sortsite`} />
                 <UserRoute as={TrainingLab} path={`${process.env.PUBLIC_URL}/email/training`} />
                 <UserRoute as={FMO} path={`${process.env.PUBLIC_URL}/email/fmo`} />
+
+                <UserRoute as={BadgesHome} path={`${process.env.PUBLIC_URL}/badges`} />
 
                 <Main default />
             </Router>

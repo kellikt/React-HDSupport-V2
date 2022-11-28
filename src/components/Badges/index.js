@@ -4,6 +4,8 @@ import IndexPage from '../Admin/IndexPage';
 import IndexLink from '../Admin/IndexLink';
 import { ReactComponent as AddBadge } from '../../images/Admin/Badges/AddBadgeIndex.svg';
 import { ReactComponent as EditBadge } from '../../images/Admin/Badges/EditBadgeIndex.svg';
+import { ReactComponent as AddStudentBadge } from '../../images/Admin/Badges/AddStudentBadgeIndex.svg';
+import { ReactComponent as EditStudentBadge } from '../../images/Admin/Badges/EditStudentBadgeIndex.svg';
 import Background from '../Background';
 
 const index = () => {
@@ -28,12 +30,20 @@ const index = () => {
                 <EditBadge />
             </IndexLink>
             <IndexLink
-                color="blue"
-                title="Add/Edit Student Badges"
+                color="light-blue"
+                title="Add Student Badges"
                 description="Add a new badge to a student's profile."
-                to={`${process.env.PUBLIC_URL}/acctmgmt/adduser`}
+                to={`${process.env.PUBLIC_URL}/badgemgmt/studentbadge`}
             >
-                <AddBadge />
+                <AddStudentBadge />
+            </IndexLink>
+            <IndexLink
+                color="dark-blue"
+                title="Manage Student Badges"
+                description="Edit or remove a badge from a student."
+                to={`${process.env.PUBLIC_URL}/badgemgmt/managebadge`}
+            >
+                <EditStudentBadge />
             </IndexLink>
             <Background color="blue" yOffset={70} />
         </IndexPage>
