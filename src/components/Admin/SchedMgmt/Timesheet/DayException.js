@@ -117,6 +117,12 @@ class DayException extends Component {
                         <WarningExclamation />
                         <div>Remember to enter exceptions for all displayed times.</div>
                     </Reminder>
+                    {logs.length > 6 ? (
+                    <WarnReminder>
+                        <Warning />
+                        <div>User has more than 3 clock-ins. Check the sidebar for all clock-ins on this day.</div>
+                    </WarnReminder>
+                    ) : ''}
                     <DateTitle>
                         <div>{dayObj.date}</div>
                         <div>{day}</div>
@@ -135,13 +141,13 @@ class DayException extends Component {
                 </Heading>
                 <Times>
                     <Label>Times:</Label>
-                    {logs.sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID).map(log => {
+                    {logs.slice(0, 6).sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID).map(log => {
                         return <span key={log.logid}>{`${log.hour}:${log.min} ${log.ampm}`}</span>;
                     })}
                 </Times>
                 <Comments>
                     <Label>Comments:</Label>
-                    {logs.sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID).map(log => {
+                    {logs.slice(0,6).sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID).map(log => {
                         return <span key={log.logid}>{log.comments}</span>;
                     })}
                 </Comments>
@@ -299,4 +305,18 @@ const Reminder = styled(ExceptionCheck)`
         line-height: 1.6;
         max-width: 25ch;
     }
+`;
+
+const WarnReminder = styled(ExceptionCheck)`
+display: flex;
+align-items: center;
+
+> div {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--red);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 25ch;
+}
 `;
