@@ -1,9 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import Container from '../../Admin/Container';
 import Breadcrumb from '../../Admin/Breadcrumb';
 import Background from '../../Background';
 import BadgesFormFeature from './BadgesFormFeature';
+import { ActivityHeader } from './BadgesHomeComponents';
+import { ReactComponent as HeaderIcon } from '../../../images/Admin/Badges/Icons/header.svg';
+import BadgeFeed from './BadgeFeed';
 
 const BadgesHome = () => {
     const links = [
@@ -16,8 +20,14 @@ const BadgesHome = () => {
             <Breadcrumb links={links} color="gold" />
             <Background color="gold" />
             <BadgesFormFeature />
+            <ActivityHeader><StyledHeaderIcon /><h2>Badge Activity</h2></ActivityHeader>
+            <BadgeFeed />
         </Container>
     );
 };
 
 export default BadgesHome;
+
+const StyledHeaderIcon = styled(HeaderIcon)`
+    display: inline;
+`;

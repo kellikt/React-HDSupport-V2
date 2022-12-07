@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { PoseGroup } from 'react-pose';
 
 import { FormEl, Title, DateRange, Options, Main, Radios } from '../DisplayBadges/DisplayBadgesComponents';
 import { ReactComponent as FeatureIcon } from '../../../images/Admin/Badges/Icons/feature.svg';
