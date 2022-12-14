@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import Button from '../Button';
 import { FormEl, Title } from './UserFormComponents';
 import { Inputs } from '../Admin/SchedMgmt/ClockMetrics/MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../images/Admin/Sched/Sheetadmin.svg';
-import { createYears } from '../Admin/utils';
-import { periods } from '../Admin/payPeriods.json';
 import Background from '../Background';
 
 class UserForm extends Component {
@@ -14,8 +13,32 @@ class UserForm extends Component {
         selectedUser: '',
         year: '',
         payPeriod: '',
+        periods: [],
+        years: [],
         searched: false,
+        existingPayPeriods: [],
     };
+
+    populatePayPeriods = event => {
+        const value = event.target.value;
+        const name = event.target.name;
+
+        if (event.target.value !== "None") {
+            this.setState({
+                [name]: value,
+                searched: false,
+                periods: this.state.existingPayPeriods.filter((year) => year.year === value)[0].pay_periods
+            });
+        } else {
+            this.setState({
+                [name]: value,
+                searched: false,
+                periods: []
+            });
+        }
+
+
+    }
 
     handleChange = event => {
         const value = event.target.value;
@@ -29,11 +52,18 @@ class UserForm extends Component {
 
     async componentDidMount() {
         try {
-            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-session-variables.php`);
-            const data = request.data;
+            const request = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-session-variables.php`);
+            const payPeriods = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-pay-periods.php`);
+            const data = await Promise.all([request, payPeriods]);
+            
+            const years = data[1].data.map((year) => {
+                return year.year;
+            })
             
             this.setState({
-                selectedUser: data.username,
+                selectedUser: data[0].data.username,
+                existingPayPeriods: data[1].data,
+                years: years,
             });
 
         } catch (error) {
@@ -42,8 +72,7 @@ class UserForm extends Component {
     }
 
     render() {
-        const { selectedUser, year, payPeriod } = this.state;
-        const years = createYears();
+        const { selectedUser, year, payPeriod, periods, years } = this.state;
 
         return (
             <React.Fragment>
@@ -53,23 +82,10 @@ class UserForm extends Component {
                         <h2>View Printable Timesheet</h2>
                         <p>Display a timesheet for: </p>
                     </Title>
-                    <Inputs>
-                        <div>
-                            <label htmlFor="payperiod">Pay Period</label>
-                            <select name="payPeriod" id="payperiod" onChange={this.handleChange} value={payPeriod}>
-                                <option value="None">Select Pay Period</option>
-                                {periods.map((period, index) => {
-                                    return (
-                                        <option value={period.value} key={index}>
-                                            {period.string}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <div>
+                    <UserInputs>
+                         <div>
                             <label htmlFor="year">Year</label>
-                            <select name="year" id="year" onChange={this.handleChange} value={year}>
+                            <select name="year" id="year" onChange={this.populatePayPeriods} value={year}>
                                 <option value="None">Select Year</option>
                                 {years.map(year => {
                                     return (
@@ -80,7 +96,24 @@ class UserForm extends Component {
                                 })}
                             </select>
                         </div>
-                    </Inputs>
+                        {year !== '' && year !=="None"
+                            ? <div>
+                                <label htmlFor="payperiod">Pay Period</label>
+                                <select name="payPeriod" id="payperiod" onChange={this.handleChange} value={payPeriod}>
+                                    <option value="None">Select Pay Period</option>
+                                    {periods.map((period, index) => {
+                                        return (
+                                            <option value={period.value} key={index}>
+                                                {period.string}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            : ''
+                        }
+
+                    </UserInputs>
                     { payPeriod !== '' && year !== '' ? 
                     <a
                     href={`${
@@ -108,5 +141,18 @@ class UserForm extends Component {
         );
     }
 }
+
+export const UserInputs = styled(Inputs)`
+    > div {
+        &:first-of-type {
+            margin-left: 0;
+            width: 33%;
+        }
+
+        &:nth-of-type(2) {
+            width: 66%;
+        }
+    }
+`
 
 export default UserForm;
