@@ -20,7 +20,7 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp }, 
             <StyledRibbon color={secondaryColor}/>
             <BadgeDescription>{description}</BadgeDescription>
             <StyledSection color={secondaryColor}/>
-            <TimestampText>Achieved {dayjs(timestamp).format('MM-DD-YYYY')} at {dayjs(timestamp).format('hh:mm A')}</TimestampText>
+            <TimestampText>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</TimestampText>
         </BadgeContainer>
     );
 }

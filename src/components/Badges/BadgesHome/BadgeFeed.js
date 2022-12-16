@@ -1,14 +1,59 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import BadgeFeedLog from './BadgeFeedLog';
+import BadgeCard from './BadgeCard';
 
 class BadgeFeed extends Component {
+
+  constructor(props) {
+      super(props);
+      this.state = {
+          badgeActivity: [],
+          recentActivity: [],
+          isLoading: true,
+      };
+  }
+
+  async componentDidMount() {
+      try {
+          const feed = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-badge-activity.php`, {
+              log: "yes",
+          });
+          const activity = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-badge-activity.php`, {
+              log: "no",
+          });
+          const data = await Promise.all([feed, activity]);
+          this.setState({
+              badgeActivity: data[0].data,
+              recentActivity: data[1].data,
+              isLoading: false,
+          });
+
+      } catch (error) {
+          console.log(error);
+      }
+  }
+
   render() {
+    const { badgeActivity, recentActivity } = this.state;
+
     return (
       <React.Fragment>
         <ActivityLog>
-            <BadgeFeedLog title="7AM Samurai" color="#ffe1e7" secondaryColor="ab747f" image="https://drive.google.com/file/d/1e3F78X6aiPoocK1aSH2AgpbJdIFzVEMX/view?usp=share_link" description="Have 7AM availability and work a 7AM shift." timestamp="1669256907" user="Larry Sashimi" />
+          <div>
+          {badgeActivity.map((item, index) => {
+              return (
+                  <BadgeFeedLog title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} />
+              );
+          })}
+          </div>
+          {recentActivity.map((item, index) => {
+              return (
+                <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} />
+              )
+          })}
         </ActivityLog>
       </React.Fragment>
     );
@@ -21,5 +66,5 @@ export default BadgeFeed;
 const ActivityLog = styled.div`
     display: grid;
     grid-template-columns: 2fr 1fr;
-    padding-top: 1em;
+    column-gap: 5em;
 `;

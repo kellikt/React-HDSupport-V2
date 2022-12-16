@@ -30,7 +30,7 @@ export default BadgesFormFeature;
 const FeatureLabel = styled.div`
     position: relative;
     top: -4em;
-    left: 0.5em;
+    left: -1em;
     grid-column: 1/4;
     margin-right: 48em;
     display: flex;
