@@ -37,6 +37,7 @@ import StudentBadge from './Badges/StudentBadge/StudentBadge';
 import ManageStudentBadges from './Badges/ManageStudentBadges/ManageStudentBadges';
 
 import BadgesHome from './Badges/BadgesHome/BadgesHome';
+import YourBadges from './Badges/YourBadges/YourBadges';
 
 class SiteRouter extends Component {
     render() {
@@ -78,6 +79,7 @@ class SiteRouter extends Component {
                 <UserRoute as={FMO} path={`${process.env.PUBLIC_URL}/email/fmo`} />
 
                 <UserRoute as={BadgesHome} path={`${process.env.PUBLIC_URL}/badges`} />
+                <UserRoute as={YourBadges} path={`${process.env.PUBLIC_URL}/badges/your-badges`} />
 
                 <Main default />
             </Router>

@@ -1,48 +1,102 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
  
 import { ReactComponent as Circle } from '../../../images/Admin/Badges/BadgeWhitespace.svg';
 import { ReactComponent as Triangle } from '../../../images/Admin/Badges/BadgeTriangle.svg';
 import { ReactComponent as Outline } from '../../../images/Admin/Badges/BadgeOutline.svg';
-import { ReactComponent as NoIcon } from '../../../images/Admin/Badges/NoBadge.svg';
+import { ReactComponent as None } from '../../../images/Admin/Badges/NoBadge.svg';
 import { ReactComponent as Diamond } from '../../../images/Admin/Badges/BadgeDiamond.svg';
 import { ReactComponent as Ribbon } from '../../../images/Admin/Badges/BadgeRibbon.svg';
 import { ReactComponent as Icon } from '../../../images/Admin/Badges/Icons/recent.svg';
+import { ReactComponent as Fav } from '../../../images/Admin/Badges/Icons/favorite.svg';
 
 
 const dayjs = require('dayjs');
 
-const BadgeCard = ({ title, color, secondaryColor, image, description, timestamp }, props) => {
+const BadgeCard = ({ bid, title, color, secondaryColor, image, description, timestamp, activity, profile, fav, handleFavorite }, props) => {
     const imageID = image.match(/[-\w]{25,}/);
+    const current = dayjs().unix();
+    const currentMonth = dayjs().date(1).unix();
 
-  return(
-      <CardContainer color={secondaryColor}>
-          <RecentLabel color={secondaryColor}><RecentIcon /><p>  Recently Unlocked</p></RecentLabel>
-          <BadgeCircle />
-          <BadgeTriangle />
-          <BadgeOutline color={color}/>
-          {imageID != '' ? <BadgeImage width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <NoIcon /> }
-          <BadgeRibbon color={secondaryColor}/>
-          <BadgeDiamond color={secondaryColor}/>
-          <BadgeTitle>{title}</BadgeTitle>
-          <BadgeDescription>{description}</BadgeDescription>
-          <BadgeTimestamp>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>
-      </CardContainer>
-  );
+    const [favorite, setFavorite] = useState(fav);
+
+    function updateFavorite(fav) {
+        const changedFavorite = fav == 0 ? 1 : 0;
+        setFavorite(changedFavorite);
+    }
+
+    return(
+        <CardContainer color={secondaryColor}>
+            {(timestamp >= currentMonth.valueOf() && timestamp <= current.valueOf()) || (activity) ?
+                <RecentLabel color={secondaryColor}><RecentIcon /><p>  Recently Unlocked</p></RecentLabel>
+                : ''
+            }
+            {
+                (() => {
+                    if (profile) {
+                        if (favorite == 0) {
+                            return <Favorite color={"white"}><FavIcon color={"transparent"} onClick={() => handleFavorite(bid, favorite, updateFavorite)}/></Favorite>
+                        } else {
+                            return <Favorite color={"transparent"}><FavIcon color={"white"} onClick={() => handleFavorite(bid, favorite, updateFavorite)}/></Favorite>
+                        }
+                    }
+                })()
+            }
+            <BadgeCircle />
+            <BadgeTriangle />
+            <BadgeOutline color={color}/>
+            {imageID != null ? <BadgeImage width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <NoIcon /> }
+            <BadgeRibbon color={secondaryColor}/>
+            <BadgeDiamond color={secondaryColor}/>
+            <BadgeTitle>{title}</BadgeTitle>
+            <BadgeDescription>{description}</BadgeDescription>
+            <BadgeTimestamp>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>
+        </CardContainer>
+    );
 
 }
 
 BadgeCard.propTypes = {
+    bid: PropTypes.number,
     title: PropTypes.string,
     color: PropTypes.string,
     secondaryColor: PropTypes.string,
     image: PropTypes.string,
     description: PropTypes.string,
     timestamp: PropTypes.number,
+    fav: PropTypes.number,
+    activity: PropTypes.bool,
+    profile: PropTypes.bool,
+    handleFavorite: PropTypes.func,
 }
 
 export default BadgeCard;
+
+const NoIcon = styled(None)`
+    position: absolute;
+    width: 7em;
+    left: 8.3em;
+    top: 2.2em;
+`;
+
+const FavIcon = styled(Fav)`
+    color: ${props => (props.color)};
+`;
+
+const Favorite = styled.button`
+    background: none;
+    border: none;
+    position: absolute;
+    width: 3.5em;
+    top: 1em;
+    left: 20.5em;
+
+    &:hover ${FavIcon} {
+        color: ${props => (props.color)};
+    }
+`;
 
 const RecentIcon = styled(Icon)`
     width: 1.5em;
@@ -138,7 +192,7 @@ const BadgeTriangle = styled(Triangle)`
 
 const CardContainer = styled.div`
     position: relative;
-    background: linear-gradient(180deg, #ab747f,#ab747f 30%,var(--white) 30%,var(--white) 60%,#ab747f 60%);
+    background: linear-gradient(180deg, ${props => (props.color) || '#fff'},${props => (props.color) || '#fff'} 30%,var(--white) 30%,var(--white) 60%,${props => (props.color) || '#fff'} 60%);
     border-radius: 8px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     height: 20em;

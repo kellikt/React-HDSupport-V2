@@ -51,7 +51,7 @@ class BadgeFeed extends Component {
           </div>
           {recentActivity.map((item, index) => {
               return (
-                <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} />
+                <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} activity={true} profile={false} />
               )
           })}
         </ActivityLog>
