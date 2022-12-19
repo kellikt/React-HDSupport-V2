@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Container from '../../Admin/Container';
 import Breadcrumb from '../../Admin/Breadcrumb';
 import Background from '../../Background';
-import BadgesFormFeature from './BadgesFormFeature';
+import BadgesHomeForm from './BadgesHomeForm';
 import { ActivityHeader } from './BadgesHomeComponents';
 import { ReactComponent as HeaderIcon } from '../../../images/Admin/Badges/Icons/header.svg';
 import BadgeFeed from './BadgeFeed';
@@ -19,7 +19,7 @@ const BadgesHome = () => {
             <h1>Badges</h1>
             <Breadcrumb links={links} color="gold" />
             <Background color="gold" />
-            <BadgesFormFeature />
+            <BadgesHomeForm />
             <ActivityHeader><StyledHeaderIcon /><h2>Badge Activity</h2></ActivityHeader>
             <BadgeFeed />
         </Container>

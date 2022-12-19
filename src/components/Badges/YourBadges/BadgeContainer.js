@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import { LayoutContext } from '../../../LayoutContext';
 
@@ -32,21 +33,38 @@ class BadgeContainer extends Component {
 
     async componentDidMount() {
         try {
-            let value = this.context;
-            const { username } = value;
 
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-current-badges.php`, {
-                badge: '',
-                user: username
-            });
+            const { profile } = this.props;
 
-            const data = request.data;
-            if(!(data === 0 || data === '')) {
-                this.setState({
-                    badges: data,
+            if (profile) {
+                let value = this.context;
+                const { username } = value;
+                console.log(username);
+                const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-current-badges.php`, {
+                    badge: '',
+                    user: username
                 });
+    
+                const data = request.data;
+                if(!(data.length === 0 || data === '')) {
+                    this.setState({
+                        badges: data,
+                    });
+                }
+            } else {
+                const { username } = this.props;
+                const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-current-badges.php`, {
+                    badge: '',
+                    user: username
+                });
+    
+                const data = request.data;
+                if(!(data.length === 0 || data === '')) {
+                    this.setState({
+                        badges: data,
+                    });
+                }
             }
-            console.log(data);
 
         } catch (error) {
             console.log(error);
@@ -55,20 +73,25 @@ class BadgeContainer extends Component {
 
     render() {
       const { badges } = this.state;
+      const { profile } = this.props;
 
-      return (
-        <BadgeDiv>
-            {badges.map((item) => {
-                return (
-                    <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} fav={item.fav} activity={false} profile={true} handleFavorite={this.handleFavorite} />
-                );
-            })}
-        </BadgeDiv>
-      );
+        return (
+            <BadgeDiv>
+                {badges.map((item) => {
+                    return (
+                        <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} fav={item.fav} activity={false} profile={profile} handleFavorite={this.handleFavorite} />
+                    );
+                })}
+            </BadgeDiv>
+        );
     }
 }
 
 BadgeContainer.contextType = LayoutContext;
+BadgeContainer.propTypes = {
+    profile: PropTypes.bool,
+    username: PropTypes.string,
+}
 
 export default BadgeContainer;
 
