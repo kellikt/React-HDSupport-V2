@@ -53,7 +53,7 @@ class StudentProfile extends Component {
         return (
           <Container>
               <h1>{user.first_name} {user.last_name}</h1>
-              <Breadcrumb links={links} color="grey" />
+              <Breadcrumb links={links} color="dark-grey" />
               <Background color="grey" />
               <BadgesFormFeature username={username} firstName={user.first_name} />
               <BadgeContainer profile={false} username={username}/>

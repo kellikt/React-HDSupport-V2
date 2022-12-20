@@ -99,4 +99,18 @@ const BadgeDiv = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 2em;
     display: grid;
+
+    @media (max-width: 1199px) {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 5em;
+    }
+
+    @media (max-width: 1199px) {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 5em;
+    }
+
+    @media (max-width: 920px) {
+        grid-template-columns: 1fr;
+    }
 `;

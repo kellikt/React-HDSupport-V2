@@ -65,9 +65,15 @@ const FeatureCase = styled.div`
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+    }
+
 `;
 
 const FeatureLabel = styled.div`
+    width: 25em;
     position: relative;
     top: -4em;
     left: -1em;
@@ -112,11 +118,7 @@ const BadgeForm = styled.div`
         }
     }
 
-    @media (max-width: 900px) {
-        grid-template-columns: 1fr 0.7fr;
-    }
-
-    @media (max-width: 600px) {
-        grid-template-columns: 1fr;
+    @media (max-width: 1020px) {
+        grid-template-rows: repeat(4, 5em);
     }
 `;

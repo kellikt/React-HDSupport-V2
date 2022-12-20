@@ -17,7 +17,7 @@ const YourBadges = () => {
     return (
         <Container>
             <h1>Your Badges</h1>
-            <Breadcrumb links={links} color="grey" />
+            <Breadcrumb links={links} color="dark-grey" />
             <Background color="grey" />
             <BadgeContainer profile={true}/>
         </Container>    
