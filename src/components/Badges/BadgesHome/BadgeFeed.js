@@ -42,18 +42,20 @@ class BadgeFeed extends Component {
     return (
       <React.Fragment>
         <ActivityLog>
-          <div>
+          <div id="activity">
           {badgeActivity.map((item, index) => {
               return (
                   <BadgeFeedLog title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} />
               );
           })}
           </div>
-          {recentActivity.map((item, index) => {
-              return (
-                <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} activity={true} profile={false} />
-              )
-          })}
+          <div id="recent">
+              {recentActivity.map((item, index) => {
+                  return (
+                    <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} activity={true} profile={false} />
+                  )
+              })}
+          </div>
         </ActivityLog>
       </React.Fragment>
     );
@@ -67,4 +69,15 @@ const ActivityLog = styled.div`
     display: grid;
     grid-template-columns: 2fr 1fr;
     column-gap: 5em;
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        column-gap: 1em;
+    }
+    @media (max-width: 1200px) {
+        #recent {
+          display: none;
+        }
+        #activity {
+          grid-column: 1/3;
+        }
+  }
 `;

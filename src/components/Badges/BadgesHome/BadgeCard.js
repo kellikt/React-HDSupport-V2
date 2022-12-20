@@ -119,6 +119,10 @@ const RecentLabel = styled.div`
       top: 1em;
       margin: 1em 0em 0em 0.5em;
     }
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        bottom: 16.6em;
+    }
 `;
 
 const BadgeTimestamp = styled.p`
@@ -128,6 +132,12 @@ const BadgeTimestamp = styled.p`
     color: var(--white);
     font-style: italic;
     font-size: 0.9em;
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        top: 20.5em;
+        font-size: 0.8em;
+        left: 3.3em;
+    }
 `;
 
 const BadgeDescription = styled.p`
@@ -135,6 +145,12 @@ const BadgeDescription = styled.p`
     top: 16em;
     left: 2em;
     color: var(--white);
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        top: 15em;
+        font-size: 0.9em;
+        left: 3em;
+    }
 `;
 
 const BadgeTitle = styled.p`
@@ -145,6 +161,11 @@ const BadgeTitle = styled.p`
     text-transform: uppercase;
     color: var(--white);
     
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        top: 11.2em;
+        left: 12.8em;
+        font-size: 0.75em;
+    }
 `;
 
 const BadgeRibbon = styled(Ribbon)`
@@ -152,6 +173,12 @@ const BadgeRibbon = styled(Ribbon)`
     width: 10em;
     top: 7em;
     left: 6.8em;
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        width: 9em;
+        top: 6.5em;
+        left: 7.6em;
+    }
 `;
 
 const BadgeDiamond = styled(Diamond)`
@@ -159,6 +186,12 @@ const BadgeDiamond = styled(Diamond)`
     top: 10.7em;
     left: 11em;
     width: 1.8em;
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        width: 1.5em;
+        top: 9.7em;
+        left: 11.1em;
+    }
 `;
 
 const BadgeImage = styled.img`
@@ -167,6 +200,13 @@ const BadgeImage = styled.img`
     height: 6.5em;
     top: 2.1em;
     left: 8.55em;
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        width: 6em;
+        height: 6em;
+        top: 2.1em;
+        left: 9em;
+    }
 `;
 
 const BadgeOutline = styled(Outline)`
@@ -174,6 +214,12 @@ const BadgeOutline = styled(Outline)`
     width: 7.8em;
     bottom: 2.3em;
     left: 7.85em;
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        width: 7em;
+        bottom: 0.5em;
+        left: 8.5em;
+    }
 `;
 
 const BadgeCircle = styled(Circle)`
@@ -181,13 +227,23 @@ const BadgeCircle = styled(Circle)`
     width: 9.5em;
     left: 7em;
     bottom: 6.5em;
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        width: 8em;
+        top: -3em;
+        left: 8em;
+    }
 `;
 
 const BadgeTriangle = styled(Triangle)`
     position: absolute;
     width: 8em;
     top: 9.7em;
-    left: 7.8em;    
+    left: 7.8em;
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        width: 4em;
+        top: 9em;
+        left: 9.8em;
+    }    
 `;
 
 const CardContainer = styled.div`
@@ -197,4 +253,8 @@ const CardContainer = styled.div`
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     height: 20em;
     margin-top: 8em;
+
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        height: 18em;
+    }
 `;

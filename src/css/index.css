@@ -53,6 +53,9 @@
     --crumb-pink-text: #b76ac4;
     --crumb-pink-bg: #f0dcf4;
     --crumb-pink-border:#f4bcff52;
+    --crumb-dark-grey-text: #FFF;
+    --crumb-dark-grey-bg: #5e5e5e;
+    --crumb-dark-grey-border: #b8b8b8;
 }
 
 html {

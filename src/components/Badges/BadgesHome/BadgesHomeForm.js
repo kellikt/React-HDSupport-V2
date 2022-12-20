@@ -160,11 +160,19 @@ const StudentProfile = styled.div`
     p {
         margin: 0;
         color: var(--dark-grey);
+
+        @media (max-width: 1250px) {
+          font-size: 15px;
+        }
     }
 
     button {
         width: 66%
     }
+
+    @media (max-width: 1064px) {
+      grid-column: 1;
+  }
 
 `;
 
@@ -184,18 +192,19 @@ const HomeForm = styled.div`
         height: auto;
         margin-left: 25%;
 
-        @media (max-width: 900px) {
+        @media (max-width: 1064px) {
             display: none;
         }
     }
 
-    @media (max-width: 900px) {
-        grid-template-columns: 1fr 0.7fr;
+    > div {
+        margin-top: 2em;
     }
 
-    @media (max-width: 600px) {
-        grid-template-columns: 1fr;
+    @media (max-width: 1064px) {
+        grid-template-columns: 1fr
     }
+
 `;
 
 const Title = styled.div`
@@ -228,7 +237,15 @@ const StudentGroup = styled.div`
     p {
         color: var(--dark-grey);
         grid-column: 1/3;
+
+        @media (max-width: 1250px) {
+          font-size: 15px;
+        }
     }
+
+    @media (max-width: 1064px) {
+        grid-column: 1;
+  }
 `;
 
 const BadgeLabel = styled.div`
@@ -271,5 +288,9 @@ const BadgeButton = styled.button`
 
     &:active {
         transform: translateY(1px);
+    }
+
+    @media (max-width: 1250px) {
+        font-size: 13px;
     }
 `;

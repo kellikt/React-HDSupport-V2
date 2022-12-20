@@ -17,7 +17,7 @@ const BadgesHome = () => {
     return (
         <Container>
             <h1>Badges</h1>
-            <Breadcrumb links={links} color="gold" />
+            <Breadcrumb links={links} color="dark-grey" />
             <Background color="gold" />
             <BadgesHomeForm />
             <ActivityHeader><StyledHeaderIcon /><h2>Badge Activity</h2></ActivityHeader>
@@ -30,4 +30,6 @@ export default BadgesHome;
 
 const StyledHeaderIcon = styled(HeaderIcon)`
     display: inline;
+    width: 5em;
+    height: 5em;
 `;

@@ -12,7 +12,6 @@ export const ActivityHeader = styled.div`
       color: white;
       font-size: 26px;
       font-weight: 400;
-      margin-top: 1.2em;
       margin-left: 1em;
     }
 `;
