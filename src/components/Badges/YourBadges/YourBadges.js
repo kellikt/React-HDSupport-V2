@@ -19,7 +19,7 @@ const YourBadges = () => {
             <h1>Your Badges</h1>
             <Breadcrumb links={links} color="dark-grey" />
             <Background color="grey" />
-            <BadgeContainer profile={true}/>
+            <BadgeContainer profile={false} list={true}/>
         </Container>    
     );
 };

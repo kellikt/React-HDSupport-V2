@@ -11,11 +11,12 @@ import { ReactComponent as Diamond } from '../../../images/Admin/Badges/BadgeDia
 import { ReactComponent as Ribbon } from '../../../images/Admin/Badges/BadgeRibbon.svg';
 import { ReactComponent as Icon } from '../../../images/Admin/Badges/Icons/recent.svg';
 import { ReactComponent as Fav } from '../../../images/Admin/Badges/Icons/favorite.svg';
+import { ReactComponent as Lock } from '../../../images/Admin/Badges/Icons/lock.svg';
 
 
 const dayjs = require('dayjs');
 
-const BadgeCard = ({ bid, title, color, secondaryColor, image, description, timestamp, activity, profile, fav, handleFavorite }, props) => {
+const BadgeCard = ({ bid, title, color, secondaryColor, image, description, timestamp, activity, profile, locked, fav, handleFavorite }, props) => {
     const imageID = image.match(/[-\w]{25,}/);
     const current = dayjs().unix();
     const currentMonth = dayjs().date(1).unix();
@@ -32,6 +33,10 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
             {(timestamp >= currentMonth.valueOf() && timestamp <= current.valueOf()) || (activity) ?
                 <RecentLabel color={secondaryColor}><RecentIcon /><p>  Recently Unlocked</p></RecentLabel>
                 : ''
+            }
+            {(locked) ?
+                <RecentLabel><LockIcon /><p>Locked</p></RecentLabel>
+                :''
             }
             {
                 (() => {
@@ -52,7 +57,10 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
             <BadgeDiamond color={secondaryColor}/>
             <BadgeTitle>{title}</BadgeTitle>
             <BadgeDescription>{description}</BadgeDescription>
-            <BadgeTimestamp>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>
+            {!locked ?
+                <BadgeTimestamp>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>   
+                : ''
+            }
         </CardContainer>
     );
 
@@ -69,10 +77,16 @@ BadgeCard.propTypes = {
     fav: PropTypes.number,
     activity: PropTypes.bool,
     profile: PropTypes.bool,
+    locked: PropTypes.bool,
     handleFavorite: PropTypes.func,
 }
 
 export default BadgeCard;
+
+const LockIcon = styled(Lock)`
+    width: 1.7em;
+    margin-bottom: 0.5em;
+`;
 
 const NoIcon = styled(None)`
     position: absolute;
