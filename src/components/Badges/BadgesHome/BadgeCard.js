@@ -12,11 +12,14 @@ import { ReactComponent as Ribbon } from '../../../images/Admin/Badges/BadgeRibb
 import { ReactComponent as Icon } from '../../../images/Admin/Badges/Icons/recent.svg';
 import { ReactComponent as Fav } from '../../../images/Admin/Badges/Icons/favorite.svg';
 import { ReactComponent as Lock } from '../../../images/Admin/Badges/Icons/lock.svg';
+import { ReactComponent as Locked } from '../../../images/Admin/Badges/LockedIcon.svg';
+
+import ReactTooltip from 'react-tooltip';
 
 
 const dayjs = require('dayjs');
 
-const BadgeCard = ({ bid, title, color, secondaryColor, image, description, timestamp, activity, profile, locked, fav, handleFavorite }, props) => {
+const BadgeCard = ({ bid, title, color, secondaryColor, image, description, timestamp, activity, profile, locked, fav, handleFavorite, staffUsername, notes }, props) => {
     const imageID = image.match(/[-\w]{25,}/);
     const current = dayjs().unix();
     const currentMonth = dayjs().date(1).unix();
@@ -27,6 +30,9 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
         const changedFavorite = fav == 0 ? 1 : 0;
         setFavorite(changedFavorite);
     }
+
+    const timestampNotesDesc = `${notes} - ${staffUsername}`;
+    const timestampDesc = `Awarded by ${staffUsername}`;
 
     return(
         <CardContainer color={secondaryColor}>
@@ -41,7 +47,7 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
             {
                 (() => {
                     if (profile) {
-                        if (favorite == 0) {
+                        if ((favorite && favorite == 0) || (!favorite && fav==0)) {
                             return <Favorite color={"white"}><FavIcon color={"transparent"} onClick={() => handleFavorite(bid, favorite, updateFavorite)}/></Favorite>
                         } else {
                             return <Favorite color={"transparent"}><FavIcon color={"white"} onClick={() => handleFavorite(bid, favorite, updateFavorite)}/></Favorite>
@@ -52,13 +58,40 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
             <BadgeCircle />
             <BadgeTriangle />
             <BadgeOutline color={color}/>
-            {imageID != null ? <BadgeImage width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <NoIcon /> }
+            {locked ?
+                <LockedBadge />
+            :
+                <div>
+                    {imageID != null ? <BadgeImage width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <NoIcon /> }
+                </div>
+            }
             <BadgeRibbon color={secondaryColor}/>
             <BadgeDiamond color={secondaryColor}/>
-            <BadgeTitle>{title}</BadgeTitle>
-            <BadgeDescription>{description}</BadgeDescription>
+            {title.length > 11 ? 
+                <div>
+                    <ReactTooltip />
+                    <BadgeTitle data-tip={title}>{title.substring(0, 11)}...</BadgeTitle>
+                </div>
+            : 
+                <BadgeTitle>{title}</BadgeTitle>
+            }
+            {description.length > 50 ?
+                <div>
+                    <ReactTooltip />
+                    <BadgeDescription data-tip={description}>{description.substring(0, 50)}...</BadgeDescription>
+                </div>
+            :
+                <BadgeDescription>{description}</BadgeDescription>
+            }
             {!locked ?
-                <BadgeTimestamp>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>   
+                <div>
+                    <ReactTooltip />
+                    {notes && notes.length > 0 ?
+                        <BadgeTimestamp data-tip={timestampNotesDesc}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>
+                    :
+                        <BadgeTimestamp data-tip={timestampDesc}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>
+                    }  
+                </div> 
                 : ''
             }
         </CardContainer>
@@ -79,9 +112,26 @@ BadgeCard.propTypes = {
     profile: PropTypes.bool,
     locked: PropTypes.bool,
     handleFavorite: PropTypes.func,
+    staffUsername: PropTypes.string,
+    notes: PropTypes.string
 }
 
 export default BadgeCard;
+
+const LockedBadge = styled(Locked)`
+    position: absolute;
+    width: 6.3em;
+    height: 6.3em;
+    top: 2.2em;
+    left: 8.6em;
+
+    @media (max-width: 1250px) {
+        width: 5.8em;
+        height: 5.8em;
+        top: 2.25em;
+        left: 9.1em;
+    }
+`;
 
 const LockIcon = styled(Lock)`
     width: 1.7em;
@@ -162,7 +212,7 @@ const BadgeTimestamp = styled.p`
 
 const BadgeDescription = styled.p`
     position: absolute;
-    top: 16em;
+    top: 15.3em;
     left: 2em;
     color: var(--white);
 
@@ -279,6 +329,9 @@ const CardContainer = styled.div`
     }
     @media (max-width: 1199px) {
         width: 25em;
+        display: flex;
+        position: relative;
+        margin: 8em auto 0em auto;
     }
 
     @media (max-width: 920px) {

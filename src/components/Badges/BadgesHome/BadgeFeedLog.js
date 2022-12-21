@@ -7,10 +7,14 @@ import { ReactComponent as BadgeOutline } from '../../../images/Admin/Badges/Fee
 import { ReactComponent as NoIcon } from '../../../images/Admin/Badges/NoBadge.svg';
 import { ReactComponent as BadgeOuterOutline } from '../../../images/Admin/Badges/BadgeOutline.svg';
 
+import ReactTooltip from 'react-tooltip';
+
 const dayjs = require('dayjs');
 
-const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timestamp, user }, props) => {
+const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timestamp, user, notes, staffUsername }, props) => {
   const imageID = image.match(/[-\w]{25,}/);
+  const timestampNotesDesc = `${notes} - ${staffUsername}`;
+  const timestampDesc = `Awarded by ${staffUsername}`;
 
   return(
       <FeedContainer color={secondaryColor}>
@@ -19,14 +23,38 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
           {imageID != null ? <BadgeIcon width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <CardNoIcon /> }
             <ProfileOutline />
             <OuterOutline color={color} />
+            {title.length > 11 ? 
+                <div>
+                        <ReactTooltip />
+                        <BadgeTitleDiv data-tip={title}><BadgeTitle>{title.substring(0,11)}...</BadgeTitle></BadgeTitleDiv>
+                </div>
+            :
             <BadgeTitleDiv><BadgeTitle>{title}</BadgeTitle></BadgeTitleDiv>
+            }
             <FeedRibbon color={secondaryColor} />
             <FeedCardContainer>
                 <FeedCard>
                         <TitleHR />
                         <CardTitle>{title}</CardTitle>
-                        <CardDesc color={secondaryColor}>{description}</CardDesc>
-                        <CardTimestamp color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
+                        {description.length > 50 ? 
+                            <div>
+                                <ReactTooltip />
+                                <CardDesc data-tip={description} color={secondaryColor}>{description.substring(0, 50)}...</CardDesc>
+                            </div>
+                        :
+                            <CardDesc color={secondaryColor}>{description}</CardDesc>
+                        }
+                        {notes.length > 0 ? 
+                            <div>
+                                <ReactTooltip />
+                                <CardTimestamp data-tip={timestampNotesDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
+                            </div>
+                        :
+                            <div>
+                                <ReactTooltip />
+                                <CardTimestamp data-tip={timestampDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
+                            </div>
+                        }
                 </FeedCard>
             </FeedCardContainer>
       </FeedContainer>
@@ -40,6 +68,8 @@ BadgeFeedLog.propTypes = {
     image: PropTypes.string,
     description: PropTypes.string,
     timestamp: PropTypes.number,
+    notes: PropTypes.string,
+    staffUsername: PropTypes.string,
     user: PropTypes.string
 }
 

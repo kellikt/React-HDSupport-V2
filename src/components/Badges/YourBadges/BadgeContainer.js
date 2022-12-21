@@ -7,12 +7,14 @@ import { LayoutContext } from '../../../LayoutContext';
 import Button from '../../Button';
 
 import BadgeCard from '../BadgesHome/BadgeCard';
+import { Inputs } from '../AddBadge/AddBadgeComponents';
 
 class BadgeContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             badges: [],
+            selectedView: 'all',
             userBadges: [],
             allBadges: true,
         }
@@ -32,6 +34,16 @@ class BadgeContainer extends Component {
         } catch (error) {
             console.log(error.message);
         }
+    }
+
+    handleChange = event => {
+        const value = event.target.value;
+        const name = event.target.name;
+
+        this.setState({
+            [name]: value,
+            searched: false,
+        });
     }
 
     handleClick = event => {
@@ -98,21 +110,29 @@ class BadgeContainer extends Component {
     }
 
     render() {
-      const { badges, userBadges, allBadges } = this.state;
+      const { badges, userBadges, allBadges, selectedView } = this.state;
       const { profile, list } = this.props;
 
         if (list) {
             return (
                 <div>
-                    {allBadges ? 
+                    <Inputs>
+                        <label htmlFor="badges">Badge View</label>
+                        <select name="selectedView" id="badges" onChange={this.handleChange} value={selectedView}>
+                            <option value="all">All Badges</option>
+                            <option value="unlocked">Unlocked Badges</option>
+                            <option value="locked">Locked Badges</option>
+                            <option value="favorite">Favorite Badges</option>
+                        </select>
+                    </Inputs>
+                    {selectedView == "all" ? 
                     <div>
-                        <BadgeButton color="dark-grey" onClick={this.handleClick}>View only unlocked badges</BadgeButton>
                         <BadgeDiv>
                             {badges.map((item) => {
                                 if (userBadges.some((badge) => badge.bid == item.bid)) {
                                     const badge = userBadges.find((badge) => badge.bid == item.bid);
                                     return (
-                                        <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={badge.tstamp} user={item.first_name} fav={item.fav} activity={false} profile={true} locked={false} handleFavorite={this.handleFavorite} />
+                                        <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={badge.tstamp} notes={badge.notes} staffUsername={badge.staff_username} user={item.first_name} fav={badge.fav} activity={false} profile={true} locked={false} handleFavorite={this.handleFavorite} />
                                     );
                                 } else {
                                     return (
@@ -122,16 +142,39 @@ class BadgeContainer extends Component {
                             })}
                         </BadgeDiv>
                     </div>
-                    :
+                    : '' }
+                    {selectedView == "locked" ? 
                     <div>
-                        <BadgeButton color="dark-grey" onClick={this.handleClick}>View all badges</BadgeButton>
                         <BadgeDiv>
-                            {userBadges.map((item) => {
-                                return <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} fav={item.fav} activity={false} profile={profile} locked={false} handleFavorite={this.handleFavorite} />
+                            {badges.map((item) => {
+                                if (!userBadges.some((badge) => badge.bid == item.bid)) {
+                                    return (
+                                        <BadgeCard bid={item.bid} title={item.title} color="#000000" secondaryColor="#000000" image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} fav={item.fav} activity={false} profile={false} locked={true} handleFavorite={this.handleFavorite} />
+                                    );
+                                }
                             })}
                         </BadgeDiv>
                     </div>
-                    }
+                    : '' }
+                    {selectedView == "unlocked" ?
+                         <div>
+                         <BadgeDiv>
+                             {userBadges.map((item) => {
+                                 return <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} notes={item.notes} staffUsername={item.staff_username} user={item.first_name} fav={item.fav} activity={false} profile={true} locked={false} handleFavorite={this.handleFavorite} />
+                             })}
+                         </BadgeDiv>
+                         </div>
+                    : ''}
+                    {selectedView == "favorite" ?
+                         <div>
+                         <BadgeDiv>
+                             {userBadges.filter((item) => item.fav == 1).map((item) => {
+                                 return <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} notes={item.notes} staffUsername={item.staff_username} user={item.first_name} fav={item.fav} activity={false} profile={true} locked={false} handleFavorite={this.handleFavorite} />
+                             })}
+                         </BadgeDiv>
+                         </div>
+                    : ''}
+
                 </div>
             );
         } else {
@@ -139,7 +182,7 @@ class BadgeContainer extends Component {
                 <BadgeDiv>
                     {badges.map((item) => {
                         return (
-                            <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} fav={item.fav} activity={false} profile={profile} locked={false} handleFavorite={this.handleFavorite} />
+                            <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} notes={item.notes} staffUsername={item.staff_username} user={item.first_name} fav={item.fav} activity={false} profile={profile} locked={false} handleFavorite={this.handleFavorite} />
                         );
                     })}
                 </BadgeDiv>

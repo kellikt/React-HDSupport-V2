@@ -13,6 +13,8 @@ class ExpandedRow extends Component {
     constructor(props) {
         super(props);
         const { title, link, description, hex, secondaryHex } = this.props;
+        console.log(hex);
+        console.log(secondaryHex);
         this.state = {
             title: title,
             link: link,
@@ -96,7 +98,7 @@ class ExpandedRow extends Component {
                 width: '36px',
                 height: '14px',
                 borderRadius: '2px',
-                background: `rgba(${ this.state.background.r }, ${ this.state.background.g }, ${ this.state.background.b }, ${ this.state.background.a })`,
+                background: this.state.background.r ?  `rgba(${ this.state.background.r }, ${ this.state.background.g }, ${ this.state.background.b }, ${ this.state.background.a })` : `${this.state.background}`
               },
               swatch: {
                 padding: '5px',
@@ -126,7 +128,7 @@ class ExpandedRow extends Component {
                     width: '36px',
                     height: '14px',
                     borderRadius: '2px',
-                    background: `rgba(${ this.state.secondaryBackground.r }, ${ this.state.secondaryBackground.g }, ${ this.state.secondaryBackground.b }, ${ this.state.secondaryBackground.a })`,
+                    background: this.state.secondaryBackground.r ? `rgba(${ this.state.secondaryBackground.r }, ${ this.state.secondaryBackground.g }, ${ this.state.secondaryBackground.b }, ${ this.state.secondaryBackground.a })` : this.state.secondaryBackground,
                 },
             },
           });

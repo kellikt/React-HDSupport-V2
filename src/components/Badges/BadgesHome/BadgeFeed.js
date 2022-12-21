@@ -25,6 +25,7 @@ class BadgeFeed extends Component {
               log: "no",
           });
           const data = await Promise.all([feed, activity]);
+          console.log(data);
           this.setState({
               badgeActivity: data[0].data,
               recentActivity: data[1].data,
@@ -45,14 +46,14 @@ class BadgeFeed extends Component {
           <div id="activity">
           {badgeActivity.map((item, index) => {
               return (
-                  <BadgeFeedLog title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} />
+                  <BadgeFeedLog title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} staffUsername={item.staff_username} notes={item.notes} />
               );
           })}
           </div>
           <div id="recent">
               {recentActivity.map((item, index) => {
                   return (
-                    <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} activity={true} profile={false} locked={false} />
+                    <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} notes={item.notes} staffUsername={item.staff_username} activity={true} profile={false} locked={false} />
                   )
               })}
           </div>

@@ -11,7 +11,7 @@ const YourBadges = () => {
 
     const links = [
         { title: 'Badges', to: '/badges/'},
-        { title: 'Your Badges', to: '/your-badges/'}
+        { title: 'Your Badges', to: '/badges/your-badges/'}
     ];
 
     return (
