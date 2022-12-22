@@ -42,7 +42,7 @@ class StudentProfile extends Component {
     }
 
     render() {
-        const { user } = this.state;
+        const { user, badges } = this.state;
         const { username } = this.props;
         console.log(user.username);
         const links = [
@@ -52,11 +52,13 @@ class StudentProfile extends Component {
 
         return (
           <Container>
-              <h1>{user.first_name} {user.last_name}</h1>
-              <Breadcrumb links={links} color="dark-grey" />
-              <Background color="grey" />
-              <BadgesFormFeature username={username} firstName={user.first_name} />
-              <BadgeContainer profile={false} list={false} username={username}/>
+                <h1>{user.first_name} {user.last_name}</h1>
+                <Breadcrumb links={links} color="dark-grey" />
+                <Background color="grey" />
+                {badges.filter((badge) => badge.fav == 1).length > 0 ?
+                    <BadgesFormFeature username={username} firstName={user.first_name} />
+                : ''}
+                <BadgeContainer profile={false} list={false} username={username}/>
           </Container>    
         );
     }

@@ -102,7 +102,7 @@ class Header extends Component {
                                                             direction={direction}
                                                             animatingOut={this.state.animatingOut}
                                                             duration={duration}
-                                                            roles={roles}
+                                                            roles={roles} 
                                                         >
                                                             <CurrentDropdown />
                                                             {PrevDropdown && <PrevDropdown />}

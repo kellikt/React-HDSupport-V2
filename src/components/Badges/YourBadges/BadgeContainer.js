@@ -9,6 +9,9 @@ import Button from '../../Button';
 import BadgeCard from '../BadgesHome/BadgeCard';
 import { Inputs } from '../AddBadge/AddBadgeComponents';
 
+import { ReactComponent as Desktop } from '../../../images/Admin/Badges/BadgesDesktopForm.svg';
+import { ReactComponent as Lightbulb } from '../../../images/Admin/Badges/BadgesLightbulbForm.svg';
+
 class BadgeContainer extends Component {
     constructor(props) {
         super(props);
@@ -116,15 +119,23 @@ class BadgeContainer extends Component {
         if (list) {
             return (
                 <div>
-                    <Inputs>
-                        <label htmlFor="badges">Badge View</label>
-                        <select name="selectedView" id="badges" onChange={this.handleChange} value={selectedView}>
-                            <option value="all">All Badges</option>
-                            <option value="unlocked">Unlocked Badges</option>
-                            <option value="locked">Locked Badges</option>
-                            <option value="favorite">Favorite Badges</option>
-                        </select>
-                    </Inputs>
+                    <ViewForm>
+                        <Title>
+                            <h2>Your Badges</h2>
+                            <p>View and manage your badge collection.</p>
+                        </Title>
+                        <Desktop />
+                        <Lightbulb />
+                        <StyledInputs>
+                            <label htmlFor="badges">Badge View</label>
+                            <select name="selectedView" id="badges" onChange={this.handleChange} value={selectedView}>
+                                <option value="all">All Badges</option>
+                                <option value="unlocked">Unlocked Badges</option>
+                                <option value="locked">Locked Badges</option>
+                                <option value="favorite">Favorite Badges</option>
+                            </select>
+                        </StyledInputs>
+                    </ViewForm>
                     {selectedView == "all" ? 
                     <div>
                         <BadgeDiv>
@@ -200,8 +211,55 @@ BadgeContainer.propTypes = {
 
 export default BadgeContainer;
 
-const BadgeButton = styled(Button)`
-    margin-top: 1em;
+const Title = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column: 1/4;
+
+    h2 {
+      font-size: 28px;
+      margin: 0 0 4px;
+      color: #000;
+      grid-column: 1;
+    }
+
+    p {
+        margin: 0;
+        color: var(--dark-grey);
+        grid-column: 1;
+    }
+
+`;
+
+const ViewForm = styled.div`
+    background: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 18px;
+    align-items: center;
+
+    > svg {
+        width: 14em;
+        height: auto;
+        margin-left: 25%;
+
+        @media (max-width: 1064px) {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1064px) {
+        grid-template-columns: 1fr
+    }
+
+`;
+
+const StyledInputs = styled(Inputs)`
+    margin-top: 2em;
 `;
 
 const BadgeDiv = styled.div`

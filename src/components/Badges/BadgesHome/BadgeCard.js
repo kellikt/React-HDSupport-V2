@@ -196,45 +196,60 @@ const RecentLabel = styled.div`
 `;
 
 const BadgeTimestamp = styled.p`
-    position: absolute;
-    top: 20em;
-    left: 2.2em;
+    position: relative;
+    top: 15em;
+    text-align: center;
     color: var(--white);
     font-style: italic;
     font-size: 0.9em;
 
-    @media (max-width: 1250px) {
-        top: 20.5em;
+    @media (max-width: 1250px) and (min-width: 1200px){
+        top: 14.5em;
         font-size: 0.8em;
-        left: 3.3em;
+    }
+
+    @media (max-width: 1200px) {
+        top: 18em;
+        left: 6em;
+        position: absolute;
     }
 `;
 
 const BadgeDescription = styled.p`
-    position: absolute;
-    top: 15.3em;
-    left: 2em;
+    position: relative;
+    top: 13.3em;
+    left: 0em;
+    text-align: center;
     color: var(--white);
 
-    @media (max-width: 1250px) {
-        top: 15em;
-        font-size: 0.9em;
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        top: 11.8em;
+    }
+
+    @media (max-width: 1200px) {
+        position: absolute;
+        width: 75%;
+        top: 13.8em;
         left: 3em;
     }
 `;
 
 const BadgeTitle = styled.p`
-    position: absolute;
+    position: relative;
     top: 11.2em;
-    left: 11.3em;
+    text-align: center;
     font-size: 0.8em;
     text-transform: uppercase;
     color: var(--white);
     
-    @media (max-width: 1250px) {
-        top: 11.2em;
-        left: 12.8em;
-        font-size: 0.75em;
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        top: 10.5em;
+        left: 0.5em;
+    }
+    @media (max-width: 1200px) {
+        top: 10.5em;
+        left: 0em;
+        width: 30em;
     }
 `;
 

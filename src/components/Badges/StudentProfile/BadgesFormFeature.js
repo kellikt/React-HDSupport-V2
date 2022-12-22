@@ -97,7 +97,7 @@ const FeatureCase = styled.div`
 `;
 
 const FeatureLabel = styled.div`
-    width: 25em;
+    width: 26em;
     position: absolute;
     top: -3em;
     left: 1em;
@@ -114,6 +114,11 @@ const FeatureLabel = styled.div`
 
     @media (max-width: 1200px) {
       left: 2em;
+    }
+
+    @media (max-width: 523px) {
+      left: 0em;
+      width: 100%;
     }
 
 

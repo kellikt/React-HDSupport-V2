@@ -52,7 +52,7 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
                         :
                             <div>
                                 <ReactTooltip />
-                                <CardTimestamp data-tip={timestampDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
+                                <CardTimestamp data-tooltip={timestampDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
                             </div>
                         }
                 </FeedCard>
@@ -112,10 +112,14 @@ const CardNoIcon = styled(NoIcon)`
 const CardTimestamp = styled.p`
     color: ${props => (props.color) || '#fff'};
 
-    @media (max-width: 1250px) {
+    @media (max-width: 1250px) and (min-width: 800px) {
         font-size: 1em;
     }
-`;
+
+    @media (max-width: 800px) {
+        font-size: 1.2em;
+    }
+    `;
 
 const CardDesc = styled.p`
     font-weight: 400;
@@ -124,8 +128,12 @@ const CardDesc = styled.p`
     margin-left: 1em;
     margin-right: 1em;
 
-    @media (max-width: 1250px) {
+    @media (max-width: 1250px) and (min-width: 800px) {
         font-size: 1em;
+    }
+
+    @media (max-width: 800px) {
+        font-size: 1.4em
     }
 `;
 
@@ -140,7 +148,8 @@ const TitleHR = styled.hr`
     }
 
     @media (max-width: 800px) {
-        display: none;
+        left: 0em;
+        width: 100%;
     }
 `;
 
@@ -151,8 +160,12 @@ const CardTitle = styled.p`
     z-index: 2;
     margin-top: 0.5em;
 
-    @media (max-width: 1250px) {
+    @media (max-width: 1250px) and (min-width: 800px) {
         font-size: 1.2em;
+    }
+
+    @media (max-width: 800px) {
+        font-size: 1.5em;
     }
 `;
 
@@ -192,18 +205,25 @@ const FeedCard = styled.div`
 `;
 
 const BadgeTitle = styled.p`
-    position: absolute;
-    top: 14.2em;
-    left: 7.5em;
+    position: relative;
+    top: 8.9em;
+    left: -12.4em;
+    text-align: center;
     color: white;
     z-index: 100;
     text-transform: uppercase;
     font-weight: 500;
 
-    @media (max-width: 1250px) and (min-width: 800px) {
-        top: 14.1em;
-        left: 9.2em;
+    @media (max-width: 1250px) and (min-width: 1200px) {
+        top: 9.7em;
+        left: -14.2em;
         font-size: 0.9em;
+    }
+
+    @media (max-width: 1200px) and (min-width: 800px) {
+        position: absolute;
+        top: 12.6em;
+        left: 8em;
     }
 
     @media (max-width: 800px) {

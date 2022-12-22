@@ -166,8 +166,21 @@ const StudentProfile = styled.div`
         }
     }
 
+    select {
+        @media (max-width: 1064px) {
+            width: 50%
+        }
+    }
+
     button {
         width: 66%
+
+        @media (max-width: 1064px) {
+            width: 25%
+        }
+        @media (max-width: 720px) {
+            width: 50%
+        }
     }
 
     @media (max-width: 1064px) {
@@ -261,6 +274,18 @@ const BadgeLabel = styled.div`
 
     button {
         width: 100%;
+
+        @media (max-width: 1064px) {
+            width: 50%
+        }
+
+        @media (max-width: 770px) {
+            width: 75%
+        }
+
+        @media (max-width: 570px) {
+            width: 100%
+        }
     }
 
 `;
@@ -291,6 +316,6 @@ const BadgeButton = styled.button`
     }
 
     @media (max-width: 1250px) {
-        font-size: 13px;
+        font-size: 15px;
     }
 `;

@@ -8,6 +8,7 @@ import { ReactComponent as Account } from '../../../images/icons/Administration/
 import { ReactComponent as Browser } from '../../../images/icons/Administration/Browser.svg';
 import { ReactComponent as Database } from '../../../images/icons/Administration/Database.svg';
 import { ReactComponent as Docs } from '../../../images/icons/Administration/Docs.svg';
+import { ReactComponent as Manage } from '../../..//images/Admin/Badges/Icons/manage.svg';
 
 const AdministrationDropdownEl = styled.div`
     width: 370px;
@@ -36,7 +37,7 @@ const AdministrationDropdown = () => {
                             <Description>Add/Edit users to HDSupport.</Description>
                         </Link>
                     </ListItem>
-                    <ListItem noMarginBottom>
+                    <ListItem>
                         <a
                             href="https://www.hawaii.edu/help/hdsupport/browser/index.php"
                             target="_blank"
@@ -48,6 +49,15 @@ const AdministrationDropdown = () => {
                             </Heading>
                             <Description>Manage the browser matrix.</Description>
                         </a>
+                    </ListItem>
+                    <ListItem noMarginBottom>
+                        <Link to={`${process.env.PUBLIC_URL}/badgemgmt`}>
+                            <Heading color="pink">
+                                <Manage />
+                                Manage Badges
+                            </Heading>
+                            <Description>Manage HD Badges.</Description>
+                        </Link>
                     </ListItem>
                 </ul>
             </DropdownSection>
