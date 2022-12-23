@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
  
 import { ReactComponent as Circle } from '../../../images/Admin/Badges/BadgeWhitespace.svg';
 import { ReactComponent as Triangle } from '../../../images/Admin/Badges/BadgeTriangle.svg';
@@ -24,13 +24,6 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
     const current = dayjs().unix();
     const currentMonth = dayjs().date(1).unix();
 
-    const [favorite, setFavorite] = useState(fav);
-
-    function updateFavorite(fav) {
-        const changedFavorite = fav == 0 ? 1 : 0;
-        setFavorite(changedFavorite);
-    }
-
     const timestampNotesDesc = `${notes} - ${staffUsername}`;
     const timestampDesc = `Awarded by ${staffUsername}`;
 
@@ -47,10 +40,10 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
             {
                 (() => {
                     if (profile) {
-                        if ((favorite && favorite == 0) || (!favorite && fav==0)) {
-                            return <Favorite color={"white"}><FavIcon color={"transparent"} onClick={() => handleFavorite(bid, favorite, updateFavorite)}/></Favorite>
+                        if (fav == 0) {
+                            return <Favorite color={"white"}><FavIcon color={"transparent"} onClick={() => handleFavorite(bid, fav)}/></Favorite>
                         } else {
-                            return <Favorite color={"transparent"}><FavIcon color={"white"} onClick={() => handleFavorite(bid, favorite, updateFavorite)}/></Favorite>
+                            return <Favorite color={"transparent"}><FavIcon color={"white"} onClick={() => handleFavorite(bid, fav)}/></Favorite>
                         }
                     }
                 })()

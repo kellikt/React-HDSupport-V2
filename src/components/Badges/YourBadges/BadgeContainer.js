@@ -23,21 +23,40 @@ class BadgeContainer extends Component {
         }
     }
 
-    handleFavorite = async (bid, fav, setFavorite) => {
+    handleFavorite = async (bid, fav) => {
+        let value = this.context;
+        const { username } = value;
+        const changedFavorite = fav == 0 ? 1 : 0;
         try {
-            let value = this.context;
-            const { username } = value;
-            const changedFavorite = fav == 0 ? 1 : 0;
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-badge-favorite.php`, {
                 username: username,
                 bid: bid,
                 fav: changedFavorite
             });
-            setFavorite(fav);
+            this.getBadges();
         } catch (error) {
             console.log(error.message);
         }
     }
+
+    getBadges = async() => {
+        try {
+            let value = this.context;
+            const { username } = value;
+
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-current-badges.php`, {
+                badge: '',
+                user: username
+            });
+
+            const data = request.data;
+            this.setState({
+                userBadges: data,
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     handleChange = event => {
         const value = event.target.value;
@@ -46,12 +65,6 @@ class BadgeContainer extends Component {
         this.setState({
             [name]: value,
             searched: false,
-        });
-    }
-
-    handleClick = event => {
-        this.setState({
-            allBadges: !this.state.allBadges
         });
     }
 
