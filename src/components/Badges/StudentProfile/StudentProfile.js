@@ -44,7 +44,6 @@ class StudentProfile extends Component {
     render() {
         const { user, badges } = this.state;
         const { username } = this.props;
-        console.log(user.username);
         const links = [
             { title: 'Badges', to: '/badges/'},
             { title: `${user.username}`, to: `/badges/${user.username}/`}
@@ -55,7 +54,7 @@ class StudentProfile extends Component {
                 <h1>{user.first_name} {user.last_name}</h1>
                 <Breadcrumb links={links} color="dark-grey" />
                 <Background color="grey" />
-                {badges.filter((badge) => badge.fav == 1).length > 0 ?
+                {badges.filter((badge) => badge.fav === 1).length > 0 ?
                     <BadgesFormFeature username={username} firstName={user.first_name} />
                 : ''}
                 <BadgeContainer profile={false} list={false} username={username}/>

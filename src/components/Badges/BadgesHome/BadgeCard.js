@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
  
 import { ReactComponent as Circle } from '../../../images/Admin/Badges/BadgeWhitespace.svg';
 import { ReactComponent as Triangle } from '../../../images/Admin/Badges/BadgeTriangle.svg';
@@ -40,10 +39,10 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
             {
                 (() => {
                     if (profile) {
-                        if (fav == 0) {
-                            return <Favorite color={"white"}><FavIcon color={"transparent"} onClick={() => handleFavorite(bid, fav)}/></Favorite>
+                        if (fav === 0) {
+                            return <Favorite color={"white"}><FavIcon color={"transparent"} animate={fav} onClick={() => handleFavorite(bid, fav)}/></Favorite>
                         } else {
-                            return <Favorite color={"transparent"}><FavIcon color={"white"} onClick={() => handleFavorite(bid, fav)}/></Favorite>
+                            return <Favorite color={"transparent"}><FavIcon color={"white"} animate={fav} onClick={() => handleFavorite(bid, fav)}/></Favorite>
                         }
                     }
                 })()
@@ -146,6 +145,19 @@ const NoIcon = styled(None)`
 
 const FavIcon = styled(Fav)`
     color: ${props => (props.color)};
+    
+`;
+
+const likeAnimation = keyframes`
+    0% {
+        transform: scale(.8);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 `;
 
 const Favorite = styled.button`
@@ -157,8 +169,15 @@ const Favorite = styled.button`
     left: 20.5em;
 
     &:hover ${FavIcon} {
-        color: ${props => (props.color)};
+        transition: all 0.4s ease;
+        transform: scale(.8);
     }
+
+    &:active {
+        animation: ${likeAnimation} 1s ease;
+    }
+
+
 `;
 
 const RecentIcon = styled(Icon)`

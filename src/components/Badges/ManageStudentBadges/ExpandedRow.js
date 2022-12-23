@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import TextInput from '../../TextInput';
 import Button from '../../Button';
-import { TextLabel, BadgeDiv } from '../AddBadge/AddBadgeComponents';
 import { TableRow } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableComponents';
 
 const dayjs = require('dayjs');
@@ -107,8 +106,4 @@ const ButtonContainer = styled.div`
             margin-bottom: 12px;
         }
     }
-`;
-
-const Username = styled.span`
-    font-weight: 700;
 `;

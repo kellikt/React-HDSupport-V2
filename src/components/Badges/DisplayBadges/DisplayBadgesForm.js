@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import DateRangerPicker from '@wojtekmaj/react-daterange-picker';
 import { PoseGroup } from 'react-pose';
 
-import { FormEl, Title, DateRange, Options, Main, Radios } from './DisplayBadgesComponents';
+import { FormEl, Title, Options, Main } from './DisplayBadgesComponents';
 import { ReactComponent as Graphic } from '../../../images/Admin/Badges/DisplayBadge.svg';
 import TextInput from '../../TextInput';
 import Button from '../../Button';

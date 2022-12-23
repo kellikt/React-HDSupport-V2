@@ -5,7 +5,6 @@ import { Link } from '@reach/router';
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Home } from '../../..//images/Admin/Badges/Icons/home.svg';
 import { ReactComponent as YourBadges } from '../../..//images/Admin/Badges/Icons/yourbadges.svg';
-import { ReactComponent as Manage } from '../../..//images/Admin/Badges/Icons/manage.svg';
 
 const DownloadsDropdownEl = styled.div`
     width: 390px;

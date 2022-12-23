@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-import { FormEl } from '../DisplayBadges/DisplayBadgesComponents';
 import { ReactComponent as FeatureIcon } from '../../../images/Admin/Badges/Icons/feature.svg';
-import Button from '../../Button';
 import Badge from './Badge';
 
 class BadgesFormFeature extends Component {
@@ -37,10 +35,9 @@ class BadgesFormFeature extends Component {
                 user: username
             });
             const data = request.data;
-            console.log(data);
             if (!(data.length === 0)) {
                 this.setState({
-                    favorites: data.filter((fav) => fav.fav == 1)
+                    favorites: data.filter((fav) => fav.fav === 1)
                 });
             }
         } catch(error) {

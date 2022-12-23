@@ -1,9 +1,9 @@
-import React, { Component, useId } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Table, TableLabel, TableHeading, TableRow, Location } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableComponents';
+import { Table, TableLabel, TableHeading, TableRow } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../images/Admin/Badges/Table.svg';
 import ExpandedRow from './ExpandedRow';
 
@@ -18,8 +18,6 @@ class ManageBadgesTable extends Component {
 
     getTableData = async () => {
         const { user, badge } = this.props;
-
-        console.log(user);
 
         try {
             const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-student-badges.php`, {

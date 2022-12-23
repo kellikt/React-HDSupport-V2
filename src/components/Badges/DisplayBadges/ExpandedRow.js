@@ -13,8 +13,6 @@ class ExpandedRow extends Component {
     constructor(props) {
         super(props);
         const { title, link, description, hex, secondaryHex } = this.props;
-        console.log(hex);
-        console.log(secondaryHex);
         this.state = {
             title: title,
             link: link,
@@ -43,7 +41,6 @@ class ExpandedRow extends Component {
 
     handleDelete = () => {
         const { bid, handleDelete } = this.props;
-        console.log(bid);
         handleDelete(bid);
     };
 
@@ -226,8 +223,4 @@ const ButtonContainer = styled.div`
             margin-bottom: 12px;
         }
     }
-`;
-
-const Username = styled.span`
-    font-weight: 700;
 `;

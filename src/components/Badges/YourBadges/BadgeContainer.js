@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { LayoutContext } from '../../../LayoutContext';
-import Button from '../../Button';
 
 import BadgeCard from '../BadgesHome/BadgeCard';
 import { Inputs } from '../AddBadge/AddBadgeComponents';
@@ -26,7 +25,7 @@ class BadgeContainer extends Component {
     handleFavorite = async (bid, fav) => {
         let value = this.context;
         const { username } = value;
-        const changedFavorite = fav == 0 ? 1 : 0;
+        const changedFavorite = fav === 0 ? 1 : 0;
         try {
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-badge-favorite.php`, {
                 username: username,
@@ -76,7 +75,6 @@ class BadgeContainer extends Component {
             if (profile) {
                 let value = this.context;
                 const { username } = value;
-                console.log(username);
                 const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-current-badges.php`, {
                     badge: '',
                     user: username
@@ -126,7 +124,7 @@ class BadgeContainer extends Component {
     }
 
     render() {
-      const { badges, userBadges, allBadges, selectedView } = this.state;
+      const { badges, userBadges, selectedView } = this.state;
       const { profile, list } = this.props;
 
         if (list) {
@@ -149,12 +147,12 @@ class BadgeContainer extends Component {
                             </select>
                         </StyledInputs>
                     </ViewForm>
-                    {selectedView == "all" ? 
+                    {selectedView === "all" ? 
                     <div>
                         <BadgeDiv>
                             {badges.map((item) => {
-                                if (userBadges.some((badge) => badge.bid == item.bid)) {
-                                    const badge = userBadges.find((badge) => badge.bid == item.bid);
+                                if (userBadges.some((badge) => badge.bid === item.bid)) {
+                                    const badge = userBadges.find((badge) => badge.bid === item.bid);
                                     return (
                                         <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={badge.tstamp} notes={badge.notes} staffUsername={badge.staff_username} user={item.first_name} fav={badge.fav} activity={false} profile={true} locked={false} handleFavorite={this.handleFavorite} />
                                     );
@@ -167,20 +165,22 @@ class BadgeContainer extends Component {
                         </BadgeDiv>
                     </div>
                     : '' }
-                    {selectedView == "locked" ? 
+                    {selectedView === "locked" ? 
                     <div>
                         <BadgeDiv>
                             {badges.map((item) => {
-                                if (!userBadges.some((badge) => badge.bid == item.bid)) {
+                                if (!userBadges.some((badge) => badge.bid === item.bid)) {
                                     return (
                                         <BadgeCard bid={item.bid} title={item.title} color="#000000" secondaryColor="#000000" image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} fav={item.fav} activity={false} profile={false} locked={true} handleFavorite={this.handleFavorite} />
                                     );
+                                } else {
+                                    return '';
                                 }
                             })}
                         </BadgeDiv>
                     </div>
                     : '' }
-                    {selectedView == "unlocked" ?
+                    {selectedView === "unlocked" ?
                          <div>
                          <BadgeDiv>
                              {userBadges.map((item) => {
@@ -189,10 +189,10 @@ class BadgeContainer extends Component {
                          </BadgeDiv>
                          </div>
                     : ''}
-                    {selectedView == "favorite" ?
+                    {selectedView === "favorite" ?
                          <div>
                          <BadgeDiv>
-                             {userBadges.filter((item) => item.fav == 1).map((item) => {
+                             {userBadges.filter((item) => item.fav === 1).map((item) => {
                                  return <BadgeCard bid={item.bid} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} notes={item.notes} staffUsername={item.staff_username} user={item.first_name} fav={item.fav} activity={false} profile={true} locked={false} handleFavorite={this.handleFavorite} />
                              })}
                          </BadgeDiv>

@@ -13,7 +13,6 @@ import Background from '../../Background';
 class BadgeForm extends Component {
     state = {
         selectedUser: '',
-        year: '',
         helpdesk: [],
         lab: [],
         third_shift: [],
@@ -63,10 +62,6 @@ class BadgeForm extends Component {
                 username: selectedUser,
                 bid: selectedBadge,
                 notes: notes
-            }).then(function (response) {
-                console.log(response);
-            }).catch(function (response) {
-                console.log(response);
             });
         } catch (error) {
             console.log(`Error adding badge: ${error}`);
@@ -109,7 +104,7 @@ class BadgeForm extends Component {
     }
 
     render() {
-        const { helpdesk, lab, third_shift, leapstart, selectedUser, year, badges, selectedBadge, notes, message, heading, error, snack } = this.state;
+        const { helpdesk, lab, third_shift, leapstart, selectedUser, badges, selectedBadge, notes, message, heading, error, snack } = this.state;
 
         return (
             <React.Fragment>

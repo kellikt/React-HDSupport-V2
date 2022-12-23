@@ -23,7 +23,7 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
             {title.length > 11 ?
                 <div>
                     <ReactTooltip />
-                    <BadgeTitle>{title.substring(0, 11)}...</BadgeTitle>
+                    <BadgeTitle data-tip={title}>{title.substring(0, 11)}...</BadgeTitle>
                 </div>
             :
                 <BadgeTitle>{title}</BadgeTitle>
@@ -98,6 +98,11 @@ const BadgeContainer = styled.div`
         margin: 3em auto 0em auto;
         display: flex;
         width: 50%;
+    }
+
+    @media (max-width: 500px) {
+        margin: 4em auto 0em auto;
+        width: 75%;
     }
 
 `;

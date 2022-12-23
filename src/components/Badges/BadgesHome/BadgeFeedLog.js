@@ -52,7 +52,7 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
                         :
                             <div>
                                 <ReactTooltip />
-                                <CardTimestamp data-tooltip={timestampDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
+                                <CardTimestamp data-tip={timestampDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
                             </div>
                         }
                 </FeedCard>
@@ -149,6 +149,7 @@ const TitleHR = styled.hr`
 
     @media (max-width: 800px) {
         left: 0em;
+        padding-right: 0em;
         width: 100%;
     }
 `;

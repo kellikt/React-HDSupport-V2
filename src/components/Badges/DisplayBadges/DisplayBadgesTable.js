@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Table, TableLabel, TableHeading, TableRow, Location } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableComponents';
+import { Table, TableLabel, TableHeading, TableRow } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../images/Admin/Badges/Table.svg';
 import { ReactComponent as ColorIcon } from '../../../images/Admin/Badges/ColorIcon.svg';
 import { ReactComponent as NoIcon } from '../../../images/Admin/Badges/NoBadge.svg';
@@ -62,7 +62,6 @@ class DisplayBadgesTable extends Component {
     };
 
     handleDelete = async bid => {
-        console.log(bid);
         try {
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-badge.php`, {
                 bid: bid
@@ -120,7 +119,7 @@ class DisplayBadgesTable extends Component {
                         const id = result.link.match(/[-\w]{25,}/);
                         return (
                             <Row key={result.bid} onClick={() => this.handleRowClick(index)} stagger={index}>
-                                <span>{result.link != '' ? <img width="100px" height="100px" src={`https://drive.google.com/uc?export=view&id=${id}`} /> : <NoIcon /> }</span>
+                                <span>{result.link !== '' ? <img width="100px" height="100px" src={`https://drive.google.com/uc?export=view&id=${id}`} alt={result.title} /> : <NoIcon /> }</span>
                                 <Username>{result.title}</Username>
                                 <Notes>{result.description}</Notes>
                                 <div><ColorIcon fill={result.hex} /><span>{result.hex}</span></div>

@@ -25,7 +25,6 @@ class BadgeFeed extends Component {
               log: "no",
           });
           const data = await Promise.all([feed, activity]);
-          console.log(data);
           this.setState({
               badgeActivity: data[0].data,
               recentActivity: data[1].data,

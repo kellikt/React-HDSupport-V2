@@ -102,10 +102,6 @@ class AddForm extends Component {
                 hex_secondary: secondaryColor,
                 description: description,
                 link: link,
-            }).then(function (response) {
-                console.log(response);
-            }).catch(function (response) {
-                console.log(response);
             });
         } catch (error) {
             console.log(`Error adding badge: ${error}`);
@@ -129,7 +125,7 @@ class AddForm extends Component {
     }
 
     render() {
-        const { title, color, background, description, message, heading, error, snack, link } = this.state;
+        const { title, description, message, heading, error, snack, link } = this.state;
 
         const styles = reactCSS({
             'default': {
@@ -137,7 +133,7 @@ class AddForm extends Component {
                 width: '36px',
                 height: '14px',
                 borderRadius: '2px',
-                background: `rgba(${ this.state.background.r }, ${ this.state.background.g }, ${ this.state.background.b }, ${ this.state.background.a })`,
+                background: this.state.background.r ?  `rgba(${ this.state.background.r }, ${ this.state.background.g }, ${ this.state.background.b }, ${ this.state.background.a })` : `${this.state.background}`
               },
               swatch: {
                 padding: '5px',
@@ -167,7 +163,7 @@ class AddForm extends Component {
                     width: '36px',
                     height: '14px',
                     borderRadius: '2px',
-                    background: `rgba(${ this.state.secondaryBackground.r }, ${ this.state.secondaryBackground.g }, ${ this.state.secondaryBackground.b }, ${ this.state.secondaryBackground.a })`,
+                    background: this.state.secondaryBackground.r ? `rgba(${ this.state.secondaryBackground.r }, ${ this.state.secondaryBackground.g }, ${ this.state.secondaryBackground.b }, ${ this.state.secondaryBackground.a })` : this.state.secondaryBackground,
                 },
             },
           });

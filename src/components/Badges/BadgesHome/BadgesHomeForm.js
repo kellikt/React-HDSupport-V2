@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 
 import { LayoutContext } from '../../../LayoutContext';
 import { ReactComponent as HomeIcon } from '../../../images/Admin/Badges/BadgeHome.svg';
@@ -63,8 +62,6 @@ class BadgesHomeForm extends Component {
                         <p>Manage your badges:</p>
                         <a
                             href={`${process.env.PUBLIC_URL}/badges/your-badges`}
-                            target="_blank"
-                            rel="nopener noreferrer"
                         >
                             <BadgeButton>Your Badges</BadgeButton>
                         </a>
@@ -73,8 +70,6 @@ class BadgesHomeForm extends Component {
                         <p>View your HD Profile:</p>
                         <a
                             href={`${process.env.PUBLIC_URL}/badges/${username}`}
-                            target="_blank"
-                            rel="nopener noreferrer"
                         >
                             <BadgeButton>Your Profile</BadgeButton>
                         </a>
@@ -128,8 +123,6 @@ class BadgesHomeForm extends Component {
                         </div>
                         <a
                             href={`${process.env.PUBLIC_URL}/badges/${selectedUser}`}
-                            target="_blank"
-                            rel="nopener noreferrer"
                         >
                             <BadgeButton>View Profile</BadgeButton>
                         </a>
@@ -168,7 +161,10 @@ const StudentProfile = styled.div`
 
     select {
         @media (max-width: 1064px) {
-            width: 50%
+            width: 50%;
+        }
+        @media (max-width: 500px) {
+            width: 100%;
         }
     }
 
@@ -176,10 +172,13 @@ const StudentProfile = styled.div`
         width: 66%
 
         @media (max-width: 1064px) {
-            width: 25%
+            width: 25%;
         }
         @media (max-width: 720px) {
-            width: 50%
+            width: 50%;
+        }
+        @media (max-width: 500px) {
+            width: 75%;
         }
     }
 
@@ -258,7 +257,13 @@ const StudentGroup = styled.div`
 
     @media (max-width: 1064px) {
         grid-column: 1;
-  }
+    }
+
+    @media (max-width: 500px) {
+        button {
+            padding: 0.5em 0em;
+        }
+    }
 `;
 
 const BadgeLabel = styled.div`
