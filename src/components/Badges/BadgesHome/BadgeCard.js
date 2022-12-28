@@ -67,10 +67,10 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
             : 
                 <BadgeTitle>{title}</BadgeTitle>
             }
-            {description.length > 50 ?
+            {description.length > 75 ?
                 <div>
                     <ReactTooltip />
-                    <BadgeDescription data-tip={description}>{description.substring(0, 50)}...</BadgeDescription>
+                    <BadgeDescription data-tip={description}>{description.substring(0, 75)}...</BadgeDescription>
                 </div>
             :
                 <BadgeDescription>{description}</BadgeDescription>
@@ -79,9 +79,9 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
                 <div>
                     <ReactTooltip />
                     {notes && notes.length > 0 ?
-                        <BadgeTimestamp data-tip={timestampNotesDesc}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>
+                        <BadgeTimestamp data-tip={timestampNotesDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</BadgeTimestamp>
                     :
-                        <BadgeTimestamp data-tip={timestampDesc}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</BadgeTimestamp>
+                        <BadgeTimestamp data-tip={timestampDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</BadgeTimestamp>
                     }  
                 </div> 
                 : ''
@@ -222,7 +222,7 @@ const BadgeTimestamp = styled.p`
 
     @media (max-width: 1200px) {
         top: 18em;
-        left: 6em;
+        left: 9em;
         position: absolute;
     }
 `;

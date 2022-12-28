@@ -15,7 +15,7 @@ class ExpandedRow extends Component {
         this.state = {
             username: username,
             title: title,
-            timestamp: timestamp,
+            timestamp: dayjs.unix(timestamp).format('MM-DD-YYYY'),
             comments: comments,
         };
     }
@@ -50,7 +50,13 @@ class ExpandedRow extends Component {
             <Row {...this.props}>
                 <span>{username}</span>
                 <span>{title}</span>
-                <span>{dayjs(timestamp).format('MM-DD-YYYY')}</span>
+                <TextInput
+                    id="timestamp"
+                    label="Timestamp"
+                    name="timestamp"
+                    value={timestamp}
+                    onChange={this.handleInput}
+                />
                 <TextInput
                     id="comments"
                     label="Comments"

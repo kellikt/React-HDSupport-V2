@@ -29,10 +29,10 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
                 <BadgeTitle>{title}</BadgeTitle>
             }
             <StyledRibbon color={secondaryColor}/>
-            {description.length > 50 ? 
+            {description.length > 60 ? 
             <div>
                 <ReactTooltip />
-                <BadgeDescription data-tip={description}>{description.substring(0, 50)}...</BadgeDescription>
+                <BadgeDescription data-tip={description}>{description.substring(0, 60)}...</BadgeDescription>
             </div>
             :
                 <BadgeDescription>{description}</BadgeDescription>
@@ -41,12 +41,12 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
             {notes && notes.length > 0 ?
                 <div>
                     <ReactTooltip />
-                <TimestampText data-tip={TimestampNotesDesc}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</TimestampText>
+                <TimestampText data-tip={TimestampNotesDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</TimestampText>
                 </div>
             :
                 <div>
                     <ReactTooltip />
-                    <TimestampText data-tip={TimestampDesc}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</TimestampText>
+                    <TimestampText data-tip={TimestampDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</TimestampText>
                 </div>
             }
         </BadgeContainer>
@@ -205,8 +205,10 @@ const StyledSection = styled(Section)`
 `;
 
 const TimestampText = styled.p`
-    position: absolute;
+    position: relative;
     top: 25em;
+    width: 80%;
+    text-align: center;
     font-style: italic;
     font-size: 0.99em;
 

@@ -36,10 +36,10 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
                 <FeedCard>
                         <TitleHR />
                         <CardTitle>{title}</CardTitle>
-                        {description.length > 50 ? 
+                        {description.length > 75 ? 
                             <div>
                                 <ReactTooltip />
-                                <CardDesc data-tip={description} color={secondaryColor}>{description.substring(0, 50)}...</CardDesc>
+                                <CardDesc data-tip={description} color={secondaryColor}>{description.substring(0, 75)}...</CardDesc>
                             </div>
                         :
                             <CardDesc color={secondaryColor}>{description}</CardDesc>
@@ -47,12 +47,12 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
                         {notes.length > 0 ? 
                             <div>
                                 <ReactTooltip />
-                                <CardTimestamp data-tip={timestampNotesDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
+                                <CardTimestamp data-tip={timestampNotesDesc} color={secondaryColor}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</CardTimestamp>
                             </div>
                         :
                             <div>
                                 <ReactTooltip />
-                                <CardTimestamp data-tip={timestampDesc} color={secondaryColor}>Achieved {dayjs(timestamp/100).format('MM-DD-YYYY')} at {dayjs(timestamp/100).format('hh:mm A')}</CardTimestamp>
+                                <CardTimestamp data-tip={timestampDesc} color={secondaryColor}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</CardTimestamp>
                             </div>
                         }
                 </FeedCard>

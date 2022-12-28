@@ -46,10 +46,12 @@ class ManageBadgesTable extends Component {
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-student-badge.php`, {
                 username: username,
                 bid: bid,
-                tstamp: tstamp,
+                tstamp: dayjs(dayjs(tstamp, "MM-DD-YYYY")).unix(),
                 notes: notes,
                 fav: fav
             });
+
+            this.getTableData();
 
             this.setState({
                 focused: -1,
@@ -122,7 +124,7 @@ class ManageBadgesTable extends Component {
                             <Row key={result.bid} onClick={() => this.handleRowClick(index)} stagger={index}>
                                 <Username>{result.username}</Username>
                                 <Username>{result.title}</Username>
-                                <span>{dayjs(result.timestamp).format('MM-DD-YYYY')}</span>
+                                <span>{dayjs.unix(result.tstamp).format('MM-DD-YYYY')}</span>
                                 <Notes>{result.notes}</Notes>
                             </Row>
                         );
