@@ -20,9 +20,13 @@ class BadgeFeed extends Component {
       try {
           const feed = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-badge-activity.php`, {
               log: "yes",
+              ranking: "no",
+              profile: "no",
           });
           const activity = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-badge-activity.php`, {
               log: "no",
+              ranking: "no",
+              profile: "no",
           });
           const data = await Promise.all([feed, activity]);
           this.setState({

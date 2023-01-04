@@ -98,7 +98,14 @@ class BadgeContainer extends Component {
                         user: username
                     });
 
-                    const data = await Promise.all([badges, userBadges]);
+                    const badge_activity = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-badge-activity.php`, {
+                        log: "no",
+                        ranking: "no",
+                        profile: "yes",
+                    });
+
+                    const data = await Promise.all([badges, userBadges, badge_activity]);
+                    console.log(data[2].data);
                     this.setState({
                         badges: data[0].data,
                         userBadges: data[1].data,
