@@ -2,9 +2,8 @@ import React from 'react';
 
 import Container from '../../Admin/Container';
 import Breadcrumb from '../../Admin/Breadcrumb';
-import Background from '../../Background';
 
-import BadgeContainer from './BadgeContainer';
+import BadgeIconContainer from './BadgeIconContainer';
 
 const YourBadges = () => {
 
@@ -17,8 +16,7 @@ const YourBadges = () => {
         <Container>
             <h1>Your Badges</h1>
             <Breadcrumb links={links} color="dark-grey" />
-            <Background color="grey" />
-            <BadgeContainer profile={false} list={true}/>
+            <BadgeIconContainer />
         </Container>    
     );
 };
