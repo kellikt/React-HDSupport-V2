@@ -8,6 +8,7 @@ import { ReactComponent as Account } from '../../../images/icons/Administration/
 import { ReactComponent as Browser } from '../../../images/icons/Administration/Browser.svg';
 import { ReactComponent as Database } from '../../../images/icons/Administration/Database.svg';
 import { ReactComponent as Docs } from '../../../images/icons/Administration/Docs.svg';
+import { ReactComponent as Google } from '../../../images/icons/Administration/Google.svg';
 
 const AdministrationDropdownEl = styled.div`
     width: 370px;
@@ -36,7 +37,7 @@ const AdministrationDropdown = () => {
                             <Description>Add/Edit users to HDSupport.</Description>
                         </Link>
                     </ListItem>
-                    <ListItem noMarginBottom>
+                    <ListItem>
                         <a
                             href="https://www.hawaii.edu/help/hdsupport/browser/index.php"
                             target="_blank"
@@ -47,6 +48,19 @@ const AdministrationDropdown = () => {
                                 Browser Recommendations
                             </Heading>
                             <Description>Manage the browser matrix.</Description>
+                        </a>
+                    </ListItem>
+                    <ListItem noMarginBottom>
+                        <a
+                            href="https://www.hawaii.edu/help/hdsupport/google-availability/index.php"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink">
+                                <Google />
+                                Google Availability
+                            </Heading>
+                            <Description>Manage the Google Availability matrix.</Description>
                         </a>
                     </ListItem>
                 </ul>
