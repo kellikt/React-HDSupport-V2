@@ -98,7 +98,7 @@ class Edit extends Component {
                 break;
             case 'username':
                 this.setState({
-                    info: { ...info, username: event.target.value },
+                    info: { ...info, username: event.target.value.trim() },
                 });
                 break;
             case 'uuid':

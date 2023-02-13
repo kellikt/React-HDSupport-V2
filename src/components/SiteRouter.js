@@ -29,6 +29,8 @@ import EditUser from './Admin/AcctMgmt/EditUser';
 import Edit from './Admin/AcctMgmt/Edit';
 import Add from './Admin/AcctMgmt/Add';
 
+import HDTestTemplates from './Email/HDTestTemplates';
+
 class SiteRouter extends Component {
     render() {
         return (
@@ -53,6 +55,8 @@ class SiteRouter extends Component {
                     as={Timesheet}
                     path={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/:username/:year/:payPeriod`}
                 />
+
+                <AdminRoute as={HDTestTemplates} path={`${process.env.PUBLIC_URL}/hd-training`} />
 
                 <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
                 <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />

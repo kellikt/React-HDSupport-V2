@@ -9,6 +9,7 @@ import { ReactComponent as Browser } from '../../../images/icons/Administration/
 import { ReactComponent as Database } from '../../../images/icons/Administration/Database.svg';
 import { ReactComponent as Docs } from '../../../images/icons/Administration/Docs.svg';
 import { ReactComponent as Google } from '../../../images/icons/Administration/Google.svg';
+import { ReactComponent as Training } from '../../../images/icons/Documentation/Reception/Schedules.svg';
 
 const AdministrationDropdownEl = styled.div`
     width: 370px;
@@ -67,6 +68,14 @@ const AdministrationDropdown = () => {
             </DropdownSection>
             <DropdownSection>
                 <ul>
+                    <ListItem>
+                        <Link to={`${process.env.PUBLIC_URL}/hd-training`}>
+                            <Heading color="pink">
+                                <Training />
+                                Training Templates
+                            </Heading>
+                        </Link>
+                    </ListItem>
                     <ListItem>
                         <a href="https://www.hawaii.edu/help/hdsupport/docs" target="_blank" rel="noopener noreferrer">
                             <Heading color="pink">
