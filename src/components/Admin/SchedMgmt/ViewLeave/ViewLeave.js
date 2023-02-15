@@ -3,22 +3,22 @@ import React from 'react';
 import Container from '../../Container';
 import Breadcrumb from '../../Breadcrumb';
 import Background from '../../../Background';
-import RequestLeaveForm from './RequestLeaveForm';
+import ViewLeaveForm from './ViewLeaveForm';
 
-const RequestLeave = () => {
+const ViewLeave = () => {
     const links = [
         { title: 'Schedule Management', to: '/schedmgmt' },
-        { title: 'Request Leave', to: '/schedmgmt/request-leave' },
+        { title: 'View Leave Requests', to: '/schedmgmt/view-leave' },
     ];
 
     return (
         <Container>
-            <h1>Request Leave</h1>
+            <h1>View Leave Requests</h1>
             <Breadcrumb links={links} color="blue" />
-            <RequestLeaveForm />
             <Background color="blue" />
+            <ViewLeaveForm />
         </Container>
     );
 };
 
-export default RequestLeave;
+export default ViewLeave;

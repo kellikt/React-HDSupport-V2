@@ -32,6 +32,7 @@ import Add from './Admin/AcctMgmt/Add';
 import HDTestTemplates from './Email/HDTestTemplates';
 
 import RequestLeave from './Admin/SchedMgmt/RequestLeave/RequestLeave';
+import ViewLeave from './Admin/SchedMgmt/ViewLeave/ViewLeave';
 
 class SiteRouter extends Component {
     render() {
@@ -60,6 +61,7 @@ class SiteRouter extends Component {
 
                 <AdminRoute as={HDTestTemplates} path={`${process.env.PUBLIC_URL}/hd-training`} />
                 <AdminRoute as={RequestLeave} path={`${process.env.PUBLIC_URL}/schedmgmt/request-leave`} />
+                <AdminRoute as={ViewLeave} path={`${process.env.PUBLIC_URL}/schedmgmt/view-leave`} />
 
                 <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
                 <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />
