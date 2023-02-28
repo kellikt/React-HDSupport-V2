@@ -17,6 +17,18 @@ export const FormEl = styled.form`
         margin-right: 0;
         margin-left: auto;
     }
+
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+        
+        >svg {
+            display: none;
+        }
+
+        button {
+            grid-column: 1;
+        }
+    }
 `;
 
 export const Title = styled.div`
@@ -25,12 +37,16 @@ export const Title = styled.div`
         font-size: 28px;
         font-weight: 600;
         margin: 0 0 4px;
-        color: var(--red);
+        color: var(--purple);
     }
     
     p {
         margin: 0;
         color: var(--dark-grey);
+    }
+
+    @media (max-width: 800px) {
+        grid-column: 1;
     }
 `;
 
@@ -57,5 +73,9 @@ export const Inputs = styled.div`
         &:nth-of-type(2) {
             grid-column: 4;
         }
+    }
+
+    @media (max-width: 800px) {
+        grid-column: 1;
     }
 `;

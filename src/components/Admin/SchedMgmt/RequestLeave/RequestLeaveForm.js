@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DateRangerPicker from '@wojtekmaj/react-daterange-picker';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import { FormEl, Title } from './RequestLeaveComponents';
 import { DateInputs } from '../ScheduleChange/ChangeFormComponents';
@@ -92,14 +93,14 @@ class RequestLeaveForm extends Component {
 
         return (
             <FormEl onSubmit={this.handleSubmit}>
-                <Title>
+                <RequestTitle>
                     <h2>Submit a Leave Request</h2>
                     <p>Submit a leave request for July - December 2022</p>
-                </Title>
-                <DateInputs color="blue">
+                </RequestTitle>
+                <RequestInputs color="pink">
                     <h3>Date Range:</h3>
                     <DateRangerPicker onChange={this.handleDate} value={date} calendarType="US" />
-                </DateInputs>
+                </RequestInputs>
                 <textarea
                     name="comment"
                     ref={this.textarea}
@@ -107,7 +108,7 @@ class RequestLeaveForm extends Component {
                     onChange={this.handleChange}
                     placeholder="Comments regarding leave request"
                 />
-                <Button color="blue">Submit Request</Button>
+                <Button color="pink">Submit Request</Button>
                 <SnackbarPortal
                     handler={submitted}
                     message={message}
@@ -123,3 +124,15 @@ class RequestLeaveForm extends Component {
 RequestLeaveForm.contextType = LayoutContext;
 
 export default RequestLeaveForm;
+
+const RequestTitle = styled(Title)`
+    h2 {
+        color: var(--pink);
+    }
+`;
+
+const RequestInputs = styled(DateInputs)`
+    h3 {
+        color: var(--pink);
+    }
+`;

@@ -7,6 +7,9 @@ import { LayoutContext } from '../../../../LayoutContext';
 import { Table, TableLabel, TableHeading, TableRow } from '../ClockMetrics/MetricsTableComponents';
 import ExpandedRow from './ExpandedRow';
 
+import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
+import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
+
 class ViewLeaveTable extends Component {
     state = {
         results: [],
@@ -20,6 +23,7 @@ class ViewLeaveTable extends Component {
         try {
             const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
                 username: username,
+                shift: '',
                 beginDate: date[0],
                 endDate: date[1],
             });
@@ -90,7 +94,10 @@ class ViewLeaveTable extends Component {
                     <span>Begin Date</span>
                     <span>End Date</span>
                     <span>Comment</span>
-                    <span>Approval Status</span>
+                    {focused == -1 ? <span>Approval Status</span> 
+                    : 
+                    <span>Action</span>
+                    }
                 </Heading>
                 {results.map((result, index) => {
                     if (index === focused) {
@@ -112,7 +119,16 @@ class ViewLeaveTable extends Component {
                                 <span>{result.begin_date}</span>
                                 <span>{result.end_date}</span>
                                 <span>{result.comment}</span>
-                                <span>{result.status}</span>
+                                <span>{function() {
+                                    switch(result.status) {
+                                        case 0:
+                                            return <p>?</p>;
+                                        case 1:
+                                            return <Cross />;
+                                        case 2:
+                                            return <LeaveCheck />;
+                                    }
+                                }()}</span>
                             </Row>
                         );
                     }
@@ -151,4 +167,8 @@ const Row = styled(TableRow)`
     &:active {
         transform: scale(1);
     }
+`;
+
+const LeaveCheck = styled(Check)`
+    width: 25px;
 `;

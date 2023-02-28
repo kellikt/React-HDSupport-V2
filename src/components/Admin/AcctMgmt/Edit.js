@@ -26,6 +26,9 @@ class Edit extends Component {
                 tech: 'no',
                 third_shift: 'no',
                 leapstart: 'no',
+                first_staff: 'no',
+                second_staff: 'no',
+                third_staff: 'no',
             },
             info: {
                 first_name: '',
@@ -42,6 +45,7 @@ class Edit extends Component {
                 uuid: 0,
                 zipcode: '',
                 uid: 0,
+                priority: 0,
             },
             snack: false,
         };
@@ -119,6 +123,11 @@ class Edit extends Component {
             case 'cellphone':
                 this.setState({
                     info: { ...info, cell_phone: event.target.value },
+                });
+                break;
+            case 'priority':
+                this.setState({
+                    info: { ...info, priority: event.target.value },
                 });
                 break;
             default:
@@ -283,6 +292,57 @@ class Edit extends Component {
                     });
                 }
                 break;
+            case 'first_staff':
+                if (roles.first_staff === 'yes') {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            first_staff: 'no',
+                        },
+                    });
+                } else {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            first_staff: 'yes',
+                        },
+                    });
+                }
+                break;
+            case 'second_staff':
+                if (roles.second_staff === 'yes') {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            second_staff: 'no',
+                        },
+                    });
+                } else {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            second_staff: 'yes',
+                        },
+                    });
+                }
+                break;
+            case 'third_staff':
+                if (roles.third_staff === 'yes') {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            third_staff: 'no',
+                        },
+                    });
+                } else {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            third_staff: 'yes',
+                        },
+                    });
+                }
+                break;
             default:
                 break;
         }
@@ -302,6 +362,9 @@ class Edit extends Component {
                 tech: roles.tech,
                 third_shift: roles.third_shift,
                 leapstart: roles.leapstart,
+                first_staff: roles.first_staff,
+                second_staff: roles.second_staff,
+                third_staff: roles.third_staff,
                 username: info.username,
                 uid: info.uid,
             });
@@ -320,6 +383,7 @@ class Edit extends Component {
                 city: info.city,
                 expired: info.expired,
                 uid: info.uid,
+                priority: info.priority,
             });
 
             await Promise.all([groups, userInfo]);
@@ -515,6 +579,36 @@ class Edit extends Component {
                             disabled={admin ? false : true}
                         />
                     </AdminRoles>
+                    {roles.staff === 'yes' ?
+                    <PrioritySection>
+                        <FormSection id="priority">Priority</FormSection>
+                        <TextInput 
+                            label="Priority"
+                            id="priority"
+                            placeholder="1"
+                            value={info.priority}
+                            onChange={event => this.handleChange(event, 'priority')}
+                        />
+                        <Checkbox
+                            id="first_staff"
+                            label="First Shift"
+                            onChange={() => this.handleCheck('first_staff')}
+                            checked={roles.first_staff === 'yes' ? true : false}
+                        />
+                        <Checkbox
+                            id="second_staff"
+                            label="Second Shift"
+                            onChange={() => this.handleCheck('second_staff')}
+                            checked={roles.second_staff === 'yes' ? true : false}
+                        />
+                        <Checkbox
+                            id="third_staff"
+                            label="Third Shift"
+                            onChange={() => this.handleCheck('third_staff')}
+                            checked={roles.third_staff === 'yes' ? true : false}
+                        />
+                    </PrioritySection>
+                    : ''}
                     <Images>
                         <Personal />
                         <Contact />
@@ -564,6 +658,11 @@ const Container = styled.main`
             content: '3';
         }
     }
+    #priority {
+        &:before {
+            content: '4';
+        }
+    }
 `;
 
 const EditForm = styled(FormEl)`
@@ -598,7 +697,7 @@ const EditForm = styled(FormEl)`
     }
 
     button {
-        grid-row: 12;
+        grid-row: 13;
         grid-column: 3;
     }
 
@@ -672,4 +771,8 @@ const Images = styled.div`
     @media (max-width: 650px) {
         display: none;
     }
+`;
+
+const PrioritySection = styled.div`
+    grid-column: 1/-1;
 `;
