@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import { PoseGroup } from 'react-pose';
 import styled from 'styled-components';
+import { PoseGroup } from 'react-pose';
 
-import { FormEl, Title, Inputs } from './ViewLeaveComponents';
-import Button from '../../../Button';
+import { FormEl, Title, Inputs } from '../ViewLeave/ViewLeaveComponents';
 import { createYears } from '../../utils';
-import ViewLeaveTable from './ViewLeaveTable';
-import { ReactComponent as View } from '../../../../images/Admin/Leave/ViewLeave.svg';
 
-class ViewLeaveForm extends Component {
+import Button from '../../../Button';
+import AdminViewLeaveTable from './AdminViewLeaveTable';
+
+import { ReactComponent as Manage } from '../../../../images/Admin/Leave/ManageLeave.svg';
+
+class AdminViewLeaveForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
             period: new Date(),
             year: '',
             date: [new Date(), new Date()],
+            shift: '',
             submitted: false,
         };
     }
@@ -49,19 +52,19 @@ class ViewLeaveForm extends Component {
     };
 
     render() {
-        const { period, year, submitted, date } = this.state;
+        const { period, year, submitted, shift, date } = this.state;
 
         const years = createYears();
 
         return (
             <React.Fragment>
                 <FormEl onSubmit={this.handleSubmit}>
-                    <Title>
-                        <h2>View Your Leave Requests</h2>
-                        <p>View your leave requests for the specified period.</p>
-                    </Title>
-                    <ViewGraphic />
-                    <Inputs>
+                    <AdminTitle>
+                        <h2>View Leave Requests</h2>
+                        <p>View a list of leave requests for the specified period.</p>
+                    </AdminTitle>
+                    <ManageLeave />
+                    <AdminInputs>
                         <div>
                             <label htmlFor="period">Leave Period</label>
                             <select name="period" id="period" onChange={this.handleChange} value={period}>
@@ -87,20 +90,50 @@ class ViewLeaveForm extends Component {
                                 })}
                             </select>
                         </div>
-                    </Inputs>
-                    <Button color="blue">Display Requests</Button>
+                        <div>
+                            <label htmlFor="shift">Shift</label>
+                            <select name="shift" id="shift" onChange={this.handleChange} value={shift}>
+                                <option value="None">Select Shift</option>
+                                <option value="1">1st Shift</option>
+                                <option value="2">2nd Shift</option>
+                                <option value="3">3rd Shift</option>
+                            </select>
+                        </div>
+                    </AdminInputs>
+                    <Button color="light-blue">Display Requests</Button>
                 </FormEl>
                 <PoseGroup>
-                    {submitted && <ViewLeaveTable key="table" date={date} />}
+                    {submitted && <AdminViewLeaveTable key="table" date={date} shift={shift} />}
                 </PoseGroup>
             </React.Fragment>
         );
     }
 }
 
-export default ViewLeaveForm;
+export default AdminViewLeaveForm;
 
-const ViewGraphic = styled(View)`
+const AdminTitle = styled(Title)`
+    h2 {
+        color: var(--light-blue);
+    }
+`;
+
+const AdminInputs = styled(Inputs)`
+    >div {
+        &:first-of-type {
+            grid-column: 1/3;
+        }
+        &:nth-of-type(2) {
+            grid-column: 3;
+        }
+        &:nth-of-type(3) {
+            grid-column: 4;
+        }
+    }
+`;
+
+const ManageLeave = styled(Manage)`
     position: absolute;
-    left: 450px;
+    left: 480px;
+    width: 250px;
 `;

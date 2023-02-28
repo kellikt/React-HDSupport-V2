@@ -7,16 +7,16 @@ import RequestLeaveForm from './RequestLeaveForm';
 
 const RequestLeave = () => {
     const links = [
-        { title: 'Schedule Management', to: '/schedmgmt' },
-        { title: 'Request Leave', to: '/schedmgmt/request-leave' },
+        { title: 'Leave Request', to: '/leave-request' },
+        { title: 'Request Leave', to: '/leave-request/request-leave' },
     ];
 
     return (
         <Container>
             <h1>Request Leave</h1>
-            <Breadcrumb links={links} color="blue" />
+            <Breadcrumb links={links} color="pink" />
             <RequestLeaveForm />
-            <Background color="blue" />
+            <Background color="bpink" />
         </Container>
     );
 };

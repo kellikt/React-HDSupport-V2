@@ -51,7 +51,7 @@ const AdministrationDropdown = () => {
                             <Description>Manage the browser matrix.</Description>
                         </a>
                     </ListItem>
-                    <ListItem noMarginBottom>
+                    <ListItem>
                         <a
                             href="https://www.hawaii.edu/help/hdsupport/google-availability/index.php"
                             target="_blank"
@@ -63,6 +63,15 @@ const AdministrationDropdown = () => {
                             </Heading>
                             <Description>Manage the Google Availability matrix.</Description>
                         </a>
+                    </ListItem>
+                    <ListItem noMarginBottom>
+                        <Link to={`${process.env.PUBLIC_URL}/leave-request`}>
+                            <Heading color="pink">
+                                <Schedule />
+                                Leave Requests
+                            </Heading>
+                            <Description>Create and manage leave requests.</Description>
+                        </Link>
                     </ListItem>
                 </ul>
             </DropdownSection>

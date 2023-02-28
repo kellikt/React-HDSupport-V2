@@ -37,6 +37,7 @@ class ExpandedRow extends Component {
 
     render() {
         const { comment, beginDate, endDate } = this.state;
+        const { status } = this.props;
         
         return (
             <Row {...this.props}>
@@ -62,9 +63,11 @@ class ExpandedRow extends Component {
                     onChange={this.handleInput}
                 />
                 <ButtonContainer>
-                    <Button color="blue" onClick={this.handleEdit}>
-                        Edit
-                    </Button>
+                    {status !== 2 &&
+                        <Button color="blue" onClick={this.handleEdit}>
+                            Edit
+                        </Button>
+                    }
                     <Button color="blue" onClick={this.handleDelete}>
                         Delete
                     </Button>
@@ -95,6 +98,7 @@ const Row = styled(TableRow)`
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     button {
         &:first-of-type {

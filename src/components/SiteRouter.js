@@ -31,8 +31,11 @@ import Add from './Admin/AcctMgmt/Add';
 
 import HDTestTemplates from './Email/HDTestTemplates';
 
+import LeaveRequests from './Admin/LeaveRequests';
 import RequestLeave from './Admin/SchedMgmt/RequestLeave/RequestLeave';
 import ViewLeave from './Admin/SchedMgmt/ViewLeave/ViewLeave';
+import AdminViewLeave from './Admin/SchedMgmt/AdminViewLeave/AdminViewLeave';
+import AdminLeave from './Admin/SchedMgmt/AdminLeave/AdminLeave';
 
 class SiteRouter extends Component {
     render() {
@@ -60,8 +63,14 @@ class SiteRouter extends Component {
                 />
 
                 <AdminRoute as={HDTestTemplates} path={`${process.env.PUBLIC_URL}/hd-training`} />
-                <AdminRoute as={RequestLeave} path={`${process.env.PUBLIC_URL}/schedmgmt/request-leave`} />
-                <AdminRoute as={ViewLeave} path={`${process.env.PUBLIC_URL}/schedmgmt/view-leave`} />
+
+                <AdminRoute as={LeaveRequests} path={`${process.env.PUBLIC_URL}/leave-request`} />
+
+                <AdminRoute as={RequestLeave} path={`${process.env.PUBLIC_URL}/leave-request/request-leave`} />
+                <AdminRoute as={ViewLeave} path={`${process.env.PUBLIC_URL}/leave-request/view-leave`} />
+
+                <AdminRoute as={AdminViewLeave} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave`} />
+                <AdminRoute as={AdminLeave} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave/:username/:startDate/:endDate/:shift`} />
 
                 <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
                 <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />
