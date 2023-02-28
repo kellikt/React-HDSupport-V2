@@ -18,6 +18,7 @@ class Edit extends Component {
         super(props);
         this.state = {
             roles: {
+                super_admin: 'no',
                 administrator: 'no',
                 helpdesk: 'no',
                 lab: 'no',
@@ -275,6 +276,23 @@ class Edit extends Component {
                     });
                 }
                 break;
+            case 'super_admin':
+                if (roles.super_admin === 'yes') {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            super_admin: 'no',
+                        },
+                    });
+                } else {
+                    this.setState({
+                        roles: {
+                            ...roles,
+                            super_admin: 'yes',
+                        },
+                    });
+                }
+                break;
             case 'enabled':
                 if (info.expired === 1) {
                     this.setState({
@@ -354,6 +372,7 @@ class Edit extends Component {
 
         try {
             const groups = axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-user-groups.php`, {
+                super_admin: roles.super_admin,
                 administrator: roles.administrator,
                 helpdesk: roles.helpdesk,
                 lab: roles.lab,
@@ -422,7 +441,7 @@ class Edit extends Component {
         const { info, roles, snack } = this.state;
         let value = this.context;
         const {
-            roles: { admin },
+            roles: { admin, super_admin },
         } = value;
 
         return (
@@ -571,6 +590,14 @@ class Edit extends Component {
                             disabled={admin ? false : true}
                         />
                         <Checkbox
+                            id="super_admin"
+                            label="Super Admin"
+                            onChange={() => this.handleCheck('super_admin')}
+                            checked={roles.super_admin === 'yes' ? true : false}
+                            color="purple"
+                            disabled={super_admin ? false : true}
+                        />
+                        <Checkbox
                             id="enabled"
                             label="Enabled"
                             onChange={() => this.handleCheck('enabled')}
@@ -589,24 +616,26 @@ class Edit extends Component {
                             value={info.priority}
                             onChange={event => this.handleChange(event, 'priority')}
                         />
-                        <Checkbox
-                            id="first_staff"
-                            label="First Shift"
-                            onChange={() => this.handleCheck('first_staff')}
-                            checked={roles.first_staff === 'yes' ? true : false}
-                        />
-                        <Checkbox
-                            id="second_staff"
-                            label="Second Shift"
-                            onChange={() => this.handleCheck('second_staff')}
-                            checked={roles.second_staff === 'yes' ? true : false}
-                        />
-                        <Checkbox
-                            id="third_staff"
-                            label="Third Shift"
-                            onChange={() => this.handleCheck('third_staff')}
-                            checked={roles.third_staff === 'yes' ? true : false}
-                        />
+                        <div>
+                            <Checkbox
+                                id="first_staff"
+                                label="First Shift"
+                                onChange={() => this.handleCheck('first_staff')}
+                                checked={roles.first_staff === 'yes' ? true : false}
+                            />
+                            <Checkbox
+                                id="second_staff"
+                                label="Second Shift"
+                                onChange={() => this.handleCheck('second_staff')}
+                                checked={roles.second_staff === 'yes' ? true : false}
+                            />
+                            <Checkbox
+                                id="third_staff"
+                                label="Third Shift"
+                                onChange={() => this.handleCheck('third_staff')}
+                                checked={roles.third_staff === 'yes' ? true : false}
+                            />
+                        </div>
                     </PrioritySection>
                     : ''}
                     <Images>
@@ -775,4 +804,7 @@ const Images = styled.div`
 
 const PrioritySection = styled.div`
     grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-column-gap: 135px;
 `;

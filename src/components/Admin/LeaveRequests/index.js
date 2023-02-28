@@ -1,4 +1,5 @@
 import React from 'react';
+import { LayoutContext } from '../../../LayoutContext';
 
 import IndexPage from '../IndexPage';
 import IndexLink from '../IndexLink';

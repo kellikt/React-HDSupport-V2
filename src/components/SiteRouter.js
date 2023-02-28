@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router';
+import SuperAdminRoute from './SuperAdminRoute';
 import AdminRoute from './AdminRoute';
 import UserRoute from './UserRoute';
 
@@ -69,7 +70,7 @@ class SiteRouter extends Component {
                 <AdminRoute as={RequestLeave} path={`${process.env.PUBLIC_URL}/leave-request/request-leave`} />
                 <AdminRoute as={ViewLeave} path={`${process.env.PUBLIC_URL}/leave-request/view-leave`} />
 
-                <AdminRoute as={AdminViewLeave} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave`} />
+                <SuperAdminRoute as={AdminViewLeave} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave`} />
                 <AdminRoute as={AdminLeave} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave/:username/:startDate/:endDate/:shift`} />
 
                 <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
