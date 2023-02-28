@@ -14,7 +14,10 @@ class RequestLeaveForm extends Component {
         super(props);
         this.state = {
             date: [new Date(), new Date()],
+            minDate: new Date(),
+            maxDate: new Date(),
             username: '',
+            leaveText: '',
             comment: '',
             submitted: false,
             error: false,
@@ -88,18 +91,46 @@ class RequestLeaveForm extends Component {
         window.clearTimeout(this.timeoutId);
     }
 
+    componentWillMount() {
+        // determine current leave period
+        const currentDate = new Date();
+
+        if (currentDate.getMonth() <= 5) {
+            const startDate = new Date(currentDate.getFullYear(), 6);
+            const endDate = new Date(currentDate.getFullYear(), 11);
+            const maxDate = new Date(currentDate.getFullYear(), 11, 31);
+            this.setState({
+                leaveText: `${startDate.toLocaleString('default', { month: 'long' })} - ${endDate.toLocaleString('default', { month: 'long' })} ${endDate.getFullYear()}`,
+                date: [startDate, startDate],
+                minDate: startDate,
+                maxDate: maxDate,
+            });
+        } else {
+            const startDate = new Date(currentDate.getFullYear() + 1, 0);
+            const endDate = new Date(currentDate.getFullYear() + 1, 5);
+            const maxDate = new Date(currentDate.getFullYear() + 1, 5, 30);
+            this.setState({
+                leaveText: `${startDate.toLocaleString('default', { month: 'long' })} - ${endDate.toLocaleString('default', { month: 'long' })} ${endDate.getFullYear()}`,
+                date: [startDate, startDate],
+                minDate: startDate,
+                maxDate: maxDate,
+            });
+        }
+        
+    }
+
     render() {
-        const { comment, date, submitted, message, messageHeading, error } = this.state;
+        const { comment, date, leaveText, minDate, maxDate, submitted, message, messageHeading, error } = this.state;
 
         return (
             <FormEl onSubmit={this.handleSubmit}>
                 <RequestTitle>
                     <h2>Submit a Leave Request</h2>
-                    <p>Submit a leave request for July - December 2022</p>
+                    <p>Submit a leave request for {leaveText}</p>
                 </RequestTitle>
                 <RequestInputs color="pink">
                     <h3>Date Range:</h3>
-                    <DateRangerPicker onChange={this.handleDate} value={date} calendarType="US" />
+                    <DateRangerPicker onChange={this.handleDate} value={date} minDate={minDate} maxDate={maxDate} calendarType="US" />
                 </RequestInputs>
                 <textarea
                     name="comment"
