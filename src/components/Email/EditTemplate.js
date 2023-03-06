@@ -142,7 +142,7 @@ class EditTemplate extends Component {
                         value={content}
                         placeholder="Email Content"
                     />
-                    <Button color="light-blue">Edit Template</Button>
+                    <Button color="light-blue">Save Changes</Button>
                     <SnackbarPortal 
                         handler={snackHandler}
                         message={`You have updated the ${template} template`}
