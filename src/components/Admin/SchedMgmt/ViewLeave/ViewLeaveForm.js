@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import { PoseGroup } from 'react-pose';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import { FormEl, Title, Inputs } from './ViewLeaveComponents';
 import Button from '../../../Button';
 import { createYears } from '../../utils';
 import ViewLeaveTable from './ViewLeaveTable';
 import { ReactComponent as View } from '../../../../images/Admin/Leave/ViewLeave.svg';
+import { LayoutContext } from '../../../../LayoutContext';
 
 class ViewLeaveForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            period: new Date(),
+            period: "0",
             year: '',
             date: [new Date(), new Date()],
             submitted: false,
+            results: [],
         };
     }
 
@@ -27,29 +30,70 @@ class ViewLeaveForm extends Component {
             [name]: value,
             submitted: false,
         });
+
+        let year;
+        if (name == "year") {
+            year = value;
+        } else {
+            year = this.state.year;
+        }
+
+        let period;
+        if (name == "period") {
+            period = value;
+        } else {
+            period = this.state.period;
+        }
+
+        if (period == 1) {
+            const beginDateString = `${year}-01-01`;
+            const endDateString = `${year}-06-30`;
+            this.setState({ 
+                date: [beginDateString, endDateString],
+                submitted: false,
+            });
+        } else if (period == 2) {
+            const beginDateString = `${year}-07-01`;
+            const endDateString = `${year}-12-31`;
+            this.setState({ 
+                date: [beginDateString, endDateString],
+                submitted: false,
+            });
+        }
     };
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { period, year } = this.state;
-        let beginDateString;
-        let endDateString;
-        if (period == "1") {
-            beginDateString = `${year}-01-01`;
-            endDateString = `${year}-06-30`;
-        } else if (period == "2") {
-            beginDateString = `${year}-07-01`;
-            endDateString = `${year}-12-31`;
-        }
-
-        this.setState({ 
-            date: [beginDateString, endDateString],
+        this.setState({
             submitted: true,
-        });
+        })
+        this.getTableData();
     };
 
+    getTableData = async() => {
+        const { date } = this.state;
+        const { username } = this.context;
+
+        try {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
+                username: username,
+                shift: '',
+                beginDate: date[0],
+                endDate: date[1],
+            });
+            const data = request.data;
+            if (!(data === 0)) {
+                this.setState({
+                    results: data,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
-        const { period, year, submitted, date } = this.state;
+        const { period, year, submitted, date, results } = this.state;
 
         const years = createYears();
 
@@ -91,12 +135,14 @@ class ViewLeaveForm extends Component {
                     <Button color="blue">Display Requests</Button>
                 </FormEl>
                 <PoseGroup>
-                    {submitted && <ViewLeaveTable key="table" date={date} />}
+                    {submitted && <ViewLeaveTable key="table" results={results} date={date} getTableData={this.getTableData} />}
                 </PoseGroup>
             </React.Fragment>
         );
     }
 }
+
+ViewLeaveForm.contextType = LayoutContext;
 
 export default ViewLeaveForm;
 

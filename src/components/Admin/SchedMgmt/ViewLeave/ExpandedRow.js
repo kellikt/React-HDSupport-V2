@@ -63,14 +63,16 @@ class ExpandedRow extends Component {
                     onChange={this.handleInput}
                 />
                 <ButtonContainer>
-                    {status !== 2 &&
-                        <Button color="blue" onClick={this.handleEdit}>
-                            Edit
-                        </Button>
-                    }
-                    <Button color="blue" onClick={this.handleDelete}>
-                        Delete
-                    </Button>
+                    {status !== 2 ?
+                        <div>
+                            <Button color="blue" onClick={this.handleEdit}>
+                                Edit
+                            </Button>
+                            <Button color="blue" onClick={this.handleDelete}>
+                                Delete
+                            </Button>
+                        </div>
+                    : <p>Request already processed. <br></br>Please contact your manager to make changes.</p>}
                 </ButtonContainer>
             </Row>
         )
@@ -81,7 +83,7 @@ ExpandedRow.propTypes = {
     comment: PropTypes.string,
     beginDate: PropTypes.string,
     endDate: PropTypes.string,
-    status: PropTypes.string,
+    status: PropTypes.number,
     lid: PropTypes.number.isRequired,
     handleDelete: PropTypes.func.isRequired,
     handleEdit: PropTypes.func.isRequired,
