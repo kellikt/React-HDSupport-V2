@@ -8,40 +8,9 @@ import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 
 class AdminViewLeaveTable extends Component {
-    state = {
-        results: [],
-    }
-
-    getTableData = async() => {
-        const { date, shift } = this.props;
-
-        try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
-                username: '',
-                shift: shift,
-                beginDate: date[0],
-                endDate: date[1],
-            });
-            const data = request.data;
-            const usernames = [...new Set(data.map(item => item.username))];
-            let res = [];
-
-            usernames.forEach(function(user) {
-                res.push(data.filter(item => item.username == user));
-            });
-
-            if (!(data === 0)) {
-                this.setState({
-                    results: res,
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     getConflict = (beginDate, endDate) => {
-        const { results } = this.state;
+        const { results } = this.props;
 
         const merged = results.flat(1);
 
@@ -60,14 +29,8 @@ class AdminViewLeaveTable extends Component {
         }
     }
 
-    async componentDidMount() {
-        await this.getTableData();
-    }
-
     render() {
-        const { results } = this.state;
-        const { date, shift } = this.props;
-        console.log(results);
+        const { date, shift, results } = this.props;
 
         return (
             <Table {...this.props}>
@@ -124,6 +87,8 @@ class AdminViewLeaveTable extends Component {
 
 AdminViewLeaveTable.propTypes = {
     date: PropTypes.array.isRequired,
+    results: PropTypes.array,
+    getTableData: PropTypes.func,
     shift: PropTypes.number,
 }
 

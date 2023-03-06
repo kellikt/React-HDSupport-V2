@@ -12,7 +12,6 @@ import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg
 
 class ViewLeaveTable extends Component {
     state = {
-        results: [],
         focused: -1,
     }
 
@@ -46,6 +45,7 @@ class ViewLeaveTable extends Component {
 
     handleEdit = async (lid, beginDate, endDate, comment, status) => {
         try {
+            const { getTableData } = this.props;
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-leave-request.php`, {
                 lid: lid,
                 beginDate: beginDate,
@@ -57,7 +57,7 @@ class ViewLeaveTable extends Component {
                 focused: -1,
             });
 
-            this.getTableData();
+            getTableData();
         } catch (error) {
                 console.log(error);
         }  
@@ -65,23 +65,20 @@ class ViewLeaveTable extends Component {
 
     handleDelete = async lid => {
         try {
+            const { getTableData } = this.props;
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-leave-request.php`, {
                 lid: lid,
             });
 
-            this.getTableData();
+            getTableData();
         } catch (error) {
             console.log(error);
         }
     };
 
-    async componentDidMount() {
-        await this.getTableData();
-    }
-
     render() {
-        const { results, focused } = this.state;
-        const { date } = this.props;
+        const { focused } = this.state;
+        const { date, results } = this.props;
 
         return (
             <Table {...this.props}>
@@ -142,6 +139,8 @@ ViewLeaveTable.contextType = LayoutContext;
 
 ViewLeaveTable.propTypes = {
     date: PropTypes.array.isRequired,
+    results: PropTypes.array,
+    getTableData: PropTypes.func
 };
 
 export default ViewLeaveTable;

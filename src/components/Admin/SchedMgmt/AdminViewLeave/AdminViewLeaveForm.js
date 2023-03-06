@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { PoseGroup } from 'react-pose';
+import axios from 'axios';
 
 import { FormEl, Title, Inputs } from '../ViewLeave/ViewLeaveComponents';
 import { createYears } from '../../utils';
@@ -9,6 +10,8 @@ import Button from '../../../Button';
 import AdminViewLeaveTable from './AdminViewLeaveTable';
 
 import { ReactComponent as Manage } from '../../../../images/Admin/Leave/ManageLeave.svg';
+
+import { LayoutContext } from '../../../../LayoutContext';
 
 class AdminViewLeaveForm extends Component {
     constructor(props) {
@@ -19,6 +22,7 @@ class AdminViewLeaveForm extends Component {
             date: [new Date(), new Date()],
             shift: '',
             submitted: false,
+            results: [],
         };
     }
 
@@ -30,29 +34,78 @@ class AdminViewLeaveForm extends Component {
             [name]: value,
             submitted: false,
         });
+
+        let year;
+        if (name == "year") {
+            year = value;
+        } else {
+            year = this.state.year;
+        }
+
+        let period;
+        if (name == "period") {
+            period = value;
+        } else {
+            period = this.state.period;
+        }
+
+        if (period == 1) {
+            const beginDateString = `${year}-01-01`;
+            const endDateString = `${year}-06-30`;
+            this.setState({ 
+                date: [beginDateString, endDateString],
+                submitted: false,
+            });
+        } else if (period == 2) {
+            const beginDateString = `${year}-07-01`;
+            const endDateString = `${year}-12-31`;
+            this.setState({ 
+                date: [beginDateString, endDateString],
+                submitted: false,
+            });
+        }
+
     };
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { period, year } = this.state;
-        let beginDateString;
-        let endDateString;
-        if (period == "1") {
-            beginDateString = `${year}-01-01`;
-            endDateString = `${year}-06-30`;
-        } else if (period == "2") {
-            beginDateString = `${year}-07-01`;
-            endDateString = `${year}-12-31`;
-        }
 
         this.setState({ 
-            date: [beginDateString, endDateString],
             submitted: true,
         });
+        this.getTableData();
     };
 
+    getTableData = async() => {
+        const { date, shift } = this.state;
+
+        try {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
+                username: '',
+                shift: shift,
+                beginDate: date[0],
+                endDate: date[1],
+            });
+            const data = request.data;
+            const usernames = [...new Set(data.map(item => item.username))];
+            let res = [];
+
+            usernames.forEach(function(user) {
+                res.push(data.filter(item => item.username == user));
+            });
+
+            if (!(data === 0)) {
+                this.setState({
+                    results: res,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
-        const { period, year, submitted, shift, date } = this.state;
+        const { period, year, submitted, shift, date, results } = this.state;
 
         const years = createYears();
 
@@ -103,12 +156,14 @@ class AdminViewLeaveForm extends Component {
                     <Button color="light-blue">Display Requests</Button>
                 </FormEl>
                 <PoseGroup>
-                    {submitted && <AdminViewLeaveTable key="table" date={date} shift={shift} />}
+                    {submitted && <AdminViewLeaveTable key="table" date={date} shift={shift} results={results} getTableData={this.getTableData} />}
                 </PoseGroup>
             </React.Fragment>
         );
     }
 }
+
+AdminViewLeaveForm.contextType = LayoutContext;
 
 export default AdminViewLeaveForm;
 

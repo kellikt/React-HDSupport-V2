@@ -33,7 +33,7 @@ class LeaveForm extends Component {
     }
 
     findPosition() {
-        const { beginDate, endDate, firstName, conflict, priority, shift } = this.props;
+        const { beginDate, endDate, firstName, conflict, priority } = this.props;
         const start = new Date(beginDate);
         const end = new Date(endDate);
         const days = (((end.getTime()/1000) - (start.getTime()/1000)) / 3600 / 24) + 1;
