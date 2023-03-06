@@ -30,6 +30,8 @@ import Edit from './Admin/AcctMgmt/Edit';
 import Add from './Admin/AcctMgmt/Add';
 
 import HDTestTemplates from './Email/HDTestTemplates';
+import AddTemplate from './Email/AddTemplate';
+import EditTemplate from './Email/EditTemplate';
 
 class SiteRouter extends Component {
     render() {
@@ -57,6 +59,8 @@ class SiteRouter extends Component {
                 />
 
                 <AdminRoute as={HDTestTemplates} path={`${process.env.PUBLIC_URL}/hd-training`} />
+                <AdminRoute as={AddTemplate} path={`${process.env.PUBLIC_URL}/add-template`} />
+                <AdminRoute as={EditTemplate} path={`${process.env.PUBLIC_URL}/edit-template/:tid`} />
 
                 <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
                 <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />
