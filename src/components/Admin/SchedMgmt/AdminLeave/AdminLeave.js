@@ -15,11 +15,10 @@ class AdminLeave extends Component {
 
     getConflict = (beginDate, endDate, lid) => {
         const { results } = this.state;
-        const { shift } = this.props;
-        console.log(results);
 
         const checkConflicts = results.filter((result) => {
-            if (((beginDate >= result.begin_date && beginDate <= result.end_date) || (endDate >= result.begin_date && endDate <= result.end_date) || (beginDate <= result.begin_date && endDate >= result.end_date)) && result.lid !== lid && result.shift == shift) {
+            console.log(result);
+            if (((beginDate >= result.begin_date && beginDate <= result.end_date) || (endDate >= result.begin_date && endDate <= result.end_date) || (beginDate <= result.begin_date && endDate >= result.end_date)) && result.lid !== lid) {
                 return true;
             } else {
                 return false;
