@@ -33,9 +33,9 @@ class LeaveForm extends Component {
     }
 
     findPosition() {
-        const { beginDate, endDate, firstName, conflict, priority } = this.props;
-        const start = new Date(beginDate);
-        const end = new Date(endDate);
+        const { beginDate, endDate, firstName, conflict, priority, shift } = this.props;
+        const start = new Date(`${beginDate} GMT-1000`);
+        const end = new Date(`${endDate} GMT-1000`);
         const days = (((end.getTime()/1000) - (start.getTime()/1000)) / 3600 / 24) + 1;
         let events = [];
         let curr = start;
@@ -47,8 +47,8 @@ class LeaveForm extends Component {
             // get position
 
             for (let j = 0; j < conflict.length; j++) {
-                const conflictStart = new Date(conflict[j].begin_date);
-                const conflictEnd = new Date(conflict[j].end_date);
+                const conflictStart = new Date(`${conflict[j].begin_date} GMT-1000`);
+                const conflictEnd = new Date(`${conflict[j].end_date} GMT-1000`);
 
                 if ((curr >= conflictStart && curr <= conflictEnd) || (curr >= conflictStart && curr <= conflictEnd) || (curr <= conflictStart && curr >= conflictEnd)) {
                     if (priority > conflict[j].priority) {
@@ -58,12 +58,28 @@ class LeaveForm extends Component {
             }
 
             // append gcal w position
-            const startDay = `${curr.getDate() + 1}`.padStart(2, "0");
+            const startDay = `${curr.getDate()}`.padStart(2, "0");
             const startMonth = `${curr.getMonth() + 1}`.padStart(2, "0");
-            const startTime = `T${170000 + (position * 10000)}Z`;
-            const endTime = `T${180000 + (position * 10000)}Z`;
-            const gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+${curr.getMonth() + 1}/${curr.getDate() + 1}&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${start.getFullYear()}${startMonth}${startDay}${endTime}`;
-            const day = { dayString: `${startMonth}/${startDay}`, link: gcal};
+            let startTime, endTime;
+
+            if (parseInt(shift) === 1) {
+                startTime = `T${170000 + (position * 10000)}Z`;
+                endTime = `T${180000 + (position * 10000)}Z`;
+            } else if (parseInt(shift) === 2) {
+                startTime = `T${250000 + (position * 10000)}Z`;
+                endTime = `T${260000 + (position * 10000)}Z`;
+            } else if (parseInt(shift) === 3) {
+                startTime = `T${160000 - (position * 10000)}Z`;
+                endTime = `T${170000 - (position * 10000)}Z`;
+            }
+
+            const gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+${curr.getMonth() + 1}/${curr.getDate()}&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${start.getFullYear()}${startMonth}${startDay}${endTime}`;
+            const options = {
+                day: 'numeric',
+                month: 'short'
+            };
+
+            const day = { dayString: curr.toLocaleDateString('en-GB', options), link: gcal};
             events.push(day);
             // increment to next day
             curr.setDate(curr.getDate() + 1);
