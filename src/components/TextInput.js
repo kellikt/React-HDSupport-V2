@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const TextInput = ({ id, label, placeholder, value, onChange, name }, props) => {
+const TextInput = ({ id, label, placeholder, value, onChange, name, disabled }, props) => {
     return (
         <Container className="styled-input">
             <label htmlFor={id}>{label}</label>
@@ -13,6 +13,7 @@ const TextInput = ({ id, label, placeholder, value, onChange, name }, props) => 
                 onChange={onChange}
                 placeholder={placeholder}
                 name={name}
+                disabled={disabled}
                 {...props}
             />
         </Container>
@@ -30,6 +31,7 @@ TextInput.propTypes = {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     name: PropTypes.string,
+    disabled: PropTypes.bool
 };
 
 export default TextInput;

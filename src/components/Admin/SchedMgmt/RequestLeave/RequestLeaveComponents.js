@@ -22,6 +22,14 @@ export const FormEl = styled.form`
         margin-left: auto;
         width: 50%;
     }
+
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+        
+        button{
+            grid-column: 1;
+        }
+    }
 `;
 
 export const Title = styled.div`
