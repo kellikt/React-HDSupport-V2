@@ -4,7 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import { FormEl, Title } from './RequestLeaveComponents';
-import { DateInputs } from '../ScheduleChange/ChangeFormComponents';
+import { DateInputs } from '../../SchedMgmt/ScheduleChange/ChangeFormComponents';
 import Button from '../../../Button';
 import { LayoutContext } from '../../../../LayoutContext';
 import SnackbarPortal from '../../../SnackbarPortal';
@@ -95,9 +95,9 @@ class RequestLeaveForm extends Component {
         const currentDate = new Date();
 
         if (currentDate.getMonth() <= 5) {
-            const startDate = new Date(currentDate.getFullYear(), 6);
-            const endDate = new Date(currentDate.getFullYear(), 11);
-            const maxDate = new Date(currentDate.getFullYear(), 11, 31);
+            const startDate = new Date(currentDate.getFullYear() + 1, 0);
+            const endDate = new Date(currentDate.getFullYear() + 1, 5);
+            const maxDate = new Date(currentDate.getFullYear() + 1, 5, 30);
             this.setState({
                 leaveText: `${startDate.toLocaleString('default', { month: 'long' })} - ${endDate.toLocaleString('default', { month: 'long' })} ${endDate.getFullYear()}`,
                 date: [startDate, startDate],
@@ -105,9 +105,9 @@ class RequestLeaveForm extends Component {
                 maxDate: maxDate,
             });
         } else {
-            const startDate = new Date(currentDate.getFullYear() + 1, 0);
-            const endDate = new Date(currentDate.getFullYear() + 1, 5);
-            const maxDate = new Date(currentDate.getFullYear() + 1, 5, 30);
+            const startDate = new Date(currentDate.getFullYear() + 1, 6);
+            const endDate = new Date(currentDate.getFullYear() + 1, 11);
+            const maxDate = new Date(currentDate.getFullYear() + 1, 11, 31);
             this.setState({
                 leaveText: `${startDate.toLocaleString('default', { month: 'long' })} - ${endDate.toLocaleString('default', { month: 'long' })} ${endDate.getFullYear()}`,
                 date: [startDate, startDate],

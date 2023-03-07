@@ -6,7 +6,7 @@ import axios from 'axios';
 import Button from '../../../Button';
 import TextInput from '../../../TextInput';
 
-import { TableHeading, TableRow } from '../ClockMetrics/MetricsTableComponents';
+import { TableHeading, TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
 

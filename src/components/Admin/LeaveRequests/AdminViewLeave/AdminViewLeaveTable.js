@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
-import { Table, TableLabel, TableHeading, TableRow } from '../ClockMetrics/MetricsTableComponents';
+import { Table, TableLabel, TableHeading, TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
 import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 
