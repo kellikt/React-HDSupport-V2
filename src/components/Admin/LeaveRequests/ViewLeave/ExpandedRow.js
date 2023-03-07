@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import TextInput from '../../../TextInput';
 import Button from '../../../Button';
-import { TableRow } from '../ClockMetrics/MetricsTableComponents';
+import { TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
 
 class ExpandedRow extends Component {
     constructor(props) {

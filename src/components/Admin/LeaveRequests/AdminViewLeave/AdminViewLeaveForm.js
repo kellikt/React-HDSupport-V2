@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
-import { PoseGroup } from 'react-pose';
 import styled from 'styled-components';
+import { PoseGroup } from 'react-pose';
 import axios from 'axios';
 
-import { FormEl, Title, Inputs } from './ViewLeaveComponents';
+import { FormEl, Title, Inputs } from '../ViewLeave/ViewLeaveComponents';
+
 import Button from '../../../Button';
-import ViewLeaveTable from './ViewLeaveTable';
-import { ReactComponent as View } from '../../../../images/Admin/Leave/ViewLeave.svg';
+import AdminViewLeaveTable from './AdminViewLeaveTable';
+
+import { ReactComponent as Manage } from '../../../../images/Admin/Leave/ManageLeave.svg';
+
 import { LayoutContext } from '../../../../LayoutContext';
 
-class ViewLeaveForm extends Component {
+class AdminViewLeaveForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            period: "0",
+            period: new Date(),
             year: '',
             date: [new Date(), new Date()],
+            shift: '',
             submitted: false,
             results: [],
         };
     }
 
     createYears() {
-        let currentYear = new Date().getFullYear();
+        let currentYear = new Date().getFullYear() + 1;
         const years = [];
 
         while (currentYear >= 2023) {
@@ -71,31 +75,39 @@ class ViewLeaveForm extends Component {
                 submitted: false,
             });
         }
+
     };
 
     handleSubmit = async event => {
         event.preventDefault();
-        this.setState({
+
+        this.setState({ 
             submitted: true,
-        })
+        });
         this.getTableData();
     };
 
     getTableData = async() => {
-        const { date } = this.state;
-        const { username } = this.context;
+        const { date, shift } = this.state;
 
         try {
             const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
-                username: username,
-                shift: '',
+                username: '',
+                shift: shift,
                 beginDate: date[0],
                 endDate: date[1],
             });
             const data = request.data;
+            const usernames = [...new Set(data.map(item => item.username))];
+            let res = [];
+
+            usernames.forEach(function(user) {
+                res.push(data.filter(item => item.username === user));
+            });
+
             if (!(data === 0)) {
                 this.setState({
-                    results: data,
+                    results: res,
                 });
             }
         } catch (error) {
@@ -104,21 +116,21 @@ class ViewLeaveForm extends Component {
     }
 
     render() {
-        const { period, year, submitted, date, results } = this.state;
+        const { period, year, submitted, shift, date, results } = this.state;
 
         const years = this.createYears();
 
         return (
             <React.Fragment>
                 <FormEl onSubmit={this.handleSubmit}>
-                    <Title>
-                        <h2>View Your Leave Requests</h2>
-                        <p>View your leave requests for the specified period.</p>
-                    </Title>
-                    <ViewDiv>
-                        <ViewGraphic />
-                    </ViewDiv>
-                    <Inputs>
+                    <AdminTitle>
+                        <h2>View Leave Requests</h2>
+                        <p>View a list of leave requests for the specified period.</p>
+                    </AdminTitle>
+                    <ManageDiv>
+                        <ManageLeave />
+                    </ManageDiv>
+                    <AdminInputs>
                         <div>
                             <label htmlFor="period">Leave Period</label>
                             <select name="period" id="period" onChange={this.handleChange} value={period}>
@@ -144,34 +156,74 @@ class ViewLeaveForm extends Component {
                                 })}
                             </select>
                         </div>
-                    </Inputs>
-                    <Button color="blue">Display Requests</Button>
+                        <div>
+                            <label htmlFor="shift">Shift</label>
+                            <select name="shift" id="shift" onChange={this.handleChange} value={shift}>
+                                <option value="None">Select Shift</option>
+                                <option value="1">1st Shift</option>
+                                <option value="2">2nd Shift</option>
+                                <option value="3">3rd Shift</option>
+                            </select>
+                        </div>
+                    </AdminInputs>
+                    <Button color="light-blue">Display Requests</Button>
                 </FormEl>
                 <PoseGroup>
-                    {submitted && <ViewLeaveTable key="table" results={results} date={date} getTableData={this.getTableData} />}
+                    {submitted && <AdminViewLeaveTable key="table" date={date} shift={shift} results={results} getTableData={this.getTableData} />}
                 </PoseGroup>
             </React.Fragment>
         );
     }
 }
 
-ViewLeaveForm.contextType = LayoutContext;
+AdminViewLeaveForm.contextType = LayoutContext;
 
-export default ViewLeaveForm;
+export default AdminViewLeaveForm;
 
-const ViewGraphic = styled(View)`
-    position: absolute;
-    left: 145px;
-    top: -120px;
+const AdminTitle = styled(Title)`
+    h2 {
+        color: var(--light-blue);
+    }
+`;
+
+const AdminInputs = styled(Inputs)`
+    >div {
+        &:first-of-type {
+            grid-column: 1/3;
+            @media (max-width: 900px) {
+                grid-column: 1/5;
+            }
+        }
+        &:nth-of-type(2) {
+            grid-column: 3;
+            @media (max-width: 900px) {
+                grid-column: 1/5;
+            }
+        }
+        &:nth-of-type(3) {
+            grid-column: 4;
+            @media (max-width: 900px) {
+                grid-column: 1/5;
+            }
+        }
+    }
+`;
+
+const ManageDiv = styled.div`
+    position: relative;
 
     @media (max-width: 800px) {
         display: none;
     }
-    @media (max-width: 1100px) {
-        left: 50px;
-    }
 `;
 
-const ViewDiv = styled.div`
-    position: relative
+const ManageLeave = styled(Manage)`
+    position: absolute;
+    left: 190px;
+    top: -230px;
+    width: 250px;
+
+    @media (max-width: 1000px) {
+        left: 100px;
+    }
 `;

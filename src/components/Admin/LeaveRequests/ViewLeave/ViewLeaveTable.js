@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import PropTypes from 'prop-types';
 import { LayoutContext } from '../../../../LayoutContext';
-import { Table, TableLabel, TableHeading, TableRow } from '../ClockMetrics/MetricsTableComponents';
+import { Table, TableLabel, TableHeading, TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
 import ExpandedRow from './ExpandedRow';
 
 import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';

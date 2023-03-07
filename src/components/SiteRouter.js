@@ -33,10 +33,10 @@ import Add from './Admin/AcctMgmt/Add';
 import HDTestTemplates from './Email/HDTestTemplates';
 
 import LeaveRequests from './Admin/LeaveRequests';
-import RequestLeave from './Admin/SchedMgmt/RequestLeave/RequestLeave';
-import ViewLeave from './Admin/SchedMgmt/ViewLeave/ViewLeave';
-import AdminViewLeave from './Admin/SchedMgmt/AdminViewLeave/AdminViewLeave';
-import AdminLeave from './Admin/SchedMgmt/AdminLeave/AdminLeave';
+import RequestLeave from './Admin/LeaveRequests/RequestLeave/RequestLeave';
+import ViewLeave from './Admin/LeaveRequests/ViewLeave/ViewLeave';
+import AdminViewLeave from './Admin/LeaveRequests/AdminViewLeave/AdminViewLeave';
+import AdminLeave from './Admin/LeaveRequests/AdminLeave/AdminLeave';
 
 class SiteRouter extends Component {
     render() {
