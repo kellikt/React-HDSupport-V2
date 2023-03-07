@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import { FormEl, Title, Inputs } from './ViewLeaveComponents';
 import Button from '../../../Button';
-import { createYears } from '../../utils';
 import ViewLeaveTable from './ViewLeaveTable';
 import { ReactComponent as View } from '../../../../images/Admin/Leave/ViewLeave.svg';
 import { LayoutContext } from '../../../../LayoutContext';
@@ -22,6 +21,18 @@ class ViewLeaveForm extends Component {
         };
     }
 
+    createYears() {
+        let currentYear = new Date().getFullYear();
+        const years = [];
+
+        while (currentYear >= 2023) {
+            years.push(currentYear);
+            currentYear--;
+        }
+
+        return years;
+    }
+
     handleChange = event => {
         const value = event.target.value;
         const name = event.target.name;
@@ -32,27 +43,27 @@ class ViewLeaveForm extends Component {
         });
 
         let year;
-        if (name == "year") {
+        if (name === "year") {
             year = value;
         } else {
             year = this.state.year;
         }
 
         let period;
-        if (name == "period") {
+        if (name === "period") {
             period = value;
         } else {
             period = this.state.period;
         }
 
-        if (period == 1) {
+        if (parseInt(period) === 1) {
             const beginDateString = `${year}-01-01`;
             const endDateString = `${year}-06-30`;
             this.setState({ 
                 date: [beginDateString, endDateString],
                 submitted: false,
             });
-        } else if (period == 2) {
+        } else if (parseInt(period) === 2) {
             const beginDateString = `${year}-07-01`;
             const endDateString = `${year}-12-31`;
             this.setState({ 
@@ -95,7 +106,7 @@ class ViewLeaveForm extends Component {
     render() {
         const { period, year, submitted, date, results } = this.state;
 
-        const years = createYears();
+        const years = this.createYears();
 
         return (
             <React.Fragment>
@@ -104,7 +115,9 @@ class ViewLeaveForm extends Component {
                         <h2>View Your Leave Requests</h2>
                         <p>View your leave requests for the specified period.</p>
                     </Title>
-                    <ViewGraphic />
+                    <ViewDiv>
+                        <ViewGraphic />
+                    </ViewDiv>
                     <Inputs>
                         <div>
                             <label htmlFor="period">Leave Period</label>
@@ -148,5 +161,17 @@ export default ViewLeaveForm;
 
 const ViewGraphic = styled(View)`
     position: absolute;
-    left: 450px;
+    left: 145px;
+    top: -120px;
+
+    @media (max-width: 800px) {
+        display: none;
+    }
+    @media (max-width: 1100px) {
+        left: 50px;
+    }
+`;
+
+const ViewDiv = styled.div`
+    position: relative
 `;

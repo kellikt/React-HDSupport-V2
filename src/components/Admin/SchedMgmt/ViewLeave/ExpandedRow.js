@@ -47,6 +47,7 @@ class ExpandedRow extends Component {
                     name="beginDate"
                     value={beginDate}
                     onChange={this.handleInput}
+                    disabled={status === 0 ? false : true}
                 />
                 <TextInput
                     id="endDate"
@@ -54,6 +55,7 @@ class ExpandedRow extends Component {
                     name="endDate"
                     value={endDate}
                     onChange={this.handleInput}
+                    disabled={status === 0 ? false : true}
                 />
                 <TextInput
                     id="comment"
@@ -61,6 +63,7 @@ class ExpandedRow extends Component {
                     name="comment"
                     value={comment}
                     onChange={this.handleInput}
+                    disabled={status === 0 ? false : true}
                 />
                 <ButtonContainer>
                     {status !== 2 ?
@@ -68,7 +71,7 @@ class ExpandedRow extends Component {
                             <Button color="blue" onClick={this.handleEdit}>
                                 Edit
                             </Button>
-                            <Button color="blue" onClick={this.handleDelete}>
+                            <Button color="red" onClick={this.handleDelete}>
                                 Delete
                             </Button>
                         </div>
@@ -98,13 +101,19 @@ const Row = styled(TableRow)`
 `;
 
 const ButtonContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    button {
-        &:first-of-type {
-            margin-bottom: 12px;
+    >div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+            width: 100%;
+            max-width: 250px;
+            &:first-of-type {
+                margin-bottom: 12px;
+            }
         }
+    }
+    >p {
+        margin-top: 30px;
     }
 `;

@@ -17,15 +17,12 @@ class AdminLeave extends Component {
         const { results } = this.state;
 
         const checkConflicts = results.filter((result) => {
-            console.log(result);
             if (((beginDate >= result.begin_date && beginDate <= result.end_date) || (endDate >= result.begin_date && endDate <= result.end_date) || (beginDate <= result.begin_date && endDate >= result.end_date)) && result.lid !== lid) {
                 return true;
             } else {
                 return false;
             }
         });
-
-        console.log(checkConflicts);
 
         if (checkConflicts.length > 0) {
             return checkConflicts;
@@ -50,7 +47,6 @@ class AdminLeave extends Component {
                 shift: shift,
             });
             const data = await Promise.all([ current, total ]);
-            console.log(data);
             if (!(data === 0)) {
                 this.setState({
                     currentLeave: data[0].data,
@@ -112,7 +108,7 @@ class AdminLeave extends Component {
                 comment: comment,
                 status: 0,
             });
-            if (approve == 2) {
+            if (approve === 2) {
                 const { username } = this.props;
                 const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-schedule-changes.php`, {
                     username: username,
@@ -204,6 +200,11 @@ const Title = styled.div`
         margin-bottom: 32px;
         margin-right: 0;
         margin-left: auto;
+        @media (max-width: 500px) {
+            grid-column: 1;
+            margin-right: auto;
+            margin-left: 0;
+        }
     }
     >span:nth-child(3) {
         grid-column: 2;

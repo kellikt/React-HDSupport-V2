@@ -90,8 +90,7 @@ class RequestLeaveForm extends Component {
     componentWillUnmount() {
         window.clearTimeout(this.timeoutId);
     }
-
-    componentWillMount() {
+    componentDidMount() {
         // determine current leave period
         const currentDate = new Date();
 
@@ -166,4 +165,8 @@ const RequestInputs = styled(DateInputs)`
     h3 {
         color: var(--pink);
     }
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+    }
 `;
+

@@ -8,6 +8,7 @@ import TextInput from '../../../TextInput';
 
 import { TableHeading, TableRow } from '../ClockMetrics/MetricsTableComponents';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
+import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
 
 class LeaveForm extends Component {
 
@@ -36,54 +37,49 @@ class LeaveForm extends Component {
         const { beginDate, endDate, firstName, conflict, priority, shift } = this.props;
         const start = new Date(`${beginDate} GMT-1000`);
         const end = new Date(`${endDate} GMT-1000`);
-        const days = (((end.getTime()/1000) - (start.getTime()/1000)) / 3600 / 24) + 1;
         let events = [];
-        let curr = start;
 
-        for (let i = 0; i < days; i++) {
-            
-            let position = 0;
+        let position = 0;
 
-            // get position
-
-            for (let j = 0; j < conflict.length; j++) {
-                const conflictStart = new Date(`${conflict[j].begin_date} GMT-1000`);
-                const conflictEnd = new Date(`${conflict[j].end_date} GMT-1000`);
-
-                if ((curr >= conflictStart && curr <= conflictEnd) || (curr >= conflictStart && curr <= conflictEnd) || (curr <= conflictStart && curr >= conflictEnd)) {
-                    if (priority > conflict[j].priority) {
-                        position++;
-                    }
-                }
+        for (let j = 0; j < conflict.length; j++) {
+            if (priority > conflict[j].priority) {
+                position++;
             }
-
-            // append gcal w position
-            const startDay = `${curr.getDate()}`.padStart(2, "0");
-            const startMonth = `${curr.getMonth() + 1}`.padStart(2, "0");
-            let startTime, endTime;
-
-            if (parseInt(shift) === 1) {
-                startTime = `T${170000 + (position * 10000)}Z`;
-                endTime = `T${180000 + (position * 10000)}Z`;
-            } else if (parseInt(shift) === 2) {
-                startTime = `T${250000 + (position * 10000)}Z`;
-                endTime = `T${260000 + (position * 10000)}Z`;
-            } else if (parseInt(shift) === 3) {
-                startTime = `T${160000 - (position * 10000)}Z`;
-                endTime = `T${170000 - (position * 10000)}Z`;
-            }
-
-            const gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+${curr.getMonth() + 1}/${curr.getDate()}&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${start.getFullYear()}${startMonth}${startDay}${endTime}`;
-            const options = {
-                day: 'numeric',
-                month: 'short'
-            };
-
-            const day = { dayString: curr.toLocaleDateString('en-GB', options), link: gcal};
-            events.push(day);
-            // increment to next day
-            curr.setDate(curr.getDate() + 1);
         }
+
+        // append gcal w greatest position
+        const startDay = `${start.getDate()}`.padStart(2, "0");
+        const startMonth = `${start.getMonth() + 1}`.padStart(2, "0");
+        const endDay = `${end.getDate()}`.padStart(2, "0");
+        const endMonth =`${end.getMonth() + 1}`.padStart(2, "0");
+        let startTime, endTime;
+
+        if (parseInt(shift) === 1) {
+            startTime = `T${170000 + (position * 10000)}Z`;
+            endTime = `T${180000 + (position * 10000)}Z`;
+        } else if (parseInt(shift) === 2) {
+            startTime = `T${250000 + (position * 10000)}Z`;
+            endTime = `T${260000 + (position * 10000)}Z`;
+        } else if (parseInt(shift) === 3) {
+            startTime = `T${160000 - (position * 10000)}Z`;
+            endTime = `T${170000 - (position * 10000)}Z`;
+        }
+
+        let gcal;
+        if (beginDate === endDate) {
+            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+${start.getMonth() + 1}/${start.getDate()}`;
+        } else {
+            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}`;
+        }
+        gcal += `&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${end.getFullYear()}${endMonth}${endDay}${endTime}`;
+        const options = {
+            day: 'numeric',
+            month: 'short'
+        };
+
+        const day = { dayString: `${start.toLocaleDateString('en-GB', options)} - ${end.toLocaleDateString('en-GB', options)}`, link: gcal};
+        events.push(day);
+
         return events;
     }
 
@@ -113,25 +109,8 @@ class LeaveForm extends Component {
     }
 
     render() {
-        const { comment, beginDate, endDate, firstName, conflict, status } = this.props;
+        const { comment, beginDate, endDate, conflict, status } = this.props;
         const { links } = this.state;
-        const start = new Date(beginDate);
-        const end = new Date(endDate);
-
-        const startDay = `${start.getDate() + 1}`.padStart(2, "0");
-        const startMonth = `${start.getMonth() + 1}`.padStart(2, "0");
-
-        const endDay = `${end.getDate() + 1}`.padStart(2, "0");
-        const endMonth = `${end.getMonth() + 1}`.padStart(2, "0");
-
-        let link = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+`;
-
-        if (beginDate != endDate) {
-            link += `${start.getMonth() + 1}/${start.getDate() + 1}-${start.getMonth() + 1}/${start.getDay()}&dates=${start.getFullYear()}${startMonth}${startDay}T170000Z/${end.getFullYear()}${endMonth}${endDay}T170000Z`;
-        } else {
-            link+= `${start.getMonth() + 1}/${start.getDate() + 1}&dates=${start.getFullYear()}${startMonth}${startDay}T170000Z/${end.getFullYear()}${endMonth}${endDay}T170000Z`;
-        }
-
         
         return (
             <Request>
@@ -141,10 +120,11 @@ class LeaveForm extends Component {
                         {conflict.map((result) => {
                             return (
                                 <ConflictForm>
-                                    <span>{result.first_name} {result.last_name}</span>
-                                    <span>Priority: {result.priority}</span>
-                                    <span>Begin Date: {result.begin_date}</span>
-                                    <span>End Date: {result.end_date}</span>    
+                                    <RedCross/>
+                                    <span><strong>{result.first_name} {result.last_name}</strong></span>
+                                    <span><strong>Priority:</strong> {result.priority}</span>
+                                    <span><strong>Begin Date:</strong> {result.begin_date}</span>
+                                    <span><strong>End Date:</strong> {result.end_date}</span>    
                                 </ConflictForm>
                             );
                         })}
@@ -163,6 +143,7 @@ class LeaveForm extends Component {
                             label="Start Date"
                             value={beginDate}
                             name="startDate"
+                            disabled
                         />
                         <Dash>-</Dash>
                         <TextInput 
@@ -170,10 +151,12 @@ class LeaveForm extends Component {
                             label="End Date"
                             value={endDate}
                             name="endDate"
+                            disabled
                         />
                     </RequestedLeave>
-
+                    <label>Comment</label>
                     <textarea
+                        id="comment"
                         name="comment"
                         ref={this.textarea}
                         value={comment}
@@ -237,6 +220,11 @@ LeaveForm.propTypes = {
 
 export default LeaveForm;
 
+const RedCross = styled(Cross)`
+    width: 50px;
+    height: 50px;
+`;
+
 const Dash = styled.div`
     line-height: 120px;
 `;
@@ -249,12 +237,22 @@ const RequestedLeave = styled.div`
     grid-template-columns: 1fr auto 1fr;
     grid-column-gap: 10px; 
 
+    @media (max-width: 500px) {
+        grid-column: 1;
+    }
 `;
 
 const Buttons = styled.div`
     grid-column: 3/-1
     flex-direction: row;
     display: flex;
+
+    @media (max-width: 1220px) {
+        grid-column: 4;
+    }
+    @media (max-width: 500px) {
+        grid-column: 1;
+    }
 `;
 
 const Request = styled.div`
@@ -273,6 +271,13 @@ const Request = styled.div`
         grid-column: 2;
         margin-right: 0;
         margin-left: auto;
+        
+        @media (max-width: 1220px) {
+            margin-left: 12px;
+        }
+    }
+    @media (max-width: 1220px) {
+        grid-template-columns: 1fr;
     }
 `;
 
@@ -285,6 +290,35 @@ const Info = styled.div`
     textarea {
         grid-column: 1/-1;
         cursor: not-allowed;
+
+        @media (max-width: 500px) {
+            grid-column: 1;
+        }
+    }
+
+    >label {
+        line-height: 0.5;
+        font-weight: 400;
+        font-size: 14px;
+        color: var(--dark-grey);
+        margin-bottom: 2px;
+        padding-left: 10px;
+
+        @media (max-width: 500px) {
+            grid-column: 1;
+        }
+    }
+    >button {
+        grid-column: 3/5;
+    }
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+    }
+
+    >button {
+        @media (max-width: 500px) {
+            grid-column: 1;
+        }
     }
 `;
 
@@ -292,6 +326,9 @@ const ConflictSection = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     grid-row-gap: 10px;
+    @media (max-width: 500px) {
+        grid-column: 1;
+    }
 `;
 
 const ConflictForm = styled.div`
@@ -303,6 +340,9 @@ const ConflictForm = styled.div`
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 const Heading = styled(TableHeading)`
@@ -339,6 +379,5 @@ const NoConflict = styled.div`
     }
     >svg {
         width: 250px;
-
     }
 `;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import PropTypes from 'prop-types';
 import { Table, TableLabel, TableHeading, TableRow } from '../ClockMetrics/MetricsTableComponents';
@@ -57,10 +56,10 @@ class AdminViewLeaveTable extends Component {
                                 {result.map((res, index) => {
                                     return (
                                         <div>
-                                            <span>{index == 0  ? <p>{res.priority}</p> : ''}</span>
-                                            <span>{index == 0  ? <p>{res.username}</p> : ''}</span>
+                                            <span>{index === 0  ? <p>{res.priority}</p> : ''}</span>
+                                            <span>{index === 0  ? <p>{res.username}</p> : ''}</span>
                                             <span>{res.begin_date} - {res.end_date}</span>
-                                            <span>{this.getConflict(res.begin_date, res.end_date) == 'yes' ? 
+                                            <span>{this.getConflict(res.begin_date, res.end_date) === 'yes' ? 
                                                 <Check />
                                             : <Cross />}</span>
                                             <span>{function() {
@@ -71,6 +70,8 @@ class AdminViewLeaveTable extends Component {
                                                         return <Cross />;
                                                     case 2:
                                                         return <Check />;
+                                                    default:
+                                                        return <p>?</p>;
                                                 }
                                             }()}</span>
                                         </div>

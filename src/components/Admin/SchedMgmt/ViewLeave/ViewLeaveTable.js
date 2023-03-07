@@ -91,7 +91,7 @@ class ViewLeaveTable extends Component {
                     <span>Begin Date</span>
                     <span>End Date</span>
                     <span>Comment</span>
-                    {focused == -1 ? <span>Approval Status</span> 
+                    {focused === -1 ? <span>Approval Status</span> 
                     : 
                     <span>Action</span>
                     }
@@ -124,6 +124,8 @@ class ViewLeaveTable extends Component {
                                             return <Cross />;
                                         case 2:
                                             return <LeaveCheck />;
+                                        default:
+                                            return <p>?</p>;
                                     }
                                 }()}</span>
                             </Row>

@@ -4,7 +4,6 @@ import { PoseGroup } from 'react-pose';
 import axios from 'axios';
 
 import { FormEl, Title, Inputs } from '../ViewLeave/ViewLeaveComponents';
-import { createYears } from '../../utils';
 
 import Button from '../../../Button';
 import AdminViewLeaveTable from './AdminViewLeaveTable';
@@ -26,6 +25,18 @@ class AdminViewLeaveForm extends Component {
         };
     }
 
+    createYears() {
+        let currentYear = new Date().getFullYear();
+        const years = [];
+
+        while (currentYear >= 2023) {
+            years.push(currentYear);
+            currentYear--;
+        }
+
+        return years;
+    }
+
     handleChange = event => {
         const value = event.target.value;
         const name = event.target.name;
@@ -36,27 +47,27 @@ class AdminViewLeaveForm extends Component {
         });
 
         let year;
-        if (name == "year") {
+        if (name === "year") {
             year = value;
         } else {
             year = this.state.year;
         }
 
         let period;
-        if (name == "period") {
+        if (name === "period") {
             period = value;
         } else {
             period = this.state.period;
         }
 
-        if (period == 1) {
+        if (parseInt(period) === 1) {
             const beginDateString = `${year}-01-01`;
             const endDateString = `${year}-06-30`;
             this.setState({ 
                 date: [beginDateString, endDateString],
                 submitted: false,
             });
-        } else if (period == 2) {
+        } else if (parseInt(period) === 2) {
             const beginDateString = `${year}-07-01`;
             const endDateString = `${year}-12-31`;
             this.setState({ 
@@ -91,7 +102,7 @@ class AdminViewLeaveForm extends Component {
             let res = [];
 
             usernames.forEach(function(user) {
-                res.push(data.filter(item => item.username == user));
+                res.push(data.filter(item => item.username === user));
             });
 
             if (!(data === 0)) {
@@ -107,7 +118,7 @@ class AdminViewLeaveForm extends Component {
     render() {
         const { period, year, submitted, shift, date, results } = this.state;
 
-        const years = createYears();
+        const years = this.createYears();
 
         return (
             <React.Fragment>
@@ -116,7 +127,9 @@ class AdminViewLeaveForm extends Component {
                         <h2>View Leave Requests</h2>
                         <p>View a list of leave requests for the specified period.</p>
                     </AdminTitle>
-                    <ManageLeave />
+                    <ManageDiv>
+                        <ManageLeave />
+                    </ManageDiv>
                     <AdminInputs>
                         <div>
                             <label htmlFor="period">Leave Period</label>
@@ -177,18 +190,40 @@ const AdminInputs = styled(Inputs)`
     >div {
         &:first-of-type {
             grid-column: 1/3;
+            @media (max-width: 900px) {
+                grid-column: 1/5;
+            }
         }
         &:nth-of-type(2) {
             grid-column: 3;
+            @media (max-width: 900px) {
+                grid-column: 1/5;
+            }
         }
         &:nth-of-type(3) {
             grid-column: 4;
+            @media (max-width: 900px) {
+                grid-column: 1/5;
+            }
         }
+    }
+`;
+
+const ManageDiv = styled.div`
+    position: relative;
+
+    @media (max-width: 800px) {
+        display: none;
     }
 `;
 
 const ManageLeave = styled(Manage)`
     position: absolute;
-    left: 480px;
+    left: 190px;
+    top: -230px;
     width: 250px;
+
+    @media (max-width: 1000px) {
+        left: 100px;
+    }
 `;
