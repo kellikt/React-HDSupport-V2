@@ -8,7 +8,7 @@
         "@slack/socket-mode": "^1.3.0",
         "@slack/web-api": "^6.7.2",
         "@wojtekmaj/react-daterange-picker": "^2.0.0",
-        "axios": "^0.18.0",
+        "axios": "1.3.4",
         "konami": "^1.6.2",
         "prop-types": "^15.6.2",
         "react": "^16.7.0",
@@ -16,10 +16,26 @@
         "react-flip-toolkit": "^6.2.1",
         "react-media": "^1.9.2",
         "react-pose": "^4.0.2",
-        "react-scripts": "2.1.1",
         "styled-components": "^4.1.1",
-        "sweetalert2": "^11.7.3"
+        "sweetalert2": "11.4.8",
+        "web-vitals": "^2.1.4",
+        "workbox-background-sync": "^6.5.4",
+        "workbox-broadcast-update": "^6.5.4",
+        "workbox-cacheable-response": "^6.5.4",
+        "workbox-core": "^6.5.4",
+        "workbox-expiration": "^6.5.4",
+        "workbox-google-analytics": "^6.5.4",
+        "workbox-navigation-preload": "^6.5.4",
+        "workbox-precaching": "^6.5.4",
+        "workbox-range-requests": "^6.5.4",
+        "workbox-routing": "^6.5.4",
+        "workbox-strategies": "^6.5.4",
+        "workbox-streams": "^6.5.4"
     },
+    "devDependencies": {
+        "react-scripts": "5.0.1"
+    },
+    "proxy": "http://localhost/hdsupport-server/routes",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
@@ -27,7 +43,6 @@
         "eject": "react-scripts eject"
     },
     "homepage": "/help/hdsupport/index.php",
-    "proxy": "http://localhost/hdsupport-server/routes",
     "eslintConfig": {
         "extends": "react-app"
     },

@@ -6,7 +6,7 @@ import { FormEl, Title, Inputs } from './MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Metrics.svg';
 import Button from '../../../Button';
 import MetricsTable from './MetricsTable';
-import { periods } from '../../payPeriods.json';
+import periods from '../../payPeriods';
 import { createYears } from '../../utils';
 
 class MetricsForm extends Component {
