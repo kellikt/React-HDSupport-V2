@@ -7,7 +7,7 @@ import { FormEl, Title } from './AdminFormComponents';
 import { Inputs } from '../ClockMetrics/MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Sheetadmin.svg';
 import { createYears } from '../../utils';
-import { periods } from '../../payPeriods.json';
+import periods from '../../payPeriods';
 import Background from '../../../Background';
 
 class AdminForm extends Component {

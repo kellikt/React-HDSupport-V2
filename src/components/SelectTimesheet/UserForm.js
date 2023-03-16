@@ -6,7 +6,7 @@ import { FormEl, Title } from './UserFormComponents';
 import { Inputs } from '../Admin/SchedMgmt/ClockMetrics/MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../images/Admin/Sched/Sheetadmin.svg';
 import { createYears } from '../Admin/utils';
-import { periods } from '../Admin/payPeriods.json';
+import periods from '../Admin/payPeriods';
 import Background from '../Background';
 
 class UserForm extends Component {
