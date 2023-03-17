@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import posed, { PoseGroup } from 'react-pose';
+import { motion, AnimatePresence } from 'framer-motion';
 
 class Snackbar extends Component {
     render() {
         const { heading, message, onClick, handler, isError } = this.props;
 
         return (
-            <PoseGroup>
+            <AnimatePresence>
                 {handler && (
-                    <StyledContainer key="snack" isError={isError}>
+                    <StyledContainer 
+                    initial={{
+                        y: 50,
+                        opacity: 0,
+                    }}
+                    animate={{
+                        y: 0,
+                        opacity: 1,
+                        transition: {
+                            ease: 'circOut',
+                            duration: 0.3,
+                        },
+                    }}
+                    exit={{
+                        y: 50,
+                        opacity: 0,
+                        transition: {
+                            ease: 'circOut',
+                            duration: 0.3,
+                        }
+                    }}
+                    key="snack" isError={isError}>
                         <div>
                             <h4>{heading}</h4>
                             <p>{message}</p>
@@ -20,7 +41,7 @@ class Snackbar extends Component {
                         </button>
                     </StyledContainer>
                 )}
-            </PoseGroup>
+            </AnimatePresence>
         );
     }
 }
@@ -39,23 +60,7 @@ Snackbar.propTypes = {
 
 export default Snackbar;
 
-const Container = posed.div({
-    enter: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            ease: 'circOut',
-            default: { duration: 300 },
-        },
-    },
-    exit: {
-        opacity: 0,
-        y: 50,
-        transition: { ease: 'circOut', duration: 300 },
-    },
-});
-
-const StyledContainer = styled(Container)`
+const StyledContainer = styled(motion.div)`
     display: flex;
     justify-content: space-between;
     background-color: #282c34;

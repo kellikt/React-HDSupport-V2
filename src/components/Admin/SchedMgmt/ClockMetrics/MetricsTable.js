@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { AnimatePresence } from 'framer-motion';
 
 import { Table, TableLabel, TableHeading, TableRow, Timestamp, Comments, Location } from './MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';
@@ -16,6 +17,7 @@ class MetricsTable extends Component {
     }
 
     async componentDidMount() {
+        console.log('mounted?');
         const { student, year, payPeriod } = this.props;
         const splitDate = payPeriod.split(',');
 
@@ -44,8 +46,29 @@ class MetricsTable extends Component {
         let stripeCounter = -1;
         let stripeFlag = false;
 
+        
+
         return (
-            <Table {...this.props}>
+            <Table {...this.props} 
+            initial={{
+                y: 50,
+                opacity: 0,
+            }} 
+            animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                    when: 'beforeChildren',
+                    ease: 'circOut',
+                    duration: 0.5,
+                },
+            }}
+            exit={{
+                y: 50,
+                opacity: 0,
+                transition: { ease: 'circOut', duration: 0.5 },
+            }}
+            >
                 <TableLabel>
                     <TableLogo />
                     <div>

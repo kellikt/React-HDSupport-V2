@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 
 import { FormEl, Title, Inputs } from './MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Metrics.svg';
@@ -26,10 +26,12 @@ class MetricsForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+        console.log('did i submit');
 
         this.setState({
             searched: true,
         });
+        console.log(this.state.searched);
     };
 
     handleChange = event => {
@@ -146,9 +148,9 @@ class MetricsForm extends Component {
                     </Inputs>
                     <Button color="light-blue">Display Actions</Button>
                 </FormEl>
-                <PoseGroup>
+                <AnimatePresence>
                     {searched && <MetricsTable key="table" student={selectedUser} year={year} payPeriod={payPeriod} />}
-                </PoseGroup>
+                </AnimatePresence>
             </React.Fragment>
         );
     }
