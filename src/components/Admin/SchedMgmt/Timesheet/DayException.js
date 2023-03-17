@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import posed from 'react-pose';
+import { motion } from 'framer-motion';
 
 import { ReactComponent as Warning } from '../../../../images/icons/RedExclamation.svg';
 import { ReactComponent as GreenCheck } from '../../../../images/icons/GreenCheck.svg';
@@ -186,10 +186,18 @@ DayException.propTypes = {
 
 export default DayException;
 
-const AnimatedDay = posed.form({
-    enter: { opacity: 1, delay: 300 },
-    exit: { opacity: 0 },
-});
+const AnimatedDay = () => {
+    const variants = {
+        enter: { opacity: 1, delay: 300 },
+        exit: { opacity: 0 },
+    }
+
+    return (
+        <motion.form 
+            variants={varaints}
+        />
+    )
+}
 
 const Container = styled(AnimatedDay)`
     display: flex;

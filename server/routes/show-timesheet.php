@@ -44,6 +44,7 @@ if ($_SESSION['username'] == $passed_username || $roles->administrator == "yes" 
   require "./timesheet_functions.php";
   require "./timesheet_ver_functions.php";
   require "./calc_timesheet.php";
+
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

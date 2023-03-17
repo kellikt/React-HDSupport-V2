@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { Table, TableLabel, TableHeading, TableRow, Location } from '../ClockMetrics/MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';
@@ -88,7 +89,26 @@ class DisplayChangesTable extends Component {
         const endDateString = `${date[1].getMonth() + 1}/${date[1].getDate()}/${date[1].getFullYear()}`;
 
         return (
-            <Table {...this.props}>
+            <Table {...this.props}
+            initial={{
+                y: 50,
+                opacity: 0,
+            }} 
+            animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                    when: 'beforeChildren',
+                    ease: 'circOut',
+                    duration: 0.5,
+                },
+            }}
+            exit={{
+                y: 50,
+                opacity: 0,
+                transition: { ease: 'circOut', duration: 0.5 },
+            }}
+            >
                 <Label>
                     <TableLogo />
                     <div>
