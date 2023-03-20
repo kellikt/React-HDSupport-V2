@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import {
+    useParams
+} from '@reach/router';
 
 import Container from '../Admin/Container';
 import Breadcrumb from '../Admin/Breadcrumb';
@@ -10,150 +13,142 @@ import { FormEl, Title } from '../Admin/AcctMgmt/FormComponents';
 import Button from '../Button';
 import SnackbarPortal from '../SnackbarPortal';
 
-class EditTemplate extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            template: '',
-            subject: '',
-            from: '',
-            to: '',
-            content: '',
-            submitted: false,
-            snackHandler: false,
-        }
-        this.textarea = React.createRef();
-    }
+function EditTemplate() {
 
-    handleChange = event => {
-        const value = event.target.value;
-        const name = event.target.name;
+    const { tid } = useParams();
 
-        this.setState({
-            [name]: value,
-        });
-    }
+    const [form, setForm] = useState({
+        template: '',
+        subject: '',
+        from: '',
+        to: '',
+        content: '',
+        submitted: false,
+        snackHandler: false,
+    });
 
-    handleSubmit = async event => {
+    const [snack, setSnack] = useState(false);
+
+    const textarea = React.createRef();
+
+    const handleChange = event => {
         event.preventDefault();
+        setForm({
+            ...form,
+            [event.target.name]: event.target.value
+        });
+    };
 
-        const { tid } = this.props;
-
-        const { template, subject, from, to, content } = this.state;
+    const handleSubmit = async event => {
+        event.preventDefault();
 
         try {
             const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-email-template.php`, {
-                tname: template,
-                toAddress: to,
-                fromAddress: from,
-                subject: subject,
-                content: content,
+                tname: form.template,
+                toAddress: form.to,
+                fromAddress: form.from,
+                subject: form.subject,
+                content: form.content,
                 tid: tid,
             });
-            this.setState({
-                snackHandler: true,
-            });
-            this.timerId = setTimeout(() => {
-                this.handleSnack();
+            setSnack(true);
+            const timerId = setTimeout(() => {
+                handleSnack();
             }, 3000);
-            console.log(request.data);
         } catch(error) {
             console.log(error);
         }
-    }
+    };
 
-    handleSnack = () => {
-        this.setState({
-            snackHandler: false,
-        });
-    }
+    const handleSnack = () => {
+        setSnack(false);
+    };
 
-    componentWillUnmount() {
-        clearTimeout(this.timerId);
-    }
-
-    async componentDidMount() {
-        const { tid } = this.props;
-        try {
+    useEffect(() => {
+        const fetchData = async() => {
             const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-email-templates.php?tid=${tid}`);
             const data = request.data;
-            this.setState({
+            let stateObj = {
                 template: data[0].tname,
                 subject: data[0].subject,
                 from: data[0].from_address,
                 to: data[0].to_address,
                 content: data[0].content,
-            });
-        } catch(error) {
+                submitted: false,
+                snackHandler: false,
+            }
+            setForm(stateObj);
+        }
+
+        try {
+            fetchData();
+        } catch (error) {
             console.log(error);
         }
-    }
+    }, []); 
 
-    render() {
-        const { tid } = this.props;
-        const { snackHandler, template, subject, from, to, content } = this.state;
-        const links = [{ title: 'HD Training Templates', to: '/hd-training'}, { title: `Edit ${template} Template`, to: `/edit-template/${tid}` }];
+    const links = [{ title: 'HD Training Templates', to: '/hd-training'}, { title: `Edit ${form.template} Template`, to: `/edit-template/${tid}` }];
 
-        return (
-            <Container>
-                <h1>Edit Training Template</h1>
-                <Breadcrumb links={links} color="light-blue" />
-                <EditForm onSubmit={this.handleSubmit}>
-                    <Title>
-                        <h2>Edit {template} Template</h2>
-                        <p>Make modifications to the {template} template</p>
-                    </Title>
-                    <TextInput
-                        id="template"
-                        label="Template Name"
-                        placeholder="Template Name"
-                        onChange={this.handleChange}
-                        value={template}
-                        name="template"
-                    />
-                    <TextInput
-                        id="subject"
-                        label="Subject"
-                        placeholder="Subject"
-                        onChange={this.handleChange}
-                        value={subject}
-                        name="subject"
-                    />
-                    <TextInput
-                        id="from"
-                        label="Email Sender (From:)"
-                        placeholder="Email Sender"
-                        onChange={this.handleChange}
-                        value={from}
-                        name="from"
-                    />
-                    <TextInput 
-                        id="to"
-                        label="Email Recipient (To:)"
-                        placeholder="Email Recipient"
-                        onChange={this.handleChange}
-                        value={to}
-                        name="to"
-                    />
-                    <textarea
-                        name="content"
-                        ref={this.textarea}
-                        onChange={this.handleChange}
-                        value={content}
-                        placeholder="Email Content"
-                    />
-                    <Button color="light-blue">Save Changes</Button>
-                    <SnackbarPortal 
-                        handler={snackHandler}
-                        message={`You have updated the ${template} template`}
-                        heading="Success!"
-                        onClick={this.handleSnack}
-                    />
-                </EditForm>
-            </Container>
-        );
-    }
-}
+    return (
+        <Container>
+            <h1>Edit Training Template</h1>
+            <Breadcrumb links={links} color="light-blue" />
+            <EditForm onSubmit={handleSubmit}>
+                <Title>
+                    <h2>Edit {form.template} Template</h2>
+                    <p>Make modifications to the {form.template} template</p>
+                </Title>
+                <TextInput
+                    id="template"
+                    label="Template Name"
+                    placeholder="Template Name"
+                    onChange={handleChange}
+                    value={form.template}
+                    name="template"
+                />
+                <TextInput
+                    id="subject"
+                    label="Subject"
+                    placeholder="Subject"
+                    onChange={handleChange}
+                    value={form.subject}
+                    name="subject"
+                />
+                <TextInput
+                    id="from"
+                    label="Email Sender (From:)"
+                    placeholder="Email Sender"
+                    onChange={handleChange}
+                    value={form.from}
+                    name="from"
+                />
+                <TextInput 
+                    id="to"
+                    label="Email Recipient (To:)"
+                    placeholder="Email Recipient"
+                    onChange={handleChange}
+                    value={form.to}
+                    name="to"
+                />
+                <textarea
+                    name="content"
+                    ref={textarea}
+                    onChange={handleChange}
+                    value={form.content}
+                    placeholder="Email Content"
+                />
+                <Button color="light-blue">Save Changes</Button>
+                <SnackbarPortal 
+                    handler={snack}
+                    message={`You have updated the ${form.template} template`}
+                    heading="Success!"
+                    onClick={handleSnack}
+                />
+            </EditForm>
+        </Container>
+    );
+
+};
 
 export default EditTemplate;
 
