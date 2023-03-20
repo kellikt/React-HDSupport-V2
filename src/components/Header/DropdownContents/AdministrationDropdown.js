@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Schedule } from '../../../images/icons/Administration/Schedule.svg';

@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import {
     useParams
-} from '@reach/router';
+} from 'react-router-dom';
 
 import Container from '../Admin/Container';
 import Breadcrumb from '../Admin/Breadcrumb';
