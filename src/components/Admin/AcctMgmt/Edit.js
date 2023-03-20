@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {
+    useParams,
+} from '@reach/router';
 
 import { LayoutContext } from '../../../LayoutContext';
 import Button from '../../Button';
@@ -13,112 +16,126 @@ import { ReactComponent as Personal } from '../../../images/Admin/Acct/EditPerso
 import { ReactComponent as Contact } from '../../../images/Admin/Acct/EditContact.svg';
 import Background from '../../Background';
 
-class Edit extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            roles: {
-                administrator: 'no',
-                helpdesk: 'no',
-                lab: 'no',
-                manager: 'no',
-                staff: 'no',
-                tech: 'no',
-                third_shift: 'no',
-                leapstart: 'no',
-            },
-            info: {
-                first_name: '',
-                last_name: '',
-                username: '',
-                alt_email: '',
-                cell_phone: '',
-                city: '',
-                date_of_employ: '',
-                expired: 0,
-                home_phone: '',
-                other_phone: '',
-                street_address: '',
-                uuid: 0,
-                zipcode: '',
-                uid: 0,
-            },
-            snack: false,
-        };
-    }
+function Edit() {
+    const { username } = useParams();
+    const { roles: { admin }} = useContext(LayoutContext);
+    const [state, setState] = useState({
+        roles: {
+            administrator: 'no',
+            helpdesk: 'no',
+            lab: 'no',
+            manager: 'no',
+            staff: 'no',
+            tech: 'no',
+            third_shift: 'no',
+            leapstart: 'no',
+        },
+        info: {
+            first_name: '',
+            last_name: '',
+            username: '',
+            alt_email: '',
+            cell_phone: '',
+            city: '',
+            date_of_employ: '',
+            expired: 0,
+            home_phone: '',
+            other_phone: '',
+            street_address: '',
+            uuid: 0,
+            zipcode: '',
+            uid: 0,
+        }
+    });
 
-    async componentDidMount() {
-        const { username } = this.props;
+    const [snack, setSnack] = useState(false);
 
-        const rolesRequest = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-roles.php?username=${username}`);
-        const infoRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
-            username: username,
-            uuid: '',
-            firstName: '',
-            lastName: '',
-        });
+    useEffect(() => {
+        const fetchData = async() => {
+            const rolesRequest = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-roles.php?username=${username}`);
+            const infoRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
+                username: username,
+                uuid: '',
+                firstName: '',
+                lastName: '',
+            });
 
-        const response = await Promise.all([rolesRequest, infoRequest]);
-        const data = [response[0].data, response[1].data];
+            const response = await Promise.all([rolesRequest, infoRequest]);
+            const data = [response[0].data, response[1].data];
 
-        this.setState({
-            roles: data[0],
-            info: data[1][0],
-        });
-    }
+            setState({
+                ...state,
+                roles: data[0],
+                info: data[1][0],
+            });
+        }
+        try {
+            fetchData();
+        } catch(error) {
+            console.log(error);
+        }
+    }, []);
 
-    handleChange = (event, type) => {
-        const { info } = this.state;
-
+    const handleChange = (event, type) => {
         switch (type) {
             case 'firstName':
-                this.setState({
-                    info: { ...info, first_name: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, first_name: event.target.value },
                 });
                 break;
             case 'lastName':
-                this.setState({
-                    info: { ...info, last_name: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, last_name: event.target.value },
                 });
                 break;
             case 'address':
-                this.setState({
-                    info: { ...info, street_address: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, street_address: event.target.value },
                 });
                 break;
             case 'city':
-                this.setState({
-                    info: { ...info, city: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, city: event.target.value },
                 });
                 break;
             case 'zip':
-                this.setState({
-                    info: { ...info, zipcode: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, zipcode: event.target.value },
                 });
                 break;
             case 'username':
-                this.setState({
-                    info: { ...info, username: event.target.value.trim() },
+                setState({
+                    ...state,
+                    info: { ...state.info, username: event.target.value.trim() },
                 });
                 break;
             case 'uuid':
-                this.setState({
-                    info: { ...info, uuid: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, uuid: event.target.value },
                 });
                 break;
             case 'nonuh':
-                this.setState({
-                    info: { ...info, alt_email: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, alt_email: event.target.value },
                 });
                 break;
             case 'homephone':
-                this.setState({
-                    info: { ...info, home_phone: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, home_phone: event.target.value },
                 });
                 break;
             case 'cellphone':
-                this.setState({
-                    info: { ...info, cell_phone: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, cell_phone: event.target.value },
                 });
                 break;
             default:
@@ -126,158 +143,175 @@ class Edit extends Component {
         }
     };
 
-    handleCheck = type => {
-        const { roles, info } = this.state;
+    const handleCheck = type => {
 
         switch (type) {
             case 'lab':
-                if (roles.lab === 'yes') {
-                    this.setState({
+                if (state.roles.lab === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             lab: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             lab: 'yes',
                         },
                     });
                 }
                 break;
             case 'helpdesk':
-                if (roles.helpdesk === 'yes') {
-                    this.setState({
+                if (state.roles.helpdesk === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             helpdesk: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             helpdesk: 'yes',
                         },
                     });
                 }
                 break;
             case 'tech':
-                if (roles.tech === 'yes') {
-                    this.setState({
+                if (state.roles.tech === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             tech: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             tech: 'yes',
                         },
                     });
                 }
                 break;
             case 'staff':
-                if (roles.staff === 'yes') {
-                    this.setState({
+                if (state.roles.staff === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             staff: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             staff: 'yes',
                         },
                     });
                 }
                 break;
             case 'third':
-                if (roles.third_shift === 'yes') {
-                    this.setState({
+                if (state.roles.third_shift === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             third_shift: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             third_shift: 'yes',
                         },
                     });
                 }
                 break;
             case 'leapstart':
-                if (roles.leapstart === 'yes') {
-                    this.setState({
+                if (state.roles.leapstart === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             leapstart: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             leapstart: 'yes',
                         },
                     });
                 }
                 break;
             case 'manager':
-                if (roles.manager === 'yes') {
-                    this.setState({
+                if (state.roles.manager === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             manager: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             manager: 'yes',
                         },
                     });
                 }
                 break;
             case 'admin':
-                if (roles.administrator === 'yes') {
-                    this.setState({
+                if (state.roles.administrator === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             administrator: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             administrator: 'yes',
                         },
                     });
                 }
                 break;
             case 'enabled':
-                if (info.expired === 1) {
-                    this.setState({
+                if (state.info.expired === 1) {
+                    setState({
+                        ...state,
                         info: {
-                            ...info,
+                            ...state.info,
                             expired: 0,
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         info: {
-                            ...info,
+                            ...state.info,
                             expired: 1,
                         },
                     });
@@ -288,252 +322,232 @@ class Edit extends Component {
         }
     };
 
-    handleSubmit = async event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-        const { roles, info } = this.state;
-
         try {
             const groups = axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-user-groups.php`, {
-                administrator: roles.administrator,
-                helpdesk: roles.helpdesk,
-                lab: roles.lab,
-                manager: roles.manager,
-                staff: roles.staff,
-                tech: roles.tech,
-                third_shift: roles.third_shift,
-                leapstart: roles.leapstart,
-                username: info.username,
-                uid: info.uid,
+                administrator: state.roles.administrator,
+                helpdesk: state.roles.helpdesk,
+                lab: state.roles.lab,
+                manager: state.roles.manager,
+                staff: state.roles.staff,
+                tech: state.roles.tech,
+                third_shift: state.roles.third_shift,
+                leapstart: state.roles.leapstart,
+                username: state.info.username,
+                uid: state.info.uid,
             });
 
             const userInfo = axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-user.php`, {
-                uuid: info.uuid,
-                firstName: info.first_name,
-                lastName: info.last_name,
-                username: info.username,
-                altEmail: info.alt_email,
-                homePhone: info.home_phone,
-                cellPhone: info.cell_phone,
-                otherPhone: info.other_phone,
-                address: info.street_address,
-                zip: info.zipcode,
-                city: info.city,
-                expired: info.expired,
-                uid: info.uid,
+                uuid: state.info.uuid,
+                firstName: state.info.first_name,
+                lastName: state.info.last_name,
+                username: state.info.username,
+                altEmail: state.info.alt_email,
+                homePhone: state.info.home_phone,
+                cellPhone: state.info.cell_phone,
+                otherPhone: state.info.other_phone,
+                address: state.info.street_address,
+                zip: state.info.zipcode,
+                city: state.info.city,
+                expired: state.info.expired,
+                uid: state.info.uid,
             });
 
             await Promise.all([groups, userInfo]);
 
-            this.setState({
-                snack: true,
-            });
+            setSnack(true);
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth',
             });
-            this.timeoutId = setTimeout(() => {
-                this.handleSnack();
+            const timeoutId = setTimeout(() => {
+                handleSnack();
             }, 3000);
         } catch (error) {
             console.log(`Error editing user: ${error}`);
         }
-    };
-
-    handleSnack = () => {
-        this.setState({
-            snack: false,
-        });
-    };
-
-    componentWillUnmount() {
-        window.clearTimeout(this.timeoutID);
     }
 
-    render() {
-        const links = [
-            { title: 'Account Management', to: '/acctmgmt' },
-            { title: 'Edit User', to: '/acctmgmt/edituser' },
-        ];
-
-        const { info, roles, snack } = this.state;
-        let value = this.context;
-        const {
-            roles: { admin },
-        } = value;
-
-        return (
-            <Container>
-                <h1>Edit User</h1>
-                <Breadcrumb links={links} color="purple" />
-                <EditForm onSubmit={this.handleSubmit}>
-                    <Title className="title">
-                        <h1>Edit Details</h1>
-                        <p>Make any desired changes in the forms below, then hit save at the bottom.</p>
-                    </Title>
-                    <FormSection id="personal">Personal Info</FormSection>
-                    <TextInput
-                        label="First Name"
-                        id="firstname"
-                        placeholder="Jane"
-                        value={info.first_name}
-                        onChange={event => this.handleChange(event, 'firstName')}
-                    />
-                    <TextInput
-                        label="Last Name"
-                        id="lastname"
-                        placeholder="Doe"
-                        value={info.last_name}
-                        onChange={event => this.handleChange(event, 'lastName')}
-                    />
-                    <TextInput
-                        label="Street Address"
-                        id="address"
-                        placeholder="1234 Placeholder Street"
-                        value={info.street_address}
-                        onChange={event => this.handleChange(event, 'address')}
-                    />
-                    <TextInput
-                        label="City"
-                        id="city"
-                        placeholder="Honolulu"
-                        value={info.city}
-                        onChange={event => this.handleChange(event, 'city')}
-                    />
-                    <TextInput
-                        label="Zipcode"
-                        id="zip"
-                        placeholder="96822"
-                        value={info.zipcode}
-                        onChange={event => this.handleChange(event, 'zip')}
-                    />
-                    <FormSection id="contact">Contact Info</FormSection>
-                    <TextInput
-                        label="UH Username"
-                        id="username"
-                        placeholder="janed"
-                        value={info.username}
-                        onChange={event => this.handleChange(event, 'username')}
-                    />
-                    <TextInput
-                        label="UH Number"
-                        id="uuid"
-                        placeholder="12345678"
-                        value={`${info.uuid}`}
-                        onChange={event => this.handleChange(event, 'uuid')}
-                    />
-                    <TextInput
-                        label="Non-UH Email"
-                        id="altemail"
-                        placeholder="janed@gmail.com"
-                        value={info.alt_email}
-                        onChange={event => this.handleChange(event, 'nonuh')}
-                    />
-                    <TextInput
-                        label="Home Phone"
-                        id="homephone"
-                        placeholder="808-956-8883"
-                        value={info.home_phone}
-                        onChange={event => this.handleChange(event, 'homephone')}
-                    />
-                    <TextInput
-                        label="Cell Phone"
-                        id="cellphone"
-                        placeholder="808-956-8883"
-                        value={info.cell_phone}
-                        onChange={event => this.handleChange(event, 'cellphone')}
-                    />
-                    <FormSection id="roles">Roles</FormSection>
-                    <FunctionalRoles>
-                        <h2>Functional Roles: </h2>
-                        <Checkbox
-                            id="lab"
-                            label="Lab Monitor"
-                            onChange={() => this.handleCheck('lab')}
-                            checked={roles.lab === 'yes' ? true : false}
-                            color="purple"
-                        />
-                        <Checkbox
-                            id="helpdesk"
-                            label="Help Desk"
-                            onChange={() => this.handleCheck('helpdesk')}
-                            checked={roles.helpdesk === 'yes' ? true : false}
-                            color="purple"
-                        />
-                        <Checkbox
-                            id="tech"
-                            label="Technician"
-                            onChange={() => this.handleCheck('tech')}
-                            checked={roles.tech === 'yes' ? true : false}
-                            color="purple"
-                        />
-                        <Checkbox
-                            id="staff"
-                            label="Staff"
-                            onChange={() => this.handleCheck('staff')}
-                            color="purple"
-                            checked={roles.staff === 'yes' ? true : false}
-                        />
-                        <Checkbox
-                            id="third"
-                            label="3rd Shift"
-                            onChange={() => this.handleCheck('third')}
-                            checked={roles.third_shift === 'yes' ? true : false}
-                            color="purple"
-                        />
-                        <Checkbox
-                            id="leapstart"
-                            label="Leap Start"
-                            onChange={() => this.handleCheck('leapstart')}
-                            checked={roles.leapstart === 'yes' ? true : false}
-                            color="purple"
-                        />
-                    </FunctionalRoles>
-                    <AdminRoles>
-                        <h2>Admin Roles</h2>
-                        <Checkbox
-                            id="manager"
-                            label="Manager"
-                            onChange={() => this.handleCheck('manager')}
-                            checked={roles.manager === 'yes' ? true : false}
-                            color="purple"
-                            disabled={admin ? false : true}
-                        />
-                        <Checkbox
-                            id="admin"
-                            label="Administrator"
-                            onChange={() => this.handleCheck('admin')}
-                            checked={roles.administrator === 'yes' ? true : false}
-                            color="purple"
-                            disabled={admin ? false : true}
-                        />
-                        <Checkbox
-                            id="enabled"
-                            label="Enabled"
-                            onChange={() => this.handleCheck('enabled')}
-                            checked={info.expired === 0 ? true : false}
-                            color="purple"
-                            disabled={admin ? false : true}
-                        />
-                    </AdminRoles>
-                    <Images>
-                        <Personal />
-                        <Contact />
-                    </Images>
-                    <Button color="purple">Submit</Button>
-                    <SnackbarPortal
-                        handler={snack}
-                        message={`Successfully edited user: '${info.username}'`}
-                        onClick={this.handleSnack}
-                        heading="Success!"
-                    />
-                </EditForm>
-                <Background color="purple" />
-            </Container>
-        );
+    const handleSnack = () => {
+        setSnack(false);
     }
+
+    const links = [
+        { title: 'Account Management', to: '/acctmgmt' },
+        { title: 'Edit User', to: '/acctmgmt/edituser' },
+    ];
+
+    return (
+        <Container>
+            <h1>Edit User</h1>
+            <Breadcrumb links={links} color="purple" />
+            <EditForm onSubmit={handleSubmit}>
+                <Title className="title">
+                    <h1>Edit Details</h1>
+                    <p>Make any desired changes in the forms below, then hit save at the bottom.</p>
+                </Title>
+                <FormSection id="personal">Personal Info</FormSection>
+                <TextInput
+                    label="First Name"
+                    id="firstname"
+                    placeholder="Jane"
+                    value={state.info.first_name}
+                    onChange={event => handleChange(event, 'firstName')}
+                />
+                <TextInput
+                    label="Last Name"
+                    id="lastname"
+                    placeholder="Doe"
+                    value={state.info.last_name}
+                    onChange={event => handleChange(event, 'lastName')}
+                />
+                <TextInput
+                    label="Street Address"
+                    id="address"
+                    placeholder="1234 Placeholder Street"
+                    value={state.info.street_address}
+                    onChange={event => handleChange(event, 'address')}
+                />
+                <TextInput
+                    label="City"
+                    id="city"
+                    placeholder="Honolulu"
+                    value={state.info.city}
+                    onChange={event => handleChange(event, 'city')}
+                />
+                <TextInput
+                    label="Zipcode"
+                    id="zip"
+                    placeholder="96822"
+                    value={state.info.zipcode}
+                    onChange={event => handleChange(event, 'zip')}
+                />
+                <FormSection id="contact">Contact Info</FormSection>
+                <TextInput
+                    label="UH Username"
+                    id="username"
+                    placeholder="janed"
+                    value={state.info.username}
+                    onChange={event => handleChange(event, 'username')}
+                />
+                <TextInput
+                    label="UH Number"
+                    id="uuid"
+                    placeholder="12345678"
+                    value={`${state.info.uuid}`}
+                    onChange={event => handleChange(event, 'uuid')}
+                />
+                <TextInput
+                    label="Non-UH Email"
+                    id="altemail"
+                    placeholder="janed@gmail.com"
+                    value={state.info.alt_email}
+                    onChange={event => handleChange(event, 'nonuh')}
+                />
+                <TextInput
+                    label="Home Phone"
+                    id="homephone"
+                    placeholder="808-956-8883"
+                    value={state.info.home_phone}
+                    onChange={event => handleChange(event, 'homephone')}
+                />
+                <TextInput
+                    label="Cell Phone"
+                    id="cellphone"
+                    placeholder="808-956-8883"
+                    value={state.info.cell_phone}
+                    onChange={event => handleChange(event, 'cellphone')}
+                />
+                <FormSection id="roles">Roles</FormSection>
+                <FunctionalRoles>
+                    <h2>Functional Roles: </h2>
+                    <Checkbox
+                        id="lab"
+                        label="Lab Monitor"
+                        onChange={() => handleCheck('lab')}
+                        checked={state.roles.lab === 'yes' ? true : false}
+                        color="purple"
+                    />
+                    <Checkbox
+                        id="helpdesk"
+                        label="Help Desk"
+                        onChange={() => handleCheck('helpdesk')}
+                        checked={state.roles.helpdesk === 'yes' ? true : false}
+                        color="purple"
+                    />
+                    <Checkbox
+                        id="tech"
+                        label="Technician"
+                        onChange={() => handleCheck('tech')}
+                        checked={state.roles.tech === 'yes' ? true : false}
+                        color="purple"
+                    />
+                    <Checkbox
+                        id="staff"
+                        label="Staff"
+                        onChange={() => handleCheck('staff')}
+                        color="purple"
+                        checked={state.roles.staff === 'yes' ? true : false}
+                    />
+                    <Checkbox
+                        id="third"
+                        label="3rd Shift"
+                        onChange={() => handleCheck('third')}
+                        checked={state.roles.third_shift === 'yes' ? true : false}
+                        color="purple"
+                    />
+                    <Checkbox
+                        id="leapstart"
+                        label="Leap Start"
+                        onChange={() => handleCheck('leapstart')}
+                        checked={state.roles.leapstart === 'yes' ? true : false}
+                        color="purple"
+                    />
+                </FunctionalRoles>
+                <AdminRoles>
+                    <h2>Admin Roles</h2>
+                    <Checkbox
+                        id="manager"
+                        label="Manager"
+                        onChange={() => handleCheck('manager')}
+                        checked={state.roles.manager === 'yes' ? true : false}
+                        color="purple"
+                        disabled={admin ? false : true}
+                    />
+                    <Checkbox
+                        id="admin"
+                        label="Administrator"
+                        onChange={() => handleCheck('admin')}
+                        checked={state.roles.administrator === 'yes' ? true : false}
+                        color="purple"
+                        disabled={admin ? false : true}
+                    />
+                    <Checkbox
+                        id="enabled"
+                        label="Enabled"
+                        onChange={() => handleCheck('enabled')}
+                        checked={state.info.expired === 0 ? true : false}
+                        color="purple"
+                        disabled={admin ? false : true}
+                    />
+                </AdminRoles>
+                <Images>
+                    <Personal />
+                    <Contact />
+                </Images>
+                <Button color="purple">Submit</Button>
+                <SnackbarPortal
+                    handler={snack}
+                    message={`Successfully edited user: '${state.info.username}'`}
+                    onClick={handleSnack}
+                    heading="Success!"
+                />
+            </EditForm>
+            <Background color="purple" />
+        </Container>
+    );
 }
-
-Edit.contextType = LayoutContext;
 
 export default Edit;
 
