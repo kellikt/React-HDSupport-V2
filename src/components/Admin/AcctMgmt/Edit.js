@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import {
     useParams,
-} from '@reach/router';
+} from 'react-router-dom';
 
 import { LayoutContext } from '../../../LayoutContext';
 import Button from '../../Button';

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { LocationProvider } from '@reach/router';
+import { BrowserRouter } from 'react-router-dom';
 
 import { LayoutProvider } from './LayoutContext';
 import './css/index.css';
@@ -9,11 +9,11 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-    <LocationProvider>
+    <BrowserRouter>
         <LayoutProvider>
             <App />
         </LayoutProvider>
-    </LocationProvider>,
+    </BrowserRouter>,
     document.getElementById('root')
 );
 

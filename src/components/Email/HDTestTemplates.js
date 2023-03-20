@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 import Container from '../Admin/Container';
 import Breadcrumb from '../Admin/Breadcrumb';
@@ -178,13 +179,12 @@ class HDTestTemplates extends Component {
                                         checked={selectedTemplates.find(x => x.tid === template.tid).selected === "yes"}
                                         name={template.tid}
                                     />
-                                    <a
-                                        href={`${process.env.PUBLIC_URL}/edit-template/${template.tid}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                    <Link
+                                        key={template.tid}
+                                        to={`${process.env.PUBLIC_URL}/edit-template/${template.tid}`}
                                     >
                                         <EditIcon />
-                                    </a>
+                                    </Link>
                                     <button onClick={e => {e.preventDefault(); this.handleDelete(template.tid)}}>
                                         <TrashIcon />
                                     </button>
