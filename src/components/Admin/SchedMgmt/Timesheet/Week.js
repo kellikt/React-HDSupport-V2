@@ -93,10 +93,10 @@ class Week extends Component {
             animate={{
                 y: 0,
                 opacity: 1,
-                delay: 0.4,
+                delay: 0.8,
                 transition: {
-                    duration: 0.4,
-                    ease: 'easeOut',
+                    duration: 0.8,
+                    ease: 'easeIn',
                 },
             }}
             exit={{
@@ -304,19 +304,6 @@ const Heading = styled.div`
         }
     }
 `;
-
-const AnimatedDay = () => {
-    const variants =  {
-        enter: { opacity: 1, delay: 300 },
-        exit: { opacity: 0 },
-    }
-
-    return (
-        <motion.div
-            variants={variants}
-        />
-    )
-}
 
 const Day = styled(motion.div)`
     display: grid;

@@ -111,7 +111,19 @@ class DayException extends Component {
         const { exception, logs, message, heading, edited, error } = this.state;
 
         return (
-            <Container onSubmit={this.handleSubmit} {...this.props}>
+            <Container 
+                initial={{
+                    opacity: 0,
+                }}
+                animate={{
+                    opacity: 1,
+                    delay: 0.3
+                }}
+                exit={{
+                    opacity: 0,
+                }}
+                onSubmit={this.handleSubmit} {...this.props}
+            >
                 <Heading>
                     <Reminder>
                         <WarningExclamation />
@@ -186,20 +198,7 @@ DayException.propTypes = {
 
 export default DayException;
 
-const AnimatedDay = () => {
-    const variants = {
-        enter: { opacity: 1, delay: 300 },
-        exit: { opacity: 0 },
-    }
-
-    return (
-        <motion.form 
-            variants={varaints}
-        />
-    )
-}
-
-const Container = styled(AnimatedDay)`
+const Container = styled(motion.form)`
     display: flex;
     flex-direction: column;
     width: 100%;

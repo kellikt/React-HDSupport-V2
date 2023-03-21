@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { AnimatePresence } from 'framer-motion';
 
 import { Table, TableLabel, TableHeading, TableRow, Timestamp, Comments, Location } from './MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';
@@ -17,7 +16,6 @@ class MetricsTable extends Component {
     }
 
     async componentDidMount() {
-        console.log('mounted?');
         const { student, year, payPeriod } = this.props;
         const splitDate = payPeriod.split(',');
 

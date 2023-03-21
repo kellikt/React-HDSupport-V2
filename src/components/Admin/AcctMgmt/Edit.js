@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import {
@@ -16,7 +16,7 @@ import { ReactComponent as Personal } from '../../../images/Admin/Acct/EditPerso
 import { ReactComponent as Contact } from '../../../images/Admin/Acct/EditContact.svg';
 import Background from '../../Background';
 
-function Edit() {
+export default function Edit() {
     const { username } = useParams();
     const { roles: { admin }} = useContext(LayoutContext);
     const [state, setState] = useState({
@@ -548,8 +548,6 @@ function Edit() {
         </Container>
     );
 }
-
-export default Edit;
 
 const Container = styled.main`
     margin-top: 60px;

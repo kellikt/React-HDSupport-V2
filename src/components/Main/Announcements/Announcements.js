@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -7,64 +7,73 @@ import Spinner from '../../Spinner';
 import { Container, CardsContainer, Card, NextButton } from './Components';
 import { ReactComponent as Arrow } from '../../../images/icons/Arrow.svg';
 
-class Announcements extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentHeight: 225,
-            announcements: [],
-            order: [0, 1, 2, 3, 4],
-            isLoading: true,
-        };
-    }
+export default function Announcements() {
+    const [state, setState] = useState({
+        currentHeight: 225,
+        announcements: [],
+        order: [0, 1, 2, 3, 4],
+        isLoading: true,
+    });
 
-    async componentDidMount() {
-        try {
+    useEffect(() => {
+        const fetchData = async() => {
             const slackRequest = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-slack-history.php`, {
                 token: `${process.env.REACT_APP_SLACK_TOKEN}`,
                 channel: `${process.env.REACT_APP_SLACK_CHANNEL}`,
-            })
-                const slackData = await slackRequest.data;
+            });
 
-                // filter channel leave/channel join/reminder_add messages and limit to 5 messages
-                let filteredSlackData = slackData.messages.filter((message) => message.subtype !== "channel_leave" && message.subtype !== "channel_join" && message.subtype !== "reminder_add" && message.room === undefined).slice(0, 5);
+            const slackData = await slackRequest.data;
 
-                // process the result
+            // filter channel leave/channel join/reminder_add messages and limit to 5 messages
+            let filteredSlackData = slackData.messages.filter((message) => message.subtype !== "channel_leave" && message.subtype !== "channel_join" && message.subtype !== "reminder_add" && message.room === undefined).slice(0, 5);
 
-                const finalArray = [...Array(5).keys()];
-                filteredSlackData.forEach((message, index) => {
-                    const timestamp = this.getTime(message.ts);
-                    const text = this.getText(message.text);
+            // process the result
 
-                    const finalMessage = {
-                        title: text[0],
-                        date: timestamp,
-                        text: text[1],
-                    };
+            const finalArray = [...Array(5).keys()];
+            filteredSlackData.forEach((message, index) => {
+                const timestamp = getTime(message.ts);
+                const text = getText(message.text);
 
-                    if (index === 0) {
-                        finalArray[1] = finalMessage;
-                    } else if (index === 4) {
-                        finalArray[0] = finalMessage;
-                    } else finalArray[index + 1] = finalMessage;
-                });
+                const finalMessage = {
+                    title: text[0],
+                    date: timestamp,
+                    text: text[1],
+                };
 
-                this.setState({
-                    announcements: finalArray,
-                    isLoading: false,
-                });
+                if (index === 0) {
+                    finalArray[1] = finalMessage;
+                } else if (index === 4) {
+                    finalArray[0] = finalMessage;
+                } else finalArray[index + 1] = finalMessage;
+            });
 
-                const height = document.querySelector('.card1').offsetHeight;
-
-                this.setState({
-                    currentHeight: height,
-                });
-        } catch (error) {
-            console.log(`Error fetching announcements: ${error}`);
+            setState({
+                ...state,
+                announcements: finalArray,
+                isLoading: false,
+            });
         }
-    }
 
-    getText = text => {
+        try {
+            fetchData();
+        } catch(error) {
+            console.log(error);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (state.isLoading) {
+            return;
+        }
+        const height = document.querySelector('.card1').offsetHeight;
+
+        setState({
+            ...state,
+            currentHeight: height,
+        });
+    }, [state.isLoading])
+
+    const getText = text => {
         let announcement;
 
         if (text.includes('•') || text.substring(0, 9) === 'Reminder:') {
@@ -115,9 +124,9 @@ class Announcements extends Component {
         }
 
         return announcement;
-    };
+    }
 
-    getTime = timestamp => {
+    const getTime = timestamp => {
         let ts = parseInt(timestamp) * 1000;
         ts = new Date(ts);
 
@@ -128,8 +137,8 @@ class Announcements extends Component {
         return monthDay;
     };
 
-    shiftCards = () => {
-        const newOrder = this.state.order.map(item => {
+    const shiftCards = () => {
+        const newOrder = state.order.map(item => {
             if (item === 0) {
                 return 4;
             } else {
@@ -139,46 +148,41 @@ class Announcements extends Component {
 
         const height = document.querySelector('.card2').offsetHeight;
 
-        this.setState({
+        setState({
+            ...state,
             order: newOrder,
             currentHeight: height,
         });
     };
 
-    render() {
-        const { currentHeight, announcements, order, isLoading } = this.state;
-
-        return (
-            <Container>
-                <Badge />
-                <CardsContainer calc={currentHeight}>
-                    {isLoading ? (
-                        <SpinnerCard>
-                            <Spinner size={50} margin={100} />
-                        </SpinnerCard>
-                    ) : (
-                        announcements.map((item, index) => {
-                            return (
-                                <Card key={index} className={`card${order[index]}`}>
-                                    <span>
-                                        <h3>{item.title}</h3>
-                                        <h6>{item.date}</h6>
-                                    </span>
-                                    <p dangerouslySetInnerHTML={{ __html: item.text }} />
-                                </Card>
-                            );
-                        })
-                    )}
-                </CardsContainer>
-                <NextButton onClick={this.shiftCards}>
-                    Next <Arrow />
-                </NextButton>
-            </Container>
-        );
-    }
+    return (
+        <Container>
+            <Badge />
+            <CardsContainer calc={state.currentHeight}>
+                {state.isLoading ? (
+                    <SpinnerCard>
+                        <Spinner size={50} margin={100} />
+                    </SpinnerCard>
+                ) : (
+                    state.announcements.map((item, index) => {
+                        return (
+                            <Card key={index} className={`card${state.order[index]}`}>
+                                <span>
+                                    <h3>{item.title}</h3>
+                                    <h6>{item.date}</h6>
+                                </span>
+                                <p dangerouslySetInnerHTML={{ __html: item.text }} />
+                            </Card>
+                        );
+                    })
+                )}
+            </CardsContainer>
+            <NextButton onClick={shiftCards}>
+                Next <Arrow />
+            </NextButton>
+        </Container>
+    );
 }
-
-export default Announcements;
 
 const SpinnerCard = styled.li`
     position: absolute;
