@@ -53,6 +53,9 @@ function Index() {
     useEffect(() => {
         changeSize();
         getUserInfo();
+        return () => {
+            changeSize();
+        }
     }, []);
 
     return (

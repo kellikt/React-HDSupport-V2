@@ -100,7 +100,7 @@ export const DateInputs = styled.div`
         background: #f1f3f6;
         border-radius: 8px;
         border: 2px solid #f1f3f6;
-        padding: 15px;
+        padding: 7px;
         transition: background 0.15s ease;
 
         > input {

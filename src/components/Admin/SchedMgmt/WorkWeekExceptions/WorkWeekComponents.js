@@ -32,7 +32,7 @@ export const RangeInput = styled(DateRange)`
         font-weight: 400;
         font-size: 14px;
         color: var(--dark-grey);
-        margin-bottom: 8px;
+        margin-bottom: 19px;
         padding-left: 12px;
     }
 `;
