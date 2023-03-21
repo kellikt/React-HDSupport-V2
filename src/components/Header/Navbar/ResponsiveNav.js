@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 import Hamburger from '../../Hamburger';

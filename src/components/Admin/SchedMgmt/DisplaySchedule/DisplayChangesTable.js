@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import styled from '@emotion/styled';
 
 import { Table, TableLabel, TableHeading, TableRow, Location } from '../ClockMetrics/MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';

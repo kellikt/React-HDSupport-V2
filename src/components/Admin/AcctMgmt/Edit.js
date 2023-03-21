@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import axios from 'axios';
 import {
     useParams,

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { DateInputs } from '../ScheduleChange/ChangeFormComponents';
 
 export const FormEl = styled.form`

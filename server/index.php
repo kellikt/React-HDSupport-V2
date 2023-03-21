@@ -17,4 +17,4 @@ if (isset($_SESSION["host"])) {
 
 ?>
 
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><meta name="theme-color" content="#000000"/><link rel="manifest" href="/help/hdsupport/manifest.json"/><title>HDSupport</title><script defer="defer" src="/help/hdsupport/static/js/main.6767927a.js"></script><link href="/help/hdsupport/static/css/main.a6eb0f50.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><meta name="theme-color" content="#000000"/><link rel="manifest" href="/help/hdsupport/manifest.json"/><title>HDSupport</title><script defer="defer" src="/help/hdsupport/static/js/main.4cf0e929.js"></script><link href="/help/hdsupport/static/css/main.5d24395b.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 const Checkbox = ({ id, label, onChange, checked, name, color, disabled }, props) => {

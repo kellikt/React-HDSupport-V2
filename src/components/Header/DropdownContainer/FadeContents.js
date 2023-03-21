@@ -1,6 +1,7 @@
 import React, { forwardRef, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 
 const FadeContents = forwardRef(({ children, duration, animatingOut, direction, roles }, ref) => {
     return (
