@@ -1,4 +1,5 @@
-import styled, { keyframes } from 'styled-components';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 
 export const FormEl = styled.form`
     background: #fff;

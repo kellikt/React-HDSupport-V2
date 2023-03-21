@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { LayoutContext } from '../../LayoutContext';
 

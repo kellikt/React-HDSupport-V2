@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import Badge from './Badge';
 import Spinner from '../../Spinner';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import {
     useParams
 } from 'react-router-dom';

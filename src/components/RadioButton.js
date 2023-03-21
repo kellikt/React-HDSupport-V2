@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 const RadioButton = ({ id, label, onChange, defaultChecked, value, name, color }, props) => {
