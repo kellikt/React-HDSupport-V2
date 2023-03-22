@@ -26,12 +26,10 @@ class MetricsForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log('did i submit');
 
         this.setState({
             searched: true,
         });
-        console.log(this.state.searched);
     };
 
     handleChange = event => {
