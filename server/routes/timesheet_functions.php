@@ -406,7 +406,7 @@ function calc_week(
 
                     for ($x = 0; $x < 6; $x++) {
 
-                        $hour = substr($exceptions["t" . $x], 0, strpos($exceptions["t" . $x], ":"));
+                        $hour = str_pad(substr($exceptions["t" . $x], 0, strpos($exceptions["t" . $x], ":")), 2, '0', STR_PAD_LEFT);
                         $min = substr($exceptions["t" . $x], strpos($exceptions["t" . $x], " ") - 2, strpos($exceptions["t" . $x], " ") - 1);
                         $ampm = substr($exceptions["t" . $x], sizeof((array)$exceptions["t" . $x]) - 3, 2);
     
@@ -424,7 +424,7 @@ function calc_week(
                     $exceptions = $check_exceptions_res[$exc_counter - 1];
                     for ($x = 0; $x < 6; $x++) {
 
-                        $hour = substr($exceptions["t" . $x], 0, strpos($exceptions["t" . $x], ":"));
+                        $hour = str_pad(substr($exceptions["t" . $x], 0, strpos($exceptions["t" . $x], ":")), 2, '0', STR_PAD_LEFT);
                         $min = substr($exceptions["t" . $x], strpos($exceptions["t" . $x], " ") - 2, strpos($exceptions["t" . $x], " ") - 1);
                         $ampm = substr($exceptions["t" . $x], sizeof((array)$exceptions["t" . $x]) - 3, 2);
     
@@ -448,7 +448,7 @@ function calc_week(
                 while ($x < count((array)$filter_result)) {
                     global $clock_counter;
 
-                    $hour = $filter_result[$x + $clock_counter]["hour"];
+                    $hour = str_pad($filter_result[$x + $clock_counter]["hour"], 2, '0', STR_PAD_LEFT);
                     $min = $filter_result[$x + $clock_counter]["min"];
                     $ampm = $filter_result[$x + $clock_counter]["ampm"];
                     $action = $filter_result[$x + $clock_counter]["action"];
@@ -1050,7 +1050,7 @@ function calc_hours_worked(&$week)
 
   //increment through the days
     foreach ($week as $key => $value) {
-  
+    
 	//calculate raw hour difference 
         $per1 = calc_single_set_hours($temp_times[$key][0], $temp_times[$key][1]);
 	
@@ -1065,6 +1065,7 @@ function calc_hours_worked(&$week)
 	//echo "per3: " . $per3["reg"] . " " . $per3["night"] . "<br />";
 
         $total_reg = $per1["reg"] + $per2["reg"] + $per3["reg"];
+
         $parsetime_reg = sprintf("%u:%02u", ($total_reg - $total_reg % 60) / 60, $total_reg % 60);
 
         // holiday check

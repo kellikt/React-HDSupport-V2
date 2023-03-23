@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DateRangerPicker from '@wojtekmaj/react-daterange-picker';
-import { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 
 import { FormEl, Title, DateRange, Options, Main, Radios } from './DisplayChangesComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/DisplaySched.svg';
@@ -90,9 +90,9 @@ class DisplayChangesForm extends Component {
                         <Button color="gold">Display Changes</Button>
                     </Options>
                 </FormEl>
-                <PoseGroup>
+                <AnimatePresence>
                     {submitted && <DisplayChangesTable key="table" username={username} date={date} option={radio} />}
-                </PoseGroup>
+                </AnimatePresence>
             </React.Fragment>
         );
     }

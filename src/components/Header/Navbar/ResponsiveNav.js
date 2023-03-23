@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import posed from 'react-pose';
+import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 import Hamburger from '../../Hamburger';
 import ToolsDropdown from '../DropdownContents/ToolsDropdown';
@@ -80,10 +80,18 @@ const Container = styled.div`
     }
 `;
 
-const AnimatedNav = posed.nav({
-    opened: { opacity: 1, y: '0%' },
-    closed: { opacity: 0, y: '-10%' },
-});
+const AnimatedNav = () => {
+    const variants = {
+        opened: { opacity: 1, y: '0%' },
+        closed: { opacity: 0, y: '-10%' },
+    }
+
+    return (
+        <motion.nav 
+            variants={variants}
+        />
+    )
+}
 
 const Nav = styled(AnimatedNav)`
     position: absolute;

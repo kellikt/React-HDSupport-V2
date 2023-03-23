@@ -1,26 +1,28 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import {
+    useParams
+} from 'react-router-dom';
 
 import Heading from './Heading';
 import { LayoutContext } from '../../../../LayoutContext';
 import Timesheet from './Timesheet';
 import MetricsTable from '../ClockMetrics/MetricsTable';
 
-class Index extends Component {
-    state = {
+function Index() {
+    const { username, payPeriod, year } = useParams();
+    const { changeSize } = useContext(LayoutContext);
+    const [state, setState] = useState({
         user: {},
         partial: {},
         weekOne: {},
         weekTwo: {},
         weekThree: {},
         grandTotals: [],
-    };
+    });
 
-    getUserInfo = async () => {
-        const { username, payPeriod, year } = this.props;
-
+    const getUserInfo = async() => {
         try {
             const request = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
                 username: username,
@@ -34,7 +36,8 @@ class Index extends Component {
                 username: username,
             });
             const responses = await Promise.all([request, timesheetRequest]);
-            this.setState({
+            setState({
+                ...state,
                 user: responses[0].data[0],
                 partial: responses[1].data[3],
                 weekOne: responses[1].data[0],
@@ -42,54 +45,36 @@ class Index extends Component {
                 weekThree: responses[1].data[2],
                 grandTotals: responses[1].data[4],
             });
-        } catch (error) {
+        } catch(error) {
             console.log(error);
         }
-    };
+    }
 
-    async componentDidMount() {
-        let value = this.context;
-        const { changeSize } = value;
+    useEffect(() => {
         changeSize();
+        getUserInfo();
+        return () => {
+            changeSize();
+        }
+    }, []);
 
-        this.getUserInfo();
-    }
+    return (
+        <Container>
+            <Heading 
+                name={`${state.user.first_name} ${state.user.last_name}`}
+                year={year}
+                payPeriod={payPeriod}
+                username={username}
+                partialHours={state.partial.partial_week_hours_parsed}
+            />
+            <InfoContainer>
+                <Timesheet weeks={[state.weekOne, state.weekTwo, state.weekThree]} totals={state.grandTotals} username={username} refreshData={getUserInfo} />
+                <MetricsTable student={username} year={year} payPeriod={payPeriod} />
+            </InfoContainer>
+        </Container>
+    );
 
-    componentWillUnmount() {
-        let value = this.context;
-        const { changeSize } = value;
-        changeSize();
-    }
-
-    render() {
-        const { year, payPeriod, username } = this.props;
-        const { user, partial, weekOne, weekTwo, weekThree, grandTotals } = this.state;
-        const weeks = [weekOne, weekTwo, weekThree];
-
-        return (
-            <Container>
-                <Heading
-                    name={`${user.first_name} ${user.last_name}`}
-                    year={year}
-                    payPeriod={payPeriod}
-                    username={username}
-                    partialHours={partial.partial_week_hours_parsed}
-                />
-                <InfoContainer>
-                    <Timesheet weeks={weeks} totals={grandTotals} username={username} refreshData={this.getUserInfo} />
-                    <MetricsTable student={username} year={year} payPeriod={payPeriod} />
-                </InfoContainer>
-            </Container>
-        );
-    }
 }
-
-Index.contextType = LayoutContext;
-Index.propTypes = {
-    username: PropTypes.string,
-    year: PropTypes.string,
-    payPeriod: PropTypes.string,
-};
 
 export default Index;
 
