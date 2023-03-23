@@ -1,5 +1,4 @@
-{
-    "periods": [
+const periods = [
         { "string": "January 1 - January 15", "value": [1, 1, 15] },
         { "string": "January 16 - January 31", "value": [1, 16, 31] },
         { "string": "Febuary 1 - Febuary 15", "value": [2, 1, 15] },
@@ -24,5 +23,6 @@
         { "string": "November 16 - November 30", "value": [11, 16, 30] },
         { "string": "December 1 - December 15", "value": [12, 1, 15] },
         { "string": "December 16 - December 31", "value": [12, 16, 31] }
-    ]
-}
+]
+
+export default periods

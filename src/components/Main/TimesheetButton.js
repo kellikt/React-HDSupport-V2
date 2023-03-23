@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Link } from '@reach/router';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { ReactComponent as Sheet } from '../../images/Main/Sheet.svg';
 
 const TimesheetButton = () => {
@@ -19,6 +19,22 @@ const TimesheetButton = () => {
 
 export default TimesheetButton;
 
+const HeadingText = styled.h3`
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 12px;
+    color: #6772E5;
+
+    > svg {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        position: relative;
+        top: 2px;
+    }
+`;
+
+
 const Container = styled(Link)`
     display: flex;
     flex-direction: column;
@@ -35,6 +51,9 @@ const Container = styled(Link)`
         color: var(--black);
         transform: translateY(-2px);
         box-shadow: 0 18px 35px rgba(50, 50, 93, 0.1), 0 8px 15px rgba(0, 0, 0, 0.07);
+        h3 {
+            color: var(--black);
+        }
     }
 
     &:active {
@@ -61,21 +80,6 @@ const Container = styled(Link)`
         padding: 0 20px;
         flex-direction: row;
         align-items: center;
-    }
-`;
-
-const HeadingText = styled.h3`
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0 0 12px;
-    color: #6772E5;
-
-    > svg {
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        position: relative;
-        top: 2px;
     }
 `;
 

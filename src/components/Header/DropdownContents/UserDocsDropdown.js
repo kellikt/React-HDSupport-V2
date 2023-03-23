@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as AskUs } from '../../../images/icons/UserDocs/AskUs.svg';

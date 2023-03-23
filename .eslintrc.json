@@ -4,9 +4,9 @@
         "es6": true
     },
     "plugins": ["react"],
-    "parser": "babel-eslint",
     "parserOptions": {
         "sourceType": "module",
+        "parser": "@babel/eslint-parser",
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
             "jsx": true

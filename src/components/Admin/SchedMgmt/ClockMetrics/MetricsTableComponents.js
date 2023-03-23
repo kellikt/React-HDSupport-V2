@@ -1,24 +1,7 @@
-import styled from 'styled-components';
-import posed from 'react-pose';
+import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
-const Faded = posed.div({
-    enter: {
-        y: 0,
-        opacity: 1,
-        beforeChildren: 500,
-        transition: {
-            ease: 'circOut',
-            default: { duration: 500 },
-        },
-    },
-    exit: {
-        y: 50,
-        opacity: 0,
-        transition: { ease: 'circOut', duration: 500 },
-    },
-});
-
-export const Table = styled(Faded)`
+export const Table = styled(motion.div)`
     display: flex;
     flex-direction: column;
     margin: 75px 0;

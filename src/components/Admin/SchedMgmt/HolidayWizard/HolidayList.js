@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import posed, { PoseGroup } from 'react-pose';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import CloseButton from '../../../CloseButton';
 import Button from '../../../Button';
@@ -11,7 +11,7 @@ const HolidayList = ({ holidayList, full, heading, color, week, handleDelete, ge
         <React.Fragment>
             <List pose="enter">
                 <h3>Current {heading}: </h3>
-                <PoseGroup>
+                <AnimatePresence>
                     {holidayList.map((item, index) => {
                         const date = new Date(item.date * 1000),
                             locale = 'en-us',
@@ -24,7 +24,22 @@ const HolidayList = ({ holidayList, full, heading, color, week, handleDelete, ge
                             dateString = `${dateString} — ${endMonth} ${endOfWeek.getDate()}, ${endOfWeek.getFullYear()}`;
                         }
                         return (
-                            <Holiday key={item.date} stagger={index} color={color}>
+                            <Holiday
+                                initial={{
+                                    opacity: 0,
+                                }} 
+                                animate={{
+                                    opacity: 1,
+                                    transition: {
+                                        delay: index/10,
+                                    },
+                                }}
+                                exit={{
+                                    opacity: 0,
+                                }}
+                                key={item.date} 
+                                color={color}
+                            >
                                 <div>
                                     <p>{dateString}</p>
                                     <span>{item.description}</span>
@@ -33,7 +48,7 @@ const HolidayList = ({ holidayList, full, heading, color, week, handleDelete, ge
                             </Holiday>
                         );
                     })}
-                </PoseGroup>
+            </AnimatePresence>
             </List>
 
             {full ? (
@@ -78,12 +93,7 @@ const List = styled.ul`
     }
 `;
 
-const AnimatedHoliday = posed.li({
-    enter: { opacity: 1, delay: ({ stagger }) => stagger * 100 },
-    exit: { opacity: 0 },
-});
-
-export const Holiday = styled(AnimatedHoliday)`
+export const Holiday = styled(motion.li)`
     display: grid;
     align-items: center;
     grid-template-columns: 1fr auto;
