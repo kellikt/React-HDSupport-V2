@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import PropTypes from 'prop-types';
 import { Table, TableLabel, TableHeading, TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
@@ -32,7 +32,25 @@ class AdminViewLeaveTable extends Component {
         const { date, shift, results } = this.props;
 
         return (
-            <Table {...this.props}>
+            <Table {...this.props}  
+            initial={{
+                y: 50,
+                opacity: 0,
+            }} 
+            animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                    when: 'beforeChildren',
+                    ease: 'circOut',
+                    duration: 0.2,
+                },
+            }}
+            exit={{
+                y: 50,
+                opacity: 0,
+                transition: { ease: 'circOut', duration: 0.2 },
+            }}>
                 <Label>
                     <div>
                         <h2>Requests for: <strong>{date[0]} to {date[1]}</strong></h2>

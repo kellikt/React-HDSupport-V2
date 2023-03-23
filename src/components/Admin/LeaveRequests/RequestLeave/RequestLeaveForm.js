@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DateRangerPicker from '@wojtekmaj/react-daterange-picker';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { FormEl, Title } from './RequestLeaveComponents';
 import { DateInputs } from '../../SchedMgmt/ScheduleChange/ChangeFormComponents';

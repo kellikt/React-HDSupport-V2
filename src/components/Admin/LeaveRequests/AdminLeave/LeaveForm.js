@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import axios from 'axios';
 
 import Button from '../../../Button';
@@ -243,7 +243,7 @@ const RequestedLeave = styled.div`
 `;
 
 const Buttons = styled.div`
-    grid-column: 3/-1
+    grid-column: 3/-1;
     flex-direction: row;
     display: flex;
 
