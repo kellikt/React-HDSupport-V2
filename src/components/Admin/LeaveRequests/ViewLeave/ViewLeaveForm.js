@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { PoseGroup } from 'react-pose';
-import styled from 'styled-components';
+import { AnimatePresence } from 'framer-motion';
+import styled from '@emotion/styled';
 import axios from 'axios';
 
 import { FormEl, Title, Inputs } from './ViewLeaveComponents';
@@ -147,9 +147,9 @@ class ViewLeaveForm extends Component {
                     </Inputs>
                     <Button color="blue">Display Requests</Button>
                 </FormEl>
-                <PoseGroup>
+                <AnimatePresence>
                     {submitted && <ViewLeaveTable key="table" results={results} date={date} getTableData={this.getTableData} />}
-                </PoseGroup>
+                </AnimatePresence>
             </React.Fragment>
         );
     }

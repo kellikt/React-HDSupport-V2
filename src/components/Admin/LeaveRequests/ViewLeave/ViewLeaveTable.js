@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import axios from 'axios';
 
 import PropTypes from 'prop-types';
@@ -81,7 +81,26 @@ class ViewLeaveTable extends Component {
         const { date, results } = this.props;
 
         return (
-            <Table {...this.props}>
+            <Table {...this.props}
+            initial={{
+                y: 50,
+                opacity: 0,
+            }} 
+            animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                    when: 'beforeChildren',
+                    ease: 'circOut',
+                    duration: 0.5,
+                },
+            }}
+            exit={{
+                y: 50,
+                opacity: 0,
+                transition: { ease: 'circOut', duration: 0.5 },
+            }}
+            >
                 <Label>
                     <div>
                         <h2>Requests for: <strong>{date[0]} - {date[1]}</strong></h2>
