@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Container from '../../Container';
 import DisplayChangesForm from './DisplayChangesForm';
 import Breadcrumb from '../../Breadcrumb';

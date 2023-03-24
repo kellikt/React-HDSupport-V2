@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 
@@ -573,7 +573,7 @@ class Add extends Component {
                             disabled={admin ? false : true}
                         />
                     </AdminRoles>
-                    {roles.staff === 'yes' ? 
+                    {roles.staff === 'yes' && roles.super_admin === 'yes' ? 
                     <PrioritySection>
                         <FormSection id="priority">Priority</FormSection>
                         <TextInput

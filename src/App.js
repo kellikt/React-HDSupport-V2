@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import konami from 'konami';

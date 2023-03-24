@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 import Button from '../../../Button';
 import TextInput from '../../../TextInput';
@@ -10,39 +10,45 @@ import { TableHeading, TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTabl
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
 
-class LeaveForm extends Component {
-
-    state = {
+function LeaveForm(props) {
+    const [state, setState] = useState({
         slots: 0,
         links: [],
+    });
+
+    const handleApprove = () => {
+        props.handleApprove(props.lid, props.username, props.beginDate, props.endDate, props.comment);
     }
 
-    handleApprove = () => {
-        const { lid, username, comment, beginDate, endDate, handleApprove } = this.props;
-        handleApprove(lid, username, beginDate, endDate, comment);
+    const handleDeny = () => {
+        Swal.fire({
+            title: '(Optional) Enter a reason for denying',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Submit Reason',
+            preConfirm: (reason) => {
+                console.log(reason);
+            }
+        });
+        props.handleDeny(props.lid, props.beginDate, props.endDate, props.comment);
     }
 
-    handleDeny = () => {
-        const { lid, comment, beginDate, endDate, handleDeny } = this.props;
-        handleDeny(lid, beginDate, endDate, comment);
+    const handleReset = () => {
+        props.handleReset(props.lid, props.beginDate, props.endDate, props.comment, props.status);
     }
 
-    handleReset = () => {
-        const { lid, beginDate, endDate, comment, status, handleReset } = this.props;
-
-        handleReset(lid, beginDate, endDate, comment, status);
-    }
-
-    findPosition() {
-        const { beginDate, endDate, firstName, conflict, priority, shift } = this.props;
-        const start = new Date(`${beginDate} GMT-1000`);
-        const end = new Date(`${endDate} GMT-1000`);
+    const findPosition = () => {
+        const start = new Date(`${props.beginDate} GMT-1000`);
+        const end = new Date(`${props.endDate} GMT-1000`);
         let events = [];
 
         let position = 0;
 
-        for (let j = 0; j < conflict.length; j++) {
-            if (priority > conflict[j].priority) {
+        for (let j = 0; j < props.conflict.length; j++) {
+            if (props.priority > props.conflict[j].priority) {
                 position++;
             }
         }
@@ -54,22 +60,22 @@ class LeaveForm extends Component {
         const endMonth =`${end.getMonth() + 1}`.padStart(2, "0");
         let startTime, endTime;
 
-        if (parseInt(shift) === 1) {
+        if (parseInt(props.shift) === 1) {
             startTime = `T${170000 + (position * 10000)}Z`;
             endTime = `T${180000 + (position * 10000)}Z`;
-        } else if (parseInt(shift) === 2) {
+        } else if (parseInt(props.shift) === 2) {
             startTime = `T${250000 + (position * 10000)}Z`;
             endTime = `T${260000 + (position * 10000)}Z`;
-        } else if (parseInt(shift) === 3) {
+        } else if (parseInt(props.shift) === 3) {
             startTime = `T${160000 - (position * 10000)}Z`;
             endTime = `T${170000 - (position * 10000)}Z`;
         }
 
         let gcal;
-        if (beginDate === endDate) {
-            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+${start.getMonth() + 1}/${start.getDate()}`;
+        if (props.beginDate === props.endDate) {
+            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}`;
         } else {
-            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${firstName}+${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}`;
+            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}`;
         }
         gcal += `&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${end.getFullYear()}${endMonth}${endDay}${endTime}`;
         const options = {
@@ -83,140 +89,117 @@ class LeaveForm extends Component {
         return events;
     }
 
-
-
-    async componentDidMount() {
-        try {
-            const { shift } = this.props;
-            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-staff.php?shift=${shift}`);
+    useEffect(() => {
+        const fetchData = async() => {
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-list-staff.php?shift=${props.shift}`);
             const total = request.data;
 
             let min = 0;
-            if (shift === 1) {
+            if (props.shift === 1) {
                 min = 4;
-            } else if (shift === 2 || shift === 3) {
+            } else if (props.shift === 2 || props.shift === 3) {
                 min = 1;
             }
             const slots = total.length - min;
-            const links = this.findPosition();
-            this.setState({
+            const links = findPosition();
+            setState({
+                ...state,
                 slots: slots,
                 links: links,
             });
+        }
+        try {
+            fetchData();
         } catch (error) {
             console.log(error);
         }
-    }
+    }, []);
 
-    render() {
-        const { comment, beginDate, endDate, conflict, status } = this.props;
-        const { links } = this.state;
-        
-        return (
-            <Request>
-                {conflict.length > 0 ?
-                    <ConflictSection>
-                        <p>Conflicts with leave request:</p>
-                        {conflict.map((result) => {
-                            return (
-                                <ConflictForm>
-                                    <RedCross/>
-                                    <span><strong>{result.first_name} {result.last_name}</strong></span>
-                                    <span><strong>Priority:</strong> {result.priority}</span>
-                                    <span><strong>Begin Date:</strong> {result.begin_date}</span>
-                                    <span><strong>End Date:</strong> {result.end_date}</span>    
-                                </ConflictForm>
-                            );
-                        })}
-                    </ConflictSection>
-                : 
-                <NoConflict>
-                    <p>No conflicts</p>
-                    <Check />
-                </NoConflict>
-    
-                }
-                <Info>
-                    <RequestedLeave>
-                        <TextInput 
-                            id="startDate"
-                            label="Start Date"
-                            value={beginDate}
-                            name="startDate"
-                            disabled
-                        />
-                        <Dash>-</Dash>
-                        <TextInput 
-                            id="endDate"
-                            label="End Date"
-                            value={endDate}
-                            name="endDate"
-                            disabled
-                        />
-                    </RequestedLeave>
-                    <label>Comment</label>
-                    <textarea
-                        id="comment"
-                        name="comment"
-                        ref={this.textarea}
-                        value={comment}
+    return (
+        <Request>
+            {props.conflict.length > 0 ?
+                <ConflictSection>
+                    <p>Conflicts with leave request:</p>
+                    {props.conflict.map((result) => {
+                        return (
+                            <ConflictForm>
+                                <RedCross/>
+                                <span><strong>{result.first_name} {result.last_name}</strong></span>
+                                <span><strong>Priority:</strong> {result.priority}</span>
+                                <span><strong>Begin Date:</strong> {result.begin_date}</span>
+                                <span><strong>End Date:</strong> {result.end_date}</span>    
+                            </ConflictForm>
+                        );
+                    })}
+                </ConflictSection>
+            : 
+            <NoConflict>
+                <p>No conflicts</p>
+                <Check />
+            </NoConflict>
+            }
+            <Info>
+                <RequestedLeave>
+                    <TextInput 
+                        id="startDate"
+                        label="Start Date"
+                        value={props.beginDate}
+                        name="startDate"
                         disabled
                     />
-                    {status === 2 ? 
-                    <EventSection>
-                        <DateTable>
-                        <Heading>
-                            <span>Date</span>
-                            <span>GCal Link</span>
-                        </Heading>
-                        {links.map((link) => {
-                        return (
-                        <Row>
-                            <span>{link.dayString}</span>
-                             <a
-                                href={link.link}
-                                target="_blank"
-                                rel="noopener noreferrer" >
-                                Create Google Calendar Event
-                            </a>
-                        </Row>
-                        );
-                        })}
-                        </DateTable>
-                        <Button color="red" onClick={this.handleReset}>Revoke Approval</Button>
-                    </EventSection>
-                     : ''}
-                    {status === 0 &&
-                        <Buttons>
-                            <Button color="red" onClick={this.handleDeny}>Deny</Button>
-                            <Button color="blue" onClick={this.handleApprove}>Approve</Button>
-                        </Buttons>
-                    }
-                    {status === 1 &&
-                    <Button color="blue" onClick={this.handleReset}>Revoke Deny</Button>}
-                </Info>
-            </Request>
-        );
-
-    }
+                    <Dash>-</Dash>
+                    <TextInput 
+                        id="endDate"
+                        label="End Date"
+                        value={props.endDate}
+                        name="endDate"
+                        disabled
+                    />
+                </RequestedLeave>
+                <label>Comment</label>
+                <textarea
+                    id="comment"
+                    name="comment"
+                    value={props.comment}
+                    disabled
+                />
+                {props.status === 2 ? 
+                <EventSection>
+                    <DateTable>
+                    <Heading>
+                        <span>Date</span>
+                        <span>GCal Link</span>
+                    </Heading>
+                    {state.links.map((link) => {
+                    return (
+                    <Row>
+                        <span>{link.dayString}</span>
+                            <a
+                            href={link.link}
+                            target="_blank"
+                            rel="noopener noreferrer" >
+                            Create Google Calendar Event
+                        </a>
+                    </Row>
+                    );
+                    })}
+                    </DateTable>
+                    <Button color="red" onClick={handleReset}>Revoke Approval</Button>
+                </EventSection>
+                    : ''}
+                {props.status === 0 &&
+                    <Buttons>
+                        <Button color="red" onClick={handleDeny}>Deny</Button>
+                        <Button color="blue" onClick={handleApprove}>Approve</Button>
+                    </Buttons>
+                }
+                {props.status === 1 &&
+                <Button color="blue" onClick={handleReset}>Revoke Deny</Button>}
+            </Info>
+        </Request>
+    );
 }
 
-LeaveForm.propTypes = {
-    beginDate: PropTypes.string,
-    endDate: PropTypes.string,
-    priority: PropTypes.number,
-    comment: PropTypes.string,
-    username: PropTypes.string,
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    shift: PropTypes.number,
-    lid: PropTypes.number.isRequired,
-    conflict: PropTypes.array,
-    status: PropTypes.number,
-    handleDeny: PropTypes.func.isRequired,
-    handleApprove: PropTypes.func.isRequired,
-    handleReset: PropTypes.func.isRequired,
-}
 
 export default LeaveForm;
 

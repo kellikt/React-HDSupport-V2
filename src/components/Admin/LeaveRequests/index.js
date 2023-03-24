@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 import IndexPage from '../IndexPage';
 import IndexLink from '../IndexLink';

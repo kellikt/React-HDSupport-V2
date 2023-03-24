@@ -607,23 +607,23 @@ export default function Edit() {
                         disabled={admin ? false : true}
                     />
                     <Checkbox
-                            id="super_admin"
-                            label="Super Admin"
-                            onChange={() => handleCheck('super_admin')}
-                            checked={state.roles.super_admin === 'yes' ? true : false}
-                            color="purple"
-                            disabled={super_admin ? false : true}
-                        />
+                        id="super_admin"
+                        label="Super Admin"
+                        onChange={() => handleCheck('super_admin')}
+                        checked={state.roles.super_admin === 'yes' ? true : false}
+                        color="purple"
+                        disabled={state.roles.super_admin === 'yes' ? false : true}
+                    />
                     <Checkbox
                         id="enabled"
                         label="Enabled"
                         onChange={() => handleCheck('enabled')}
                         checked={state.info.expired === 0 ? true : false}
                         color="purple"
-                        disabled={admin ? false : true}
+                        disabled={state.roles.administrator === 'yes' ? false : true}
                     />
                 </AdminRoles>
-                {state.roles.staff === 'yes' ?
+                {state.roles.staff === 'yes' && state.roles.super_admin == 'yes' ?
                     <PrioritySection>
                         <FormSection id="priority">Priority</FormSection>
                         <TextInput 

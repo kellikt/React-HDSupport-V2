@@ -1,4 +1,4 @@
-import React, { forwardRef, cloneElement } from 'react';
+import { forwardRef, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';

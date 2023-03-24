@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { LayoutContext } from '../LayoutContext';
 import Main from './Main/Main';
 import NoAuth from './NoAuth';

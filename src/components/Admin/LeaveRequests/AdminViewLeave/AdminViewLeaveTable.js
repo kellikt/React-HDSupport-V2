@@ -1,17 +1,14 @@
-import React, { Component } from 'react';
 import styled from '@emotion/styled';
 
-import PropTypes from 'prop-types';
 import { Table, TableLabel, TableHeading, TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
 import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 
-class AdminViewLeaveTable extends Component {
+function AdminViewLeaveTable(props) {
 
-    getConflict = (beginDate, endDate) => {
-        const { results } = this.props;
+    const getConflict = (beginDate, endDate) => {
 
-        const merged = results.flat(1);
+        const merged = props.results.flat(1);
 
         const checkConflicts = merged.filter((result) => {
             if ((beginDate >= result.begin_date && beginDate <= result.end_date) || (endDate >= result.begin_date && endDate <= result.end_date) || (beginDate <= result.begin_date && endDate >= result.endDate)) {
@@ -28,11 +25,8 @@ class AdminViewLeaveTable extends Component {
         }
     }
 
-    render() {
-        const { date, shift, results } = this.props;
-
-        return (
-            <Table {...this.props}  
+    return (
+        <Table {...props}  
             initial={{
                 y: 50,
                 opacity: 0,
@@ -50,65 +44,57 @@ class AdminViewLeaveTable extends Component {
                 y: 50,
                 opacity: 0,
                 transition: { ease: 'circOut', duration: 0.2 },
-            }}>
-                <Label>
-                    <div>
-                        <h2>Requests for: <strong>{date[0]} to {date[1]}</strong></h2>
-                    </div>
-                </Label>
-                <Heading>
-                    <span>Priority</span>
-                    <span>Username</span>
-                    <span>Requested Dates</span>
-                    <span>No Conflicts?</span>
-                    <span>Approval Status</span>
-                </Heading>
-                {results.map((result, index) => {
-                    return (
-                        <a
-                        href={`${process.env.PUBLIC_URL}/leave-request/admin-leave/${result[0].username}/${date[0]}/${date[1]}/${shift}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >
-                            <Row key={result[0].username} stagger={index}>
-                                {result.map((res, index) => {
-                                    return (
-                                        <div>
-                                            <span>{index === 0  ? <p>{res.priority}</p> : ''}</span>
-                                            <span>{index === 0  ? <p>{res.username}</p> : ''}</span>
-                                            <span>{res.begin_date} - {res.end_date}</span>
-                                            <span>{this.getConflict(res.begin_date, res.end_date) === 'yes' ? 
-                                                <Check />
-                                            : <Cross />}</span>
-                                            <span>{function() {
-                                                switch(res.status) {
-                                                    case 0:
-                                                        return <p>?</p>;
-                                                    case 1:
-                                                        return <Cross />;
-                                                    case 2:
-                                                        return <Check />;
-                                                    default:
-                                                        return <p>?</p>;
-                                                }
-                                            }()}</span>
-                                        </div>
-                                    );
-                                })}
-                            </Row>
-                        </a>
-                    );
-                })}
-            </Table>
-        );
-    }
-}
-
-AdminViewLeaveTable.propTypes = {
-    date: PropTypes.array.isRequired,
-    results: PropTypes.array,
-    getTableData: PropTypes.func,
-    shift: PropTypes.number,
+        }}>
+            <Label>
+                <div>
+                    <h2>Requests for: <strong>{props.date[0]} to {props.date[1]}</strong></h2>
+                </div>
+            </Label>
+            <Heading>
+                <span>Priority</span>
+                <span>Username</span>
+                <span>Requested Dates</span>
+                <span>No Conflicts?</span>
+                <span>Approval Status</span>
+            </Heading>
+            {props.results.map((result, index) => {
+                return (
+                    <a
+                    href={`${process.env.PUBLIC_URL}/leave-request/admin-leave/${result[0].username}/${props.date[0]}/${props.date[1]}/${props.shift}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
+                        <Row key={result[0].username} stagger={index}>
+                            {result.map((res, index) => {
+                                return (
+                                    <div>
+                                        <span>{index === 0  ? <p>{res.priority}</p> : ''}</span>
+                                        <span>{index === 0  ? <p>{res.username}</p> : ''}</span>
+                                        <span>{res.begin_date} - {res.end_date}</span>
+                                        <span>{getConflict(res.begin_date, res.end_date) === 'yes' ? 
+                                            <Check />
+                                        : <Cross />}</span>
+                                        <span>{function() {
+                                            switch(res.status) {
+                                                case 0:
+                                                    return <p>?</p>;
+                                                case 1:
+                                                    return <Cross />;
+                                                case 2:
+                                                    return <Check />;
+                                                default:
+                                                    return <p>?</p>;
+                                            }
+                                        }()}</span>
+                                    </div>
+                                );
+                            })}
+                        </Row>
+                    </a>
+                );
+            })}
+        </Table>
+    );
 }
 
 export default AdminViewLeaveTable;

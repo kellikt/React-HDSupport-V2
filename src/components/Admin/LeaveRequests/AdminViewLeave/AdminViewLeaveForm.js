@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import axios from 'axios';
@@ -10,22 +10,24 @@ import AdminViewLeaveTable from './AdminViewLeaveTable';
 
 import { ReactComponent as Manage } from '../../../../images/Admin/Leave/ManageLeave.svg';
 
-import { LayoutContext } from '../../../../LayoutContext';
+function AdminViewLeaveForm() {
 
-class AdminViewLeaveForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            period: new Date(),
-            year: '',
-            date: [new Date(), new Date()],
-            shift: '',
-            submitted: false,
-            results: [],
-        };
-    }
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    };
 
-    createYears() {
+    const [state, setState] = useState({
+        period: '',
+        year: '',
+        date: [(new Date()).toLocaleString('en-CA', options), (new Date()).toLocaleString('en-CA', options)],
+        shift: "1",
+        submitted: false,
+        results: [],
+    });
+
+    const createYears = () => {
         let currentYear = new Date().getFullYear() + 1;
         const years = [];
 
@@ -37,65 +39,55 @@ class AdminViewLeaveForm extends Component {
         return years;
     }
 
-    handleChange = event => {
+    const years = createYears();
+
+    const handleChange = event => {
         const value = event.target.value;
         const name = event.target.name;
-
-        this.setState({
-            [name]: value,
-            submitted: false,
-        });
 
         let year;
         if (name === "year") {
             year = value;
         } else {
-            year = this.state.year;
+            year = state.year;
         }
 
-        let period;
+        let newPeriod;
         if (name === "period") {
-            period = value;
+            newPeriod = value;
         } else {
-            period = this.state.period;
+            newPeriod = state.period;
         }
 
-        if (parseInt(period) === 1) {
+        if (parseInt(newPeriod) === 1) {
             const beginDateString = `${year}-01-01`;
             const endDateString = `${year}-06-30`;
-            this.setState({ 
+            setState({ 
+                ...state,
+                [name]: value,
                 date: [beginDateString, endDateString],
                 submitted: false,
             });
-        } else if (parseInt(period) === 2) {
+        } else if (parseInt(newPeriod) === 2) {
             const beginDateString = `${year}-07-01`;
             const endDateString = `${year}-12-31`;
-            this.setState({ 
+            setState({ 
+                ...state,
+                [name]: value,
                 date: [beginDateString, endDateString],
                 submitted: false,
             });
         }
-
     };
 
-    handleSubmit = async event => {
-        event.preventDefault();
-
-        this.setState({ 
-            submitted: true,
-        });
-        this.getTableData();
-    };
-
-    getTableData = async() => {
-        const { date, shift } = this.state;
+    const getTableData = async() => {
 
         try {
             const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
                 username: '',
-                shift: shift,
-                beginDate: date[0],
-                endDate: date[1],
+                shift: state.shift,
+                beginDate: state.date[0],
+                endDate: state.date[1],
             });
             const data = request.data;
             const usernames = [...new Set(data.map(item => item.username))];
@@ -106,8 +98,10 @@ class AdminViewLeaveForm extends Component {
             });
 
             if (!(data === 0)) {
-                this.setState({
+                setState({
+                    ...state,
                     results: res,
+                    submitted: true,
                 });
             }
         } catch (error) {
@@ -115,68 +109,71 @@ class AdminViewLeaveForm extends Component {
         }
     }
 
-    render() {
-        const { period, year, submitted, shift, date, results } = this.state;
+    const handleSubmit = async event => {
+        event.preventDefault();
+        console.log(state);
 
-        const years = this.createYears();
+        try {
+            getTableData();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-        return (
-            <React.Fragment>
-                <FormEl onSubmit={this.handleSubmit}>
-                    <AdminTitle>
-                        <h2>View Leave Requests</h2>
-                        <p>View a list of leave requests for the specified period.</p>
-                    </AdminTitle>
-                    <ManageDiv>
-                        <ManageLeave />
-                    </ManageDiv>
-                    <AdminInputs>
-                        <div>
-                            <label htmlFor="period">Leave Period</label>
-                            <select name="period" id="period" onChange={this.handleChange} value={period}>
-                                <option value="None">Select Leave Period</option>
-                                <option value="1">
-                                    January - June
-                                </option>
-                                <option value="2">
-                                    July - December
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="year">Year</label>
-                            <select name="year" id="year" onChange={this.handleChange} value={year}>
-                                <option value="None">Select Year</option>
-                                {years.map(year => {
-                                    return (
-                                        <option key={year} value={year}>
-                                            {year}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="shift">Shift</label>
-                            <select name="shift" id="shift" onChange={this.handleChange} value={shift}>
-                                <option value="None">Select Shift</option>
-                                <option value="1">1st Shift</option>
-                                <option value="2">2nd Shift</option>
-                                <option value="3">3rd Shift</option>
-                            </select>
-                        </div>
-                    </AdminInputs>
-                    <Button color="light-blue">Display Requests</Button>
-                </FormEl>
-                <AnimatePresence>
-                    {submitted && <AdminViewLeaveTable key="table" date={date} shift={shift} results={results} getTableData={this.getTableData} />}
-                </AnimatePresence>
-            </React.Fragment>
-        );
-    }
+    return (
+        <React.Fragment>
+            <FormEl onSubmit={handleSubmit}>
+                <AdminTitle>
+                    <h2>View Leave Requests</h2>
+                    <p>View a list of leave requests for the specified period.</p>
+                </AdminTitle>
+                <ManageDiv>
+                    <ManageLeave />
+                </ManageDiv>
+                <AdminInputs>
+                    <div>
+                        <label htmlFor="period">Leave Period</label>
+                        <select name="period" id="period" onChange={handleChange} value={state.period}>
+                            <option value="None">Select Leave Period</option>
+                            <option value="1">
+                                January - June
+                            </option>
+                            <option value="2">
+                                July - December
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="year">Year</label>
+                        <select name="year" id="year" onChange={handleChange} value={state.year}>
+                            <option value="None">Select Year</option>
+                            {years.map(year => {
+                                return (
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="shift">Shift</label>
+                        <select name="shift" id="shift" onChange={handleChange} value={state.shift}>
+                            <option value="None">Select Shift</option>
+                            <option value="1">1st Shift</option>
+                            <option value="2">2nd Shift</option>
+                            <option value="3">3rd Shift</option>
+                        </select>
+                    </div>
+                </AdminInputs>
+                <Button color="light-blue">Display Requests</Button>
+            </FormEl>
+            <AnimatePresence>
+                {state.submitted && <AdminViewLeaveTable key="table" date={state.date} shift={state.shift} results={state.results} />}
+            </AnimatePresence>
+        </React.Fragment>
+    );
 }
-
-AdminViewLeaveForm.contextType = LayoutContext;
 
 export default AdminViewLeaveForm;
 

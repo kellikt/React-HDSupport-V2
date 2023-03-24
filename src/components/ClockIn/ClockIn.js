@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import styled from '@emotion/styled';
 
 import { ReactComponent as Laptop } from '../../images/Clock/Laptop.svg';
