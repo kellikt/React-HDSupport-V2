@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 
 import { ReactComponent as Schedules } from '../../images/Main/Schedules.svg';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     useParams
 } from 'react-router-dom';
@@ -89,7 +89,7 @@ function AdminLeave() {
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-leave-request.php`, {
                 lid: lid,
                 beginDate: beginDate,
-                endDate,
+                endDate: endDate,
                 comment: comment,
                 status: 1,
             });

@@ -1,96 +1,66 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 
 import TextInput from '../../../TextInput';
 import Button from '../../../Button';
 import { TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
 
-class ExpandedRow extends Component {
-    constructor(props) {
-        super(props);
-        const { beginDate, endDate, comment } = this.props;
-        this.state = {
-            comment: comment,
-            beginDate: beginDate,
-            endDate: endDate,
-        }
-    }
+function ExpandedRow(props) {
+    const [state, setState] = useState({
+        comment: props.comment,
+        beginDate: props.beginDate,
+        endDate: props.endDate,
+    });
 
-    handleInput = event => {
+    const handleInput = event => {
         const name = event.target.name;
-        this.setState({
+        setState({
+            ...state,
             [name]: event.target.value,
         });
     };
 
-    handleEdit = () => {
-        const { lid, status, handleEdit } = this.props;
-        const { comment, beginDate, endDate } = this.state;
-        handleEdit(lid, beginDate, endDate, comment, status);
-    };
-
-    handleDelete = () => {
-        const { lid, handleDelete } = this.props;
-        handleDelete(lid);
-    }
-
-    render() {
-        const { comment, beginDate, endDate } = this.state;
-        const { status } = this.props;
-        
-        return (
-            <Row {...this.props}>
-                <TextInput
-                    id="beginDate"
-                    label="Begin Date"
-                    name="beginDate"
-                    value={beginDate}
-                    onChange={this.handleInput}
-                    disabled={status === 0 ? false : true}
-                />
-                <TextInput
-                    id="endDate"
-                    label="End Date"
-                    name="endDate"
-                    value={endDate}
-                    onChange={this.handleInput}
-                    disabled={status === 0 ? false : true}
-                />
-                <TextInput
-                    id="comment"
-                    label="Comment"
-                    name="comment"
-                    value={comment}
-                    onChange={this.handleInput}
-                    disabled={status === 0 ? false : true}
-                />
-                <ButtonContainer>
-                    {status !== 2 ?
-                        <div>
-                            <Button color="blue" onClick={this.handleEdit}>
-                                Edit
-                            </Button>
-                            <Button color="red" onClick={this.handleDelete}>
-                                Delete
-                            </Button>
-                        </div>
-                    : <p>Request already processed. <br></br>Please contact your manager to make changes.</p>}
-                </ButtonContainer>
-            </Row>
-        )
-    }
+    return (
+        <Row {...props}>
+            <TextInput
+                id="beginDate"
+                label="Begin Date"
+                name="beginDate"
+                value={state.beginDate}
+                onChange={handleInput}
+                disabled={props.status === 0 ? false : true}
+            />
+            <TextInput
+                id="endDate"
+                label="End Date"
+                name="endDate"
+                value={state.endDate}
+                onChange={handleInput}
+                disabled={props.status === 0 ? false : true}
+            />
+            <TextInput
+                id="comment"
+                label="Comment"
+                name="comment"
+                value={state.comment}
+                onChange={handleInput}
+                disabled={props.status === 0 ? false : true}
+            />
+            <ButtonContainer>
+                {props.status == 0 ?
+                    <div>
+                        <Button color="blue" onClick={() => (props.handleEdit(props.lid, state.beginDate, state.endDate, state.comment, props.status))}>
+                            Edit
+                        </Button>
+                        <Button color="red" onClick={() => (props.handleDelete(props.lid))}>
+                            Delete
+                        </Button>
+                    </div>
+                : <p>Request already processed. <br></br>Please contact your manager to make changes.</p>}
+            </ButtonContainer>
+        </Row>
+    );
 }
-
-ExpandedRow.propTypes = {
-    comment: PropTypes.string,
-    beginDate: PropTypes.string,
-    endDate: PropTypes.string,
-    status: PropTypes.number,
-    lid: PropTypes.number.isRequired,
-    handleDelete: PropTypes.func.isRequired,
-    handleEdit: PropTypes.func.isRequired,
-};
 
 export default ExpandedRow;
 

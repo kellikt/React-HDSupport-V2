@@ -1,51 +1,22 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 
-import PropTypes from 'prop-types';
-import { LayoutContext } from '../../../../LayoutContext';
 import { Table, TableLabel, TableHeading, TableRow } from '../../SchedMgmt/ClockMetrics/MetricsTableComponents';
 import ExpandedRow from './ExpandedRow';
 
 import { ReactComponent as Cross } from '../../../../images/icons/RedCross.svg';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 
-class ViewLeaveTable extends Component {
-    state = {
-        focused: -1,
-    }
+function ViewLeaveTable(props) {
+    const [focus, setFocus] = useState(-1);
 
-    getTableData = async() => {
-        const { date } = this.props;
-        const { username } = this.context;
-
-        try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
-                username: username,
-                shift: '',
-                beginDate: date[0],
-                endDate: date[1],
-            });
-            const data = request.data;
-            if (!(data === 0)) {
-                this.setState({
-                    results: data,
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    handleRowClick = index => {
-        this.setState({
-            focused: index,
-        });
+    const handleRowClick = index => {
+        setFocus(index);
     };
 
-    handleEdit = async (lid, beginDate, endDate, comment, status) => {
+    const handleEdit = async (lid, beginDate, endDate, comment, status) => {
         try {
-            const { getTableData } = this.props;
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-leave-request.php`, {
                 lid: lid,
                 beginDate: beginDate,
@@ -53,35 +24,28 @@ class ViewLeaveTable extends Component {
                 comment: comment,
                 status: status,
             });
-            this.setState({
-                focused: -1,
-            });
+            setFocus(-1);
 
-            getTableData();
+            props.getTableData();
         } catch (error) {
                 console.log(error);
         }  
     }
 
-    handleDelete = async lid => {
+    const handleDelete = async lid => {
         try {
-            const { getTableData } = this.props;
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-leave-request.php`, {
                 lid: lid,
             });
 
-            getTableData();
+            props.getTableData();
         } catch (error) {
             console.log(error);
         }
     };
 
-    render() {
-        const { focused } = this.state;
-        const { date, results } = this.props;
-
-        return (
-            <Table {...this.props}
+    return (
+        <Table {...props}
             initial={{
                 y: 50,
                 opacity: 0,
@@ -101,68 +65,60 @@ class ViewLeaveTable extends Component {
                 transition: { ease: 'circOut', duration: 0.5 },
             }}
             >
-                <Label>
-                    <div>
-                        <h2>Requests for: <strong>{date[0]} - {date[1]}</strong></h2>
-                    </div>
-                </Label>
-                <Heading>
-                    <span>Begin Date</span>
-                    <span>End Date</span>
-                    <span>Comment</span>
-                    {focused === -1 ? <span>Approval Status</span> 
-                    : 
-                    <span>Action</span>
-                    }
-                </Heading>
-                {results.map((result, index) => {
-                    if (index === focused) {
-                        return (
-                            <ExpandedRow 
-                                key={result.lid}
-                                comment={result.comment}
-                                beginDate={result.begin_date}
-                                endDate={result.end_date}
-                                status={result.status}
-                                lid={result.lid}
-                                handleDelete={this.handleDelete}
-                                handleEdit={this.handleEdit}
-                            />
-                        );
-                    } else {
-                        return (
-                            <Row key={result.lid} onClick={() => this.handleRowClick(index)} stagger={index}>
-                                <span>{result.begin_date}</span>
-                                <span>{result.end_date}</span>
-                                <span>{result.comment}</span>
-                                <span>{function() {
-                                    switch(result.status) {
-                                        case 0:
-                                            return <p>?</p>;
-                                        case 1:
-                                            return <Cross />;
-                                        case 2:
-                                            return <LeaveCheck />;
-                                        default:
-                                            return <p>?</p>;
-                                    }
-                                }()}</span>
-                            </Row>
-                        );
-                    }
-                })}
-            </Table>
-        );
-    }
+            <Label>
+                <div>
+                    <h2>Requests for: <strong>{props.date[0]} - {props.date[1]}</strong></h2>
+                </div>
+            </Label>
+            <Heading>
+                <span>Begin Date</span>
+                <span>End Date</span>
+                <span>Comment</span>
+                {focus === -1 ? <span>Approval Status</span> 
+                : 
+                <span>Action</span>
+                }
+            </Heading>
+            {props.results.map((result, index) => {
+                if (index === focus) {
+                    return (
+                        <ExpandedRow 
+                            key={result.lid}
+                            comment={result.comment}
+                            beginDate={result.begin_date}
+                            endDate={result.end_date}
+                            status={result.status}
+                            lid={result.lid}
+                            handleDelete={handleDelete}
+                            handleEdit={handleEdit}
+                        />
+                    );
+                } else {
+                    return (
+                        <Row key={result.lid} onClick={() => handleRowClick(index)} stagger={index}>
+                            <span>{result.begin_date}</span>
+                            <span>{result.end_date}</span>
+                            <span>{result.comment}</span>
+                            <span>{function() {
+                                switch(result.status) {
+                                    case 0:
+                                        return <p>?</p>;
+                                    case 1:
+                                        return <Cross />;
+                                    case 2:
+                                        return <LeaveCheck />;
+                                    default:
+                                        return <p>?</p>;
+                                }
+                            }()}</span>
+                        </Row>
+                    );
+                }
+            })}
+        </Table>
+    );
+
 }
-
-ViewLeaveTable.contextType = LayoutContext;
-
-ViewLeaveTable.propTypes = {
-    date: PropTypes.array.isRequired,
-    results: PropTypes.array,
-    getTableData: PropTypes.func
-};
 
 export default ViewLeaveTable;
 

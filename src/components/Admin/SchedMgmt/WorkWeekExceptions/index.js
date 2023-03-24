@@ -1,5 +1,3 @@
-import React from 'react';
-
 import WorkWeekWizard from './WorkWeekWizard';
 import Breadcrumb from '../../Breadcrumb';
 import Container from '../../Container';

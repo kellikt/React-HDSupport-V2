@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Container from '../../Container';
 import Breadcrumb from '../../Breadcrumb';
 import Background from '../../../Background';
