@@ -79,7 +79,7 @@ class SiteRouter extends Component {
                 <Route element={<AdminRoute as={ViewLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/view-leave`} />
 
                 <Route element={<SuperAdminRoute as={AdminViewLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave`} />
-                <Route element={<AdminRoute as={AdminLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave/:username/:startDate/:endDate/:shift`} />
+                <Route element={<AdminRoute as={AdminLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave/:user/:startDate/:endDate/:shift`} />
                 <Route path="*" element={<Main />} />
             </Routes>
         );

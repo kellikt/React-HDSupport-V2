@@ -78,7 +78,7 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const Selectors = styled.div`
+export const Selectors = styled.div`
     button {
         padding: 15px 30px;
         margin: 0 30px;

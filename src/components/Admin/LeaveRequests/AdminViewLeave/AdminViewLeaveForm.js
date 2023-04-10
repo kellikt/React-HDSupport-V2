@@ -111,7 +111,6 @@ function AdminViewLeaveForm() {
 
     const handleSubmit = async event => {
         event.preventDefault();
-        console.log(state);
 
         try {
             getTableData();
