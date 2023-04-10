@@ -49,14 +49,16 @@ function ExpandedRow(props) {
             <ButtonContainer>
                 {props.status == 0 ?
                     <div>
-                        <Button color="blue" onClick={() => (props.handleEdit(props.lid, state.beginDate, state.endDate, state.comment, props.status))}>
+                        <Button color="blue" onClick={() => (props.handleEdit(props.lid, state.beginDate, state.endDate, state.comment, props.status, props.staffComment))}>
                             Edit
                         </Button>
                         <Button color="red" onClick={() => (props.handleDelete(props.lid))}>
                             Delete
                         </Button>
                     </div>
-                : <p>Request already processed. <br></br>Please contact your manager to make changes.</p>}
+                : <p>Request already processed. <br/>
+                {props.staffComment.length > 0 ? `Manager Comments: ${props.staffComment}`: ''}
+                <br/>Please contact your manager to make changes.</p>}
             </ButtonContainer>
         </Row>
     );

@@ -18,7 +18,7 @@ import Background from '../../Background';
 
 export default function Edit() {
     const { username } = useParams();
-    const { roles: { admin }} = useContext(LayoutContext);
+    const { roles: { admin, super_admin }} = useContext(LayoutContext);
     const [state, setState] = useState({
         roles: {
             super_admin: 'no',
@@ -56,6 +56,7 @@ export default function Edit() {
     const [snack, setSnack] = useState(false);
 
     useEffect(() => {
+        console.log(super_admin);
         const fetchData = async() => {
             const rolesRequest = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-roles.php?username=${username}`);
             const infoRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
@@ -612,7 +613,7 @@ export default function Edit() {
                         onChange={() => handleCheck('super_admin')}
                         checked={state.roles.super_admin === 'yes' ? true : false}
                         color="purple"
-                        disabled={state.roles.super_admin === 'yes' ? false : true}
+                        disabled={super_admin ? false : true}
                     />
                     <Checkbox
                         id="enabled"
@@ -623,7 +624,7 @@ export default function Edit() {
                         disabled={state.roles.administrator === 'yes' ? false : true}
                     />
                 </AdminRoles>
-                {state.roles.staff === 'yes' && state.roles.super_admin == 'yes' ?
+                {state.roles.staff === 'yes' && super_admin ?
                     <PrioritySection>
                         <FormSection id="priority">Priority</FormSection>
                         <TextInput 

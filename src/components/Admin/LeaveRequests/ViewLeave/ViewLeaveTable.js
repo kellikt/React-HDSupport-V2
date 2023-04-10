@@ -15,7 +15,7 @@ function ViewLeaveTable(props) {
         setFocus(index);
     };
 
-    const handleEdit = async (lid, beginDate, endDate, comment, status) => {
+    const handleEdit = async (lid, beginDate, endDate, comment, status, staffComment) => {
         try {
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-leave-request.php`, {
                 lid: lid,
@@ -23,6 +23,7 @@ function ViewLeaveTable(props) {
                 endDate: endDate,
                 comment: comment,
                 status: status,
+                staffComment: staffComment,
             });
             setFocus(-1);
 
@@ -80,11 +81,12 @@ function ViewLeaveTable(props) {
                 }
             </Heading>
             {props.results.map((result, index) => {
-                if (index === focus) {
+                if (index === focus && result.status == 0) {
                     return (
                         <ExpandedRow 
                             key={result.lid}
                             comment={result.comment}
+                            staffComment={result.staff_comment}
                             beginDate={result.begin_date}
                             endDate={result.end_date}
                             status={result.status}
@@ -102,13 +104,13 @@ function ViewLeaveTable(props) {
                             <span>{function() {
                                 switch(result.status) {
                                     case 0:
-                                        return <p>?</p>;
+                                        return <p>?<br/>{result.staff_comment.length > 0 ? `Manager comment: ${result.staff_comment}`  : ''}</p>;
                                     case 1:
-                                        return <Cross />;
+                                        return <p><Cross /><br/>{result.staff_comment.length > 0 ? `Manager comment: ${result.staff_comment}`  : ''}</p>;
                                     case 2:
-                                        return <LeaveCheck />;
+                                        return <p><LeaveCheck /><br/>{result.staff_comment.length > 0 ? `Manager comment: ${result.staff_comment}`  : ''}</p>;
                                     default:
-                                        return <p>?</p>;
+                                        return <p>?<br/>{result.staff_comment.length > 0 ? `Manager comment: ${result.staff_comment}`  : ''}</p>;
                                 }
                             }()}</span>
                         </Row>
@@ -142,6 +144,10 @@ const Row = styled(TableRow)`
 
     &:active {
         transform: scale(1);
+    }
+
+    span:nth-of-type(4) {
+        text-align: center;
     }
 `;
 
