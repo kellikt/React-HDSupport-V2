@@ -9,6 +9,7 @@ import { ReactComponent as Browser } from '../../../images/icons/Administration/
 import { ReactComponent as Database } from '../../../images/icons/Administration/Database.svg';
 import { ReactComponent as Docs } from '../../../images/icons/Administration/Docs.svg';
 import { ReactComponent as Google } from '../../../images/icons/Administration/Google.svg';
+import { ReactComponent as Storage } from '../../../images/icons/Administration/Storage.svg';
 import { ReactComponent as Training } from '../../../images/icons/Documentation/Reception/Schedules.svg';
 
 const AdministrationDropdownEl = styled.div`
@@ -68,6 +69,14 @@ const AdministrationDropdown = () => {
             </DropdownSection>
             <DropdownSection>
                 <ul>
+                    <ListItem>
+                        <Link to={`${process.env.PUBLIC_URL}/google-storage`}>
+                            <Heading color="pink">
+                                <Storage />
+                                Google Storage Templates
+                            </Heading>
+                        </Link>
+                    </ListItem>
                     <ListItem>
                         <Link to={`${process.env.PUBLIC_URL}/hd-training`}>
                             <Heading color="pink">

@@ -32,6 +32,9 @@ import Add from './Admin/AcctMgmt/Add';
 import HDTestTemplates from './Email/HDTestTemplates';
 import AddTemplate from './Email/AddTemplate';
 import EditTemplate from './Email/EditTemplate';
+import GoogleStorageTemplate from './Email/GoogleStorageTemplate';
+import AddGoogleTemplate from './Email/AddGoogleTemplate';
+import EditGoogleTemplate from './Email/EditGoogleTemplate';
 
 class SiteRouter extends Component {
     render() {
@@ -56,8 +59,11 @@ class SiteRouter extends Component {
                 <Route element={<AdminRoute as={Timesheet} />} path={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/:username/:year/:payPeriod`} />
 
                 <Route element={<AdminRoute as={HDTestTemplates} />} path={`${process.env.PUBLIC_URL}/hd-training`} />
+                <Route element={<AdminRoute as={GoogleStorageTemplate} />} path={`${process.env.PUBLIC_URL}/google-storage`} />
                 <Route element={<AdminRoute as={AddTemplate} />} path={`${process.env.PUBLIC_URL}/add-template`} />
                 <Route element={<AdminRoute as={EditTemplate} />} path={`${process.env.PUBLIC_URL}/edit-template/:tid`} />
+                <Route element={<AdminRoute as={AddGoogleTemplate} />} path={`${process.env.PUBLIC_URL}/add-google-template`} />
+                <Route element={<AdminRoute as={EditGoogleTemplate} />} path={`${process.env.PUBLIC_URL}/edit-google-template/:tid`} />
                 
                 <Route element={<UserRoute as={Email} />} path={`${process.env.PUBLIC_URL}/email`} />
                 <Route element={<UserRoute as={Banner} />} path={`${process.env.PUBLIC_URL}/email/banner`} />
