@@ -21,6 +21,7 @@ function GoogleStorageTemplate() {
         student: '',
         templates: [],
         selectedTemplates: [],
+        links: [{ title: 'Google Storage Templates', to: '/google-storage' }]
     });
 
     const [snack, setSnack] = useState({
@@ -31,17 +32,16 @@ function GoogleStorageTemplate() {
     });
 
     const handleInput = event => {
-        const { selectedTemplates } = this.state;
         const target = event.target;
         const value = target.value;
         const name = target.name;
 
         if (target.type === 'checkbox') {
             // find template in selectedTemplates
-            const template = selectedTemplates.find(x => x.tid === parseInt(name));
+            const template = state.selectedTemplates.find(x => x.tid === parseInt(name));
 
-            const index = selectedTemplates.findIndex(x => x.tid === parseInt(name));
-            const newTemplate = selectedTemplates.slice();
+            const index = state.selectedTemplates.findIndex(x => x.tid === parseInt(name));
+            const newTemplate = state.selectedTemplates.slice();
 
             if (template.selected === "no") {
                 newTemplate[index].selected = "yes";
@@ -80,15 +80,15 @@ function GoogleStorageTemplate() {
             showCancelButton: true,
         }).then((result) => {
             if (result.isConfirmed) {
-                this.deleteTemplate(tid);
+                deleteTemplate(tid);
             }
         });
     }
 
     const handleSnack = () => {
-        setState({
-            ...state,
-            snackHandler: false,
+        setSnack({
+            ...snack,
+            handler: false,
         });
     }
 
@@ -164,7 +164,7 @@ function GoogleStorageTemplate() {
                             id="student"
                             label="Name of Student in Training"
                             placeholder="Student Name"
-                            value={student}
+                            value={state.student}
                             onChange={handleInput}
                             name="student"
                         />
@@ -177,18 +177,38 @@ function GoogleStorageTemplate() {
                                         id={template.tid}
                                         label={`${template.tname} Template`}
                                         onChange={handleInput}
-                                        checked={selectedTemplates.find(x => x.tid === template.tid).selected === "yes"}
+                                        checked={state.selectedTemplates.find(x => x.tid === template.tid).selected === "yes"}
                                         name={template.tid}
                                     />
                                     <Link
                                         key={template.tid}
                                     >
+                                        <EditIcon />
                                     </Link>
+                                    <button onClick={e => {e.preventDefault(); handleDelete(template.tid); }}>
+                                        <TrashIcon />
+                                    </button>
                                 </TemplateDiv>
                             );
                         })}
                     </Text>
                 </div>
+                <div>
+                    <a
+                        href={`${process.env.PUBLIC_URL}/add-template`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <Button type="button" color="purple">Add Template</Button>
+                    </a>
+                    <Button color="light-blue">Send Email</Button>
+                </div>
+                <SnackbarPortal 
+                    handler={snack.handler}
+                    message={`You have sent email template(s) for: '${state.student}'`}
+                    heading="Success!"
+                    onClick={handleSnack}
+                />
             </EmailForm>
         </TemplateContainer>
     );
