@@ -90,7 +90,7 @@ export default function ManagerActions(props) {
         if (props.beginDate === props.endDate) {
             gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}`;
         } else {
-            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}`;
+            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&src=c_gjs3u1vu768u14f91kqqr1bc4s@group.calendar.google.com&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}`;
         }
         gcal += `&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${end.getFullYear()}${endMonth}${endDay}${endTime}`;
         const options = {

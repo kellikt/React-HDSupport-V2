@@ -71,6 +71,7 @@ function AdminLeave() {
                 username: user,
                 beginDate: startDate,
                 endDate: endDate,
+                shift: shift,
             });
             const total = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
                 username: '',
