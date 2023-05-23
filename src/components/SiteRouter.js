@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import SuperAdminRoute from './SuperAdminRoute';
 import AdminRoute from './AdminRoute';
 import UserRoute from './UserRoute';
 
@@ -35,6 +36,12 @@ import EditTemplate from './Email/EditTemplate';
 import GoogleStorageTemplate from './Email/GoogleStorageTemplate';
 import AddGoogleTemplate from './Email/AddGoogleTemplate';
 import EditGoogleTemplate from './Email/EditGoogleTemplate';
+
+import LeaveRequests from './Admin/LeaveRequests';
+import RequestLeave from './Admin/LeaveRequests/RequestLeave/RequestLeave';
+import ViewLeave from './Admin/LeaveRequests/ViewLeave/ViewLeave';
+import AdminViewLeave from './Admin/LeaveRequests/AdminViewLeave/AdminViewLeave';
+import AdminLeave from './Admin/LeaveRequests/AdminLeave/AdminLeave';
 
 class SiteRouter extends Component {
     render() {
@@ -73,6 +80,12 @@ class SiteRouter extends Component {
                 <Route element={<UserRoute as={TrainingLab} />} path={`${process.env.PUBLIC_URL}/email/training`} />
                 <Route element={<UserRoute as={FMO} />} path={`${process.env.PUBLIC_URL}/email/fmo`} />
 
+                <Route element={<AdminRoute as={LeaveRequests} />} path={`${process.env.PUBLIC_URL}/leave-request`} />
+                <Route element={<AdminRoute as={RequestLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/request-leave`} />
+                <Route element={<AdminRoute as={ViewLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/view-leave`} />
+
+                <Route element={<SuperAdminRoute as={AdminViewLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave`} />
+                <Route element={<AdminRoute as={AdminLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave/:user/:startDate/:endDate/:shift`} />
                 <Route path="*" element={<Main />} />
             </Routes>
         );
