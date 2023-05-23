@@ -44,7 +44,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "homepage": "/help/hdsupport/dev4/index.php",
+    "homepage": "/help/hdsupport/index.php",
     "proxy": "http://localhost/hdsupport-server/routes",
     "eslintConfig": {
         "extends": "react-app"

@@ -420,6 +420,7 @@ class Add extends Component {
         const {
             roles: { admin, super_admin },
         } = value;
+        console.log(super_admin);
 
         return (
             <Container>
@@ -549,14 +550,14 @@ class Add extends Component {
                             label="Manager"
                             onChange={() => this.handleCheck('manager')}
                             checked={roles.manager === 'yes' ? true : false}
-                            disabled={admin ? false : true}
+                            disabled={super_admin || admin ? false : true}
                         />
                         <Checkbox
                             id="admin"
                             label="Administrator"
                             onChange={() => this.handleCheck('admin')}
                             checked={roles.administrator === 'yes' ? true : false}
-                            disabled={admin ? false : true}
+                            disabled={super_admin || admin ? false : true}
                         />
                         <Checkbox
                             id="super_admin"
@@ -570,10 +571,10 @@ class Add extends Component {
                             label="Enabled"
                             onChange={() => this.handleCheck('enabled')}
                             checked={info.expired === 0 ? true : false}
-                            disabled={admin ? false : true}
+                            disabled={super_admin || admin ? false : true}
                         />
                     </AdminRoles>
-                    {roles.staff === 'yes' && roles.super_admin === 'yes' ? 
+                    {roles.staff === 'yes' && super_admin ? 
                     <PrioritySection>
                         <FormSection id="priority">Priority</FormSection>
                         <TextInput

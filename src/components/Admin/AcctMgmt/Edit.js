@@ -145,8 +145,9 @@ export default function Edit() {
                 });
                 break;
             case 'priority':
-                this.setState({
-                    info: { ...info, priority: event.target.value },
+                setState({
+                    ...state,
+                    info: { ...state.info, priority: event.target.value },
                 });
                 break;
             default:
@@ -310,17 +311,19 @@ export default function Edit() {
                 }
                 break;
             case 'super_admin':
-                if (roles.super_admin === 'yes') {
-                    this.setState({
+                if (state.roles.super_admin === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             super_admin: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             super_admin: 'yes',
                         },
                     });
@@ -346,51 +349,57 @@ export default function Edit() {
                 }
                 break;
             case 'first_staff':
-                if (roles.first_staff === 'yes') {
-                    this.setState({
+                if (state.roles.first_staff === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             first_staff: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             first_staff: 'yes',
                         },
                     });
                 }
                 break;
             case 'second_staff':
-                if (roles.second_staff === 'yes') {
-                    this.setState({
+                if (state.roles.second_staff === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             second_staff: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             second_staff: 'yes',
                         },
                     });
                 }
                 break;
             case 'third_staff':
-                if (roles.third_staff === 'yes') {
-                    this.setState({
+                if (state.roles.third_staff === 'yes') {
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             third_staff: 'no',
                         },
                     });
                 } else {
-                    this.setState({
+                    setState({
+                        ...state,
                         roles: {
-                            ...roles,
+                            ...state.roles,
                             third_staff: 'yes',
                         },
                     });
@@ -404,6 +413,7 @@ export default function Edit() {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
+            console.log(state);
             const groups = axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-user-groups.php`, {
                 super_admin: state.roles.super_admin,
                 administrator: state.roles.administrator,
@@ -597,7 +607,7 @@ export default function Edit() {
                         onChange={() => handleCheck('manager')}
                         checked={state.roles.manager === 'yes' ? true : false}
                         color="purple"
-                        disabled={admin ? false : true}
+                        disabled={super_admin || admin ? false : true}
                     />
                     <Checkbox
                         id="admin"
@@ -605,7 +615,7 @@ export default function Edit() {
                         onChange={() => handleCheck('admin')}
                         checked={state.roles.administrator === 'yes' ? true : false}
                         color="purple"
-                        disabled={admin ? false : true}
+                        disabled={super_admin || admin ? false : true}
                     />
                     <Checkbox
                         id="super_admin"
@@ -621,7 +631,7 @@ export default function Edit() {
                         onChange={() => handleCheck('enabled')}
                         checked={state.info.expired === 0 ? true : false}
                         color="purple"
-                        disabled={state.roles.administrator === 'yes' ? false : true}
+                        disabled={super_admin || admin ? false : true}
                     />
                 </AdminRoles>
                 {state.roles.staff === 'yes' && super_admin ?
