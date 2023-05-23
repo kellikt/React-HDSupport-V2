@@ -166,7 +166,7 @@ function AdminLeave() {
             await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-leave-request.php`, {
                 lid: lid,
                 beginDate: beginDate,
-                endDate,
+                endDate: endDate,
                 comment: comment,
                 status: 0,
                 staffComment: staffComment,
