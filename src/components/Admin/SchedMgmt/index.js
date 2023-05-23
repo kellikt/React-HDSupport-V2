@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IndexPage from '../IndexPage';
 import IndexLink from '../IndexLink';
 import { ReactComponent as Sheetadmin } from '../../../images/Admin/Sched/Sheetadmin.svg';

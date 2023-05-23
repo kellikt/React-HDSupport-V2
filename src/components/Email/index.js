@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IndexPage from '../Admin/IndexPage';
 import IndexLink from '../Admin/IndexLink';
 import { ReactComponent as UsernameChange } from '../../images/Email/UsernameChange.svg';

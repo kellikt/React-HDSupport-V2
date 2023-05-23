@@ -18,9 +18,10 @@ import Background from '../../Background';
 
 export default function Edit() {
     const { username } = useParams();
-    const { roles: { admin }} = useContext(LayoutContext);
+    const { roles: { admin, super_admin }} = useContext(LayoutContext);
     const [state, setState] = useState({
         roles: {
+            super_admin: 'no',
             administrator: 'no',
             helpdesk: 'no',
             lab: 'no',
@@ -29,6 +30,9 @@ export default function Edit() {
             tech: 'no',
             third_shift: 'no',
             leapstart: 'no',
+            first_staff: 'no',
+            second_staff: 'no',
+            third_staff: 'no',
         },
         info: {
             first_name: '',
@@ -45,12 +49,14 @@ export default function Edit() {
             uuid: 0,
             zipcode: '',
             uid: 0,
+            priority: 0,
         }
     });
 
     const [snack, setSnack] = useState(false);
 
     useEffect(() => {
+        console.log(super_admin);
         const fetchData = async() => {
             const rolesRequest = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-roles.php?username=${username}`);
             const infoRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
@@ -136,6 +142,12 @@ export default function Edit() {
                 setState({
                     ...state,
                     info: { ...state.info, cell_phone: event.target.value },
+                });
+                break;
+            case 'priority':
+                setState({
+                    ...state,
+                    info: { ...state.info, priority: event.target.value },
                 });
                 break;
             default:
@@ -298,6 +310,25 @@ export default function Edit() {
                     });
                 }
                 break;
+            case 'super_admin':
+                if (state.roles.super_admin === 'yes') {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            super_admin: 'no',
+                        },
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            super_admin: 'yes',
+                        },
+                    });
+                }
+                break;
             case 'enabled':
                 if (state.info.expired === 1) {
                     setState({
@@ -317,6 +348,63 @@ export default function Edit() {
                     });
                 }
                 break;
+            case 'first_staff':
+                if (state.roles.first_staff === 'yes') {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            first_staff: 'no',
+                        },
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            first_staff: 'yes',
+                        },
+                    });
+                }
+                break;
+            case 'second_staff':
+                if (state.roles.second_staff === 'yes') {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            second_staff: 'no',
+                        },
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            second_staff: 'yes',
+                        },
+                    });
+                }
+                break;
+            case 'third_staff':
+                if (state.roles.third_staff === 'yes') {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            third_staff: 'no',
+                        },
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        roles: {
+                            ...state.roles,
+                            third_staff: 'yes',
+                        },
+                    });
+                }
+                break;
             default:
                 break;
         }
@@ -325,7 +413,9 @@ export default function Edit() {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
+            console.log(state);
             const groups = axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-user-groups.php`, {
+                super_admin: state.roles.super_admin,
                 administrator: state.roles.administrator,
                 helpdesk: state.roles.helpdesk,
                 lab: state.roles.lab,
@@ -334,6 +424,9 @@ export default function Edit() {
                 tech: state.roles.tech,
                 third_shift: state.roles.third_shift,
                 leapstart: state.roles.leapstart,
+                first_staff: state.roles.first_staff,
+                second_staff: state.roles.second_staff,
+                third_staff: state.roles.third_staff,
                 username: state.info.username,
                 uid: state.info.uid,
             });
@@ -352,6 +445,7 @@ export default function Edit() {
                 city: state.info.city,
                 expired: state.info.expired,
                 uid: state.info.uid,
+                priority: state.info.priority,
             });
 
             await Promise.all([groups, userInfo]);
@@ -513,7 +607,7 @@ export default function Edit() {
                         onChange={() => handleCheck('manager')}
                         checked={state.roles.manager === 'yes' ? true : false}
                         color="purple"
-                        disabled={admin ? false : true}
+                        disabled={super_admin || admin ? false : true}
                     />
                     <Checkbox
                         id="admin"
@@ -521,7 +615,15 @@ export default function Edit() {
                         onChange={() => handleCheck('admin')}
                         checked={state.roles.administrator === 'yes' ? true : false}
                         color="purple"
-                        disabled={admin ? false : true}
+                        disabled={super_admin || admin ? false : true}
+                    />
+                    <Checkbox
+                        id="super_admin"
+                        label="Super Admin"
+                        onChange={() => handleCheck('super_admin')}
+                        checked={state.roles.super_admin === 'yes' ? true : false}
+                        color="purple"
+                        disabled={super_admin ? false : true}
                     />
                     <Checkbox
                         id="enabled"
@@ -529,9 +631,41 @@ export default function Edit() {
                         onChange={() => handleCheck('enabled')}
                         checked={state.info.expired === 0 ? true : false}
                         color="purple"
-                        disabled={admin ? false : true}
+                        disabled={super_admin || admin ? false : true}
                     />
                 </AdminRoles>
+                {state.roles.staff === 'yes' && super_admin ?
+                    <PrioritySection>
+                        <FormSection id="priority">Priority</FormSection>
+                        <TextInput 
+                            label="Priority"
+                            id="priority"
+                            placeholder="1"
+                            value={state.info.priority}
+                            onChange={event => handleChange(event, 'priority')}
+                        />
+                        <div>
+                            <Checkbox
+                                id="first_staff"
+                                label="First Shift"
+                                onChange={() => handleCheck('first_staff')}
+                                checked={state.roles.first_staff === 'yes' ? true : false}
+                            />
+                            <Checkbox
+                                id="second_staff"
+                                label="Second Shift"
+                                onChange={() => handleCheck('second_staff')}
+                                checked={state.roles.second_staff === 'yes' ? true : false}
+                            />
+                            <Checkbox
+                                id="third_staff"
+                                label="Third Shift"
+                                onChange={() => handleCheck('third_staff')}
+                                checked={state.roles.third_staff === 'yes' ? true : false}
+                            />
+                        </div>
+                    </PrioritySection>
+                : ''}
                 <Images>
                     <Personal />
                     <Contact />
@@ -576,6 +710,11 @@ const Container = styled.main`
             content: '3';
         }
     }
+    #priority {
+        &:before {
+            content: '4';
+        }
+    }
 `;
 
 const EditForm = styled(FormEl)`
@@ -610,7 +749,7 @@ const EditForm = styled(FormEl)`
     }
 
     button {
-        grid-row: 12;
+        grid-row: 13;
         grid-column: 3;
     }
 
@@ -684,4 +823,11 @@ const Images = styled.div`
     @media (max-width: 650px) {
         display: none;
     }
+`;
+
+const PrioritySection = styled.div`
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-column-gap: 135px;
 `;

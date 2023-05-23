@@ -43,6 +43,7 @@ export class LayoutProvider extends Component {
                 lab: rolesData.lab === 'yes' ? true : false,
                 tech: rolesData.tech === 'yes' ? true : false,
                 staff: rolesData.staff === 'yes' ? true : false,
+                super_admin: rolesData.super_admin === 'yes' ? true: false,
                 admin: rolesData.administrator === 'yes' ? true : false,
                 manager: rolesData.manager === 'yes' ? true : false,
             };

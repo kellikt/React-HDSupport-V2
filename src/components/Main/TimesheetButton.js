@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Sheet } from '../../images/Main/Sheet.svg';

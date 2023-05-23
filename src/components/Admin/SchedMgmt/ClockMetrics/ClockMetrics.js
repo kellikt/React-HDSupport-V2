@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Container from '../../Container';
 import MetricsForm from './MetricsForm';
 import Breadcrumb from '../../Breadcrumb';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { AnimatePresence } from 'framer-motion';
@@ -78,7 +78,7 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const Selectors = styled.div`
+export const Selectors = styled.div`
     button {
         padding: 15px 30px;
         margin: 0 30px;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import HolidayWizard from './HolidayWizard';
 import Breadcrumb from '../../Breadcrumb';
 import Container from '../../Container';
