@@ -78,14 +78,6 @@ const AdministrationDropdown = () => {
             <DropdownSection>
                 <ul>
                     <ListItem>
-                        <Link to={`${process.env.PUBLIC_URL}/google-storage`}>
-                            <Heading color="pink">
-                                <Storage />
-                                Google Storage Templates
-                            </Heading>
-                        </Link>
-                    </ListItem>
-                    <ListItem>
                         <Link to={`${process.env.PUBLIC_URL}/hd-training`}>
                             <Heading color="pink">
                                 <Training />

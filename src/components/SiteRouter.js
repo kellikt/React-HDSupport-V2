@@ -70,7 +70,7 @@ class SiteRouter extends Component {
                 <Route element={<AdminRoute as={AddTemplate} />} path={`${process.env.PUBLIC_URL}/add-template`} />
                 <Route element={<AdminRoute as={EditTemplate} />} path={`${process.env.PUBLIC_URL}/edit-template/:tid`} />
                 <Route element={<AdminRoute as={AddGoogleTemplate} />} path={`${process.env.PUBLIC_URL}/add-google-template`} />
-                <Route element={<AdminRoute as={EditGoogleTemplate} />} path={`${process.env.PUBLIC_URL}/edit-google-template/:tid`} />
+                <Route element={<AdminRoute as={EditGoogleTemplate} />} path={`${process.env.PUBLIC_URL}/edit-google-template/:gtid`} />
                 
                 <Route element={<UserRoute as={Email} />} path={`${process.env.PUBLIC_URL}/email`} />
                 <Route element={<UserRoute as={Banner} />} path={`${process.env.PUBLIC_URL}/email/banner`} />

@@ -6,19 +6,22 @@ import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg
 
 function AdminViewLeaveTable(props) {
 
-    const getConflict = (beginDate, endDate) => {
+    const getConflict = (beginDate, endDate, lid) => {
 
         const merged = props.results.flat(1);
 
+        console.log(merged);
+
         const checkConflicts = merged.filter((result) => {
-            if ((beginDate >= result.begin_date && beginDate <= result.end_date) || (endDate >= result.begin_date && endDate <= result.end_date) || (beginDate <= result.begin_date && endDate >= result.endDate)) {
+            if (((beginDate >= result.begin_date && beginDate <= result.end_date) || (endDate >= result.begin_date && endDate <= result.end_date) || (beginDate <= result.begin_date && endDate >= result.end_date)) && result.lid !== lid) {
                 return true;
             } else {
                 return false;
             }
         });
+        console.log(checkConflicts);
 
-        if (checkConflicts.length > 1) {
+        if (checkConflicts.length > 0) {
             return "no";
         } else {
             return "yes";
@@ -71,7 +74,7 @@ function AdminViewLeaveTable(props) {
                                         <span>{index === 0  ? <p>{res.priority}</p> : ''}</span>
                                         <span>{index === 0  ? <p>{res.username}</p> : ''}</span>
                                         <span>{res.begin_date} - {res.end_date}</span>
-                                        <span>{getConflict(res.begin_date, res.end_date) === 'yes' ? 
+                                        <span>{getConflict(res.begin_date, res.end_date, res.lid) === 'yes' ? 
                                             <Check />
                                         : <Cross />}</span>
                                         <span>{function() {
