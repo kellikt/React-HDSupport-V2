@@ -172,7 +172,7 @@ class HDTestTemplates extends Component {
                           {templates.map((template) => {
                             return (
                                 <TemplateDiv>
-                                    <Checkbox 
+                                    <Checkbox
                                         id={template.tid}
                                         label={`${template.tname} Template`}
                                         onChange={this.handleInput}

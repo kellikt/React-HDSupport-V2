@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios, { formToJSON } from 'axios';
 import styled from '@emotion/styled';
 
@@ -27,6 +27,8 @@ function AddGoogleTemplate() {
         isError: false,
     });
 
+    const links = [{ title: 'Google Storage', to: '/google-storage' }, { title: 'Add Template', to: '/add-google-template' }];
+
     const textarea = React.createRef();
 
     const handleChange = event => {
@@ -49,12 +51,11 @@ function AddGoogleTemplate() {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-email-template.php`, {
-                tname: template,
-                fromAddress: from,
-                toAddress: to,
-                subject: subject,
-                content: content,
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/add-google-template.php`, {
+                tname: state.template,
+                fromAddress: state.from,
+                subject: state.subject,
+                content: state.content,
             });
 
             const tid = await request.data;
@@ -83,7 +84,7 @@ function AddGoogleTemplate() {
                 <TextInput 
                     id="template"
                     label="Template Name"
-                    placeholder="Tempalte Name"
+                    placeholder="Template Name"
                     onChange={handleChange}
                     name="template"
                 />
@@ -101,23 +102,16 @@ function AddGoogleTemplate() {
                     onChange={handleChange}
                     name="from"
                 />
-                <TextInput 
-                    id="to"
-                    label="Email Recipient (To:)"
-                    placeholder="Email Recipient"
-                    onChange={handleChange}
-                    name="to"
-                />
                 <textarea 
                     name="content"
                     ref={textarea}
                     onChange={handleChange}
-                    placeholder="Email COntent"
+                    placeholder="Email Content"
                 />
                 <Button color="purple">Create Template</Button>
                 <SnackbarPortal 
                     handler={snack.handler}
-                    message={`You have created the ${template} Template`}
+                    message={`You have created the ${state.template} Template`}
                     heading="Success!"
                     onClick={handleSnack}
                 />

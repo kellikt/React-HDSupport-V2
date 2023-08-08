@@ -8,7 +8,8 @@ import Container from '../Admin/Container';
 import Breadcrumb from '../Admin/Breadcrumb';
 import TextInput from '../TextInput';
 import Button from '../Button';
-import Checkbox from '../Checkbox';
+import RadioButton from '../RadioButton';
+import { Radios } from '../Admin/SchedMgmt/DisplaySchedule/DisplayChangesComponents';
 import { FormEl, Title } from '../Admin/AcctMgmt/FormComponents';
 import { Text } from '../Admin/SchedMgmt/HolidayWizard/HolidayWizardComponents';
 import { ReactComponent as HDVector } from '../../images/Email/HDTraining.svg';
@@ -28,6 +29,7 @@ function GoogleStorageTemplate() {
         handler: false,
         heading: '',
         message: '',
+        radio: '',
         isError: false,
     });
 
@@ -35,12 +37,13 @@ function GoogleStorageTemplate() {
         const target = event.target;
         const value = target.value;
         const name = target.name;
+        console.log(target.type);
 
         if (target.type === 'checkbox') {
             // find template in selectedTemplates
-            const template = state.selectedTemplates.find(x => x.tid === parseInt(name));
+            const template = state.selectedTemplates.find(x => x.gtid === parseInt(name));
 
-            const index = state.selectedTemplates.findIndex(x => x.tid === parseInt(name));
+            const index = state.selectedTemplates.findIndex(x => x.gtid === parseInt(name));
             const newTemplate = state.selectedTemplates.slice();
 
             if (template.selected === "no") {
@@ -53,6 +56,11 @@ function GoogleStorageTemplate() {
                 ...state,
                 selectedTemplates: newTemplate,
             });
+        } else if (target.type === 'radio') {
+            setState({
+                ...state,
+                [name]: event.target.value,
+            });
         } else {
             setState({
                 ...state,
@@ -61,18 +69,18 @@ function GoogleStorageTemplate() {
         }
     }
 
-    const deleteTemplate = async (tid) => {
+    const deleteTemplate = async (gtid) => {
         try {
-            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-email-template.php`, {
-                tid: tid,
+            await axios.post(`${process.env.REACT_APP_DB_SERVER}/delete-google-template.php`, {
+                gtid: gtid,
             });
-            getTemplate();
+            getTemplates();
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleDelete = async (tid) => {
+    const handleDelete = async (gtid) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this deletion",
@@ -80,7 +88,7 @@ function GoogleStorageTemplate() {
             showCancelButton: true,
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteTemplate(tid);
+                deleteTemplate(gtid);
             }
         });
     }
@@ -100,7 +108,7 @@ function GoogleStorageTemplate() {
         try {
             for (const template of selectedTemplates) {
                 if (template.selected === "yes") {
-                    const curr = templates.find(item => item.tid === template.tid);
+                    const curr = templates.find(item => item.gtid === template.gtid);
                     console.log(curr);
                     await axios.post(`${process.env.REACT_APP_DB_SERVER}/send-email.php`, {
                         from: curr.from_address,
@@ -124,11 +132,11 @@ function GoogleStorageTemplate() {
 
     const getTemplates = async() => {
         try {
-            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-email-templates.php?tid=`);
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-google-templates.php?gtid=`);
             const data = request.data;
             let templates = [];
             for (let i = 0; i < data.length; i++) {
-                templates.push({tid: data[i].tid, selected: "no"});
+                templates.push({gtid: data[i].gtid, selected: "no"});
             }
             setState({
                 ...state,
@@ -153,7 +161,7 @@ function GoogleStorageTemplate() {
             <h1>Google Storage Templates</h1>
             <Breadcrumb links={state.links} color="light-blue" />
             <EmailForm onSubmit={handleSubmit}>
-                <HDTraining />
+                <HDVector />
                 <div>
                     <Title>
                         <h2>Send Google Storage Template</h2>
@@ -169,33 +177,37 @@ function GoogleStorageTemplate() {
                             name="student"
                         />
                         <br/>
-                        <p>Select Email Templates</p>
-                        {state.templates.map((template) => {
-                            return (
-                                <TemplateDiv>
-                                    <Checkbox 
-                                        id={template.tid}
-                                        label={`${template.tname} Template`}
-                                        onChange={handleInput}
-                                        checked={state.selectedTemplates.find(x => x.tid === template.tid).selected === "yes"}
-                                        name={template.tid}
-                                    />
-                                    <Link
-                                        key={template.tid}
-                                    >
-                                        <EditIcon />
-                                    </Link>
-                                    <button onClick={e => {e.preventDefault(); handleDelete(template.tid); }}>
-                                        <TrashIcon />
-                                    </button>
-                                </TemplateDiv>
-                            );
-                        })}
+                        <p>Select Email Template</p>
+                        <FormRadios>
+                            {state.templates.map((template) => {
+                                return (
+                                    <TemplateDiv>   
+                                        <RadioButton 
+                                            name="radio"
+                                            id={template.gtid}
+                                            value={template.gtid}
+                                            label={`${template.tname} Template`}
+                                            onChange={handleInput}
+                                        />
+                                        <Link
+                                            key={template.gtid}
+                                            to={`${process.env.PUBLIC_URL}/edit-google-template/${template.gtid}`}
+                                        >
+                                            <EditIcon />
+                                        </Link>
+
+                                        <button onClick={e => {e.preventDefault(); handleDelete(template.gtid); }}>
+                                            <TrashIcon />
+                                        </button>
+                                    </TemplateDiv>
+                                );
+                            })}
+                        </FormRadios>
                     </Text>
                 </div>
                 <div>
                     <a
-                        href={`${process.env.PUBLIC_URL}/add-template`}
+                        href={`${process.env.PUBLIC_URL}/add-google-template`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -205,7 +217,7 @@ function GoogleStorageTemplate() {
                 </div>
                 <SnackbarPortal 
                     handler={snack.handler}
-                    message={`You have sent email template(s) for: '${state.student}'`}
+                    message={`You have sent email template(s) for: '${state.selectedTemplates.tname}'`}
                     heading="Success!"
                     onClick={handleSnack}
                 />
@@ -272,11 +284,12 @@ const EmailForm = styled(FormEl)`
     }
 `;
 
-const HDTraining = styled(HDVector)`
-
+const FormRadios = styled(Radios)`
+    display: block;
 `;
 
 const TemplateDiv = styled.div`
+    margin: 0 5px 10px !important;
     > div {
         display: inline;
     }

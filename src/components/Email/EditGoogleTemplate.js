@@ -15,13 +15,12 @@ import SnackbarPortal from '../SnackbarPortal';
 
 function EditGoogleTemplate() {
 
-    const { tid } = useParams();
+    const { gtid } = useParams();
 
     const [form, setForm] = useState({
         template: '',
         subject: '',
         from: '',
-        to: '',
         content: '',
         submitted: false,
         snackHandler: false,
@@ -43,13 +42,12 @@ function EditGoogleTemplate() {
         event.preventDefault();
 
         try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-email-template.php`, {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-google-template.php`, {
                 tname: form.template,
-                toAddress: form.to,
-                fromAddress: form.form,
+                fromAddress: form.from,
                 subject: form.subject,
                 content: form.content,
-                tid: tid,
+                gtid: gtid,
             });
             setSnack(true);
             const timerId = setTimeout(() => {
@@ -66,13 +64,13 @@ function EditGoogleTemplate() {
 
     useEffect(() => {
         const fetchData = async() => {
-            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-email-templates.php?tid=${tid}`);
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-google-templates.php?gtid=${gtid}`);
             const data = request.data;
+            console.log(data);
             let stateObj = {
                 template: data[0].tname,
                 subject: data[0].subject,
                 from: data[0].from_address,
-                to: data[0].to_address,
                 content: data[0].content,
                 submitted: false,
                 snackHandler: false,
@@ -88,7 +86,7 @@ function EditGoogleTemplate() {
         }
     }, [])
 
-    const links = [{ title: 'Google Storage Templates', to: '/google-storage'}, {title: `Edit ${form.template} Template`, to: `/edit-template/${tid}`}];
+    const links = [{ title: 'Google Storage Templates', to: '/google-storage'}, {title: `Edit ${form.template} Template`, to: `/edit-template/${gtid}`}];
 
     return (
         <Container>
@@ -111,7 +109,8 @@ function EditGoogleTemplate() {
                     id="subject"
                     label="Subject"
                     placeholder="Subject"
-                    onChange={form.subject}
+                    onChange={handleChange}
+                    value={form.subject}
                     name="subject"
                 />
                 <TextInput 
@@ -121,14 +120,6 @@ function EditGoogleTemplate() {
                     onChange={handleChange}
                     value={form.from}
                     name="from"
-                />
-                <TextInput 
-                    id="to"
-                    label="Email Recipient (To:)"
-                    placeholder="Email Recipient"
-                    onChange={handleChange}
-                    value={form.to}
-                    name="to"
                 />
                 <textarea 
                     name="content"
@@ -152,12 +143,12 @@ function EditGoogleTemplate() {
 export default EditGoogleTemplate;
 
 const EditForm = styled(FormEl)`
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     textarea {
         grid-column: 1/-1;
     }
     button {
-        grid-column: 4;
+        grid-column: 3;
         @media (max-width: 910px) {
             grid-column: 1;
         }

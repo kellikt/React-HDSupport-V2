@@ -7,11 +7,12 @@ import { FormEl, Title, Inputs } from '../ViewLeave/ViewLeaveComponents';
 
 import Button from '../../../Button';
 import AdminViewLeaveTable from './AdminViewLeaveTable';
+import AdminViewLeaveOptions from './AdminViewLeaveOptions';
+import SnackbarPortal from '../../../SnackbarPortal';
 
 import { ReactComponent as Manage } from '../../../../images/Admin/Leave/ManageLeave.svg';
 
 function AdminViewLeaveForm() {
-
     const options = {
         year: 'numeric',
         month: '2-digit',
@@ -21,10 +22,16 @@ function AdminViewLeaveForm() {
     const [state, setState] = useState({
         period: '',
         year: '',
-        date: [(new Date()).toLocaleString('en-CA', options), (new Date()).toLocaleString('en-CA', options)],
-        shift: "1",
+        lpid: -1,
+        date: [new Date().toLocaleString('en-CA', options), new Date().toLocaleString('en-CA', options)],
+        periodDates: [],
+        shift: '1',
         submitted: false,
         results: [],
+        error: false,
+        messageHeading: '',
+        message: '',
+        snackSubmitted: false,
     });
 
     const createYears = () => {
@@ -37,23 +44,23 @@ function AdminViewLeaveForm() {
         }
 
         return years;
-    }
+    };
 
     const years = createYears();
 
-    const handleChange = event => {
+    const handleChange = (event) => {
         const value = event.target.value;
         const name = event.target.name;
 
         let year;
-        if (name === "year") {
+        if (name === 'year') {
             year = value;
         } else {
             year = state.year;
         }
 
         let newPeriod;
-        if (name === "period") {
+        if (name === 'period') {
             newPeriod = value;
         } else {
             newPeriod = state.period;
@@ -62,7 +69,7 @@ function AdminViewLeaveForm() {
         if (parseInt(newPeriod) === 1) {
             const beginDateString = `${year}-01-01`;
             const endDateString = `${year}-06-30`;
-            setState({ 
+            setState({
                 ...state,
                 [name]: value,
                 date: [beginDateString, endDateString],
@@ -71,7 +78,7 @@ function AdminViewLeaveForm() {
         } else if (parseInt(newPeriod) === 2) {
             const beginDateString = `${year}-07-01`;
             const endDateString = `${year}-12-31`;
-            setState({ 
+            setState({
                 ...state,
                 [name]: value,
                 date: [beginDateString, endDateString],
@@ -80,8 +87,67 @@ function AdminViewLeaveForm() {
         }
     };
 
-    const getTableData = async() => {
+    const handleDate = (date) => {
+        setState({
+            ...state,
+            periodDates: date,
+        });
+    };
 
+    const handleSnack = () => {
+        setState({
+            ...state,
+            snackSubmitted: false,
+        });
+    };
+
+    const handlePeriodSubmit = async (event) => {
+        event.preventDefault();
+
+        const startDateString = `${state.periodDates[0].getFullYear()}-${
+            state.periodDates[0].getMonth() + 1
+        }-${state.periodDates[0].getDate()}`;
+        const endDateString = `${state.periodDates[1].getFullYear()}-${
+            state.periodDates[1].getMonth() + 1
+        }-${state.periodDates[1].getDate()}`;
+
+        try {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/edit-leave-period.php`, {
+                lpid: state.lpid,
+                period: state.period,
+                year: state.year,
+                openDate: startDateString,
+                closeDate: endDateString,
+            });
+            const data = request.data;
+
+            if (data) {
+                setState({
+                    ...state,
+                    snackSubmitted: true,
+                    message: 'Successfully updated leave request submission period.',
+                    messageHeading: 'Success!',
+                    error: false,
+                    comment: '',
+                });
+            } else {
+                setState({
+                    ...state,
+                    snackSubmitted: true,
+                    message: 'Failed to update leave request submission period.',
+                    messageHeading: 'Error!',
+                    error: true,
+                });
+            }
+            setTimeout(() => {
+                handleSnack();
+            }, 3000);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getTableData = async () => {
         try {
             const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
                 username: '',
@@ -90,11 +156,11 @@ function AdminViewLeaveForm() {
                 endDate: state.date[1],
             });
             const data = request.data;
-            const usernames = [...new Set(data.map(item => item.username))];
+            const usernames = [...new Set(data.map((item) => item.username))];
             let res = [];
 
-            usernames.forEach(function(user) {
-                res.push(data.filter(item => item.username === user));
+            usernames.forEach(function (user) {
+                res.push(data.filter((item) => item.username === user));
             });
 
             if (!(data === 0)) {
@@ -107,13 +173,35 @@ function AdminViewLeaveForm() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
-    const handleSubmit = async event => {
+    const getLeavePeriod = async () => {
+        try {
+            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-admin-leave-period.php`, {
+                period: state.period,
+                year: state.year,
+            });
+            const data = request.data;
+
+            if (!(data === 0)) {
+                setState({
+                    ...state,
+                    lpid: data.lpid,
+                    periodDates: [data.open_date, data.close_date],
+                    submitted: true,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
             getTableData();
+            getLeavePeriod();
         } catch (error) {
             console.log(error);
         }
@@ -134,19 +222,15 @@ function AdminViewLeaveForm() {
                         <label htmlFor="period">Leave Period</label>
                         <select name="period" id="period" onChange={handleChange} value={state.period}>
                             <option value="None">Select Leave Period</option>
-                            <option value="1">
-                                January - June
-                            </option>
-                            <option value="2">
-                                July - December
-                            </option>
+                            <option value="1">January - June</option>
+                            <option value="2">July - December</option>
                         </select>
                     </div>
                     <div>
                         <label htmlFor="year">Year</label>
                         <select name="year" id="year" onChange={handleChange} value={state.year}>
                             <option value="None">Select Year</option>
-                            {years.map(year => {
+                            {years.map((year) => {
                                 return (
                                     <option key={year} value={year}>
                                         {year}
@@ -166,9 +250,29 @@ function AdminViewLeaveForm() {
                     </div>
                 </AdminInputs>
                 <Button color="light-blue">Display Requests</Button>
+                <SnackbarPortal
+                    handler={state.snackSubmitted}
+                    message={state.message}
+                    heading={state.messageHeading}
+                    isError={state.error}
+                    onClick={handleSnack}
+                />
             </FormEl>
             <AnimatePresence>
-                {state.submitted && <AdminViewLeaveTable key="table" date={state.date} shift={state.shift} results={state.results} />}
+                {state.submitted && (
+                    <AdminViewLeaveOptions
+                        key="options"
+                        handleDate={handleDate}
+                        handlePeriodSubmit={handlePeriodSubmit}
+                        periodDates={state.periodDates}
+                        lpid={state.lpid}
+                    />
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {state.submitted && (
+                    <AdminViewLeaveTable key="table" date={state.date} shift={state.shift} results={state.results} />
+                )}
             </AnimatePresence>
         </React.Fragment>
     );
@@ -183,7 +287,7 @@ const AdminTitle = styled(Title)`
 `;
 
 const AdminInputs = styled(Inputs)`
-    >div {
+    > div {
         &:first-of-type {
             grid-column: 1/3;
             @media (max-width: 900px) {
