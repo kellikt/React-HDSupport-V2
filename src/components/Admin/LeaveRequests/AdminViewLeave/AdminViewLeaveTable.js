@@ -10,8 +10,6 @@ function AdminViewLeaveTable(props) {
 
         const merged = props.results.flat(1);
 
-        console.log(merged);
-
         const checkConflicts = merged.filter((result) => {
             if (((beginDate >= result.begin_date && beginDate <= result.end_date) || (endDate >= result.begin_date && endDate <= result.end_date) || (beginDate <= result.begin_date && endDate >= result.end_date)) && result.lid !== lid) {
                 return true;
@@ -19,7 +17,6 @@ function AdminViewLeaveTable(props) {
                 return false;
             }
         });
-        console.log(checkConflicts);
 
         if (checkConflicts.length > 0) {
             return "no";

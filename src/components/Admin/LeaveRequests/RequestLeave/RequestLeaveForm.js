@@ -17,6 +17,7 @@ function RequestLeaveForm() {
         year: 0,
         openDate: new Date(),
         closeDate: new Date(),
+        openPeriod: false,
         current: new Date(),
         username: '',
         leaveText: '',
@@ -103,6 +104,7 @@ function RequestLeaveForm() {
             const data = request.data;
             setState({
                 ...state,
+                openPeriod: data.open_period,
                 openDate: new Date(data.open_date),
                 closeDate: new Date(data.close_date),
                 period: data.period,
@@ -138,7 +140,6 @@ function RequestLeaveForm() {
                     maxDate: maxDate,
                 });
             }
-            console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -150,7 +151,7 @@ function RequestLeaveForm() {
 
     return (
         <div>
-            {state.current >= state.openDate && state.current <= state.closeDate && (
+            {state.openPeriod && (
                 <FormEl onSubmit={handleSubmit}>
                     <RequestTitle>
                         <h2>Submit a Leave Request</h2>
@@ -182,6 +183,14 @@ function RequestLeaveForm() {
                     />
                 </FormEl>
             )}
+            {!state.openPeriod &&
+            <FormEl>
+                <RequestTitle>
+                    <h2>Leave Requests Unavailable</h2>
+                    <p>The period to submit leave requests is currently closed.</p>
+                </RequestTitle>
+            </FormEl>
+            }
         </div>
     );
 }

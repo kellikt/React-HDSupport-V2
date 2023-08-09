@@ -147,61 +147,49 @@ function AdminViewLeaveForm() {
         }
     };
 
-    const getTableData = async () => {
+    const getAdminData = async () => {
         try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
+            const requests = axios.post(`${process.env.REACT_APP_DB_SERVER}/get-leave-requests.php`, {
                 username: '',
                 shift: state.shift,
                 beginDate: state.date[0],
                 endDate: state.date[1],
             });
-            const data = request.data;
-            const usernames = [...new Set(data.map((item) => item.username))];
-            let res = [];
-
-            usernames.forEach(function (user) {
-                res.push(data.filter((item) => item.username === user));
-            });
-
-            if (!(data === 0)) {
-                setState({
-                    ...state,
-                    results: res,
-                    submitted: true,
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const getLeavePeriod = async () => {
-        try {
-            const request = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-admin-leave-period.php`, {
+            const period = axios.post(`${process.env.REACT_APP_DB_SERVER}/get-admin-leave-period.php`, {
                 period: state.period,
                 year: state.year,
             });
-            const data = request.data;
 
-            if (!(data === 0)) {
+            const data = await Promise.all([requests, period]);
+            const leaveRequests = data[0].data;
+            const usernames = [...new Set(leaveRequests.map((item) => item.username))];
+            let res = [];
+
+            usernames.forEach(function (user) {
+                res.push(leaveRequests.filter((item) => item.username === user));
+            });
+
+            const periodRequest = data[1].data;
+
+            if (data) {
                 setState({
                     ...state,
-                    lpid: data.lpid,
-                    periodDates: [data.open_date, data.close_date],
+                    results: res,
+                    lpid: periodRequest.lpid,
+                    periodDates: [new Date(periodRequest.open_date), new Date(periodRequest.close_date)],
                     submitted: true,
                 });
             }
         } catch (error) {
             console.log(error);
         }
-    };
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            getTableData();
-            getLeavePeriod();
+            getAdminData();
         } catch (error) {
             console.log(error);
         }
