@@ -102,21 +102,18 @@ function RequestLeaveForm() {
         try {
             const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-leave-period.php`);
             const data = request.data;
-            setState({
-                ...state,
-                openPeriod: data.open_period,
-                openDate: new Date(data.open_date),
-                closeDate: new Date(data.close_date),
-                period: data.period,
-                year: data.year,
-            });
             const currentDate = new Date();
             if (data.period == 1) {
-                const startDate = new Date(data.year + 1, 0);
-                const endDate = new Date(data.year + 1, 5);
-                const maxDate = new Date(data.year + 1, 5, 30);
+                const startDate = new Date(data.year, 0);
+                const endDate = new Date(data.year, 5);
+                const maxDate = new Date(data.year, 5, 30);
                 setState({
                     ...state,
+                    openPeriod: data.open_period,
+                    openDate: new Date(data.open_date),
+                    closeDate: new Date(data.close_date),
+                    period: data.period,
+                    year: data.year,
                     leaveText: `${startDate.toLocaleString('default', { month: 'long' })} - ${endDate.toLocaleString(
                         'default',
                         { month: 'long' }
@@ -126,11 +123,16 @@ function RequestLeaveForm() {
                     maxDate: maxDate,
                 });
             } else {
-                const startDate = new Date(currentDate.getFullYear() + 1, 6);
-                const endDate = new Date(currentDate.getFullYear() + 1, 11);
-                const maxDate = new Date(currentDate.getFullYear() + 1, 11, 31);
+                const startDate = new Date(data.year, 6);
+                const endDate = new Date(data.year, 11);
+                const maxDate = new Date(data.year, 11, 31);
                 setState({
                     ...state,
+                    openPeriod: data.open_period,
+                    openDate: new Date(data.open_date),
+                    closeDate: new Date(data.close_date),
+                    period: data.period,
+                    year: data.year,
                     leaveText: `${startDate.toLocaleString('default', { month: 'long' })} - ${endDate.toLocaleString(
                         'default',
                         { month: 'long' }
@@ -147,6 +149,7 @@ function RequestLeaveForm() {
 
     useEffect(() => {
         getLeavePeriod();
+        console.log(state);
     }, []);
 
     return (
