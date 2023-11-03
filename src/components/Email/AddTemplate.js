@@ -77,7 +77,7 @@ class AddTemplate extends Component {
     }
 
     render() {
-        const links = [{ title: 'HD Training Templates', to: '/hd-training' }, { title: 'Add Template', to: '/add-template' }];
+        const links = [{ title: 'Google Storage Templates', to: '/google-storage' }, { title: 'Add Template', to: '/add-template' }];
 
         const { snackHandler } = this.state;
         const { template } = this.state;

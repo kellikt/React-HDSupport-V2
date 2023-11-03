@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import Swal from 'sweetalert2';

@@ -1,8 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import CsvDownloadButton from 'react-json-to-csv';
 
 import Container from '../Admin/Container';
 import Breadcrumb from '../Admin/Breadcrumb';
@@ -19,10 +20,12 @@ import { ReactComponent as Trash } from '../../images/icons/Email/Trash.svg';
 
 function GoogleStorageTemplate() {
     const [state, setState] = useState({
-        student: '',
+        file: '',
         templates: [],
-        selectedTemplates: [],
-        links: [{ title: 'Google Storage Templates', to: '/google-storage' }]
+        selectedTemplate: '',
+        links: [{ title: 'Google Storage Templates', to: '/google-storage' }],
+        logButton: false,
+        logData: [],
     });
 
     const [snack, setSnack] = useState({
@@ -33,41 +36,23 @@ function GoogleStorageTemplate() {
         isError: false,
     });
 
-    const handleInput = event => {
+    const handleInput = (event) => {
         const target = event.target;
         const value = target.value;
-        const name = target.name;
-        console.log(target.type);
 
-        if (target.type === 'checkbox') {
-            // find template in selectedTemplates
-            const template = state.selectedTemplates.find(x => x.gtid === parseInt(name));
+        setState({
+            ...state,
+            selectedTemplate: value,
+        });
+    };
 
-            const index = state.selectedTemplates.findIndex(x => x.gtid === parseInt(name));
-            const newTemplate = state.selectedTemplates.slice();
-
-            if (template.selected === "no") {
-                newTemplate[index].selected = "yes";
-            } else {
-                newTemplate[index].selected = "no";
-            }
-
-            setState({
-                ...state,
-                selectedTemplates: newTemplate,
-            });
-        } else if (target.type === 'radio') {
-            setState({
-                ...state,
-                [name]: event.target.value,
-            });
-        } else {
-            setState({
-                ...state,
-                [name] : value,
-            });
-        }
-    }
+    const handleFileChange = (event) => {
+        setState({
+            ...state,
+            logButton: false,
+            file: event.target.files[0],
+        });
+    };
 
     const deleteTemplate = async (gtid) => {
         try {
@@ -78,75 +63,83 @@ function GoogleStorageTemplate() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const handleDelete = async (gtid) => {
         Swal.fire({
-            title: "Are you sure?",
+            title: 'Are you sure?',
             text: "You won't be able to revert this deletion",
-            icon: "warning",
+            icon: 'warning',
             showCancelButton: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteTemplate(gtid);
             }
         });
-    }
+    };
 
     const handleSnack = () => {
+        console.log(state.logData);
         setSnack({
             ...snack,
             handler: false,
         });
-    }
+    };
 
-    const handleSubmit = async event => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const { templates, selectedTemplates, student } = this.state;
+        const { file, selectedTemplate } = state;
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('selectedTemplate', selectedTemplate);
 
         try {
-            for (const template of selectedTemplates) {
-                if (template.selected === "yes") {
-                    const curr = templates.find(item => item.gtid === template.gtid);
-                    console.log(curr);
-                    await axios.post(`${process.env.REACT_APP_DB_SERVER}/send-email.php`, {
-                        from: curr.from_address,
-                        to: curr.to_address,
-                        subject: `[${student}] ${curr.subject}`,
-                        body: curr.content,
-                    });
-                }
-            }
-            setState({
-                snackHandler: true,
+            const response = await axios.post(`${process.env.REACT_APP_DB_SERVER}/google-test.php`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
-            setTimeout(() => {
-                handleSnack();
-            }, 3000);
-
+            console.log(response.data);
+            if (response.data[0]) {
+                setSnack({
+                    ...state,
+                    message: `You have sent email templates. ${response.data[0][1]} emails successfully sent.`,
+                    handler: true,
+                });
+                setState({
+                    ...state,
+                    logButton: true,
+                    logData: response.data[0][2],
+                });
+                setTimeout(() => {
+                    handleSnack();
+                }, 3000);
+            } else {
+                console.log(response.data[0][1]);
+            }
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
-    const getTemplates = async() => {
+    const getTemplates = async () => {
         try {
             const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-google-templates.php?gtid=`);
             const data = request.data;
             let templates = [];
             for (let i = 0; i < data.length; i++) {
-                templates.push({gtid: data[i].gtid, selected: "no"});
+                templates.push({ gtid: data[i].gtid, selected: 'no' });
             }
             setState({
                 ...state,
                 templates: data,
-                selectedTemplates: templates,
+                selectedTemplate: '',
             });
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     useEffect(() => {
         try {
@@ -154,35 +147,53 @@ function GoogleStorageTemplate() {
         } catch (error) {
             console.log(error);
         }
-    }, [])
+    }, []);
 
     return (
         <TemplateContainer>
             <h1>Google Storage Templates</h1>
             <Breadcrumb links={state.links} color="light-blue" />
+            <div>
+                    {state.logButton && (
+                        <CsvDownloadButton
+                            data={state.logData}
+                            style={{
+                                color: 'var(--white)',
+                                lineHeight: '1.5',
+                                padding: '0.5em 2em',
+                                fontWeight: '600',
+                                transition: 'all 0.15s ease',
+                                outline: 0,
+                                textShadow: '0 1px 2px rgba(0, 0, 0, 0.18)',
+                                boxShadow: '0 1px 2px 0 rgba(74, 144, 226, 0.44), 0 2px 8px 0 rgba(0, 0, 0, 0.14)',
+                                background: 'var(--green-button)',
+                                borderRadius: '6px',
+                                fontSize: '16px',
+                                marginTop: '10px',
+                            }}
+                        >
+                            Download Log
+                        </CsvDownloadButton>
+                    )}
+                </div>
             <EmailForm onSubmit={handleSubmit}>
                 <HDVector />
                 <div>
                     <Title>
                         <h2>Send Google Storage Template</h2>
-                        <p>Upload a list of recipients from Google Admin and select the desired email template to send.</p>
+                        <p>
+                            Upload a list of recipients from Google Admin and select the desired email template to send.
+                        </p>
                     </Title>
                     <Text>
-                        <TextInput 
-                            id="student"
-                            label="Name of Student in Training"
-                            placeholder="Student Name"
-                            value={state.student}
-                            onChange={handleInput}
-                            name="student"
-                        />
-                        <br/>
+                        <input type="file" onChange={handleFileChange} />
+                        <br />
                         <p>Select Email Template</p>
                         <FormRadios>
                             {state.templates.map((template) => {
                                 return (
-                                    <TemplateDiv>   
-                                        <RadioButton 
+                                    <TemplateDiv>
+                                        <RadioButton
                                             name="radio"
                                             id={template.gtid}
                                             value={template.gtid}
@@ -196,7 +207,12 @@ function GoogleStorageTemplate() {
                                             <EditIcon />
                                         </Link>
 
-                                        <button onClick={e => {e.preventDefault(); handleDelete(template.gtid); }}>
+                                        <button
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleDelete(template.gtid);
+                                            }}
+                                        >
                                             <TrashIcon />
                                         </button>
                                     </TemplateDiv>
@@ -206,18 +222,16 @@ function GoogleStorageTemplate() {
                     </Text>
                 </div>
                 <div>
-                    <a
-                        href={`${process.env.PUBLIC_URL}/add-google-template`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <Button type="button" color="purple">Add Template</Button>
+                    <a href={`${process.env.PUBLIC_URL}/add-google-template`} target="_blank" rel="noopener noreferrer">
+                        <Button type="button" color="purple">
+                            Add Template
+                        </Button>
                     </a>
                     <Button color="light-blue">Send Email</Button>
                 </div>
-                <SnackbarPortal 
+                <SnackbarPortal
                     handler={snack.handler}
-                    message={`You have sent email template(s) for: '${state.selectedTemplates.tname}'`}
+                    message={snack.message}
                     heading="Success!"
                     onClick={handleSnack}
                 />
@@ -256,8 +270,8 @@ const EmailForm = styled(FormEl)`
 
                 @media (max-width: 630px) {
                     float: right;
-                    margin-left:
-                } 
+                    margin-left: ;
+                }
             }
         }
         > button {

@@ -4,6 +4,7 @@ import SnackbarPortal from '../../SnackbarPortal';
 import { FormEl, Title, UHSearch, PIISearch } from './FormComponents';
 import TextInput from '../../TextInput';
 import Button from '../../Button';
+import Checkbox from '../../Checkbox';
 import SearchResult from './SearchResult';
 import { ReactComponent as GradHat } from '../../../images/Admin/Acct/GradHat.svg';
 import { ReactComponent as Forms } from '../../../images/Admin/Acct/Forms.svg';
@@ -19,6 +20,7 @@ class Form extends Component {
             error: false,
             searched: false,
             searchResult: {},
+            enabled: true,
         };
     }
 
@@ -50,6 +52,10 @@ class Form extends Component {
                     lastName: event.target.value,
                 });
                 break;
+            case 'enabled':
+                this.setState({
+                    enabled: !this.state.enabled,
+                });
             default:
                 break;
         }
@@ -57,9 +63,9 @@ class Form extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { username, uuid, firstName, lastName } = this.state;
+        const { username, uuid, firstName, lastName, enabled } = this.state;
 
-        if (username === '' && uuid === '' && firstName === '' && lastName === '') {
+        if (username === '' && uuid === '' && firstName === '' && lastName === '' && !enabled) {
             this.setState({
                 error: true,
             });
@@ -76,6 +82,7 @@ class Form extends Component {
                     uuid: uuid,
                     firstName: firstName,
                     lastName: lastName,
+                    enabled: enabled,
                 });
                 const data = request.data;
 
@@ -95,7 +102,7 @@ class Form extends Component {
     }
 
     render() {
-        const { username, uuid, firstName, lastName, error, searched, searchResult } = this.state;
+        const { username, uuid, firstName, lastName, error, searched, searchResult, enabled } = this.state;
 
         return (
             <React.Fragment>
@@ -142,7 +149,14 @@ class Form extends Component {
                                 value={lastName}
                                 onChange={event => this.handleChange(event, 'lastName')}
                             />
+
                         </PIISearch>
+                        <Checkbox 
+                            id="enabled"
+                            label="Enabled"
+                            onChange={event => this.handleChange(event, 'enabled')}
+                            checked={enabled ? true : false}
+                        />
                         <Button color="purple">Search</Button>
                     </FormEl>
                 )}

@@ -29,6 +29,7 @@ function Index() {
                 uuid: '',
                 firstName: '',
                 lastName: '',
+                enabled: false,
             });
             const timesheetRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/get-timesheet-info.php`, {
                 payPeriod: payPeriod,

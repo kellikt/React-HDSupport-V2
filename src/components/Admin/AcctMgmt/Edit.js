@@ -56,7 +56,6 @@ export default function Edit() {
     const [snack, setSnack] = useState(false);
 
     useEffect(() => {
-        console.log(super_admin);
         const fetchData = async() => {
             const rolesRequest = axios.get(`${process.env.REACT_APP_DB_SERVER}/get-roles.php?username=${username}`);
             const infoRequest = axios.post(`${process.env.REACT_APP_DB_SERVER}/search-user.php`, {
@@ -64,6 +63,7 @@ export default function Edit() {
                 uuid: '',
                 firstName: '',
                 lastName: '',
+                enabled: false,
             });
 
             const response = await Promise.all([rolesRequest, infoRequest]);

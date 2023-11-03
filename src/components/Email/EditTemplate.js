@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import {
@@ -87,7 +87,7 @@ function EditTemplate() {
         }
     }, []); 
 
-    const links = [{ title: 'HD Training Templates', to: '/hd-training'}, { title: `Edit ${form.template} Template`, to: `/edit-template/${tid}` }];
+    const links = [{ title: 'Google Storage Templates', to: '/google-storage'}, { title: `Edit ${form.template} Template`, to: `/edit-template/${tid}` }];
 
     return (
         <Container>
