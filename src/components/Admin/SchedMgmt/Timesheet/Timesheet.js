@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import { Component } from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 
 import Week from './Week';
 import WeekTotal from './WeekTotal';
@@ -41,7 +41,7 @@ class Timesheet extends Component {
                     })}
                 </Selectors>
                 <WeekContainer>
-                    <PoseGroup>
+                    <AnimatePresence>
                         {week === 0 ? (
                             <Week key="weekOne" username={username} weekData={weeks[0]} refreshData={refreshData} />
                         ) : week === 1 ? (
@@ -49,7 +49,7 @@ class Timesheet extends Component {
                         ) : (
                             <Week key="weekThree" username={username} weekData={weeks[2]} refreshData={refreshData} />
                         )}
-                    </PoseGroup>
+                    </AnimatePresence>
                     <WeekTotal
                         regular={totals[0]}
                         night={totals[1]}
@@ -78,7 +78,7 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const Selectors = styled.div`
+export const Selectors = styled.div`
     button {
         padding: 15px 30px;
         margin: 0 30px;

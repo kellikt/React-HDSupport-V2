@@ -1,5 +1,4 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import check from '../../images/icons/GreenCheck.svg';
 import arrow from '../../images/icons/GreenArrow.svg';

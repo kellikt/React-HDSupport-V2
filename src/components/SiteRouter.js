@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { Router } from '@reach/router';
+import { Component } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import SuperAdminRoute from './SuperAdminRoute';
 import AdminRoute from './AdminRoute';
 import UserRoute from './UserRoute';
 
@@ -40,53 +41,76 @@ import BadgesHome from './Badges/BadgesHome/BadgesHome';
 import YourBadges from './Badges/YourBadges/YourBadges';
 import StudentProfile from './Badges/StudentProfile/StudentProfile';
 import BadgeRanking from './Badges/BadgeRanking/BadgeRanking';
+import HDTestTemplates from './Email/HDTestTemplates';
+import AddTemplate from './Email/AddTemplate';
+import EditTemplate from './Email/EditTemplate';
+import GoogleStorageTemplate from './Email/GoogleStorageTemplate';
+import AddGoogleTemplate from './Email/AddGoogleTemplate';
+import EditGoogleTemplate from './Email/EditGoogleTemplate';
+
+import LeaveRequests from './Admin/LeaveRequests';
+import RequestLeave from './Admin/LeaveRequests/RequestLeave/RequestLeave';
+import ViewLeave from './Admin/LeaveRequests/ViewLeave/ViewLeave';
+import AdminViewLeave from './Admin/LeaveRequests/AdminViewLeave/AdminViewLeave';
+import AdminLeave from './Admin/LeaveRequests/AdminLeave/AdminLeave';
 
 class SiteRouter extends Component {
     render() {
         return (
-            <Router primary={false}>
-                <UserRoute as={Main} path={`${process.env.PUBLIC_URL}/`} />
-                <UserRoute as={ClockIn} path={`${process.env.PUBLIC_URL}/clock`} />
-                <UserRoute as={SelectTimesheet} path={`${process.env.PUBLIC_URL}/timesheet`} />
+            <Routes primary={false}>
+                <Route element={<UserRoute as={Main} />} path={`${process.env.PUBLIC_URL}/`} />
+                <Route element={<UserRoute as={ClockIn} />} path={`${process.env.PUBLIC_URL}/clock`}/>
+                <Route element={<UserRoute as={SelectTimesheet} />} path={`${process.env.PUBLIC_URL}/timesheet`} />
 
-                <AdminRoute as={AcctMgmt} path={`${process.env.PUBLIC_URL}/acctmgmt`} />
-                <AdminRoute as={EditUser} path={`${process.env.PUBLIC_URL}/acctmgmt/edituser`} />
-                <AdminRoute as={Edit} path={`${process.env.PUBLIC_URL}/acctmgmt/edituser/:username`} />
-                <AdminRoute as={Add} path={`${process.env.PUBLIC_URL}/acctmgmt/adduser`} />
+                <Route element={<AdminRoute as={AcctMgmt} />} path={`${process.env.PUBLIC_URL}/acctmgmt`} />
+                <Route element={<AdminRoute as={EditUser} />} path={`${process.env.PUBLIC_URL}/acctmgmt/edituser`} />
+                <Route element={<AdminRoute as={Edit} />} path={`${process.env.PUBLIC_URL}/acctmgmt/edituser/:username`} />
+                <Route element={<AdminRoute as={Add} />} path={`${process.env.PUBLIC_URL}/acctmgmt/adduser`} />
 
-                <AdminRoute as={SchedMgmt} path={`${process.env.PUBLIC_URL}/schedmgmt`} />
-                <AdminRoute as={ClockMetrics} path={`${process.env.PUBLIC_URL}/schedmgmt/clockmetrics`} />
-                <AdminRoute as={ScheduleChange} path={`${process.env.PUBLIC_URL}/schedmgmt/schedchange`} />
-                <AdminRoute as={DisplayChanges} path={`${process.env.PUBLIC_URL}/schedmgmt/displaychanges`} />
-                <AdminRoute as={TimesheetAdmin} path={`${process.env.PUBLIC_URL}/schedmgmt/tsadmin`} />
-                <AdminRoute as={WorkWeekExceptions} path={`${process.env.PUBLIC_URL}/schedmgmt/wwexceptions`} />
-                <AdminRoute as={HolidayWizard} path={`${process.env.PUBLIC_URL}/schedmgmt/holiday`} />
-                <AdminRoute
-                    as={Timesheet}
-                    path={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/:username/:year/:payPeriod`}
-                />
+                <Route element={<AdminRoute as={SchedMgmt} />} path={`${process.env.PUBLIC_URL}/schedmgmt`} />
+                <Route element={<AdminRoute as={ClockMetrics} />} path={`${process.env.PUBLIC_URL}/schedmgmt/clockmetrics`} />
+                <Route element={<AdminRoute as={ScheduleChange} />} path={`${process.env.PUBLIC_URL}/schedmgmt/schedchange`} />
+                <Route element={<AdminRoute as={DisplayChanges} />} path={`${process.env.PUBLIC_URL}/schedmgmt/displaychanges`} />
+                <Route element={<AdminRoute as={TimesheetAdmin} />} path={`${process.env.PUBLIC_URL}/schedmgmt/tsadmin`} />
+                <Route element={<AdminRoute as={WorkWeekExceptions} />} path={`${process.env.PUBLIC_URL}/schedmgmt/wwexceptions`} />
+                <Route element={<AdminRoute as={HolidayWizard} />} path={`${process.env.PUBLIC_URL}/schedmgmt/holiday`} />
+                <Route element={<AdminRoute as={Timesheet} />} path={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/:username/:year/:payPeriod`} />
 
-                <AdminRoute as={Badges} path={`${process.env.PUBLIC_URL}/badgemgmt`} />
-                <AdminRoute as={AddBadge} path={`${process.env.PUBLIC_URL}/badgemgmt/addbadge`} />
-                <AdminRoute as={DisplayBadges} path={`${process.env.PUBLIC_URL}/badgemgmt/displaybadges`} />
-                <AdminRoute as={StudentBadge} path={`${process.env.PUBLIC_URL}/badgemgmt/studentbadge`} />
-                <AdminRoute as={ManageStudentBadges} path={`${process.env.PUBLIC_URL}/badgemgmt/managebadge`} />
+                <Route element={<AdminRoute as={Badges}/>} path={`${process.env.PUBLIC_URL}/badgemgmt`} />
+                <Route element={<AdminRoute as={AddBadge}/>} path={`${process.env.PUBLIC_URL}/badgemgmt/addbadge`} />
+                <Route element={<AdminRoute as={DisplayBadges}/>} path={`${process.env.PUBLIC_URL}/badgemgmt/displaybadges`} />
+                <Route element={<AdminRoute as={StudentBadge}/>} path={`${process.env.PUBLIC_URL}/badgemgmt/studentbadge`} />
+                <Route element={<AdminRoute as={ManageStudentBadges}/>} path={`${process.env.PUBLIC_URL}/badgemgmt/managebadge`} />
 
-                <UserRoute as={Email} path={`${process.env.PUBLIC_URL}/email`} />
-                <UserRoute as={Banner} path={`${process.env.PUBLIC_URL}/email/banner`} />
-                <UserRoute as={UsernameChange} path={`${process.env.PUBLIC_URL}/email/usernamechange`} />
-                <UserRoute as={FileDrop} path={`${process.env.PUBLIC_URL}/email/filedrop`} />
-                <UserRoute as={SortSite} path={`${process.env.PUBLIC_URL}/email/sortsite`} />
-                <UserRoute as={TrainingLab} path={`${process.env.PUBLIC_URL}/email/training`} />
-                <UserRoute as={FMO} path={`${process.env.PUBLIC_URL}/email/fmo`} />
-
-                <UserRoute as={BadgesHome} path={`${process.env.PUBLIC_URL}/badges`} />
-                <UserRoute as={YourBadges} path={`${process.env.PUBLIC_URL}/badges/your-badges`} />
-                <UserRoute as={StudentProfile} path={`${process.env.PUBLIC_URL}/badges/:username`} />
-                <UserRoute as={BadgeRanking} path={`${process.env.PUBLIC_URL}/badges/badge-ranking`} />
+                <Route element={<UserRoute as={BadgesHome} />} path={`${process.env.PUBLIC_URL}/badges`} />
+                <Route element={<UserRoute as={YourBadges} />} path={`${process.env.PUBLIC_URL}/badges/your-badges`} />
+                <Route element={<UserRoute as={StudentProfile} />} path={`${process.env.PUBLIC_URL}/badges/:username`} />
+                <Route element={<UserRoute as={BadgeRanking} />} path={`${process.env.PUBLIC_URL}/badges/badge-ranking`} />
 
                 <Main default />
-            </Router>
+                <Route element={<AdminRoute as={HDTestTemplates} />} path={`${process.env.PUBLIC_URL}/hd-training`} />
+                <Route element={<AdminRoute as={GoogleStorageTemplate} />} path={`${process.env.PUBLIC_URL}/google-storage`} />
+                <Route element={<AdminRoute as={AddTemplate} />} path={`${process.env.PUBLIC_URL}/add-template`} />
+                <Route element={<AdminRoute as={EditTemplate} />} path={`${process.env.PUBLIC_URL}/edit-template/:tid`} />
+                <Route element={<AdminRoute as={AddGoogleTemplate} />} path={`${process.env.PUBLIC_URL}/add-google-template`} />
+                <Route element={<AdminRoute as={EditGoogleTemplate} />} path={`${process.env.PUBLIC_URL}/edit-google-template/:gtid`} />
+                
+                <Route element={<UserRoute as={Email} />} path={`${process.env.PUBLIC_URL}/email`} />
+                <Route element={<UserRoute as={Banner} />} path={`${process.env.PUBLIC_URL}/email/banner`} />
+                <Route element={<UserRoute as={UsernameChange} />} path={`${process.env.PUBLIC_URL}/email/usernamechange`} />
+                <Route element={<UserRoute as={FileDrop} />} path={`${process.env.PUBLIC_URL}/email/filedrop`} />
+                <Route element={<UserRoute as={SortSite} />} path={`${process.env.PUBLIC_URL}/email/sortsite`} />
+                <Route element={<UserRoute as={TrainingLab} />} path={`${process.env.PUBLIC_URL}/email/training`} />
+                <Route element={<UserRoute as={FMO} />} path={`${process.env.PUBLIC_URL}/email/fmo`} />
+
+                <Route element={<AdminRoute as={LeaveRequests} />} path={`${process.env.PUBLIC_URL}/leave-request`} />
+                <Route element={<AdminRoute as={RequestLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/request-leave`} />
+                <Route element={<AdminRoute as={ViewLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/view-leave`} />
+
+                <Route element={<SuperAdminRoute as={AdminViewLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave`} />
+                <Route element={<AdminRoute as={AdminLeave} />} path={`${process.env.PUBLIC_URL}/leave-request/admin-leave/:user/:startDate/:endDate/:shift`} />
+                <Route path="*" element={<Main />} />
+            </Routes>
         );
     }
 }

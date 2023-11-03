@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Tooltip } from 'react-tooltip';
 
 import { Table, TableLabel, TableHeading, TableRow, Timestamp, Comments, Location } from './MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../../images/Admin/Sched/Table.svg';
 import { ReactComponent as Check } from '../../../../images/icons/GreenCheck.svg';
 import { ReactComponent as X } from '../../../../images/icons/RedCross.svg';
+import { ReactComponent as Warning } from '../../../../images/icons/WarningExclamation.svg';
 
 class MetricsTable extends Component {
     constructor(props) {
@@ -37,6 +39,16 @@ class MetricsTable extends Component {
         }
     }
 
+    renderIcon(flag) {
+        if (flag == "check") {
+            return <Check />;
+        } else if (flag == "warning") {
+            return <Warning />;
+        } else {
+            return <X />
+        }
+    }
+
     render() {
         const { student, year, payPeriod } = this.props;
         const { results } = this.state;
@@ -44,8 +56,29 @@ class MetricsTable extends Component {
         let stripeCounter = -1;
         let stripeFlag = false;
 
+        
+
         return (
-            <Table {...this.props}>
+            <Table {...this.props} 
+            initial={{
+                y: 50,
+                opacity: 0,
+            }} 
+            animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                    when: 'beforeChildren',
+                    ease: 'circOut',
+                    duration: 0.5,
+                },
+            }}
+            exit={{
+                y: 50,
+                opacity: 0,
+                transition: { ease: 'circOut', duration: 0.5 },
+            }}
+            >
                 <TableLabel>
                     <TableLogo />
                     <div>
@@ -66,9 +99,9 @@ class MetricsTable extends Component {
                 {results
                 .sort(({ logid: previousID }, { logid: currentID}) => previousID - currentID)
                 .map((result, index) => {
-                    let locationFlag = false;
+                    let locationFlag = "check";
                     if (stripeCounter === 1) {
-                        stripeFlag = !stripeFlag;
+                        stripeFlag = "!stripeFlag";
                         stripeCounter = 0;
                     } else stripeCounter++;
                     let classes = '';
@@ -78,7 +111,13 @@ class MetricsTable extends Component {
                         classes = 'tableRow';
                     }
                     if (!result.ip.includes('128.171')) {
-                        locationFlag = true;
+                        const check1 = result.ip.match(/132.160.12[0-7]/) && result.ip.match(/132.160.12[0-7]/).length > 0;
+                        const check2 = result.ip.includes('132.160.7.') && result.ip.substring(10) < 64;
+                        if (check1 || check2) {
+                            locationFlag = "warning";
+                        } else {
+                            locationFlag = "cross";
+                        }
                     }
 
                     return (
@@ -88,7 +127,8 @@ class MetricsTable extends Component {
                                 <span>{`${result.month}/${result.day}/${year}`}</span>
                             </Timestamp>
                             <Comments>{result.comments}</Comments>
-                            <Location>{locationFlag ? <X /> : <Check />}</Location>
+                            <Location id={"anchor" + result.logid}>{this.renderIcon(locationFlag)}</Location>
+                            <Tooltip anchorSelect={"#anchor" + result.logid} content={result.ip} />
                         </TableRow>
                     );
                 })}

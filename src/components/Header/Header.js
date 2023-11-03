@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Flipper } from 'react-flip-toolkit';
 import PropTypes from 'prop-types';
 import Media from 'react-media';

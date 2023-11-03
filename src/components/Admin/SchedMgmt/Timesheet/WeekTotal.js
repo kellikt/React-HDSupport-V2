@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const WeekTotal = ({ regular, night, overtime, nightOvertime, hoursString }, props) => {
     return (

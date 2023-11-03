@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IndexPage from '../IndexPage';
 import IndexLink from '../IndexLink';
 import { ReactComponent as AddUser } from '../../../images/Admin/Acct/AddUser.svg';

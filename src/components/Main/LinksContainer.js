@@ -1,5 +1,4 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { ReactComponent as Schedules } from '../../images/Main/Schedules.svg';
 import { ReactComponent as Wiki } from '../../images/Main/Wiki.svg';

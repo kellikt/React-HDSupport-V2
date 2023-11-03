@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import { Component } from 'react';
+import styled from '@emotion/styled';
 import { OutageContext } from './OutageContext';
 
 class Tabs extends Component {

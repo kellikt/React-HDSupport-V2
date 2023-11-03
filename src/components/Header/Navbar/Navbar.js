@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Link } from '@reach/router';
+import { Component } from 'react';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import { ReactComponent as ITSLogo } from '../../../images/icons/its.svg';
 

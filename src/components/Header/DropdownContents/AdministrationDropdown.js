@@ -1,6 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from '@reach/router';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Schedule } from '../../../images/icons/Administration/Schedule.svg';
@@ -9,6 +8,9 @@ import { ReactComponent as Browser } from '../../../images/icons/Administration/
 import { ReactComponent as Database } from '../../../images/icons/Administration/Database.svg';
 import { ReactComponent as Docs } from '../../../images/icons/Administration/Docs.svg';
 import { ReactComponent as Manage } from '../../..//images/Admin/Badges/Icons/manage.svg';
+import { ReactComponent as Google } from '../../../images/icons/Administration/Google.svg';
+import { ReactComponent as Storage } from '../../../images/icons/Administration/Storage.svg';
+import { ReactComponent as Training } from '../../../images/icons/Documentation/Reception/Schedules.svg';
 
 const AdministrationDropdownEl = styled.div`
     width: 370px;
@@ -59,10 +61,48 @@ const AdministrationDropdown = () => {
                             <Description>Manage HD Badges.</Description>
                         </Link>
                     </ListItem>
+                    <ListItem>
+                        <a
+                            href="https://www.hawaii.edu/help/hdsupport/google-availability/index.php"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Heading color="pink">
+                                <Google />
+                                Google Availability
+                            </Heading>
+                            <Description>Manage the Google Availability matrix.</Description>
+                        </a>
+                    </ListItem>
+                    <ListItem noMarginBottom>
+                        <Link to={`${process.env.PUBLIC_URL}/leave-request`}>
+                            <Heading color="pink">
+                                <Schedule />
+                                Leave Requests
+                            </Heading>
+                            <Description>Create and manage leave requests.</Description>
+                        </Link>
+                    </ListItem>
                 </ul>
             </DropdownSection>
             <DropdownSection>
                 <ul>
+                    <ListItem>
+                        <Link to={`${process.env.PUBLIC_URL}/google-storage`}>
+                            <Heading color="pink">
+                                <Storage />
+                                Google Storage Templates
+                            </Heading>
+                        </Link>
+                    </ListItem>
+                    <ListItem>
+                        <Link to={`${process.env.PUBLIC_URL}/hd-training`}>
+                            <Heading color="pink">
+                                <Training />
+                                Training Templates
+                            </Heading>
+                        </Link>
+                    </ListItem>
                     <ListItem>
                         <a href="https://www.hawaii.edu/help/hdsupport/docs" target="_blank" rel="noopener noreferrer">
                             <Heading color="pink">

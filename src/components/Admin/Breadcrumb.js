@@ -1,7 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 
 const Breadcrumb = ({ links, color }) => {
     return (

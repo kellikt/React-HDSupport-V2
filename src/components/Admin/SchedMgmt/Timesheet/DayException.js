@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import { Component } from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import posed from 'react-pose';
+import { motion } from 'framer-motion';
 
 import { ReactComponent as Warning } from '../../../../images/icons/RedExclamation.svg';
 import { ReactComponent as GreenCheck } from '../../../../images/icons/GreenCheck.svg';
@@ -111,7 +111,19 @@ class DayException extends Component {
         const { exception, logs, message, heading, edited, error } = this.state;
 
         return (
-            <Container onSubmit={this.handleSubmit} {...this.props}>
+            <Container 
+                initial={{
+                    opacity: 0,
+                }}
+                animate={{
+                    opacity: 1,
+                    delay: 0.3
+                }}
+                exit={{
+                    opacity: 0,
+                }}
+                onSubmit={this.handleSubmit} {...this.props}
+            >
                 <Heading>
                     <Reminder>
                         <WarningExclamation />
@@ -186,12 +198,7 @@ DayException.propTypes = {
 
 export default DayException;
 
-const AnimatedDay = posed.form({
-    enter: { opacity: 1, delay: 300 },
-    exit: { opacity: 0 },
-});
-
-const Container = styled(AnimatedDay)`
+const Container = styled(motion.form)`
     display: flex;
     flex-direction: column;
     width: 100%;

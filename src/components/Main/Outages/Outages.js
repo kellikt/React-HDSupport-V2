@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import { Component } from 'react';
+import styled from '@emotion/styled';
 
 import OutageContent from './OutageContent';
 import Tabs from './Tabs';

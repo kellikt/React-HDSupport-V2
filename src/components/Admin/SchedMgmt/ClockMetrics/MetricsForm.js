@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 
 import { FormEl, Title, Inputs } from './MetricsFormComponents';
 import { ReactComponent as Graphic } from '../../../../images/Admin/Sched/Metrics.svg';
 import Button from '../../../Button';
 import MetricsTable from './MetricsTable';
-import { periods } from '../../payPeriods.json';
+import periods from '../../payPeriods';
 import { createYears } from '../../utils';
 
 class MetricsForm extends Component {
@@ -146,9 +146,9 @@ class MetricsForm extends Component {
                     </Inputs>
                     <Button color="light-blue">Display Actions</Button>
                 </FormEl>
-                <PoseGroup>
+                <AnimatePresence>
                     {searched && <MetricsTable key="table" student={selectedUser} year={year} payPeriod={payPeriod} />}
-                </PoseGroup>
+                </AnimatePresence>
             </React.Fragment>
         );
     }

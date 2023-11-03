@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import posed, { PoseGroup } from 'react-pose';
+import { Component } from 'react';
+import styled from '@emotion/styled';
+import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
 
 import WeekTotal from './WeekTotal';
@@ -85,7 +85,29 @@ class Week extends Component {
         const extraLastWeekDays = this.getExtraLastWeekDays(dayKeys);
 
         return (
-            <WeekContainer {...this.props}>
+            <WeekContainer {...this.props}
+            initial={{
+                y: 50,
+                opacity: 0,
+            }}
+            animate={{
+                y: 0,
+                opacity: 1,
+                delay: 0.8,
+                transition: {
+                    duration: 0.8,
+                    ease: 'easeIn',
+                },
+            }}
+            exit={{
+                y: 50,
+                opacity: 0,
+                transition: {
+                    duration: 0.4,
+                    ease: 'easeOut',
+                },
+            }}
+            >
                 <Container>
                     <Heading>
                         <span>Date</span>
@@ -100,11 +122,22 @@ class Week extends Component {
                         <span>OT</span>
                         <span>NT OT</span>
                     </Heading>
-                    <PoseGroup>
+                    <AnimatePresence>
                         {extraFirstWeekDays.map(day => {
                             const dayOfWeek = day.toLocaleString('en-US', { weekday: 'long' });
                             return (
-                                <InactiveDay key={day.getTime()}>
+                                <InactiveDay key={day.getTime()}
+                                initial={{
+                                    opacity: 0,
+                                }}
+                                animate={{
+                                    opacity: 0.3,
+                                    delay: 3,
+                                }}
+                                exit={{
+                                    opacity: 0,
+                                }}
+                                >
                                     <DateOfRow>
                                         <div>{`${day.getMonth() + 1}/${day.getDate()}/${day.getFullYear()}`}</div>
                                         <div>{dayOfWeek}</div>
@@ -140,7 +173,18 @@ class Week extends Component {
                                 );
                             } else {
                                 return (
-                                    <Day key={day} onClick={() => this.handleClick(index)}>
+                                    <Day 
+                                    initial={{
+                                        opacity: 0,
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                        delay: 3,
+                                    }}
+                                    exit={{
+                                        opacity: 0,
+                                    }}
+                                    key={day} onClick={() => this.handleClick(index)}>
                                         <DateOfRow>
                                             <div>{currentDayObj.date}</div>
                                             <div>{day}</div>
@@ -186,7 +230,18 @@ class Week extends Component {
                         {extraLastWeekDays.map(day => {
                             const dayOfWeek = day.toLocaleString('en-US', { weekday: 'long' });
                             return (
-                                <InactiveDay key={day.getTime()}>
+                                <InactiveDay key={day.getTime()}
+                                initial={{
+                                    opacity: 0,
+                                }}
+                                animate={{
+                                    opacity: 0.3,
+                                    delay: 3,
+                                }}
+                                exit={{
+                                    opacity: 0,
+                                }}
+                                >
                                     <DateOfRow>
                                         <div>{`${day.getMonth() + 1}/${day.getDate()}/${day.getFullYear()}`}</div>
                                         <div>{dayOfWeek}</div>
@@ -194,7 +249,7 @@ class Week extends Component {
                                 </InactiveDay>
                             );
                         })}
-                    </PoseGroup>
+                    </AnimatePresence>
                 </Container>
                 <WeekTotal
                     regular={weekData.subtotal_reg}
@@ -216,27 +271,7 @@ Week.propTypes = {
 
 export default Week;
 
-const AnimatedContainer = posed.div({
-    enter: {
-        y: 0,
-        opacity: 1,
-        delay: 400,
-        transition: {
-            duration: 400,
-            ease: 'easeOut',
-        },
-    },
-    exit: {
-        y: 50,
-        opacity: 0,
-        transition: {
-            duration: 400,
-            ease: 'easeOut',
-        },
-    },
-});
-
-const WeekContainer = styled(AnimatedContainer)`
+const WeekContainer = styled(motion.div)`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -270,12 +305,7 @@ const Heading = styled.div`
     }
 `;
 
-const AnimatedDay = posed.div({
-    enter: { opacity: 1, delay: 300 },
-    exit: { opacity: 0 },
-});
-
-const Day = styled(AnimatedDay)`
+const Day = styled(motion.div)`
     display: grid;
     grid-template-columns: repeat(11, 1fr);
     font-weight: 500;
@@ -291,12 +321,7 @@ const Day = styled(AnimatedDay)`
     }
 `;
 
-const InactiveDayAnimated = posed.div({
-    enter: { opacity: 0.3, delay: 300 },
-    exit: { opacity: 0 },
-});
-
-const InactiveDay = styled(InactiveDayAnimated)`
+const InactiveDay = styled(motion.div)`
     cursor: not-allowed;
     display: grid;
     grid-template-columns: repeat(11, 1fr);
