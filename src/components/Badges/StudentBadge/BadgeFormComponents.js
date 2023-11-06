@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const FormEl = styled.form`
     padding: 30px 30px 30px 335px;

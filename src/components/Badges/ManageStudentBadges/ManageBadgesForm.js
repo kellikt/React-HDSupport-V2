@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
 import { FormEl, Title, Options, Main } from './ManageBadgesComponents';
@@ -23,7 +23,7 @@ class ManageBadgesForm extends Component {
         };
     }
 
-    handleInput = event => {
+    handleInput = (event) => {
         const name = event.target.name;
 
         this.setState({
@@ -32,7 +32,7 @@ class ManageBadgesForm extends Component {
         });
     };
 
-    handleSubmit = async event => {
+    handleSubmit = async (event) => {
         event.preventDefault();
 
         this.setState({ submitted: true });
@@ -69,7 +69,8 @@ class ManageBadgesForm extends Component {
                         <Title>
                             <h2>Manage Student Badges</h2>
                             <p>
-                                Shows a list of badges for specified user and badge. Omitting the 'Badge' field will fetch all badges for the student.
+                                Shows a list of badges for specified user and badge. Omitting the 'Badge' field will
+                                fetch all badges for the student.
                             </p>
                         </Title>
                         <Inputs>
@@ -78,38 +79,42 @@ class ManageBadgesForm extends Component {
                                 <select name="selectedUser" id="user" onChange={this.handleInput} value={selectedUser}>
                                     <option value="None">Select a Student</option>
                                     <optgroup label="Help Desk">
-                                        {helpdesk.map(student => {
+                                        {helpdesk.map((student) => {
                                             return (
-                                                <option value={student.username} key={student.uid}>{`${
-                                                    student.last_name
-                                                }, ${student.first_name}`}</option>
+                                                <option
+                                                    value={student.username}
+                                                    key={student.uid}
+                                                >{`${student.last_name}, ${student.first_name}`}</option>
                                             );
                                         })}
                                     </optgroup>
                                     <optgroup label="Lab Monitors">
-                                        {lab.map(student => {
+                                        {lab.map((student) => {
                                             return (
-                                                <option value={student.username} key={student.uid}>{`${
-                                                    student.last_name
-                                                }, ${student.first_name}`}</option>
+                                                <option
+                                                    value={student.username}
+                                                    key={student.uid}
+                                                >{`${student.last_name}, ${student.first_name}`}</option>
                                             );
                                         })}
                                     </optgroup>
                                     <optgroup label="Third Shift">
-                                        {third_shift.map(student => {
+                                        {third_shift.map((student) => {
                                             return (
-                                                <option value={student.username} key={student.uid}>{`${
-                                                    student.last_name
-                                                }, ${student.first_name}`}</option>
+                                                <option
+                                                    value={student.username}
+                                                    key={student.uid}
+                                                >{`${student.last_name}, ${student.first_name}`}</option>
                                             );
                                         })}
                                     </optgroup>
                                     <optgroup label="Leap Start">
-                                        {leapstart.map(student => {
+                                        {leapstart.map((student) => {
                                             return (
-                                                <option value={student.username} key={student.uid}>{`${
-                                                    student.last_name
-                                                }, ${student.first_name}`}</option>
+                                                <option
+                                                    value={student.username}
+                                                    key={student.uid}
+                                                >{`${student.last_name}, ${student.first_name}`}</option>
                                             );
                                         })}
                                     </optgroup>
@@ -125,13 +130,29 @@ class ManageBadgesForm extends Component {
                             />
                         </Inputs>
                         <Options>
-                        <Button color="dark-blue">Display Badges</Button>
-                     </Options>
+                            <Button color="dark-blue">Display Badges</Button>
+                        </Options>
                     </Main>
                 </FormEl>
-                <PoseGroup>
-                    {submitted && <ManageBadgesTable key="table" user={selectedUser} badge={badge} />}
-                </PoseGroup>
+                <AnimatePresence>
+                    {submitted && (
+                        <ManageBadgesTable
+                            key="table"
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 0.3,
+                                delay: 3,
+                            }}
+                            exit={{
+                                opacity: 0,
+                            }}
+                            user={selectedUser}
+                            badge={badge}
+                        />
+                    )}
+                </AnimatePresence>
             </React.Fragment>
         );
     }

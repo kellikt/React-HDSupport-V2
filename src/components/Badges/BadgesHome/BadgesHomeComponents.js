@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const ActivityHeader = styled.div`
     background: linear-gradient(180deg, #8a8c98, #3c3d42);

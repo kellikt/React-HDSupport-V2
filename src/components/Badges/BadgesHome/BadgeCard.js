@@ -1,7 +1,8 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
- 
+import { motion } from 'framer-motion';
+
 import { ReactComponent as Circle } from '../../../images/Admin/Badges/BadgeWhitespace.svg';
 import { ReactComponent as Triangle } from '../../../images/Admin/Badges/BadgeTriangle.svg';
 import { ReactComponent as Outline } from '../../../images/Admin/Badges/BadgeOutline.svg';
@@ -13,12 +14,29 @@ import { ReactComponent as Fav } from '../../../images/Admin/Badges/Icons/favori
 import { ReactComponent as Lock } from '../../../images/Admin/Badges/Icons/lock.svg';
 import { ReactComponent as Locked } from '../../../images/Admin/Badges/LockedIcon.svg';
 
-import ReactTooltip from 'react-tooltip';
-
+import { Tooltip } from 'react-tooltip';
 
 const dayjs = require('dayjs');
 
-const BadgeCard = ({ bid, title, color, secondaryColor, image, description, timestamp, activity, profile, locked, fav, handleFavorite, staffUsername, notes }, props) => {
+const BadgeCard = (
+    {
+        bid,
+        title,
+        color,
+        secondaryColor,
+        image,
+        description,
+        timestamp,
+        activity,
+        profile,
+        locked,
+        fav,
+        handleFavorite,
+        staffUsername,
+        notes,
+    },
+    props
+) => {
     const imageID = image.match(/[-\w]{25,}/);
     const current = dayjs().unix();
     const currentMonth = dayjs().date(1).unix();
@@ -26,70 +44,120 @@ const BadgeCard = ({ bid, title, color, secondaryColor, image, description, time
     const timestampNotesDesc = `${notes} - ${staffUsername}`;
     const timestampDesc = `Awarded by ${staffUsername}`;
 
-    return(
+    return (
         <CardContainer color={secondaryColor}>
-            {(timestamp >= currentMonth.valueOf() && timestamp <= current.valueOf()) || (activity) ?
-                <RecentLabel color={secondaryColor}><RecentIcon /><p>  Recently Unlocked</p></RecentLabel>
-                : ''
-            }
-            {(locked) ?
-                <RecentLabel><LockIcon /><p>Locked</p></RecentLabel>
-                :''
-            }
-            {
-                (() => {
-                    if (profile) {
-                        if (fav === 0) {
-                            return <Favorite color={"white"}><FavIcon color={"transparent"} animate={fav} onClick={() => handleFavorite(bid, fav)}/></Favorite>
-                        } else {
-                            return <Favorite color={"transparent"}><FavIcon color={"white"} animate={fav} onClick={() => handleFavorite(bid, fav)}/></Favorite>
-                        }
+            {(timestamp >= currentMonth.valueOf() && timestamp <= current.valueOf()) || activity ? (
+                <RecentLabel color={secondaryColor}>
+                    <RecentIcon />
+                    <p> Recently Unlocked</p>
+                </RecentLabel>
+            ) : (
+                ''
+            )}
+            {locked ? (
+                <RecentLabel>
+                    <LockIcon />
+                    <p>Locked</p>
+                </RecentLabel>
+            ) : (
+                ''
+            )}
+            {(() => {
+                if (profile) {
+                    if (fav === 0) {
+                        return (
+                            <Favorite
+                                initial={{
+                                    opacity: 0,
+                                }}
+                                animate={{
+                                    opacity: 0.3,
+                                    delay: 3,
+                                }}
+                                exit={{
+                                    opacity: 0,
+                                }}
+                                color={'white'}
+                            >
+                                <FavIcon color={'transparent'} animate={fav} onClick={() => handleFavorite(bid, fav)} />
+                            </Favorite>
+                        );
+                    } else {
+                        return (
+                            <Favorite
+                                initial={{
+                                    opacity: 0,
+                                }}
+                                animate={{
+                                    opacity: 0.3,
+                                    delay: 3,
+                                }}
+                                exit={{
+                                    opacity: 0,
+                                }}
+                                color={'transparent'}
+                            >
+                                <FavIcon color={'white'} animate={fav} onClick={() => handleFavorite(bid, fav)} />
+                            </Favorite>
+                        );
                     }
-                })()
-            }
+                }
+            })()}
             <BadgeCircle />
             <BadgeTriangle />
-            <BadgeOutline color={color}/>
-            {locked ?
+            <BadgeOutline color={color} />
+            {locked ? (
                 <LockedBadge />
-            :
+            ) : (
                 <div>
-                    {imageID != null ? <BadgeImage width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <NoIcon /> }
+                    {imageID != null ? (
+                        <BadgeImage
+                            width="200px"
+                            height="200px"
+                            src={`https://drive.google.com/uc?export=view&id=${imageID}`}
+                        />
+                    ) : (
+                        <NoIcon />
+                    )}
                 </div>
-            }
-            <BadgeRibbon color={secondaryColor}/>
-            <BadgeDiamond color={secondaryColor}/>
-            {title.length > 11 ? 
+            )}
+            <BadgeRibbon color={secondaryColor} />
+            <BadgeDiamond color={secondaryColor} />
+            {title.length > 11 ? (
                 <div>
-                    <ReactTooltip />
+                    <Tooltip />
                     <BadgeTitle data-tip={title}>{title.substring(0, 11)}...</BadgeTitle>
                 </div>
-            : 
+            ) : (
                 <BadgeTitle>{title}</BadgeTitle>
-            }
-            {description.length > 75 ?
+            )}
+            {description.length > 75 ? (
                 <div>
-                    <ReactTooltip />
+                    <Tooltip />
                     <BadgeDescription data-tip={description}>{description.substring(0, 75)}...</BadgeDescription>
                 </div>
-            :
+            ) : (
                 <BadgeDescription>{description}</BadgeDescription>
-            }
-            {!locked ?
+            )}
+            {!locked ? (
                 <div>
-                    <ReactTooltip />
-                    {notes && notes.length > 0 ?
-                        <BadgeTimestamp data-tip={timestampNotesDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</BadgeTimestamp>
-                    :
-                        <BadgeTimestamp data-tip={timestampDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</BadgeTimestamp>
-                    }  
-                </div> 
-                : ''
-            }
+                    <Tooltip />
+                    {notes && notes.length > 0 ? (
+                        <BadgeTimestamp data-tip={timestampNotesDesc}>
+                            Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}
+                        </BadgeTimestamp>
+                    ) : (
+                        <BadgeTimestamp data-tip={timestampDesc}>
+                            Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}
+                        </BadgeTimestamp>
+                    )}
+                </div>
+            ) : (
+                ''
+            )}
         </CardContainer>
     );
-
-}
+};
 
 BadgeCard.propTypes = {
     bid: PropTypes.number,
@@ -105,8 +173,8 @@ BadgeCard.propTypes = {
     locked: PropTypes.bool,
     handleFavorite: PropTypes.func,
     staffUsername: PropTypes.string,
-    notes: PropTypes.string
-}
+    notes: PropTypes.string,
+};
 
 export default BadgeCard;
 
@@ -144,23 +212,10 @@ const NoIcon = styled(None)`
 `;
 
 const FavIcon = styled(Fav)`
-    color: ${props => (props.color)};
-    
+    color: ${(props) => props.color};
 `;
 
-const likeAnimation = keyframes`
-    0% {
-        transform: scale(.8);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-`;
-
-const Favorite = styled.button`
+const Favorite = styled(motion.button)`
     background: none;
     border: none;
     position: absolute;
@@ -170,14 +225,8 @@ const Favorite = styled.button`
 
     &:hover ${FavIcon} {
         transition: all 0.4s ease;
-        transform: scale(.8);
+        transform: scale(0.8);
     }
-
-    &:active {
-        animation: ${likeAnimation} 1s ease;
-    }
-
-
 `;
 
 const RecentIcon = styled(Icon)`
@@ -187,7 +236,7 @@ const RecentIcon = styled(Icon)`
 const RecentLabel = styled.div`
     display: flex;
     position: absolute;
-    background-color: #46474E; 
+    background-color: #46474e;
     padding: 0em 0.5em 0em 0.5em;
     border-radius: 0.4em;
     bottom: 18.6em;
@@ -197,9 +246,9 @@ const RecentLabel = styled.div`
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
 
     p {
-      font-weight: 400;
-      top: 1em;
-      margin: 1em 0em 0em 0.5em;
+        font-weight: 400;
+        top: 1em;
+        margin: 1em 0em 0em 0.5em;
     }
 
     @media (max-width: 1250px) {
@@ -215,7 +264,7 @@ const BadgeTimestamp = styled.p`
     font-style: italic;
     font-size: 0.9em;
 
-    @media (max-width: 1250px) and (min-width: 1200px){
+    @media (max-width: 1250px) and (min-width: 1200px) {
         top: 14.5em;
         font-size: 0.8em;
     }
@@ -253,7 +302,7 @@ const BadgeTitle = styled.p`
     font-size: 0.8em;
     text-transform: uppercase;
     color: var(--white);
-    
+
     @media (max-width: 1250px) and (min-width: 1200px) {
         top: 10.5em;
         left: 0.5em;
@@ -340,12 +389,19 @@ const BadgeTriangle = styled(Triangle)`
         width: 4em;
         top: 9em;
         left: 9.8em;
-    }    
+    }
 `;
 
 const CardContainer = styled.div`
     position: relative;
-    background: linear-gradient(180deg, ${props => (props.color) || '#fff'},${props => (props.color) || '#fff'} 30%,var(--white) 30%,var(--white) 60%,${props => (props.color) || '#fff'} 60%);
+    background: linear-gradient(
+        180deg,
+        ${(props) => props.color || '#fff'},
+        ${(props) => props.color || '#fff'} 30%,
+        var(--white) 30%,
+        var(--white) 60%,
+        ${(props) => props.color || '#fff'} 60%
+    );
     border-radius: 8px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     height: 20em;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 
 import { FormEl, Title, Options, Main } from './DisplayBadgesComponents';
 import { ReactComponent as Graphic } from '../../../images/Admin/Badges/DisplayBadge.svg';
@@ -16,7 +16,7 @@ class DisplayBadgesForm extends Component {
         };
     }
 
-    handleInput = event => {
+    handleInput = (event) => {
         const name = event.target.name;
 
         this.setState({
@@ -25,7 +25,7 @@ class DisplayBadgesForm extends Component {
         });
     };
 
-    handleSubmit = async event => {
+    handleSubmit = async (event) => {
         event.preventDefault();
 
         this.setState({ submitted: true });
@@ -42,7 +42,8 @@ class DisplayBadgesForm extends Component {
                         <Title>
                             <h2>Display Badges</h2>
                             <p>
-                                Shows a list of badges based on search keyword. Leaving the 'Badge' field blank will fetch results for all badges.
+                                Shows a list of badges based on search keyword. Leaving the 'Badge' field blank will
+                                fetch results for all badges.
                             </p>
                         </Title>
                         <TextInput
@@ -58,9 +59,24 @@ class DisplayBadgesForm extends Component {
                         <Button color="purple">Display Badges</Button>
                     </Options>
                 </FormEl>
-                <PoseGroup>
-                    {submitted && <DisplayBadgesTable key="table" badge={badge} />}
-                </PoseGroup>
+                <AnimatePresence>
+                    {submitted && (
+                        <DisplayBadgesTable
+                            key="table"
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 0.3,
+                                delay: 3,
+                            }}
+                            exit={{
+                                opacity: 0,
+                            }}
+                            badge={badge}
+                        />
+                    )}
+                </AnimatePresence>
             </React.Fragment>
         );
     }

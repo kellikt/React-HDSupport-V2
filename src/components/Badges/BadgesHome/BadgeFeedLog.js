@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { ReactComponent as ProfilePlaceholder } from '../../../images/Admin/Badges/ProfilePlaceholder.svg';
 import { ReactComponent as Ribbon } from '../../../images/Admin/Badges/BadgeRibbon.svg';
@@ -7,7 +7,7 @@ import { ReactComponent as BadgeOutline } from '../../../images/Admin/Badges/Fee
 import { ReactComponent as NoIcon } from '../../../images/Admin/Badges/NoBadge.svg';
 import { ReactComponent as BadgeOuterOutline } from '../../../images/Admin/Badges/BadgeOutline.svg';
 
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 
 const dayjs = require('dayjs');
 
@@ -25,7 +25,7 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
             <OuterOutline color={color} />
             {title.length > 11 ? 
                 <div>
-                        <ReactTooltip />
+                        <Tooltip />
                         <BadgeTitleDiv data-tip={title}><BadgeTitle>{title.substring(0,11)}...</BadgeTitle></BadgeTitleDiv>
                 </div>
             :
@@ -38,7 +38,7 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
                         <CardTitle>{title}</CardTitle>
                         {description.length > 75 ? 
                             <div>
-                                <ReactTooltip />
+                                <Tooltip />
                                 <CardDesc data-tip={description} color={secondaryColor}>{description.substring(0, 75)}...</CardDesc>
                             </div>
                         :
@@ -46,12 +46,12 @@ const BadgeFeedLog = ({ title, color, secondaryColor, image, description, timest
                         }
                         {notes.length > 0 ? 
                             <div>
-                                <ReactTooltip />
+                                <Tooltip />
                                 <CardTimestamp data-tip={timestampNotesDesc} color={secondaryColor}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</CardTimestamp>
                             </div>
                         :
                             <div>
-                                <ReactTooltip />
+                                <Tooltip />
                                 <CardTimestamp data-tip={timestampDesc} color={secondaryColor}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</CardTimestamp>
                             </div>
                         }

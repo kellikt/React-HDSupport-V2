@@ -1,12 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
 import { ReactComponent as Outline } from '../../../images/Admin/Badges/BadgeOutline.svg';
 import { ReactComponent as Ribbon } from '../../../images/Admin/Badges/BadgeRibbon.svg';
 import { ReactComponent as Section } from '../../../images/Admin/Badges/BadgeSection.svg';
 import { ReactComponent as NoIcon } from '../../../images/Admin/Badges/NoBadge.svg';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 
 const dayjs = require('dayjs');
 
@@ -22,7 +22,7 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
             {imageID != null ? <BadgeIcon width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <StyledNoIcon /> }
             {title.length > 11 ?
                 <div>
-                    <ReactTooltip />
+                    <Tooltip />
                     <BadgeTitle data-tip={title}>{title.substring(0, 11)}...</BadgeTitle>
                 </div>
             :
@@ -31,7 +31,7 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
             <StyledRibbon color={secondaryColor}/>
             {description.length > 60 ? 
             <div>
-                <ReactTooltip />
+                <Tooltip />
                 <BadgeDescription data-tip={description}>{description.substring(0, 60)}...</BadgeDescription>
             </div>
             :
@@ -40,12 +40,12 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
             <StyledSection color={secondaryColor}/>
             {notes && notes.length > 0 ?
                 <div>
-                    <ReactTooltip />
+                    <Tooltip />
                 <TimestampText data-tip={TimestampNotesDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</TimestampText>
                 </div>
             :
                 <div>
-                    <ReactTooltip />
+                    <Tooltip />
                     <TimestampText data-tip={TimestampDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</TimestampText>
                 </div>
             }

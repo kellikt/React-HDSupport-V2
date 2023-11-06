@@ -87,7 +87,6 @@ class SiteRouter extends Component {
                 <Route element={<UserRoute as={StudentProfile} />} path={`${process.env.PUBLIC_URL}/badges/:username`} />
                 <Route element={<UserRoute as={BadgeRanking} />} path={`${process.env.PUBLIC_URL}/badges/badge-ranking`} />
 
-                <Main default />
                 <Route element={<AdminRoute as={HDTestTemplates} />} path={`${process.env.PUBLIC_URL}/hd-training`} />
                 <Route element={<AdminRoute as={GoogleStorageTemplate} />} path={`${process.env.PUBLIC_URL}/google-storage`} />
                 <Route element={<AdminRoute as={AddTemplate} />} path={`${process.env.PUBLIC_URL}/add-template`} />

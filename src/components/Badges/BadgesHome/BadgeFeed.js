@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import BadgeFeedLog from './BadgeFeedLog';
 import BadgeCard from './BadgeCard';

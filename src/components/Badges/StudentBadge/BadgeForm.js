@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import Button from '../../Button';
 import TextInput from '../../TextInput';

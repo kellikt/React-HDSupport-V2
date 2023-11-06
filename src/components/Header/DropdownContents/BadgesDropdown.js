@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Link } from '@reach/router';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import { DropdownSection, Heading, Description, ListItem } from './Components';
 import { ReactComponent as Home } from '../../..//images/Admin/Badges/Icons/home.svg';

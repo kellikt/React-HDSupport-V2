@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { Table, TableLabel, TableHeading, TableRow } from '../../Admin/SchedMgmt/ClockMetrics/MetricsTableComponents';
 import { ReactComponent as TableLogo } from '../../../images/Admin/Badges/Table.svg';
