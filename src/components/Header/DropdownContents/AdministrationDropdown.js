@@ -52,15 +52,6 @@ const AdministrationDropdown = () => {
                             <Description>Manage the browser matrix.</Description>
                         </a>
                     </ListItem>
-                    <ListItem noMarginBottom>
-                        <Link to={`${process.env.PUBLIC_URL}/badgemgmt`}>
-                            <Heading color="pink">
-                                <Manage />
-                                Manage Badges
-                            </Heading>
-                            <Description>Manage HD Badges.</Description>
-                        </Link>
-                    </ListItem>
                     <ListItem>
                         <a
                             href="https://www.hawaii.edu/help/hdsupport/google-availability/index.php"
@@ -74,13 +65,22 @@ const AdministrationDropdown = () => {
                             <Description>Manage the Google Availability matrix.</Description>
                         </a>
                     </ListItem>
-                    <ListItem noMarginBottom>
+                    <ListItem>
                         <Link to={`${process.env.PUBLIC_URL}/leave-request`}>
                             <Heading color="pink">
                                 <Schedule />
                                 Leave Requests
                             </Heading>
                             <Description>Create and manage leave requests.</Description>
+                        </Link>
+                    </ListItem>
+                    <ListItem noMarginBottom>
+                        <Link to={`${process.env.PUBLIC_URL}/badgemgmt`}>
+                            <Heading color="pink">
+                                <Manage />
+                                Manage Badges
+                            </Heading>
+                            <Description>Manage HD Badges.</Description>
                         </Link>
                     </ListItem>
                 </ul>

@@ -85,7 +85,7 @@ function RequestLeaveForm() {
                 setState({
                     ...state,
                     submitted: true,
-                    message: 'Failed to submit leave reuqest.',
+                    message: 'Failed to submit leave request. Check if you already have a leave request submitted for this date range.',
                     messageHeading: 'Error!',
                     error: true,
                 });

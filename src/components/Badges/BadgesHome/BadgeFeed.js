@@ -49,14 +49,14 @@ class BadgeFeed extends Component {
           <div id="activity">
           {badgeActivity.map((item, index) => {
               return (
-                  <BadgeFeedLog title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} staffUsername={item.staff_username} notes={item.notes} />
+                  <BadgeFeedLog key={index} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} user={item.first_name} staffUsername={item.staff_username} username={item.username} notes={item.notes} />
               );
           })}
           </div>
           <div id="recent">
               {recentActivity.map((item, index) => {
                   return (
-                    <BadgeCard title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} notes={item.notes} staffUsername={item.staff_username} activity={true} profile={false} locked={false} />
+                    <BadgeCard key={index} title={item.title} color={item.hex} secondaryColor={item.hex_secondary} image={item.link} description={item.description} timestamp={item.tstamp} notes={item.notes} staffUsername={item.staff_username} username={item.username} activity={true} profile={false} locked={false} />
                   )
               })}
           </div>

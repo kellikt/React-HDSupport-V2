@@ -54,9 +54,9 @@ class BadgesFormFeature extends Component {
                 <BadgeForm>
                     <FeatureLabel><StyledFeatureIcon /><p>{firstName}'s Featured Badges</p></FeatureLabel>
                     <FeatureCase bigHeight={this.calculateRegBadgeHeight()} smallHeight={this.calculateSmallBadgeHeight()} columnHeight={this.calculateOneColumnHeight()}>
-                        {favorites.map((favorite) => {
+                        {favorites.map((favorite, index) => {
                             return (
-                                <Badge title={favorite.title} image={favorite.link} color={favorite.hex} secondaryColor={favorite.hex_secondary} description={favorite.description} timestamp={favorite.tstamp} notes={favorite.notes} staffUsername={favorite.staff_username}/>
+                                <Badge key={index} title={favorite.title} image={favorite.link} color={favorite.hex} secondaryColor={favorite.hex_secondary} description={favorite.description} timestamp={favorite.tstamp} notes={favorite.notes} staffUsername={favorite.staff_username}/>
                             )
                         })}
                     </FeatureCase>
@@ -78,16 +78,16 @@ const FeatureCase = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-row-gap: 4em;
-    height: ${props => (props.bigHeight) || 0}em
+    height: ${({bigHeight}) => (bigHeight) || 0}em;
 
     @media (max-width: 1200px) and (min-width: 700px) {
-      height: ${props => (props.smallHeight) || 0}em
+      height: ${({smallHeight}) => (smallHeight) || 0}em;
       grid-row-gap: 0em;
     }
 
     @media (max-width: 700px) {
         grid-template-columns: 1fr;
-        height: ${props => (props.columnHeight) || 0}em
+        height: ${({columnHeight}) => (columnHeight) || 0}em;
         grid-row-gap: 0em;
     }
 
@@ -99,7 +99,7 @@ const FeatureLabel = styled.div`
     top: -3em;
     left: 1em;
     display: flex;
-    background-color: #626471
+    background-color: #626471;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.3), 0 5px 15px rgba(0, 0, 0, 0.07);
     border-radius: 0.5em;
     p {

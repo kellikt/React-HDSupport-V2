@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@emotion/babel-plugin": "^11.11.0",
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
         "@slack/rtm-api": "^6.1.0",
@@ -53,7 +54,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "homepage": "/help/hdsupport/index.php",
+    "homepage": "/help/hdsupport/dev/index.php",
     "eslintConfig": {
         "extends": "react-app"
     },

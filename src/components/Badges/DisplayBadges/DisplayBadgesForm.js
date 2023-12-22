@@ -67,7 +67,7 @@ class DisplayBadgesForm extends Component {
                                 opacity: 0,
                             }}
                             animate={{
-                                opacity: 0.3,
+                                opacity: 1,
                                 delay: 3,
                             }}
                             exit={{

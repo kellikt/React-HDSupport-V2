@@ -59,7 +59,7 @@ export class LayoutProvider extends Component {
 
             this.refreshID = setInterval(() => {
                 window.location.reload();
-            }, 480000);
+            }, 1800000);
         } catch (error) {
             console.log(`Unable: ${error}`);
         }

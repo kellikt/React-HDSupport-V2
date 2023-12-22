@@ -5,6 +5,7 @@ import Container from '../../Admin/Container';
 import Breadcrumb from '../../Admin/Breadcrumb';
 import Background from '../../Background';
 import BadgesHomeForm from './BadgesHomeForm';
+import TopBadgeHolder from './TopBadgeHolder';
 import { ActivityHeader } from './BadgesHomeComponents';
 import { ReactComponent as HeaderIcon } from '../../../images/Admin/Badges/Icons/header.svg';
 import BadgeFeed from './BadgeFeed';
@@ -20,6 +21,7 @@ const BadgesHome = () => {
             <Breadcrumb links={links} color="dark-grey" />
             <Background color="gold" />
             <BadgesHomeForm />
+            <TopBadgeHolder />
             <ActivityHeader><StyledHeaderIcon /><h2>Badge Activity</h2></ActivityHeader>
             <BadgeFeed />
         </Container>

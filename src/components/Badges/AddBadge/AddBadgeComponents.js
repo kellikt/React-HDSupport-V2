@@ -7,7 +7,7 @@ export const Form = styled.form`
     display: grid;
     margin-top: 30px;
     background: #fff;
-    grid-template-columns: 1fr 2fr
+    grid-template-columns: 1fr 2fr;
     grid-column-gap: 60px;
     margin-bottom: 30px;
 

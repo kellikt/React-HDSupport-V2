@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 
@@ -71,7 +71,7 @@ const BadgeCard = (
                                     opacity: 0,
                                 }}
                                 animate={{
-                                    opacity: 0.3,
+                                    opacity: 1,
                                     delay: 3,
                                 }}
                                 exit={{
@@ -89,7 +89,7 @@ const BadgeCard = (
                                     opacity: 0,
                                 }}
                                 animate={{
-                                    opacity: 0.3,
+                                    opacity: 1,
                                     delay: 3,
                                 }}
                                 exit={{
@@ -111,11 +111,7 @@ const BadgeCard = (
             ) : (
                 <div>
                     {imageID != null ? (
-                        <BadgeImage
-                            width="200px"
-                            height="200px"
-                            src={`https://drive.google.com/uc?export=view&id=${imageID}`}
-                        />
+                        <BadgeImage width="200px" height="200px" referrerPolicy="no-referrer" src={`https://lh3.google.com/u/0/d/${imageID}`} />
                     ) : (
                         <NoIcon />
                     )}
@@ -125,31 +121,38 @@ const BadgeCard = (
             <BadgeDiamond color={secondaryColor} />
             {title.length > 11 ? (
                 <div>
-                    <Tooltip />
-                    <BadgeTitle data-tip={title}>{title.substring(0, 11)}...</BadgeTitle>
+                    <BadgeTitle id={'anchor' + timestamp}>{title.substring(0, 11)}...</BadgeTitle>
+                    <Tooltip anchorSelect={'#anchor' + timestamp} content={title} />
                 </div>
             ) : (
                 <BadgeTitle>{title}</BadgeTitle>
             )}
             {description.length > 75 ? (
                 <div>
-                    <Tooltip />
-                    <BadgeDescription data-tip={description}>{description.substring(0, 75)}...</BadgeDescription>
+                    <BadgeDescription id={'anchor-desc' + timestamp}>
+                        {description.substring(0, 75)}...
+                    </BadgeDescription>
+                    <Tooltip anchorSelect={'#anchor-desc' + timestamp} content={description} />
                 </div>
             ) : (
                 <BadgeDescription>{description}</BadgeDescription>
             )}
             {!locked ? (
                 <div>
-                    <Tooltip />
                     {notes && notes.length > 0 ? (
-                        <BadgeTimestamp data-tip={timestampNotesDesc}>
-                            Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}
-                        </BadgeTimestamp>
+                        <React.Fragment>
+                            <BadgeTimestamp id={'anchor-tdesc' + timestamp}>
+                                Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}
+                            </BadgeTimestamp>
+                            <Tooltip anchorSelect={'#anchor-tdesc' + timestamp} content={timestampNotesDesc} />
+                        </React.Fragment>
                     ) : (
-                        <BadgeTimestamp data-tip={timestampDesc}>
-                            Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}
-                        </BadgeTimestamp>
+                        <React.Fragment>
+                            <BadgeTimestamp id={'anchor-tdesc'}>
+                                Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}
+                            </BadgeTimestamp>
+                            <Tooltip anchorSelect={'#anchor-tdesc' + timestamp} content={timestampDesc} />
+                        </React.Fragment>
                     )}
                 </div>
             ) : (

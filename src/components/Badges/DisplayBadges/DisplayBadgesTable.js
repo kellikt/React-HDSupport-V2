@@ -119,7 +119,7 @@ class DisplayBadgesTable extends Component {
                         const id = result.link.match(/[-\w]{25,}/);
                         return (
                             <Row key={result.bid} onClick={() => this.handleRowClick(index)} stagger={index}>
-                                <span>{result.link !== '' ? <img width="100px" height="100px" src={`https://drive.google.com/uc?export=view&id=${id}`} alt={result.title} /> : <NoIcon /> }</span>
+                                <span>{result.link !== '' ? <img width="100px" height="100px" referrerPolicy="no-referrer" src={`https://lh3.google.com/u/0/d/${id}`} alt={result.title} /> : <NoIcon /> }</span>
                                 <Username>{result.title}</Username>
                                 <Notes>{result.description}</Notes>
                                 <div><ColorIcon fill={result.hex} /><span>{result.hex}</span></div>

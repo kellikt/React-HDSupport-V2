@@ -19,11 +19,11 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
     return(
         <BadgeContainer>
             <StyledOutline color={color}/>
-            {imageID != null ? <BadgeIcon width="200px" height="200px" src={`https://drive.google.com/uc?export=view&id=${imageID}`} /> : <StyledNoIcon /> }
+            {imageID != null ? <BadgeIcon width="200px" height="200px" referrerPolicy="no-referrer" src={`https://lh3.google.com/u/0/d/${imageID}`} /> : <StyledNoIcon /> }
             {title.length > 11 ?
                 <div>
-                    <Tooltip />
-                    <BadgeTitle data-tip={title}>{title.substring(0, 11)}...</BadgeTitle>
+                    <BadgeTitle id={"anchor" + title + timestamp}>{title.substring(0, 11)}...</BadgeTitle>
+                    <Tooltip anchorSelect={"#anchor" + title + timestamp} content={title} />
                 </div>
             :
                 <BadgeTitle>{title}</BadgeTitle>
@@ -45,8 +45,8 @@ const Badge = ({ title, image, color, secondaryColor, description, timestamp, no
                 </div>
             :
                 <div>
-                    <Tooltip />
-                    <TimestampText data-tip={TimestampDesc}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</TimestampText>
+                    <TimestampText id={"#anchor-timestamp" + title + timestamp}>Achieved {dayjs.unix(timestamp).format('MM-DD-YYYY')}</TimestampText>
+                    <Tooltip anchorSelect={"#anchor-timestamp" + title + timestamp} content={TimestampDesc}/>
                 </div>
             }
         </BadgeContainer>
