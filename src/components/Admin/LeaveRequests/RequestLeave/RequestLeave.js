@@ -14,7 +14,7 @@ const RequestLeave = () => {
             <h1>Request Leave</h1>
             <Breadcrumb links={links} color="pink" />
             <RequestLeaveForm />
-            <Background color="bpink" />
+            <Background color="pink" />
         </Container>
     );
 };

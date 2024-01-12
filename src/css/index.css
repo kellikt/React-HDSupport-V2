@@ -13,6 +13,7 @@
     --black: #32325d;
     --red: #d95c6e;
     --purple: #a38cdc;
+    --cyan: #1D616F;
     --transition-duration: 1250ms;
     --transition-delay: 250ms;
     --spacer: 28px;
@@ -24,6 +25,7 @@
     --light-blue-button: linear-gradient(180deg, #89b1ff, #5b8def);
     --gold-button: linear-gradient(180deg, #ffc476, #e39f48);
     --blue-button: linear-gradient(180deg, #7c7ebf, #414384);
+    --cyan-button: linear-gradient(180deg, #73B6C9, #457A86);
     --secondary-button: #fff;
 
     --crumb-blue-text: #6772e5;
@@ -47,6 +49,9 @@
     --crumb-red-text: #800a1b;
     --crumb-red-bg: #f8c9cd;
     --crumb-red-border: #f8c9cd52;
+    --crumb-cyan-text: #1D616F;
+    --crumb-cyan-bg: #A2DFED;
+    --crumb-cyan-border: #d6e6f452;
 }
 
 html {

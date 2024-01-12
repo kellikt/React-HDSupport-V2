@@ -16,6 +16,8 @@ import TimesheetAdmin from './Admin/SchedMgmt/TimesheetAdmin/TimesheetAdmin';
 import HolidayWizard from './Admin/SchedMgmt/HolidayWizard';
 import WorkWeekExceptions from './Admin/SchedMgmt/WorkWeekExceptions';
 import Timesheet from './Admin/SchedMgmt/Timesheet';
+import Announcements from './Admin/SchedMgmt/Announcements/Announcements';
+import DisplayAnnounce from './Admin/SchedMgmt/DisplayAnnounce/DisplayAnnounce';
 
 import Email from './Email/';
 import Banner from './Email/Banner';
@@ -64,6 +66,8 @@ class SiteRouter extends Component {
                 <Route element={<AdminRoute as={WorkWeekExceptions} />} path={`${process.env.PUBLIC_URL}/schedmgmt/wwexceptions`} />
                 <Route element={<AdminRoute as={HolidayWizard} />} path={`${process.env.PUBLIC_URL}/schedmgmt/holiday`} />
                 <Route element={<AdminRoute as={Timesheet} />} path={`${process.env.PUBLIC_URL}/schedmgmt/timesheet/:username/:year/:payPeriod`} />
+                <Route element={<AdminRoute as={Announcements} />} path={`${process.env.PUBLIC_URL}/schedmgmt/announcements`} />
+                <Route element={<AdminRoute as={DisplayAnnounce} />} path={`${process.env.PUBLIC_URL}/schedmgmt/displayannounce`} />
 
                 <Route element={<AdminRoute as={HDTestTemplates} />} path={`${process.env.PUBLIC_URL}/hd-training`} />
                 <Route element={<AdminRoute as={GoogleStorageTemplate} />} path={`${process.env.PUBLIC_URL}/google-storage`} />

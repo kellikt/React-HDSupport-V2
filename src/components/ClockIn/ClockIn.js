@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import { ReactComponent as Laptop } from '../../images/Clock/Laptop.svg';
 import ClockCard from './ClockCard';
+import MissedAnnouncements from './MissedAnnouncements';
 import CommentAdvice from './CommentAdvice';
 import { LayoutContext } from '../../LayoutContext';
 import { ClockProvider } from './ClockContext';
@@ -25,6 +26,7 @@ class ClockIn extends Component {
     render() {
         return (
             <Container>
+                <MissedAnnouncements />
                 <Laptop />
                 <ClockProvider>
                     <ClockCard />

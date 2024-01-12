@@ -227,6 +227,7 @@ function AdminLeave() {
                 from: from,
                 to: to,
                 subject: subject,
+                bcc: `${username}@hawaii.edu`,
                 body: content,
             });
             if (request.data) {

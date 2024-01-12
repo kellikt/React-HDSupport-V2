@@ -1,55 +1,72 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import styled from '@emotion/styled';
 
+import { LayoutContext } from '../../../LayoutContext';
 import Badge from './Badge';
 import Spinner from '../../Spinner';
 import { Container, CardsContainer, Card, NextButton } from './Components';
 import { ReactComponent as Arrow } from '../../../images/icons/Arrow.svg';
 
 export default function Announcements() {
+    const { username } = useContext(LayoutContext);
     const [state, setState] = useState({
         currentHeight: 225,
         announcements: [],
-        order: [0, 1, 2, 3, 4],
+        order: [],
         isLoading: true,
     });
 
     useEffect(() => {
         const fetchData = async() => {
-            const slackRequest = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-slack-history.php`, {
+            const slackRequest = await axios.post(`${process.env.REACT_APP_DB_SERVER}/get-announcements.php`, {
                 token: `${process.env.REACT_APP_SLACK_TOKEN}`,
                 channel: `${process.env.REACT_APP_SLACK_CHANNEL}`,
+                username: username,
             });
 
             const slackData = await slackRequest.data;
 
-            // filter channel leave/channel join/reminder_add messages and limit to 5 messages
-            let filteredSlackData = slackData.messages.filter((message) => message.subtype !== "channel_leave" && message.subtype !== "channel_join" && message.subtype !== "reminder_add" && message.room === undefined).slice(0, 5);
-
             // process the result
 
-            const finalArray = [...Array(5).keys()];
-            filteredSlackData.forEach((message, index) => {
-                const timestamp = getTime(message.ts);
-                const text = getText(message.text);
-
-                const finalMessage = {
-                    title: text[0],
-                    date: timestamp,
-                    text: text[1],
-                };
-
-                if (index === 0) {
-                    finalArray[1] = finalMessage;
-                } else if (index === 4) {
-                    finalArray[0] = finalMessage;
-                } else finalArray[index + 1] = finalMessage;
+            const finalArray = [];
+            slackData.forEach((message, index) => {
+                if (message.atype == "slack") {
+                    const timestamp = getTime(message.ts);
+                    const text = getText(message.text);
+    
+                    const finalMessage = {
+                        title: text[0],
+                        date: timestamp,
+                        text: text[1],
+                    };
+                    if (index === 0) {
+                        finalArray[1] = finalMessage;
+                    } else if (index === slackData.length - 1) {
+                        finalArray[0] = finalMessage;
+                    } else finalArray[index + 1] = finalMessage;
+    
+                } else {
+                    const timestamp = message.open_date;
+                    const text = message.text;
+                    const title = message.title
+                    const finalMessage = {
+                        title: title,
+                        date: timestamp,
+                        text: text,
+                    };
+                    if (index === 0) {
+                        finalArray[1] = finalMessage;
+                    } else if (index === slackData.length - 1) {
+                        finalArray[0] = finalMessage;
+                    } else finalArray[index + 1] = finalMessage;
+                }
             });
 
             setState({
                 ...state,
                 announcements: finalArray,
+                order: [...Array(slackData.length).keys()],
                 isLoading: false,
             });
         }
@@ -71,6 +88,8 @@ export default function Announcements() {
             ...state,
             currentHeight: height,
         });
+
+        
     }, [state.isLoading])
 
     const getText = text => {
@@ -140,7 +159,7 @@ export default function Announcements() {
     const shiftCards = () => {
         const newOrder = state.order.map(item => {
             if (item === 0) {
-                return 4;
+                return state.order.length - 1;
             } else {
                 return item - 1;
             }

@@ -6,6 +6,8 @@ import { ReactComponent as DisplaySched } from '../../../images/Admin/Sched/Disp
 import { ReactComponent as SchedChange } from '../../../images/Admin/Sched/SchedChange.svg';
 import { ReactComponent as Holiday } from '../../../images/Admin/Sched/Holiday.svg';
 import { ReactComponent as Forty } from '../../../images/Admin/Sched/Forty.svg';
+import { ReactComponent as AddAnn } from '../../../images/Admin/Announce/Add.svg';
+import { ReactComponent as DisplayAnn } from '../../../images/Admin/Announce/Edit.svg';
 import Background from '../../Background';
 
 const index = () => {
@@ -60,6 +62,22 @@ const index = () => {
                 to={`${process.env.PUBLIC_URL}/schedmgmt/wwexceptions`}
             >
                 <Forty />
+            </IndexLink>
+            <IndexLink
+                color="pink"
+                title="Add Announcement"
+                description="Add a manual announcement."
+                to={`${process.env.PUBLIC_URL}/schedmgmt/announcements`}
+            >
+                <AddAnn />
+            </IndexLink>
+            <IndexLink
+                color="cyan"
+                title="Display Announcements"
+                description="Make edits to any manual announcements."
+                to={`${process.env.PUBLIC_URL}/schedmgmt/displayannounce`}
+            >
+                <DisplayAnn />
             </IndexLink>
             <Background />
         </IndexPage>

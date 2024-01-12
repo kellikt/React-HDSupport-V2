@@ -88,11 +88,11 @@ export default function ManagerActions(props) {
 
         let gcal;
         if (props.beginDate === props.endDate) {
-            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}`;
+            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&src=c_gjs3u1vu768u14f91kqqr1bc4s@group.calendar.google.com&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}`;
         } else {
-            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&src=c_gjs3u1vu768u14f91kqqr1bc4s@group.calendar.google.com&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}`;
+            gcal = `https://www.google.com/calendar/render?action=TEMPLATE&src=c_gjs3u1vu768u14f91kqqr1bc4s@group.calendar.google.com&text=${props.firstName}+${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}&recur=RRULE:FREQ%3DDAILY;INTERVAL=1;UNTIL=${end.getFullYear()}${endMonth}${endDay}${endTime}`;
         }
-        gcal += `&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${end.getFullYear()}${endMonth}${endDay}${endTime}`;
+        gcal += `&dates=${start.getFullYear()}${startMonth}${startDay}${startTime}/${end.getFullYear()}${startMonth}${startDay}${endTime}`;
         const options = {
             day: 'numeric',
             month: 'short'
