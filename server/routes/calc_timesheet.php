@@ -22,7 +22,6 @@ function getLogs(
     while ($row = $result->fetch_assoc()) {
         $array[] = $row;
     }
-    //echo json_encode($array);
     return json_encode($array,1);
 }
 

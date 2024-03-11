@@ -35,6 +35,7 @@ if (isset($_SESSION["uuid"])) {
 
 <body>
 <!--BEGIN MAIN BODY -->
+Your session has expired.<br /><br />
 You are now logged out.<br /><br />
 <a href="index.php">Log</a> back in.
 <!--END MAIN BODY -->

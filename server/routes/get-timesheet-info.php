@@ -1,6 +1,7 @@
 <?php 
 
 session_start();
+
 include "./do_auth.php";
 
 if (isset($_SESSION["host"])) {

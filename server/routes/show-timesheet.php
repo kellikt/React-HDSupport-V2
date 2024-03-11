@@ -53,7 +53,7 @@ if ($_SESSION['username'] == $passed_username || $roles->administrator == "yes" 
 <head>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="../css/timesheet_styles.css">
+<link rel="stylesheet" type="text/css" href="./css/timesheet_styles.css">
 
 </head>
 <body>
