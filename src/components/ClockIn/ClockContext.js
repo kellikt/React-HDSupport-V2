@@ -14,6 +14,7 @@ export class ClockProvider extends Component {
             clockedIn: null,
             loading: true,
             timedOut: false,
+            networkError: false,
         };
     }
 
@@ -51,28 +52,31 @@ export class ClockProvider extends Component {
                 lastClock: {
                     action: 'out',
                 },
+                networkError: true,
                 loading: false,
             });
         }
     }
 
     handleSubmit = async commentString => {
-        const { username, clockedIn } = this.state;
+        const { username, clockedIn, networkError } = this.state;
         let action;
         if (clockedIn) action = 'out';
         else action = 'in';
 
-        try {
-            await axios.post(`${process.env.REACT_APP_DB_SERVER}/clock-in.php`, {
-                username: username,
-                comments: commentString,
-                action: action,
-            });
-            this.refreshForm();
-        } catch (error) {
-            this.setState({
-                timedOut: true,
-            });
+        if (!networkError) {
+            try {
+                await axios.post(`${process.env.REACT_APP_DB_SERVER}/clock-in.php`, {
+                    username: username,
+                    comments: commentString,
+                    action: action,
+                });
+                this.refreshForm();
+            } catch (error) {
+                this.setState({
+                    timedOut: true,
+                });
+            }
         }
     };
 
@@ -115,6 +119,7 @@ export class ClockProvider extends Component {
                     handleSubmit: this.handleSubmit,
                     loading: this.state.loading,
                     timedOut: this.state.timedOut,
+                    networkError: this.state.networkError,
                 }}
             >
                 {children}
