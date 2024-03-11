@@ -23,6 +23,19 @@ export class LayoutProvider extends Component {
         });
     };
 
+    checkSession = async() => {
+        try {
+            const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/check-session.php`);
+            const data = request.data;
+            console.log(data);
+            if (data == 1) {
+                window.location.href = `${process.env.REACT_APP_DB_SERVER}/session-expired.php`;
+            }
+        } catch (error) {
+            window.location.href = `${process.env.REACT_APP_DB_SERVER}/session-expired.php`;
+        }
+    }
+
     async componentDidMount() {
         try {
             const request = await axios.get(`${process.env.REACT_APP_DB_SERVER}/get-session-variables.php`);
@@ -58,7 +71,7 @@ export class LayoutProvider extends Component {
             });
 
             this.refreshID = setInterval(() => {
-                window.location.reload();
+                this.checkSession();
             }, 480000);
         } catch (error) {
             console.log(`Unable: ${error}`);

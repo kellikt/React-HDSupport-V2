@@ -42,7 +42,7 @@ class Form extends Component {
     render() {
         const { text } = this.state;
         let value = this.context;
-        const { username, clockedIn, loading, timedOut } = value;
+        const { username, clockedIn, loading, timedOut, networkError } = value;
 
         return (
             <FormEl onSubmit={this.handleSubmit}>
@@ -55,10 +55,10 @@ class Form extends Component {
                                 {timedOut ? <Warning /> : clockedIn ? <GreenCheck /> : <RedX />}
                                 <div>
                                     <Username>
-                                        You <strong>({username})</strong> are:
+                                        You <strong>({username})</strong> {networkError ? 'have a' : 'are'}:
                                     </Username>
                                     <InOrOut clockedIn={clockedIn} timedOut={timedOut}>
-                                        {timedOut ? 'Timed Out' : clockedIn ? 'Clocked in' : 'Clocked out'}
+                                        {timedOut ? 'Timed Out' : networkError ? 'Network Error' : clockedIn ? 'Clocked in' : 'Clocked out'}
                                     </InOrOut>
                                 </div>
                             </ClockState>
@@ -76,17 +76,30 @@ class Form extends Component {
                         </LeftSide>
                         <RightSide>
                             {timedOut ? <WarningImg /> : clockedIn ? <Working /> : <Couch />}
-                            {clockedIn ? (
-                                <Button color="red">Clock out</Button>
-                            ) : (
-                                <Button color="green">Clock In</Button>
-                            )}
+                            {!networkError ?
+                                <React.Fragment>
+                                {clockedIn ? (
+                                    <Button color="red">Clock out</Button>
+                                ) : (
+                                    <Button color="green">Clock In</Button>
+                                )}
+                                </React.Fragment>
+                            : ''}
                         </RightSide>
                     </React.Fragment>
                 )}
                 <SnackbarPortal
                     handler={timedOut}
                     message={'Your session expired. Please refresh the page.'}
+                    heading={'Hey!'}
+                    isError={true}
+                    onClick={() => {
+                        return null;
+                    }}
+                />
+                <SnackbarPortal
+                    handler={networkError}
+                    message={'Please check your network connection and refresh the page.'}
                     heading={'Hey!'}
                     isError={true}
                     onClick={() => {
