@@ -54,7 +54,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "homepage": "/help/hdsupport/dev/index.php",
+    "homepage": "/help/hdsupport/dev6/index.php",
     "eslintConfig": {
         "extends": "react-app"
     },
