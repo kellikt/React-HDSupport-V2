@@ -25,8 +25,8 @@ export default function Announcements() {
             const slackData = await slackRequest.data;
 
             // filter channel leave/channel join/reminder_add messages and limit to 5 messages
-            let filteredSlackData = slackData.messages.filter((message) => message.subtype !== "channel_leave" && message.subtype !== "channel_join" && message.subtype !== "reminder_add" && message.room === undefined).slice(0, 5);
-
+            let filteredSlackData = slackData.messages.filter((message) => message.subtype !== "channel_leave" && message.subtype !== "channel_join" && message.subtype !== "reminder_add" && message.room === undefined && (message.text.includes('•') || message.text.substring(0, 9) === 'Reminder:')).slice(0, 5);
+            console.log(filteredSlackData);
             // process the result
 
             const finalArray = [...Array(5).keys()];

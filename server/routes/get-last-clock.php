@@ -18,6 +18,10 @@ function getLastClock($db, $username)
 
     $stmt->close();
 
+    if (is_null($array)) {
+        return json_encode(["action" => "out", "comments" => "", "month" => "", "day" => "", "year" => "", "hour" => "", "min" => "", "ampm" => "", "dow" => ""]);
+    }
+
     return json_encode($array);
 }
 
